@@ -1,4 +1,4 @@
-.navbar { 
+.NavbarItems { 
     background: darkgray;
     height: 80px;
     display: flex;
@@ -8,7 +8,7 @@
 }
 
 .logo {
-    color: #fff; 
+    color: rgb(15, 15, 15); 
     justify-self: start; 
     margin-left: 20px; 
     cursor: pointer;
@@ -44,7 +44,7 @@
 }
 
 .fa-bars { 
-    color: #ffff; 
+    color: rgb(3, 3, 3); 
 }
 
 .mobileNav{ 

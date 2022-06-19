@@ -1,3 +1,4 @@
+
 import React, { Component } from "react"
 
 class App extends Component {
@@ -13,6 +14,18 @@ class App extends Component {
       todoList: []
       };
   }
+// temporarily commenting this out
+// import './App.css';
+// import Navbar from "./components/Navbar/navbar.js"
+
+// function App() {
+//   return (
+//     <div className="App">
+//       <Navbar />
+//     </div>
+//   );
+// }
+
 
     async componentDidMount() {
       try {

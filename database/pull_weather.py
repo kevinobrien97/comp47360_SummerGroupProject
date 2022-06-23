@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 #requests must be pip installed
 import connect_db
 import math
@@ -7,10 +7,10 @@ import time
 import datetime
 import os
 
-key = os.environ['WEATHERAPI']
+api = os.environ['API']
 
-def pull_weather(key):
-    open_weather = f"http://api.openweathermap.org/data/2.5/weather?lat=53.33306&lon=-6.24889&appid={key}&units=metric"
+def pull_weather(api):
+    open_weather = f"http://api.openweathermap.org/data/2.5/weather?lat=53.33306&lon=-6.24889&appid={api}&units=metric"
 
     data = requests.get(open_weather).json()  
 
@@ -26,7 +26,7 @@ def pull_weather(key):
 con = connect_db
 con.create_weather_table()
 while True:
-    weather = pull_weather(key)
+    weather = pull_weather(api)
     start = time.time()
     time.sleep(3600 - ((time.time() - start) % 3600))
 

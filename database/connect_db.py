@@ -1,4 +1,4 @@
-#!usr/bin/python
+#!/usr/bin/env python3
 from sqlalchemy import create_engine
 import os
 SQLPW = os.environ['SQLPW']

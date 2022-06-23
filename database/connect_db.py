@@ -6,30 +6,24 @@ engine = create_engine("mysql+mysqlconnector://shuttleup:" + SQLPW + "@shupdubli
 
 connection = engine.connect()
 
-# def create_weather():
-#     sql = """
-#     CREATE TABLE IF NOT EXISTS weather (
-#     temperature INTEGER, 
-#     feels_like INTEGER,
-#     )
-#     """
-#     try:
-#         print(connection.execute(sql).fetchall())
-#     except Exception as error:
-#         print(error)
+def create_weather_table():
+    create_table = f"CREATE TABLE IF NOT EXISTS weather (temperature INTEGER, feels_like INTEGER, time_stamp VARCHAR(70))"
+    try:
+        print(connection.execute(create_table).fetchall())
+    except Exception as error:
+        print(error)
 
-# def insert_weather(value: dict):
-#     try:
-#         run = connection.execute(
-#             f"INSERT INTO weather values('{value['temp']}','{value['feels_like']}')")
-#         print(run.fetchall())
-#     except Exception as error:
-#         print(error)
+def insert_weather(value: dict):
+    sql = f"INSERT INTO weather values('{value['temperature']}','{value['feels_like']}','{value['time_stamp']}')"
+    try:
+        print(connection.execute(sql).fetchall())
+    except Exception as error:
+        print(error)
 
 
-testData = "INSERT INTO test_table (test_col) VALUES (123)"
-connection.execute(testData)
-print('Success')
+#testData = "INSERT INTO test_table (test_col) VALUES (123)"
+#connection.execute(testData)
+#print('Success')
 
 
-connection.close()
+#connection.close()

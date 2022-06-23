@@ -4,7 +4,7 @@ import connect_db
 import math
 import requests
 import time
-import datetime
+from datetime import datetime, timedelta
 import os
 
 api = os.environ['API']
@@ -16,7 +16,7 @@ def pull_weather(api):
 
     temperature = math.floor(data['main']['temp'])
     feels_like = math.floor(data['main']['feels_like'])
-    time_stamp = datetime.datetime.now()
+    time_stamp = datetime.now() + timedelta(hours=1)
     return {
     'temperature': temperature,
     'feels_like': feels_like,

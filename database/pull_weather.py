@@ -1,3 +1,4 @@
+#!/usr/bin/python
 #requests must be pip installed
 import connect_db
 import math

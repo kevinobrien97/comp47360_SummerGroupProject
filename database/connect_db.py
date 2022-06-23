@@ -1,3 +1,4 @@
+#!usr/bin/python
 from sqlalchemy import create_engine
 import os
 SQLPW = os.environ['SQLPW']

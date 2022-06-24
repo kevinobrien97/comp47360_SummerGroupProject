@@ -19,7 +19,7 @@ from rest_framework import routers
 from dubbus import views 
 
 router = routers.DefaultRouter()                   
-router.register(r'todos', views.TodoView, 'dubbus')  
+router.register(r'stops', views.StopsView, 'dubbus')  
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import Todo
+from .models import Stops
 
-class TodoSerializer(serializers.ModelSerializer):
+class StopsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Todo
-        fields = ('id' ,'title', 'description', 'completed')
+        model = Stops
+        fields = ('stop_id', 'stop_name', 'stop_lat', 'stop_long')

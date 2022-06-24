@@ -1,80 +1,53 @@
+import React, {useState, useCallback, useEffect} from "react";
+import './App.css';
+import Navbar from "./components/Navbar/navbar.js"
 
-import React, { Component } from "react"
+function App() {
+  const [stops, setStops] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const fetchStopsData = useCallback(async () => {
+    setError(null);
+    setIsLoading(true);
+    try {
+      // fetch returns a promise
+      // is asynchronous
+      const response = await fetch("http://127.0.0.1:8000/api/stops/");
+      if (!response.ok) {
+        // wont continue with next line if error thrown
+        throw new Error("Something went wrong");
+      }
+      const data = await response.json();
+      console.log(data[0])
+      setStops(data[0])
+    } catch (error) {
+      setError(error.message);
+    }
+    setIsLoading(false);
+  }, []);
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      viewCompleted: false,
-      activeItem: {
-        title: "",
-        description: "",
-        completed: false
-      },
-      todoList: []
-      };
+  useEffect(() => {
+    fetchStopsData();
+  }, [fetchStopsData]);
+
+  // handling possible output states
+  let content = <p>Sending request...</p>;
+  if (Object.keys(stops).length > 0) {
+    content = <p>{stops['stop_name']}</p>;
   }
-// temporarily commenting this out
-// import './App.css';
-// import Navbar from "./components/Navbar/navbar.js"
-
-// function App() {
-//   return (
-//     <div className="App">
-//       <Navbar />
-//     </div>
-//   );
-// }
-
-
-    async componentDidMount() {
-      try {
-        const res = await fetch('http://localhost:8000/api/todos/');
-        const todoList = await res.json();
-        this.setState({
-          todoList
-        });
-      } catch (e) {
-        console.log(e);
-    }
-    }
-    renderItems = () => {
-      const { viewCompleted } = this.state;
-      const newItems = this.state.todoList.filter(
-        item => item.completed === viewCompleted
-      );
-      return newItems.map(item => (
-        <li 
-          key={item.id}
-          className="list-group-item d-flex justify-content-between align-items-center"
-        >
-          <span 
-            className={`todo-title mr-2 ${
-              this.state.viewCompleted ? "completed-todo" : ""
-            }`}
-            title={item.description}
-            >
-              {item.title}
-            </span>
-        </li>
-      ));
-    };
-
-    render() {
-      return (
-        <main className="content">
-        <div className="row">
-          <div className="col-md-6 col-sm-10 mx-auto p-0">
-            <div className="card p-3">
-              <ul className="list-group list-group-flush">
-                {this.renderItems()}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </main>
-      )
-    }
+  if (error) {
+    content = <p>{error}</p>;
   }
-  
+  if(isLoading) {
+    content = <p>Loading data...</p>;
+  }
+
+  return (
+    <div className="App">
+      <Navbar />
+      {content}
+    </div>
+  );
+}
+
 export default App;

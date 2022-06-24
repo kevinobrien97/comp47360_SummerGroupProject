@@ -1,0 +1,9 @@
+.google-map { 
+    width: 60%;
+    height: 100vh;
+    margin-top: -80px;
+    position: fixed; 
+    left: 40%;
+    margin-left: 50%
+
+}

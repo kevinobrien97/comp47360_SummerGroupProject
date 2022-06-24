@@ -3,5 +3,5 @@ from .models import Stops
 
 class StopsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Stops,
+        model = Stops
         fields = ('stop_id', 'stop_name', 'stop_lat', 'stop_long')

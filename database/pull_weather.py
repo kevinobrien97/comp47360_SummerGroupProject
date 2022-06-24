@@ -28,6 +28,5 @@ con.create_weather_table()
 while True:
     weather = pull_weather(api)
     start = time.time()
-    time.sleep(3600 - ((time.time() - start) % 3600))
-
     con.insert_weather(weather)
+    time.sleep(3600 - (time.time() - start) % 3600)

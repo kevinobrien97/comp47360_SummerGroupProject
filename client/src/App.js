@@ -1,5 +1,6 @@
 import React, {useState, useCallback, useEffect} from "react";
 import './App.css';
+import Map from './components/Map/Map'
 import Navbar from "./components/Navbar/navbar.js"
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
 
   return (
     <div className="App">
+    
       <Navbar />
       {content}
     </div>

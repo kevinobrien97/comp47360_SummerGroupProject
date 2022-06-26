@@ -1,5 +1,5 @@
 import "./Map.css";
-import { useJsApiLoader, GoogleMap } from "@react-google-maps/api";
+import { useJsApiLoader, GoogleMap, Marker } from "@react-google-maps/api";
 
 const center = { lat: 53.3473, lng: -6.2591 };
 
@@ -17,7 +17,13 @@ const Map = () => {
         center={center}
         zoom={15}
         mapContainerStyle={{ width: "100%", height: "100%" }}
-      >{}</GoogleMap>
+        // can remove any default controls - should not need these for our app
+        options={{ fullscreenControl: false, streetViewControl: false }}
+      >
+          {/* will need a variant of the below later */}
+          {/* <Marker position={center}></Marker> */}
+        {}
+      </GoogleMap>
     </div>
   );
 };

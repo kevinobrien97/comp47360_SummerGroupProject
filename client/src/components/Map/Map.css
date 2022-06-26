@@ -5,5 +5,9 @@
     position: absolute; 
     /* left: 40%;
     margin-left: 50% */
+}
 
+.journey-planner {
+    z-index:100;
+    padding-left: 2rem;
 }

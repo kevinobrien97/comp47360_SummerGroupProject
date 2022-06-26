@@ -48,7 +48,7 @@ function App() {
     <div className="App">
       <Navbar />
       {/* {content} */}
-      <Journey></Journey>
+
       <Map>
         
       </Map>

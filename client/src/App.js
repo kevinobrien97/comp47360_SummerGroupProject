@@ -1,6 +1,8 @@
-import React, {useState, useCallback, useEffect} from "react";
-import './App.css';
-import Navbar from "./components/Navbar/navbar.js"
+import React, { useState, useCallback, useEffect } from "react";
+import "./App.css";
+import Journey from "./components/Journey/Journey";
+import Map from "./components/Map/Map";
+import Navbar from "./components/Navbar/navbar";
 
 function App() {
   const [stops, setStops] = useState({});
@@ -18,8 +20,8 @@ function App() {
         throw new Error("Something went wrong");
       }
       const data = await response.json();
-      console.log(data[0])
-      setStops(data[0])
+      console.log(data[0]);
+      setStops(data[0]);
     } catch (error) {
       setError(error.message);
     }
@@ -33,19 +35,23 @@ function App() {
   // handling possible output states
   let content = <p>Sending request...</p>;
   if (Object.keys(stops).length > 0) {
-    content = <p>{stops['stop_name']}</p>;
+    content = <p>{stops["stop_name"]}</p>;
   }
   if (error) {
     content = <p>{error}</p>;
   }
-  if(isLoading) {
+  if (isLoading) {
     content = <p>Loading data...</p>;
   }
 
   return (
     <div className="App">
       <Navbar />
-      {content}
+      {/* {content} */}
+
+      <Map>
+        
+      </Map>
     </div>
   );
 }

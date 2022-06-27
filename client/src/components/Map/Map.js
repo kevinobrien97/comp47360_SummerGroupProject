@@ -22,7 +22,7 @@ const Map = (props) => {
   const [mapLoaded, setMapLoaded] = useState(null);
   const [directionsOutput, setDirectionsOutput] = useState(null);
   const [distance, setDistance] = useState("");
-
+ 
   const originRef = useRef("");
   const destinationRef = useRef("");
 
@@ -51,10 +51,9 @@ const Map = (props) => {
       transitOptions: { modes: ["BUS"] },
       provideRouteAlternatives: true,
     });
-    console.log("res", results.routes);
+    console.log("res", results);
     setDirectionsOutput(results);
-    //console.log("dir", results.routes[0].overview_polyline);
-    console.log("output");
+
     setDistance(results.routes[0].legs[0].distance.text);
     props.onJourney(results.routes);
   }
@@ -65,6 +64,13 @@ const Map = (props) => {
     props.onCancelJourney();
     originRef.current.value = "";
     destinationRef.current.value = "";
+  }
+
+  function getRoute() {
+    if (props.chosenRoute){
+      return parseInt(props.chosenRoute)
+    }
+    return 0
   }
 
   return (
@@ -113,7 +119,8 @@ const Map = (props) => {
           {/* will need a variant of the below later */}
           {/* <Marker position={center}></Marker> */}
           {directionsOutput && (
-            <DirectionsRenderer directions={directionsOutput} routeIndex={3} />
+            
+            <DirectionsRenderer directions={directionsOutput} routeIndex={getRoute()} />
           )}
           {}
         </GoogleMap>

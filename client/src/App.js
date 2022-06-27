@@ -84,6 +84,7 @@ function App() {
       <Map
         onJourney={getRoutesHandler}
         onCancelJourney={cancelRoutesHandler}
+        chosenRoute={chosenRoute}
       ></Map>
     </div>
   );

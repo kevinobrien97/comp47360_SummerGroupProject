@@ -1,10 +1,27 @@
 import React, { useState, useCallback, useEffect } from "react";
 import "./App.css";
-import Journey from "./components/Journey/Journey";
 import Map from "./components/Map/Map";
+import RouteOptions from "./components/Map/RouteOptions";
 import Navbar from "./components/Navbar/navbar";
 
 function App() {
+  const [allRoutes, setAllRoutes] = useState();
+  const getRoutesHandler = (r) => {
+    console.log("app", r);
+    // setAllRoutes([{ number: r, route: "hello" }]);
+    const transformedRoutes = r.map((route) => {
+      return {
+        id: Math.random().toString(),
+        time: route.legs[0].arrival_time.text,
+      };
+    });
+    setAllRoutes(transformedRoutes);
+  };
+
+  const cancelRoutesHandler = () => {
+    setAllRoutes();
+  };
+
   const [stops, setStops] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -48,10 +65,12 @@ function App() {
     <div className="App">
       <Navbar />
       {/* {content} */}
-
-      <Map>
-        
-      </Map>
+      {/* display component only if route options available */}
+      {allRoutes && <RouteOptions options={allRoutes}></RouteOptions>}
+      <Map
+        onJourney={getRoutesHandler}
+        onCancelJourney={cancelRoutesHandler}
+      ></Map>
     </div>
   );
 }

@@ -1,10 +1,35 @@
 import React, { useState, useCallback, useEffect } from "react";
 import "./App.css";
-import Journey from "./components/Journey/Journey";
 import Map from "./components/Map/Map";
+import RouteOptions from "./components/Map/RouteOptions";
 import Navbar from "./components/Navbar/navbar";
 
 function App() {
+  const [allRoutes, setAllRoutes] = useState();
+  const [chosenRoute, setChosenRoute] = useState();
+
+  const getRoutesHandler = (r) => {
+    console.log("app", r);
+    // setAllRoutes([{ number: r, route: "hello" }]);
+    const transformedRoutes = r.map((route, index) => {
+      return {
+        id: index,
+        time: route.legs[0].arrival_time.text,
+      };
+    });
+    setAllRoutes(transformedRoutes);
+  };
+
+  const cancelRoutesHandler = () => {
+    setChosenRoute();
+    setAllRoutes();
+  };
+
+  const selectedRouteHandler = (selection) => {
+    setChosenRoute(selection);
+    console.log("here", selection);
+  };
+
   const [stops, setStops] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -48,10 +73,21 @@ function App() {
     <div className="App">
       <Navbar />
       {/* {content} */}
-
-      <Map>
-        
-      </Map>
+      {/* display component only if route options available */}
+      {allRoutes && (
+        <RouteOptions
+          chosenRoute={chosenRoute}
+          options={allRoutes}
+          selectedRoute={selectedRouteHandler}
+        ></RouteOptions>
+      )}
+      <Map
+        onJourney={getRoutesHandler}
+        onCancelJourney={cancelRoutesHandler}
+        chosenRoute={chosenRoute}
+        // passing the setter to update the bg colour on first load
+        chosenRouteSetter={setChosenRoute}
+      ></Map>
     </div>
   );
 }

@@ -22,7 +22,7 @@ const Map = (props) => {
   const [mapLoaded, setMapLoaded] = useState(null);
   const [directionsOutput, setDirectionsOutput] = useState(null);
   const [distance, setDistance] = useState("");
- 
+
   const originRef = useRef("");
   const destinationRef = useRef("");
 
@@ -56,6 +56,7 @@ const Map = (props) => {
 
     setDistance(results.routes[0].legs[0].distance.text);
     props.onJourney(results.routes);
+    props.chosenRouteSetter(0);
   }
 
   function cancelRoute() {
@@ -67,10 +68,10 @@ const Map = (props) => {
   }
 
   function getRoute() {
-    if (props.chosenRoute){
-      return parseInt(props.chosenRoute)
+    if (props.chosenRoute) {
+      return parseInt(props.chosenRoute);
     }
-    return 0
+    return 0;
   }
 
   return (
@@ -119,8 +120,10 @@ const Map = (props) => {
           {/* will need a variant of the below later */}
           {/* <Marker position={center}></Marker> */}
           {directionsOutput && (
-            
-            <DirectionsRenderer directions={directionsOutput} routeIndex={getRoute()} />
+            <DirectionsRenderer
+              directions={directionsOutput}
+              routeIndex={getRoute()}
+            />
           )}
           {}
         </GoogleMap>

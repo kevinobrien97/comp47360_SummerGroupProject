@@ -85,6 +85,8 @@ function App() {
         onJourney={getRoutesHandler}
         onCancelJourney={cancelRoutesHandler}
         chosenRoute={chosenRoute}
+        // passing the setter to update the bg colour on first load
+        chosenRouteSetter={setChosenRoute}
       ></Map>
     </div>
   );

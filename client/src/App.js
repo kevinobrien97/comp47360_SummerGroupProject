@@ -6,12 +6,14 @@ import Navbar from "./components/Navbar/navbar";
 
 function App() {
   const [allRoutes, setAllRoutes] = useState();
+  const [chosenRoute, setChosenRoute] = useState();
+
   const getRoutesHandler = (r) => {
     console.log("app", r);
     // setAllRoutes([{ number: r, route: "hello" }]);
-    const transformedRoutes = r.map((route) => {
+    const transformedRoutes = r.map((route, index) => {
       return {
-        id: Math.random().toString(),
+        id: index,
         time: route.legs[0].arrival_time.text,
       };
     });
@@ -19,7 +21,13 @@ function App() {
   };
 
   const cancelRoutesHandler = () => {
+    setChosenRoute();
     setAllRoutes();
+  };
+
+  const selectedRouteHandler = (selection) => {
+    setChosenRoute(selection);
+    console.log("here", selection);
   };
 
   const [stops, setStops] = useState({});
@@ -66,7 +74,13 @@ function App() {
       <Navbar />
       {/* {content} */}
       {/* display component only if route options available */}
-      {allRoutes && <RouteOptions options={allRoutes}></RouteOptions>}
+      {allRoutes && (
+        <RouteOptions
+          chosenRoute={chosenRoute}
+          options={allRoutes}
+          selectedRoute={selectedRouteHandler}
+        ></RouteOptions>
+      )}
       <Map
         onJourney={getRoutesHandler}
         onCancelJourney={cancelRoutesHandler}

@@ -12,10 +12,12 @@ import {
   Button,
   Box,
   Grid,
-  TextField,
-  IconButton,
 } from "@mui/material";
 import { FaLocationArrow } from "react-icons/fa";
+
+const searchLimits = {
+  componentRestrictions: { country: ['ie']},
+}
 
 const center = { lat: 53.3473, lng: -6.2591 };
 // not setting libraries directly to prevent a bug
@@ -39,7 +41,6 @@ const Map = () => {
   if (!isLoaded) return console.log("error loading map");
 
   async function routeCalculator() {
-    console.log('he', originRef.current.value)
     if (originRef.current.value === "" || destinationRef.current.value === "") {
       return;
     }
@@ -66,19 +67,17 @@ const Map = () => {
     <div>
       <Box className="journey-planner">
         <Grid container direction="row" spacing={2}>
-          <Autocomplete>
+          <Autocomplete options={searchLimits}>
             <input
               id="origin"
               placeholder="Origin"
-    
               ref={originRef}
             />
           </Autocomplete>
-          <Autocomplete>
+          <Autocomplete options={searchLimits}>
             <input
               id="destination"
               placeholder="Destination"
-             
               ref={destinationRef}
             />
           </Autocomplete>

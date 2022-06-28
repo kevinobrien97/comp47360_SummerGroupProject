@@ -9,21 +9,19 @@
     margin-bottom: 5px;
 }
 
-.journey-planner {
-    margin-top: 20px;
-    z-index:100;
-    margin-left: 200px;
-}
-.journey-headings {
-    margin-top: 18px;
-    margin-left: 50px;
-}
+
 .origin-select {
     margin-top: -60px;
 }
  .destination-select {
     margin-top: 10px; 
 } 
+
+.MuiButtonGroup-root {
+    margin-top: 30px;
+    margin-left: -150px;
+}
+
 .journey-container {
     margin-left: 5px;
     margin-top: 5px;
@@ -33,9 +31,5 @@
     position: absolute;
     border-radius: 10px;
     
-}
-.MuiButtonGroup-root {
-    margin-top: 30px;
-    margin-left: -150px;
 }
     

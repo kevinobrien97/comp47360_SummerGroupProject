@@ -6,26 +6,23 @@ import {
   Autocomplete,
   DirectionsRenderer,
 } from "@react-google-maps/api";
-import { useState, useRef } from "react";
-import { ButtonGroup, Button, Box, Grid } from "@mui/material";
-import { FaLocationArrow } from "react-icons/fa";
-
-const searchLimits = {
-  componentRestrictions: { country: ["ie"] },
-};
+import { useState } from "react";
+import Journey from "./Journey/Journey";
+import RouteOptions from "./Journey/RouteOptions";
 
 const center = { lat: 53.3473, lng: -6.2591 };
 // not setting libraries directly to prevent a bug
 const libraries = ["places"];
 
 const Map = (props) => {
+  const [allRoutes, setAllRoutes] = useState();
+  const [chosenRoute, setChosenRoute] = useState();
   const [mapLoaded, setMapLoaded] = useState(null);
   const [directionsOutput, setDirectionsOutput] = useState(null);
   const [distance, setDistance] = useState("");
-
-  const originRef = useRef("");
-  const destinationRef = useRef("");
-
+  const selectedRouteHandler = (selection) => {
+    setChosenRoute(selection);
+  };
   // below loads google maps script
   const { isLoaded } = useJsApiLoader({
     // on server must create .env.local file in src to store API key
@@ -35,17 +32,12 @@ const Map = (props) => {
 
   if (!isLoaded) return console.log("error loading map");
 
-  async function routeCalculator() {
-    if (originRef.current.value === "" || destinationRef.current.value === "") {
-      return;
-    }
-
+  async function routeCalculator(or, des) {
     // eslint-disable-next-line no-undef
     const dirServ = new google.maps.DirectionsService();
-
     const results = await dirServ.route({
-      origin: originRef.current.value,
-      destination: destinationRef.current.value,
+      origin: or,
+      destination: des,
       // eslint-disable-next-line no-undef
       travelMode: google.maps.TravelMode.TRANSIT,
       transitOptions: { modes: ["BUS"] },
@@ -53,23 +45,38 @@ const Map = (props) => {
     });
     console.log("res", results);
     setDirectionsOutput(results);
-
     setDistance(results.routes[0].legs[0].distance.text);
-    props.onJourney(results.routes);
-    props.chosenRouteSetter(0);
+    getRoutesHandler(results.routes);
+    setChosenRoute(0);
   }
+
+  const getRoutesHandler = (r) => {
+    console.log("app", r);
+
+    const transformedRoutes = r.map((route, index) => {
+      return {
+        id: index,
+        time: route.legs[0].arrival_time.text,
+      };
+    });
+    setAllRoutes(transformedRoutes);
+  };
 
   function cancelRoute() {
     setDirectionsOutput(null);
     setDistance("");
-    props.onCancelJourney();
-    originRef.current.value = "";
-    destinationRef.current.value = "";
+    setChosenRoute();
+    setAllRoutes();
   }
 
+  function centerMap() {
+    //set zoom
+    // function will need to be updated to center to users location (or 'center' variable updated)
+    mapLoaded.panTo(center);
+  }
   function getRoute() {
-    if (props.chosenRoute) {
-      return parseInt(props.chosenRoute);
+    if (chosenRoute) {
+      return parseInt(chosenRoute);
     }
     return 0;
   }
@@ -77,46 +84,19 @@ const Map = (props) => {
   return (
     <div>
       <div className="journey-container">
-        <div className="journey-headings">
-          <h3>From: </h3>
-          <h3>To:</h3>
-        </div>
-        <Box className="journey-planner">
-          <Grid container direction="column" spacing={2}>
-            <div className="origin-select">
-              <Autocomplete options={searchLimits}>
-                <input id="origin" placeholder="Origin" ref={originRef} />
-              </Autocomplete>
-            </div>
-            <div className="destination-select">
-              <Autocomplete options={searchLimits}>
-                <input
-                  id="destination"
-                  placeholder="Destination"
-                  ref={destinationRef}
-                />
-              </Autocomplete>
-            </div>
-          </Grid>
-
-          <ButtonGroup>
-          <Button type="submit" onClick={routeCalculator}>
-            Calculate Route
-          </Button>
-          <Button type="submit" onClick={cancelRoute}>
-            Cancel
-          </Button>
-          {/* will need to change this to users location at some stage */}
-          <Button
-            aria-label="center back"
-            size="large"
-            onClick={() => mapLoaded.panTo(center)}
-          >
-            {<FaLocationArrow />}
-          </Button>
-        </ButtonGroup>
-      </Box>
-    </div>
+        <Journey
+          routeCalculator={routeCalculator}
+          cancelRoute={cancelRoute}
+          centerMap={centerMap}
+        ></Journey>
+        {allRoutes && (
+          <RouteOptions
+            chosenRoute={chosenRoute}
+            options={allRoutes}
+            selectedRoute={selectedRouteHandler}
+          ></RouteOptions>
+        )}
+      </div>
       <div className="google-map">
         <GoogleMap
           // to do -- center map on users current location

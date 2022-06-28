@@ -1,44 +1,20 @@
 import React, { useState, useCallback, useEffect } from "react";
 import "./App.css";
-import Map from "./components/Map/Map";
-import RouteOptions from "./components/Map/RouteOptions";
+import Map from "./components/PrimaryContent/Map";
+// import RouteOptions from "./components/Map/RouteOptions";
 import Navbar from "./components/Navbar/Navbar";
 import SideContainer from "./components/FeaturesCard/SideContainer";
 import LogIn from "./components/Navbar/LogIn";
 
 function App() {
-  const [allRoutes, setAllRoutes] = useState();
-  const [chosenRoute, setChosenRoute] = useState();
   const [logInWindow, setLogInWindow] = useState(false);
 
   const closeLogIn = () => {
-    setLogInWindow(false)
-  }
-  
+    setLogInWindow(false);
+  };
+
   const openLogIn = () => {
-    setLogInWindow(true)
-  }
-
-
-  const getRoutesHandler = (r) => {
-    console.log("app", r);
-
-    const transformedRoutes = r.map((route, index) => {
-      return {
-        id: index,
-        time: route.legs[0].arrival_time.text,
-      };
-    });
-    setAllRoutes(transformedRoutes);
-  };
-
-  const cancelRoutesHandler = () => {
-    setChosenRoute();
-    setAllRoutes();
-  };
-
-  const selectedRouteHandler = (selection) => {
-    setChosenRoute(selection);
+    setLogInWindow(true);
   };
 
   const [stops, setStops] = useState({});
@@ -84,22 +60,7 @@ function App() {
     <div className="App">
       <Navbar openLogIn={openLogIn}></Navbar>
       <SideContainer />
-      {/* {content} */}
-      {/* display component only if route options available */}
-      {allRoutes && (
-        <RouteOptions
-          chosenRoute={chosenRoute}
-          options={allRoutes}
-          selectedRoute={selectedRouteHandler}
-        ></RouteOptions>
-      )}
-      <Map
-        onJourney={getRoutesHandler}
-        onCancelJourney={cancelRoutesHandler}
-        chosenRoute={chosenRoute}
-        // passing the setter to update the bg colour on first load
-        chosenRouteSetter={setChosenRoute}
-      ></Map>
+      <Map />
       {logInWindow && <LogIn closeLogIn={closeLogIn}></LogIn>}
     </div>
   );

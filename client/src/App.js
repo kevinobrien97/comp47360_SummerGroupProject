@@ -3,6 +3,7 @@ import "./App.css";
 import Map from "./components/Map/Map";
 import RouteOptions from "./components/Map/RouteOptions";
 import Navbar from "./components/Navbar/navbar";
+import SideContainer from "./components/FeaturesCard/SideContainer"
 
 function App() {
   const [allRoutes, setAllRoutes] = useState();
@@ -72,6 +73,7 @@ function App() {
   return (
     <div className="App">
       <Navbar />
+      <SideContainer />
       {/* {content} */}
       {/* display component only if route options available */}
       {allRoutes && (

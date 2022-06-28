@@ -76,21 +76,30 @@ const Map = (props) => {
 
   return (
     <div>
-      <Box className="journey-planner">
-        <Grid container direction="row" spacing={2}>
-          <Autocomplete options={searchLimits}>
-            <input id="origin" placeholder="Origin" ref={originRef} />
-          </Autocomplete>
-          <Autocomplete options={searchLimits}>
-            <input
-              id="destination"
-              placeholder="Destination"
-              ref={destinationRef}
-            />
-          </Autocomplete>
-        </Grid>
+      <div className="journey-container">
+        <div className="journey-headings">
+          <h3>From: </h3>
+          <h3>To:</h3>
+        </div>
+        <Box className="journey-planner">
+          <Grid container direction="column" spacing={2}>
+            <div className="origin-select">
+              <Autocomplete options={searchLimits}>
+                <input id="origin" placeholder="Origin" ref={originRef} />
+              </Autocomplete>
+            </div>
+            <div className="destination-select">
+              <Autocomplete options={searchLimits}>
+                <input
+                  id="destination"
+                  placeholder="Destination"
+                  ref={destinationRef}
+                />
+              </Autocomplete>
+            </div>
+          </Grid>
 
-        <ButtonGroup>
+          <ButtonGroup>
           <Button type="submit" onClick={routeCalculator}>
             Calculate Route
           </Button>
@@ -107,6 +116,7 @@ const Map = (props) => {
           </Button>
         </ButtonGroup>
       </Box>
+    </div>
       <div className="google-map">
         <GoogleMap
           // to do -- center map on users current location

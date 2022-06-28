@@ -5,7 +5,12 @@ import {AppBar, Toolbar, Typography, Stack, Button} from "@mui/material"
 const MiniNav = () => {
     return (
         <div className="mininav-items">
-            <AppBar position='static'>
+            <AppBar position='static'
+                style={{
+                    boxShadow: "0px 0px 0px 0px",
+                }}
+            
+            >
                <Toolbar>
                    <Typography variant='h7' fontSize={8} component='div'/>
                    <Stack direction="row"></Stack> 

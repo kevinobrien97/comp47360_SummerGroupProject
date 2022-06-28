@@ -1,9 +1,12 @@
 .side-container {
     margin-left: 5px;
-    margin-top: 15px;
+    margin-top: 190px;
     height: 60vh; 
-    width: 60vh;
+    min-width: 370px;
+    max-width: 414px; 
     background-color: aqua;
+    position: absolute;
+    margin-bottom: 5px;
 
 }
-
+/* min and max width of mobile device */

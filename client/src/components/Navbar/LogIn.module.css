@@ -18,7 +18,7 @@
 .back_drop {
   left: 0;
   top: 0;
-  position: fixed;
+  position: absolute;
   height: 100%;
   width: 100%;
   z-index: 20;

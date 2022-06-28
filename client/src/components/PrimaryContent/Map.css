@@ -9,7 +9,6 @@
     margin-bottom: 5px;
 }
 
-
 .origin-select {
     margin-top: -60px;
 }
@@ -30,6 +29,16 @@
     background-color: aqua;
     position: absolute;
     border-radius: 10px;
-    
+    white-space: normal;
+    overflow: hidden;
 }
+
+.journey-container.journey_back_drop {
+    display: inline-block;
+    position: fixed;
+   
+    z-index: 20;
+    background: rgba(0, 0, 0, 0.8);
+  }
+  
     

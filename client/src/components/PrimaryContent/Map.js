@@ -3,7 +3,6 @@ import {
   useJsApiLoader,
   GoogleMap,
   Marker,
-  Autocomplete,
   DirectionsRenderer,
 } from "@react-google-maps/api";
 import { useState } from "react";
@@ -19,6 +18,7 @@ const Map = (props) => {
   const [chosenRoute, setChosenRoute] = useState();
   const [mapLoaded, setMapLoaded] = useState(null);
   const [directionsOutput, setDirectionsOutput] = useState(null);
+  const [showRoutes, setShowRoutes] = useState(false);
   const [distance, setDistance] = useState("");
   const selectedRouteHandler = (selection) => {
     setChosenRoute(selection);
@@ -60,6 +60,7 @@ const Map = (props) => {
       };
     });
     setAllRoutes(transformedRoutes);
+    setShowRoutes(true)
   };
 
   function cancelRoute() {
@@ -80,22 +81,28 @@ const Map = (props) => {
     }
     return 0;
   }
+  function removeRoutes() {
+    setShowRoutes(false)
+  }
 
   return (
     <div>
+      {/* <div className={`journey-container ${showRoutes ? 'journey_back_drop' : ''}`}> */}
       <div className="journey-container">
-        <Journey
-          routeCalculator={routeCalculator}
-          cancelRoute={cancelRoute}
-          centerMap={centerMap}
-        ></Journey>
-        {allRoutes && (
+      {allRoutes && showRoutes && (
           <RouteOptions
+          removeRoutes={removeRoutes}
             chosenRoute={chosenRoute}
             options={allRoutes}
             selectedRoute={selectedRouteHandler}
           ></RouteOptions>
         )}
+        <Journey
+          routeCalculator={routeCalculator}
+          cancelRoute={cancelRoute}
+          centerMap={centerMap}
+        ></Journey>
+      
       </div>
       <div className="google-map">
         <GoogleMap

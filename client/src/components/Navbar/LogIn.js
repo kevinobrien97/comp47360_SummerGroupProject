@@ -1,13 +1,13 @@
 import React from "react";
 import { Card, Button } from "@mui/material";
-import "./LogIn.css";
+import classes from "./LogIn.module.css";
 
 const LogIn = (props) => {
   return (
     <div>
-    <div className="back_drop" onClick={props.closeLogIn}></div>
-      <div className="log_in_modal">
-        <div className="log_in_modal_content">
+    <div className={classes.back_drop} onClick={props.closeLogIn}></div>
+      <div className={classes.log_in_modal}>
+        <div className={classes.log_in_modal_content}>
           <header>
             <h3>Sign In</h3>
           </header>

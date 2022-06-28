@@ -3,15 +3,26 @@ import "./App.css";
 import Map from "./components/Map/Map";
 import RouteOptions from "./components/Map/RouteOptions";
 import Navbar from "./components/Navbar/navbar";
-import SideContainer from "./components/FeaturesCard/SideContainer"
+import SideContainer from "./components/FeaturesCard/SideContainer";
+import LogIn from "./components/Navbar/LogIn";
 
 function App() {
   const [allRoutes, setAllRoutes] = useState();
   const [chosenRoute, setChosenRoute] = useState();
+  const [logInWindow, setLogInWindow] = useState(false);
+
+  const closeLogIn = () => {
+    setLogInWindow(false)
+  }
+  
+  const openLogIn = () => {
+    setLogInWindow(true)
+  }
+
 
   const getRoutesHandler = (r) => {
     console.log("app", r);
-    // setAllRoutes([{ number: r, route: "hello" }]);
+
     const transformedRoutes = r.map((route, index) => {
       return {
         id: index,
@@ -28,7 +39,6 @@ function App() {
 
   const selectedRouteHandler = (selection) => {
     setChosenRoute(selection);
-    console.log("here", selection);
   };
 
   const [stops, setStops] = useState({});
@@ -72,7 +82,7 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
+      <Navbar openLogIn={openLogIn}></Navbar>
       <SideContainer />
       {/* {content} */}
       {/* display component only if route options available */}
@@ -90,6 +100,7 @@ function App() {
         // passing the setter to update the bg colour on first load
         chosenRouteSetter={setChosenRoute}
       ></Map>
+      {logInWindow && <LogIn closeLogIn={closeLogIn}></LogIn>}
     </div>
   );
 }

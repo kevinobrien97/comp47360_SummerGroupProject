@@ -1,7 +1,7 @@
-import "./navbar.css"
+import "./Navbar.css"
 import {AppBar, Toolbar, Typography, Stack, Button} from "@mui/material"
 // npm install @mui/material @emotion/react @emotion/styled
-const Navbar = () => {
+const Navbar = (props) => {
     return (
         <div className="nav-items">
             <AppBar position='static' 
@@ -14,12 +14,11 @@ const Navbar = () => {
                    <Typography variant='h7' component='div'/>
                    <Stack direction="row"></Stack> 
                     <Button color="inherit" >Home</Button>
-                    <Button color="inherit">Signup/Login</Button>
+                    <Button onClick={props.openLogIn} color="inherit">Signup/Login</Button>
                 </Toolbar>
             </AppBar>
         </div>
     )                 
-
 }
 export default Navbar
 

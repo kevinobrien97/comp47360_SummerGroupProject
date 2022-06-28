@@ -1,4 +1,4 @@
-export const mainMenu = [
+export const Menu = [
     {
         title: 'Home', 
         name: 'home-link', 

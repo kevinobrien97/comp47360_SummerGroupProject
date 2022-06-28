@@ -1,6 +1,5 @@
 import "./RouteOptions.css";
 import { Button } from "@mui/material";
-import { useState } from "react";
 
 const RouteOptions = (props) => {
 //   const [chosenRoute, setChosenRoute] = useState();
@@ -8,10 +7,7 @@ const RouteOptions = (props) => {
   console.log("props", props.options);
 
   const pickRoute = (event) => {
-    console.log("event", event.target.value);
-    
     props.selectedRoute(event.target.value);
-    console.log('test')
   };
 
   // conditionally sets bg colour of options

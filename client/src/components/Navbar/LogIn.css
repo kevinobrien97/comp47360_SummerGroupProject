@@ -1,0 +1,26 @@
+.log_in_modal {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  top: 40%;
+  width: 100%;
+  z-index: 30;
+  background: red;
+  box-shadow: 0 2px 8px rgba(143, 103, 103, 0.26);
+  border-radius: 10px;
+}
+
+.log_in_modal_content {
+  position: absolute;
+  background-color: green;
+}
+
+.back_drop {
+  left: 0;
+  top: 0;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 20;
+  background: rgba(0, 0, 0, 0.8);
+}

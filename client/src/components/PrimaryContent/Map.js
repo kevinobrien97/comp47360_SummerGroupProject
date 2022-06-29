@@ -60,7 +60,7 @@ const Map = (props) => {
       };
     });
     setAllRoutes(transformedRoutes);
-    setShowRoutes(true)
+    setShowRoutes(true);
   };
 
   function cancelRoute() {
@@ -71,10 +71,33 @@ const Map = (props) => {
   }
 
   function centerMap() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(panLocation, locationError);
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
     //set zoom
     // function will need to be updated to center to users location (or 'center' variable updated)
-    mapLoaded.panTo(center);
   }
+
+  function panLocation(location) {
+    // eslint-disable-next-line no-undef
+    let latLng = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
+    mapLoaded.panTo(latLng);
+  }
+
+  function locationError() {
+    if(navigator.permissions) {
+      navigator.permissions.query({ name: 'geolocation' }).then(result => {
+        if (result.state === 'denied') {
+          alert('To use this feature you must enable location permissions in your settings.')
+        }
+      })
+    } else {
+      alert('Unable to locate you. You can enter your location manually.')
+    }
+  }
+
   function getRoute() {
     if (chosenRoute) {
       return parseInt(chosenRoute);
@@ -82,16 +105,16 @@ const Map = (props) => {
     return 0;
   }
   function removeRoutes() {
-    setShowRoutes(false)
+    setShowRoutes(false);
   }
 
   return (
     <div>
       {/* <div className={`journey-container ${showRoutes ? 'journey_back_drop' : ''}`}> */}
       <div className="journey-container">
-      {allRoutes && showRoutes && (
+        {allRoutes && showRoutes && (
           <RouteOptions
-          removeRoutes={removeRoutes}
+            removeRoutes={removeRoutes}
             chosenRoute={chosenRoute}
             options={allRoutes}
             selectedRoute={selectedRouteHandler}
@@ -102,7 +125,6 @@ const Map = (props) => {
           cancelRoute={cancelRoute}
           centerMap={centerMap}
         ></Journey>
-      
       </div>
       <div className="google-map">
         <GoogleMap

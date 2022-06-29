@@ -1,5 +1,7 @@
 .route_options {
   list-style-type: none;
+  /* removes the space bullets took up to allow centering */
+  padding-left: 0;
 }
 
 .route {
@@ -13,16 +15,7 @@
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(143, 103, 103, 0.26);
   border-radius: 10px;
-  /* display: flex;
-  justify-content: center;
-  z-index: 30; */
-  /* display: inline-block;
-  position: absolute;
-  z-index: 20;
-  background: rgba(0, 0, 0, 0.8);
 
-  z-index: 10;
-  width: 100%; */
 }
 
 .back_ground {

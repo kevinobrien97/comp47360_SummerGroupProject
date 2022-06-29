@@ -1,7 +1,7 @@
 import { ButtonGroup, Button, Box, Grid } from "@mui/material";
 import { Autocomplete } from "@react-google-maps/api";
 import "./Journey.css";
-import { FaLocationArrow } from "react-icons/fa";
+import { FaLocationArrow, FaArrowsAltV } from "react-icons/fa";
 import { useRef } from "react";
 
 const searchLimits = {
@@ -28,9 +28,65 @@ const Journey = (props) => {
     props.cancelRoute();
   };
 
-  const panMap = () => {
-    props.centerMap();
-  };
+  // const panMap = () => {
+  //   props.centerMap();
+  // };
+
+  function centerMap() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(panLocation, locationError);
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+    //set zoom
+    // function will need to be updated to center to users location (or 'center' variable updated)
+  }
+
+  function panLocation(location) {
+    // eslint-disable-next-line no-undef
+    let latLng = new google.maps.LatLng(
+      location.coords.latitude,
+      location.coords.longitude
+    );
+    props.centerMap(latLng);
+    // getAddress(location.coords.latitude, location.coords.longitude);
+    getAddress(latLng);
+  }
+
+  function getAddress(latLng) {
+    // eslint-disable-next-line no-undef
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ latLng: latLng }, (result, status) => {
+      // eslint-disable-next-line no-undef
+      if (status !== google.maps.GeocoderStatus.OK) {
+        console.log(status);
+      }
+      // eslint-disable-next-line no-undef
+      if (status === google.maps.GeocoderStatus.OK && result) {
+        console.log(result);
+        originRef.current.value = result[0].formatted_address;
+      }
+    });
+  }
+  function locationError() {
+    if (navigator.permissions) {
+      navigator.permissions.query({ name: "geolocation" }).then((result) => {
+        if (result.state === "denied") {
+          alert(
+            "To use this feature you must enable location permissions in your settings."
+          );
+        }
+      });
+    } else {
+      alert("Unable to locate you. You can enter your location manually.");
+    }
+  }
+
+  function reverseJourney() {
+    let temp = originRef.current.value;
+    originRef.current.value = destinationRef.current.value
+    destinationRef.current.value = temp
+  }
 
   return (
     <div>
@@ -63,8 +119,15 @@ const Journey = (props) => {
           <Button type="submit" onClick={triggerCancelRoute}>
             Cancel
           </Button>
+          <Button
+            aria-label="center back"
+            size="medium"
+            onClick={reverseJourney}
+          >
+            {<FaArrowsAltV />}
+          </Button>
           {/* will need to change this to users location at some stage */}
-          <Button aria-label="center back" size="large" onClick={panMap}>
+          <Button aria-label="center back" size="large" onClick={centerMap}>
             {<FaLocationArrow />}
           </Button>
         </ButtonGroup>

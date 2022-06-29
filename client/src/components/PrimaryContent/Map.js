@@ -69,10 +69,9 @@ const Map = (props) => {
     setChosenRoute();
     setAllRoutes();
   }
-  function centerMap (latLng){
-  mapLoaded.panTo(latLng);
-}
-  
+  function centerMap(latLng) {
+    mapLoaded.panTo(latLng);
+  }
 
   function getRoute() {
     if (chosenRoute) {

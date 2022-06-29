@@ -2,7 +2,7 @@ import { ButtonGroup, Button, Box, Grid } from "@mui/material";
 import { Autocomplete } from "@react-google-maps/api";
 import "./Journey.css";
 import { FaLocationArrow, FaArrowsAltV } from "react-icons/fa";
-import { useRef } from "react";
+import { useImperativeHandle, useRef } from "react";
 
 const searchLimits = {
   componentRestrictions: { country: ["ie"] },
@@ -49,34 +49,26 @@ const Journey = (props) => {
       location.coords.longitude
     );
     props.centerMap(latLng);
-    getAddress(location.coords.latitude, location.coords.longitude);
+    // getAddress(location.coords.latitude, location.coords.longitude);
+    getAddress(latLng);
   }
 
-  function getAddress(lat, long) {
-    fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=${process.env.REACT_APP_MAPS_API_KEY}`
-    )
-      .then((res) => res.json())
-      // .then((address) => originRef.current=address.results[0].formatted_address.current);
-      .then((address) => originRef.current = address.results[0].formatted_address);
-      console.log(originRef)
-     
-    // console.log(address);
+  function getAddress(latLng) {
+    // eslint-disable-next-line no-undef
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({ latLng: latLng }, (result, status) => {
+      // eslint-disable-next-line no-undef
+      if (status !== google.maps.GeocoderStatus.OK) {
+        console.log(status);
+      }
+      // eslint-disable-next-line no-undef
+      if (status === google.maps.GeocoderStatus.OK && result) {
+        console.log(result);
+        originRef.current.value = result[0].formatted_address;
+        
+      }
+    });
   }
-  //   // eslint-disable-next-line no-undef
-  //   const geocoder = new google.maps.Geocoder();
-  //   geocoder.geocode({ latLng: latLng }, (result, status) => {
-  //     // eslint-disable-next-line no-undef
-  //     if (status !== google.maps.GeocoderStatus.OK) {
-  //       console.log(status)
-  //     }
-  //     // eslint-disable-next-line no-undef
-  //     if (status == google.maps.GeocoderStatus.OK) {
-  //       console.log(result);
-  //       // var address = results[0].formatted_address;
-  //     }
-  //   });
-  // }
   function locationError() {
     if (navigator.permissions) {
       navigator.permissions.query({ name: "geolocation" }).then((result) => {

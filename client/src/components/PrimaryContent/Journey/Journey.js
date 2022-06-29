@@ -2,7 +2,7 @@ import { ButtonGroup, Button, Box, Grid } from "@mui/material";
 import { Autocomplete } from "@react-google-maps/api";
 import "./Journey.css";
 import { FaLocationArrow, FaArrowsAltV } from "react-icons/fa";
-import { useImperativeHandle, useRef } from "react";
+import { useRef } from "react";
 
 const searchLimits = {
   componentRestrictions: { country: ["ie"] },
@@ -65,7 +65,6 @@ const Journey = (props) => {
       if (status === google.maps.GeocoderStatus.OK && result) {
         console.log(result);
         originRef.current.value = result[0].formatted_address;
-        
       }
     });
   }
@@ -81,6 +80,12 @@ const Journey = (props) => {
     } else {
       alert("Unable to locate you. You can enter your location manually.");
     }
+  }
+
+  function reverseJourney() {
+    let temp = originRef.current.value;
+    originRef.current.value = destinationRef.current.value
+    destinationRef.current.value = temp
   }
 
   return (
@@ -113,6 +118,13 @@ const Journey = (props) => {
           </Button>
           <Button type="submit" onClick={triggerCancelRoute}>
             Cancel
+          </Button>
+          <Button
+            aria-label="center back"
+            size="medium"
+            onClick={reverseJourney}
+          >
+            {<FaArrowsAltV />}
           </Button>
           {/* will need to change this to users location at some stage */}
           <Button aria-label="center back" size="large" onClick={centerMap}>

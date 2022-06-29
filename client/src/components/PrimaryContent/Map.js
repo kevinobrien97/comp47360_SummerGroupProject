@@ -69,34 +69,10 @@ const Map = (props) => {
     setChosenRoute();
     setAllRoutes();
   }
-
-  function centerMap() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(panLocation, locationError);
-    } else {
-      alert("Geolocation is not supported by this browser.");
-    }
-    //set zoom
-    // function will need to be updated to center to users location (or 'center' variable updated)
-  }
-
-  function panLocation(location) {
-    // eslint-disable-next-line no-undef
-    let latLng = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
-    mapLoaded.panTo(latLng);
-  }
-
-  function locationError() {
-    if(navigator.permissions) {
-      navigator.permissions.query({ name: 'geolocation' }).then(result => {
-        if (result.state === 'denied') {
-          alert('To use this feature you must enable location permissions in your settings.')
-        }
-      })
-    } else {
-      alert('Unable to locate you. You can enter your location manually.')
-    }
-  }
+  function centerMap (latLng){
+  mapLoaded.panTo(latLng);
+}
+  
 
   function getRoute() {
     if (chosenRoute) {

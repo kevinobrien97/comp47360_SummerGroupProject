@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import "./App.css";
 import Map from "./components/PrimaryContent/Map";
 // import RouteOptions from "./components/Map/RouteOptions";
-import Navbar from "./components/Navbar/Navbar";
+import Navbar from "./components/Navbar/navbar";
 import SideContainer from "./components/FeaturesCard/SideContainer";
 import LogIn from "./components/Navbar/LogIn";
 

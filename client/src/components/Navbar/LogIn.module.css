@@ -2,7 +2,7 @@
   position: fixed;
   display: flex;
   justify-content: center;
-  top: 40%;
+  top: 30%;
   width: 100%;
   z-index: 30;
   background: red;
@@ -13,6 +13,7 @@
 .log_in_modal_content {
   position: absolute;
   background-color: green;
+  width:50%;
 }
 
 .back_drop {

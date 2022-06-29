@@ -43,7 +43,25 @@ INSTALLED_APPS = [
     'dubbus',
     'corsheaders',
     'rest_framework',
+    # for token based authentication
+    'rest_framework.authtoken',
+    'djoser'
 ]
+
+#configure DRF
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+
+# configure Djoser
+DJOSER = {
+    "USER_ID_FIELD": "username"
+}
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',

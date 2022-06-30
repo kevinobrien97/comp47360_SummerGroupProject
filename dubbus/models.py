@@ -12,3 +12,13 @@ class Stops(models.Model):
         # keep false so Django doesnt change our tables (django specific tables should be True)
         managed = False
         db_table = 'stops'
+
+class Weather(models.Model):
+    temperature = models.IntegerField()
+    feels_like = models.IntegerField()
+    time_stamp = models.DateTimeField(primary_key=True, unique=True)
+
+    class Meta: 
+        managed = False
+        db_table = 'weather'
+

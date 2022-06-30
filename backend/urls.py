@@ -20,6 +20,7 @@ from dubbus import views
 
 router = routers.DefaultRouter()                   
 router.register(r'stops', views.StopsView, 'dubbus')  
+router.register(r'weather', views.WeatherView, 'dubbus')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

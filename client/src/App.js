@@ -10,6 +10,7 @@ import SignUp from "./components/Navbar/SignUp";
 
 function App() {
   const [logInWindow, setLogInWindow] = useState(false);
+  const [SignUpWindow, setSignUpWindow] = useState(false);
 
   const closeLogIn = () => {
     setLogInWindow(false);
@@ -18,8 +19,6 @@ function App() {
   const openLogIn = () => {
     setLogInWindow(true);
   };
-
-  const [SignUpWindow, setSignUpWindow] = useState(false);
 
   const closeSignUp = () => {
     setSignUpWindow(false);

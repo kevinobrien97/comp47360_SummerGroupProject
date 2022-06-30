@@ -1,4 +1,4 @@
-import "./navbar.css"
+import "./Navbar.css"
 import {AppBar, Toolbar, Typography, Stack, Button} from "@mui/material"
 // npm install @mui/material @emotion/react @emotion/styled
 const Navbar = (props) => {

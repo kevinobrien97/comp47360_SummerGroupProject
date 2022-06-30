@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Button } from "@mui/material";
-import classes from "./LogIn.module.css";
+import classes from "./LogInSignUp.module.css";
 
 // import { withRouter } from "react-router-dom";  // new import 
 // import { connect } from "react-redux";          // new import 

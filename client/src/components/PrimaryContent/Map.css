@@ -1,12 +1,14 @@
 .google-map {
-    min-width: 370px; 
-    max-width: 2000px;
-    height: 89vh;
+    /* min-width: 370px; 
+    max-width: 2000px; */
+    height: 100%;
+    width: 100%;
     position: absolute; 
-    left: 430px;
-    right: 10px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    /* left: 430px;
+    right: 10px; */
+    /* margin-top: 5px;
+    margin-bottom: 5px; */
+    z-index: -1;
 }
 
 .origin-select {
@@ -33,12 +35,12 @@
     overflow: hidden;
 }
 
-.journey-container.journey_back_drop {
+/* .journey-container.journey_back_drop {
     display: inline-block;
     position: fixed;
    
     z-index: 20;
     background: rgba(0, 0, 0, 0.8);
-  }
+  } */
   
     

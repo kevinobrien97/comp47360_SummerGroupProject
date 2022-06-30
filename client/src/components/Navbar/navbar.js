@@ -14,7 +14,8 @@ const Navbar = (props) => {
                    <Typography variant='h7' component='div'/>
                    <Stack direction="row"></Stack> 
                     <Button color="inherit" >Home</Button>
-                    <Button onClick={props.openLogIn} color="inherit">Signup/Login</Button>
+                    <Button onClick={props.openLogIn} color="inherit">Login</Button>
+                    <Button onClick={props.openSignUp} color="inherit" >Signup</Button>
                 </Toolbar>
             </AppBar>
         </div>

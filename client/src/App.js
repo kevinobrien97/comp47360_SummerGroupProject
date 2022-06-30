@@ -5,6 +5,8 @@ import Map from "./components/PrimaryContent/Map";
 import Navbar from "./components/Navbar/navbar";
 import SideContainer from "./components/FeaturesCard/SideContainer";
 import LogIn from "./components/Navbar/LogIn";
+import SignUp from "./components/Navbar/SignUp";
+
 
 function App() {
   const [logInWindow, setLogInWindow] = useState(false);
@@ -15,6 +17,16 @@ function App() {
 
   const openLogIn = () => {
     setLogInWindow(true);
+  };
+
+  const [SignUpWindow, setSignUpWindow] = useState(false);
+
+  const closeSignUp = () => {
+    setSignUpWindow(false);
+  };
+
+  const openSignUp = () => {
+    setSignUpWindow(true);
   };
 
   const [stops, setStops] = useState({});
@@ -58,10 +70,11 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar openLogIn={openLogIn}></Navbar>
+      <Navbar openLogIn={openLogIn} openSignUp={openSignUp}></Navbar>
       <SideContainer />
       <Map />
       {logInWindow && <LogIn closeLogIn={closeLogIn}></LogIn>}
+      {SignUpWindow && <SignUp closeSignUp={closeSignUp}></SignUp>}
     </div>
   );
 }

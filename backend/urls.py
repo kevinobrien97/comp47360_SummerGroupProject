@@ -14,10 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include, url
+from django.urls import path, include
+from django.conf.urls import url
+
 from rest_framework import routers
 from dubbus import views 
 
+# django.conf.urls.url() was deprecated in Django 3.0, and is removed in Django 4.0+.
+# The easiest fix is to replace url() with re_path(). 
 router = routers.DefaultRouter()                   
 router.register(r'stops', views.StopsView, 'dubbus')  
 

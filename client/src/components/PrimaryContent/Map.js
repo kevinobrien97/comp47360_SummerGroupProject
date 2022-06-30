@@ -8,6 +8,8 @@ import {
 import { useState } from "react";
 import Journey from "./Journey/Journey";
 import RouteOptions from "./Journey/RouteOptions";
+import SideContainer from "./FeaturesCard/SideContainer";
+import { Drawer } from "@mui/material";
 
 const center = { lat: 53.3473, lng: -6.2591 };
 // not setting libraries directly to prevent a bug
@@ -86,6 +88,20 @@ const Map = (props) => {
   return (
     <div>
       {/* <div className={`journey-container ${showRoutes ? 'journey_back_drop' : ''}`}> */}
+      {props.drawer && <div>
+           {/* <Drawer
+        ModalProps={{
+          hideBackdrop: true,
+        }}
+        open={props.drawer}
+        PaperProps={{
+          sx: {
+            fontColor: "black",
+          },
+        }}
+      > */}
+        <SideContainer></SideContainer>
+      
       <div className="journey-container">
         {allRoutes && showRoutes && (
           <RouteOptions
@@ -100,7 +116,10 @@ const Map = (props) => {
           cancelRoute={cancelRoute}
           centerMap={centerMap}
         ></Journey>
+      
       </div>
+      <SideContainer></SideContainer>
+      {/* </Drawer> */}</div>}
       <div className="google-map">
         <GoogleMap
           // to do -- center map on users current location

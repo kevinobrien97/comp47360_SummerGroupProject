@@ -1,19 +1,24 @@
 import React, { useState, useCallback, useEffect } from "react";
-import "./App.css";
+// import "./App.css";
 import Map from "./components/PrimaryContent/Map";
 import Navbar from "./components/Navbar/Navbar";
-import SideContainer from "./components/FeaturesCard/SideContainer";
+
 import LogIn from "./components/Navbar/LogIn";
+
 
 function App() {
   const [logInWindow, setLogInWindow] = useState(false);
+  const [drawer, setDrawer] = useState(true);
 
-  const closeLogIn = () => {
-    setLogInWindow(false);
+  const toggleLogIn = () => {
+    // set the opposite of what it is
+    setLogInWindow(!logInWindow);
+    console.log("Hello");
   };
 
-  const openLogIn = () => {
-    setLogInWindow(true);
+  const toggleDrawer = () => {
+    // set the opposite of what it is
+    setDrawer(!drawer);
   };
 
   const [stops, setStops] = useState({});
@@ -54,7 +59,7 @@ function App() {
   if (isLoading) {
     content = <p>Loading data...</p>;
   }
-// for testing first
+  // for testing first
   // const [weather, setWeather] = useState({});
   // const fetchWeatherData = useCallback(async () => {
   //   setError(null);
@@ -89,13 +94,14 @@ function App() {
   //   content = <p>Loading data...</p>;
   // }
 
-
   return (
-    <div className="App">
-      <Navbar openLogIn={openLogIn}></Navbar>
-      <SideContainer />
-      <Map />
-      {logInWindow && <LogIn closeLogIn={closeLogIn}></LogIn>}
+    <div>
+      <Navbar openLogIn={toggleLogIn} toggleDrawer={toggleDrawer}></Navbar>
+
+ 
+
+      <Map drawer={drawer}/>
+      {logInWindow && <LogIn closeLogIn={toggleLogIn}></LogIn>}
     </div>
   );
 }

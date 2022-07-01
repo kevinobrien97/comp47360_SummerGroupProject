@@ -4,10 +4,12 @@ import MiniNav from "./MiniNav.js";
 
 const SideContainer = (props) => {
   return (
-    <div className="side-container">
-      <MiniNav />
-      <div className="display"></div>
-    </div>
+    
+      <div className="side-container">
+        <MiniNav />
+        <div className="display"></div>
+      </div>
+
   );
 };
 export default SideContainer;

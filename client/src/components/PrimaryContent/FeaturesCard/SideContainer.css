@@ -7,6 +7,6 @@
     background-color: aqua;
     position: absolute;
     margin-bottom: 5px;
-
+    border-radius: 10px;
 }
 /* min and max width of mobile device */

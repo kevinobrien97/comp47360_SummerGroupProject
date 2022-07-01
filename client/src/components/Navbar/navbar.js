@@ -1,7 +1,7 @@
 import "./Navbar.css";
 import { AppBar, Toolbar, Typography, Stack, Button } from "@mui/material";
 import { FaEllipsisV } from "react-icons/fa";
-
+import {Link } from "react-router-dom"
 // npm install @mui/material @emotion/react @emotion/styled
 const Navbar = (props) => {
   return (
@@ -19,7 +19,7 @@ const Navbar = (props) => {
           <Button aria-label="center back" size="large" onClick={props.toggleDrawer}>
             {<FaEllipsisV />}
           </Button>
-          <Button color="inherit">Home</Button>
+          <Link to={'/'}><Button color="inherit">Home</Button></Link>
           <Button onClick={props.openLogIn} color="inherit">
             Signup/Login
           </Button>

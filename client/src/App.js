@@ -2,9 +2,8 @@ import React, { useState, useCallback, useEffect } from "react";
 // import "./App.css";
 import Map from "./components/PrimaryContent/Map";
 import Navbar from "./components/Navbar/Navbar";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LogIn from "./components/Navbar/LogIn";
-
 
 function App() {
   const [logInWindow, setLogInWindow] = useState(false);
@@ -95,14 +94,13 @@ function App() {
   // }
 
   return (
-    <div>
+    <BrowserRouter>
       <Navbar openLogIn={toggleLogIn} toggleDrawer={toggleDrawer}></Navbar>
-
- 
-
-      <Map drawer={drawer}/>
-      {logInWindow && <LogIn closeLogIn={toggleLogIn}></LogIn>}
-    </div>
+      <Routes>
+        <Route path="/" element={<Map drawer={drawer} />}/>
+      </Routes>
+      {/* {logInWindow && <LogIn closeLogIn={toggleLogIn}></LogIn>} */}
+    </BrowserRouter>
   );
 }
 

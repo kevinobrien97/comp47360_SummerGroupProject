@@ -1,0 +1,23 @@
+.stop_options {
+    list-style-type: none;
+    /* removes the space bullets took up to allow centering */
+    padding-left: 0;
+    overflow:hidden;
+    overflow-y: scroll;
+    height: 25rem;   
+  }
+
+  .stop_option {
+    list-style-type: none;
+    /* removes the space bullets took up to allow centering */
+    padding-left: 0;
+   
+  }
+
+.stop {
+    display: flex;
+     justify-content: center;
+     align-items: center; 
+     flex-direction: column; 
+     
+  }

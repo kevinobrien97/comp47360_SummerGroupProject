@@ -8,5 +8,13 @@
     position: absolute;
     margin-bottom: 5px;
     border-radius: 10px;
+    white-space: normal;
+    overflow:hidden;
+   
+}
+
+.display {
+  
+    
 }
 /* min and max width of mobile device */

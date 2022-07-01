@@ -99,7 +99,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Map drawer={drawer} />}/>
       </Routes>
-      {/* {logInWindow && <LogIn closeLogIn={toggleLogIn}></LogIn>} */}
+      {logInWindow && <LogIn closeLogIn={toggleLogIn}></LogIn>}
     </BrowserRouter>
   );
 }

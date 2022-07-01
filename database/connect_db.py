@@ -21,7 +21,6 @@ def insert_weather(value: dict):
     except Exception as error:
         print(error)
 
-
 #testData = "INSERT INTO test_table (test_col) VALUES (123)"
 #connection.execute(testData)
 #print('Success')

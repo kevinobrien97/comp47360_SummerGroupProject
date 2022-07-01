@@ -59,6 +59,11 @@ function App() {
     content = <p>Loading data...</p>;
   }
 
+  const [isDesktop, setDesktop] = useState(window.innerWidth > 650);
+  const updateMedia = () => {
+    setDesktop(window.innerWidth > 415);
+  };
+
   useEffect(() => {
     window.addEventListener("resize", updateMedia);
     return () => window.removeEventListener("resize", updateMedia);

@@ -4,7 +4,46 @@
     margin-left: 11.5px;
 }
 .journey-headings {
-    margin-top: 18px;
+    margin-top:5px;
     margin-left: 50px;
 }
 
+.origin-select {
+    margin-top: -60px;
+}
+#origin {
+    margin-top: -10px;
+    margin-left: 9rem;
+    width: 14rem;
+    padding: 5px;
+    box-shadow: lightgrey;
+    position: absolute;
+}
+ .destination-select {
+    margin-top: -30px;
+    position: absolute;
+}
+ #destination {
+    margin-left: 9rem;
+    width: 14rem; 
+    padding: 5px;
+
+ }
+
+.MuiButtonGroup-root {
+    margin-top: 30px;
+    margin-left: .8em;
+}
+
+.journey-container {
+    margin-left: .5rem;
+    margin-top: .5rem;
+    margin-right: .5rem;
+    height: 11rem; 
+    width: 25rem;
+    background-color: aqua;
+    position: absolute;
+    border-radius: 10px;
+    white-space: normal;
+    overflow: hidden;
+}

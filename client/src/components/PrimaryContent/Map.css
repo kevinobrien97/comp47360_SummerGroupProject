@@ -11,30 +11,6 @@
     z-index: -1;
 }
 
-.origin-select {
-    margin-top: -60px;
-}
- .destination-select {
-    margin-top: 10px; 
-} 
-
-.MuiButtonGroup-root {
-    margin-top: 30px;
-    margin-left: -150px;
-}
-
-.journey-container {
-    margin-left: .5rem;
-    margin-top: .5rem;
-    margin-right: .5rem;
-    height: 11rem; 
-    width: 25rem;
-    background-color: aqua;
-    position: absolute;
-    border-radius: 10px;
-    white-space: normal;
-    overflow: hidden;
-}
 
 /* .journey-container.journey_back_drop {
     display: inline-block;

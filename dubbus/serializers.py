@@ -9,4 +9,4 @@ class StopsSerializer(serializers.ModelSerializer):
 class WeatherSerializer(serializers.ModelSerializer):
     class Meta: 
         model = Weather 
-        fields = ('temperature', 'feels_like', 'timestamp')
+        fields = ('temperature', 'feels_like', 'time_stamp')

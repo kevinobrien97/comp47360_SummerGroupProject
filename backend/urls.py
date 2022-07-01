@@ -25,4 +25,5 @@ router.register(r'weather', views.WeatherView, 'dubbus')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('weather/'), include(router.urls)
 ]

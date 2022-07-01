@@ -58,48 +58,30 @@ function App() {
   if (isLoading) {
     content = <p>Loading data...</p>;
   }
-  // for testing first
-  // const [weather, setWeather] = useState({});
-  // const fetchWeatherData = useCallback(async () => {
-  //   setError(null);
-  //   setIsLoading(true);
-  //   try {
-  //     const response = await fetch("http://127.0.0.1:8000/api/weather/");
-  //     if (!response.ok) {
-  //       throw new Error("Something went wrong loading weather");
-  //     }
-  //     const data = await response.json();
-  //     console.log(data[0]);
-  //     setWeather(data[0]);
-  //   } catch (error) {
-  //     setError(error.message);
-  //   }
-  //   setIsLoading(false);
-  // }, []);
 
-  // useEffect(() => {
-  //   fetchWeatherData();
-  // }, [fetchWeatherData]);
-
-  // // handling possible output states
-  // let content = <p>Sending request...</p>;
-  // if (Object.keys(weather).length > 0) {
-  //   content = <p>{weather["temperature"]}</p>;
-  // }
-  // if (error) {
-  //   content = <p>{error}</p>;
-  // }
-  // if (isLoading) {
-  //   content = <p>Loading data...</p>;
-  // }
+  useEffect(() => {
+    window.addEventListener("resize", updateMedia);
+    return () => window.removeEventListener("resize", updateMedia);
+  });
 
   return (
     <BrowserRouter>
-      <Navbar openLogIn={toggleLogIn} toggleDrawer={toggleDrawer}></Navbar>
-      <Routes>
-        <Route path="/" element={<Map drawer={drawer} />}/>
-      </Routes>
-      {logInWindow && <LogIn closeLogIn={toggleLogIn}></LogIn>}
+      {isDesktop ? (
+      <div> 
+        <Navbar openLogIn={toggleLogIn} toggleDrawer={toggleDrawer}></Navbar>
+        <Routes>
+          <Route path="/" element={<Map drawer={drawer} />}/>
+        </Routes>
+        {logInWindow && <LogIn closeLogIn={toggleLogIn}></LogIn>}
+      </div>
+      ) : (
+      <div>
+        <Navbar openLogIn={toggleLogIn} toggleDrawer={toggleDrawer}></Navbar>
+        {logInWindow && <LogIn closeLogIn={toggleLogIn}></LogIn>}
+
+      </div>
+      )}
+
     </BrowserRouter>
   );
 }

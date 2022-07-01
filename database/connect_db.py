@@ -15,6 +15,11 @@ def create_weather_table():
         print(error)
 
 def insert_weather(value: dict):
+    empty_table="truncate table weather"
+    try: 
+        print(connection.execute(empty_table).fetchall())
+    except Exception as error: 
+        print(error)
     sql = f"INSERT INTO weather values('{value['temperature']}','{value['feels_like']}','{value['time_stamp']}')"
     try:
         print(connection.execute(sql).fetchall())

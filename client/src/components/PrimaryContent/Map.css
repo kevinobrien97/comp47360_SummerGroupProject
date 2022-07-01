@@ -24,10 +24,11 @@
 }
 
 .journey-container {
-    margin-left: 5px;
-    margin-top: 5px;
-    height: 170px; 
-    width: 414px;
+    margin-left: .5rem;
+    margin-top: .5rem;
+    margin-right: .5rem;
+    height: 11rem; 
+    width: 25rem;
     background-color: aqua;
     position: absolute;
     border-radius: 10px;

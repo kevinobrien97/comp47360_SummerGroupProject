@@ -42,13 +42,20 @@ const RouteOptions = (props) => {
               >
 
                 {route.legs[0].steps.map((step,idx) => (
-              
-                  (step.travel_mode === "WALKING" ? 
+
+                  (idx === 0 ?
+                // if its the first then dont want an arrow (i.e. '>')
+                    (step.travel_mode === "WALKING" ? 
                   <span key={idx} style={{ pointerEvents: "none" }}><FaWalking /></span>:
                   <span key={idx} style={{ pointerEvents: "none" }}><FaBus /> {step.transit.line.short_name}</span>)
+                    :
+              
+                  (step.travel_mode === "WALKING" ? 
+                  <span key={idx} style={{ pointerEvents: "none" }}>{'>'}<FaWalking /> </span>:
+                  <span key={idx} style={{ pointerEvents: "none" }}>{'>'}<FaBus /> {step.transit.line.short_name}</span>))
 
                 ))}
-                Time: {route.legs[0].arrival_time.text}
+                  ETA: {route.legs[0].arrival_time.text}
        
               </Button>
             </li>

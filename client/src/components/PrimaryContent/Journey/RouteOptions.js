@@ -1,5 +1,7 @@
 import classes from "./RouteOptions.module.css";
 import { Button } from "@mui/material";
+import { FaBus, FaWalking } from "react-icons/fa";
+
 
 const RouteOptions = (props) => {
   //   const [chosenRoute, setChosenRoute] = useState();
@@ -27,14 +29,20 @@ const RouteOptions = (props) => {
       <div className={classes.back_ground} onClick={hideRoutes}></div>
       <div className={classes.route}>
         <ul className={classes.route_options}>
-          {props.options.map((option) => (
-            <li key={option.id}>
+          {props.options.map((route, index) => (
+            <li key={index}>
               <Button
-                style={bgColor(option.id)}
-                value={option.id}
+                style={bgColor(index)}
+                value={index}
                 onClick={pickRoute}
               >
-                Arrival Time: {option.time}
+                {route.legs[0].steps.map((step) => (
+                  step.travel_mode === "WALKING" ? 
+                  <FaWalking /> :
+                  <FaBus /> 
+
+                ))}
+                {/* Arrival Time: {route.legs[0].arrival_time.text} */}
               </Button>
             </li>
           ))}

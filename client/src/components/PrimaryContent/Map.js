@@ -55,13 +55,13 @@ const Map = (props) => {
   const getRoutesHandler = (r) => {
     console.log("app", r);
 
-    const transformedRoutes = r.map((route, index) => {
-      return {
-        id: index,
-        time: route.legs[0].arrival_time.text,
-      };
-    });
-    setAllRoutes(transformedRoutes);
+    // const transformedRoutes = r.map((route, index) => {
+    //   return {
+    //     id: index,
+    //     time: route.legs[0].arrival_time.text,
+    //   };
+    // });
+    setAllRoutes(r);
     setShowRoutes(true);
   };
 

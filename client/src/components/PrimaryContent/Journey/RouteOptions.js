@@ -1,3 +1,4 @@
+import React from "react";
 import classes from "./RouteOptions.module.css";
 import { Button } from "@mui/material";
 import { FaBus, FaWalking } from "react-icons/fa";
@@ -9,6 +10,7 @@ const RouteOptions = (props) => {
   console.log("props", props.options);
 
   const pickRoute = (event) => {
+    console.log('triggered', event.target)
     props.selectedRoute(event.target.value);
   };
 
@@ -30,21 +32,27 @@ const RouteOptions = (props) => {
       <div className={classes.route}>
         <ul className={classes.route_options}>
           {props.options.map((route, index) => (
-            <li key={index}>
+            <React.Fragment key={index}>
+            <li>
               <Button
                 style={bgColor(index)}
                 value={index}
                 onClick={pickRoute}
+               
               >
-                {route.legs[0].steps.map((step) => (
-                  step.travel_mode === "WALKING" ? 
-                  <FaWalking /> :
-                  <FaBus /> 
+
+                {route.legs[0].steps.map((step,idx) => (
+              
+                  (step.travel_mode === "WALKING" ? 
+                  <span key={idx} style={{ pointerEvents: "none" }}><FaWalking /></span>:
+                  <span key={idx} style={{ pointerEvents: "none" }}><FaBus /> {step.transit.line.short_name}</span>)
 
                 ))}
-                {/* Arrival Time: {route.legs[0].arrival_time.text} */}
+                Time: {route.legs[0].arrival_time.text}
+       
               </Button>
             </li>
+            </React.Fragment>
           ))}
         </ul>
       </div>

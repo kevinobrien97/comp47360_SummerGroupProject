@@ -27,7 +27,7 @@ const RouteOptions = (props) => {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div style={{ display: "flex", justifyContent: "center"}}>
       <div className={classes.back_ground} onClick={hideRoutes}></div>
       <div className={classes.route}>
         <ul className={classes.route_options}>

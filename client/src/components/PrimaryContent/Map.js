@@ -38,7 +38,7 @@ const Map = (props) => {
   // below loads google maps script
   const { isLoaded } = useJsApiLoader({
     // on server must create .env.local file in src to store API key
-    googleMapsApiKey: "AIzaSyDkGwr25DksIcoJK-td7kd-6Yk0vvJ4DAI",
+    googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
     libraries,
   });
 

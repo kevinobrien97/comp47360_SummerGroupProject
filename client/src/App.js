@@ -5,7 +5,6 @@ import Navbar from "./components/Navbar/Navbar";
 import SideContainer from "./components/PrimaryContent/FeaturesCard/SideContainer.js"
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LogIn from "./components/Navbar/LogIn";
-// import MobileMap from "./components/PrimaryContent/MobileMap.js";
 
 function App() {
   const [logInWindow, setLogInWindow] = useState(false);

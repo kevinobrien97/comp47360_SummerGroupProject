@@ -132,8 +132,8 @@ const Journey = (props) => {
           <Button aria-label="center back" size="large" onClick={centerMap}>
             {<FaLocationArrow />}
           </Button>
-          <Button aria-label="center back" size="large" >
-          {<FaEllipsisV />}
+          <Button aria-label="center back" size="large" onClick={props.toggleDrawer}>
+            {<FaEllipsisV />}
           </Button>
         </ButtonGroup>
         </div>

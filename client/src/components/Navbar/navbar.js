@@ -62,7 +62,7 @@ return (
               <Toolbar>
                 <div className="weather-container">
                     <div className="display-weather">
-                      <p> {weatherContent} </p>
+                      {weatherContent}
                     </div>
                 </div>
                   <NavDrawer></NavDrawer> 
@@ -81,7 +81,7 @@ return (
                 </Grid>
                 <div className="weather-container">
                   <div className="display-weather">
-                    <p> {weatherContent} </p>
+                    {weatherContent}
                   </div>
                 </div>
               </Toolbar>

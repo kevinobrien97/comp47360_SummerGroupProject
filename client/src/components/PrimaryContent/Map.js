@@ -22,9 +22,19 @@ const Map = (props) => {
   const [directionsOutput, setDirectionsOutput] = useState(null);
   const [showRoutes, setShowRoutes] = useState(false);
   const [distance, setDistance] = useState("");
+  const [drawer, setDrawer] = useState(true);
+
+
   const selectedRouteHandler = (selection) => {
     setChosenRoute(selection);
   };
+
+  const toggleDrawer = () => {
+    // set the opposite of what it is
+    console.log('triggered')
+    setDrawer(!drawer);
+  };
+
   // below loads google maps script
   const { isLoaded } = useJsApiLoader({
     // on server must create .env.local file in src to store API key
@@ -88,19 +98,9 @@ const Map = (props) => {
   return (
     <div>
       {/* <div className={`journey-container ${showRoutes ? 'journey_back_drop' : ''}`}> */}
-      {props.drawer && <div>
-           {/* <Drawer
-        ModalProps={{
-          hideBackdrop: true,
-        }}
-        open={props.drawer}
-        PaperProps={{
-          sx: {
-            fontColor: "black",
-          },
-        }}
-      > */}
-        <SideContainer></SideContainer>
+      
+      
+        
       
       <div className="map">
         {allRoutes && showRoutes && (
@@ -115,11 +115,15 @@ const Map = (props) => {
           routeCalculator={routeCalculator}
           cancelRoute={cancelRoute}
           centerMap={centerMap}
+          toggleDrawer={toggleDrawer}
         ></Journey>
       
       </div>
+      {drawer && <div>
+  
       <SideContainer></SideContainer>
-      {/* </Drawer> */}</div>}
+      </div>}
+      {/* </Drawer> */}
       <div className="google-map">
         <GoogleMap
           // to do -- center map on users current location

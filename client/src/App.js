@@ -5,11 +5,11 @@ import Navbar from "./components/Navbar/Navbar";
 import SideContainer from "./components/PrimaryContent/FeaturesCard/SideContainer.js"
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LogIn from "./components/Navbar/LogIn";
-import MobileMap from "./components/PrimaryContent/MobileMap.js";
+// import MobileMap from "./components/PrimaryContent/MobileMap.js";
 
 function App() {
   const [logInWindow, setLogInWindow] = useState(false);
-  const [drawer, setDrawer] = useState(true);
+
 
   const toggleLogIn = () => {
     // set the opposite of what it is
@@ -17,10 +17,7 @@ function App() {
     console.log("Hello");
   };
 
-  const toggleDrawer = () => {
-    // set the opposite of what it is
-    setDrawer(!drawer);
-  };
+
 
   const [stops, setStops] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -79,7 +76,7 @@ function App() {
       <div> 
         <Navbar openLogIn={toggleLogIn}></Navbar>
         <Routes>
-          <Route path="/" element={<Map drawer={drawer} />}/>
+          <Route path="/" element={<Map/>}/>
         </Routes>
         {logInWindow && <LogIn closeLogIn={toggleLogIn}></LogIn>}
       </div>
@@ -88,7 +85,7 @@ function App() {
         <Navbar openLogIn={toggleLogIn}></Navbar>
         {logInWindow && <LogIn closeLogIn={toggleLogIn}></LogIn>}
         <Routes>
-          <Route path="/" element={<Map drawer={drawer} toggleDrawer={toggleDrawer} />}/>
+          <Route path="/" element={<Map/>}/>
         </Routes>
 
         <SideContainer/>

@@ -2,17 +2,21 @@
   position: fixed;
   display: flex;
   justify-content: center;
-  top: 40%;
+  top: 15%;
   width: 100%;
-  z-index: 30;
   background: red;
-  box-shadow: 0 2px 8px rgba(143, 103, 103, 0.26);
-  border-radius: 10px;
+  z-index: 3
+  /* box-shadow: 0 2px 8px rgba(255, 255, 255, 0.26);
+  border-radius: 10px; */
 }
 
 .log_in_modal_content {
   position: absolute;
   background-color: green;
+  height: 70vh;
+  width: 80%;
+  border-radius: 15px;
+  box-shadow:rgba(0, 0, 0, 0.26)
 }
 
 .back_drop {
@@ -21,6 +25,6 @@
   position: absolute;
   height: 100%;
   width: 100%;
-  z-index: 20;
+  z-index: 2;
   background: rgba(0, 0, 0, 0.8);
 }

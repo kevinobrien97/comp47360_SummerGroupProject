@@ -28,7 +28,7 @@ const Map = (props) => {
   // below loads google maps script
   const { isLoaded } = useJsApiLoader({
     // on server must create .env.local file in src to store API key
-    googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
+    googleMapsApiKey: "AIzaSyDkGwr25DksIcoJK-td7kd-6Yk0vvJ4DAI",
     libraries,
   });
 
@@ -102,7 +102,7 @@ const Map = (props) => {
       > */}
         <SideContainer></SideContainer>
       
-      <div className="journey-container">
+      <div className="map">
         {allRoutes && showRoutes && (
           <RouteOptions
             removeRoutes={removeRoutes}

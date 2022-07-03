@@ -1,56 +1,15 @@
-/* .NavbarItems { 
-    background: darkgray;
-    height: 80px;
+.weather-container {
+    margin-left: 80%;
+    background-color: black;
+    position: absolute;
+    border-radius: 30px;
+    width: 3rem;
     display: flex;
-    justify-content: center;
-    align-items: center; 
-    font-size: 1.2rem; 
-}
 
-.logo {
-    color: rgb(15, 15, 15); 
-    justify-self: start; 
-    margin-left: 20px; 
-    cursor: pointer;
-}
-
-.fa-react { 
-    margin-left: 0.5rem; 
-    font-size: 1.6rem;
-}
-
-.navMenu { 
-    display: grid; 
-    grid-template-columns: repeat(5, auto); 
-    grid-gap: 10px; 
-    list-style: none; 
-    text-align: center; 
-    width: 70vw; 
-    justify-content: end; 
-    margin-right: 2rem;
 
 }
+.display-weather {
+    font-weight: bold;
+    margin-left: .3rem;
 
-.navLinks { 
-    color: #ffff;
-    text-decoration: none; 
-    padding: 0.5rem 1rem; 
 }
-
-.navLinks:hover {
-    background-color: #6D7F;
-    border-radius: 4px; 
-    transition: all 0.2s ease-out;
-}
-
-.fa-bars { 
-    color: rgb(3, 3, 3); 
-}
-
-.mobileNav{ 
-    display: none
-}
-
-.menuIcon { 
-    display: none;
-} */

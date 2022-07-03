@@ -1,8 +1,10 @@
 import { ButtonGroup, Button, Box, Grid } from "@mui/material";
 import { Autocomplete } from "@react-google-maps/api";
 import "./Journey.css";
+import { FaEllipsisV } from "react-icons/fa";
 import { FaLocationArrow, FaArrowsAltV } from "react-icons/fa";
 import { useRef } from "react";
+// import SideContainer from "./PrimaryContent/FeaturesCard/SideContainer.js"
 
 const searchLimits = {
   componentRestrictions: { country: ["ie"] },
@@ -89,7 +91,7 @@ const Journey = (props) => {
   }
 
   return (
-    <div>
+    <div className="journey-container">
       <div className="journey-headings">
         <h3>From: </h3>
         <h3>To: </h3>
@@ -111,7 +113,7 @@ const Journey = (props) => {
             </Autocomplete>
           </div>
         </Grid>
-
+        <div className="route-planner">
         <ButtonGroup>
           <Button type="submit" onClick={triggerRouteCalculator}>
             Calculate Route
@@ -130,7 +132,11 @@ const Journey = (props) => {
           <Button aria-label="center back" size="large" onClick={centerMap}>
             {<FaLocationArrow />}
           </Button>
+          <Button aria-label="center back" size="large" >
+          {<FaEllipsisV />}
+          </Button>
         </ButtonGroup>
+        </div>
       </Box>
     </div>
   );

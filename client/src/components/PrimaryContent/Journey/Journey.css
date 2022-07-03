@@ -1,49 +1,69 @@
 .journey-planner {
     margin-top: .5rem;
-    z-index:100;
+    z-index:2;
     margin-left: 11.5px;
+    display: flex;
 }
 .journey-headings {
-    margin-top:5px;
-    margin-left: 50px;
+    margin-top:0;
+    margin-left: 10px;
+    font-family: Helvetica;;
 }
 
-.origin-select {
-    margin-top: -60px;
-}
 #origin {
-    margin-top: -10px;
-    margin-left: 9rem;
+    margin-top: 1.5rem;
+    margin-left: 1.3rem;
     width: 14rem;
     padding: 5px;
     box-shadow: lightgrey;
+    border-radius: 5px;
+    border: 1px;
+    background-color: black;
+    color: white;
     position: absolute;
+    z-index: 2;
 }
  .destination-select {
-    margin-top: -30px;
+    margin-top: 4rem;
     position: absolute;
+    z-index:2;
 }
  #destination {
-    margin-left: 9rem;
+    background-color: black;
+    border-radius: 5px;
+    border: 1px;
+    margin-left: 1.3rem;
     width: 14rem; 
     padding: 5px;
+    z-index: 2;
 
  }
 
+/* .route-planner {
+     margin-top: 7rem;
+     z-index: 2;
+     position: center;
+ } */
 .MuiButtonGroup-root {
-    margin-top: 30px;
-    margin-left: .8em;
-}
+    margin-top: 7rem;
+    height: 2.7rem;
+    position:left;
+    margin-left: -3rem;
+    max-width: 105%;  
+} 
 
 .journey-container {
     margin-left: .5rem;
     margin-top: .5rem;
+    height: 11rem;
+    max-width: 25rem;
     margin-right: .5rem;
-    height: 11rem; 
-    width: 25rem;
-    background-color: aqua;
+    height: 11rem;
+    background-color: rgb(230, 225, 225);
     position: absolute;
     border-radius: 10px;
     white-space: normal;
     overflow: hidden;
+    z-index: 2;
+    display: flex;
 }

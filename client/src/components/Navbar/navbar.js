@@ -1,7 +1,8 @@
 import "./Navbar.css";
-import { AppBar, Toolbar, Typography, Stack, Button } from "@mui/material";
+import { AppBar, Toolbar, Typography, Stack, Button, Grid, useMediaQuery, useTheme} from "@mui/material";
+import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
+import NavDrawer from "./NavDrawer"
 import React, { useState, useCallback, useEffect } from "react";
-import { FaEllipsisV } from "react-icons/fa";
 import {Link } from "react-router-dom"
 // npm install @mui/material @emotion/react @emotion/styled
 const Navbar = (props) => {
@@ -16,7 +17,7 @@ const Navbar = (props) => {
   try {
     const response = await fetch("http://127.0.0.1:8000/api/weather/");
     if (!response.ok) {
-    throw new Error("Something went wrong loading weather");
+    throw new Error("404");
     }
     const data = await response.json();
     console.log(data[0]);
@@ -43,6 +44,10 @@ if (isLoading) {
 weatherContent = <p>...</p>;
 }
 
+const theme = useTheme();
+const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
+console.log(isMatch);
+const [value, setValue] = useState(); 
 return (
     <div className="nav-items">
       <AppBar
@@ -52,19 +57,39 @@ return (
           backgroundColor: "darkgrey",
         }}>
       
-        <Toolbar>
-          <Typography variant="h6"  />
-            <Stack direction="row" ></Stack>
-            <Button aria-label="center back" size="large" onClick={props.toggleDrawer}>
-              {<FaEllipsisV />}
-            </Button>
-            <Link to={'/'}><Button color="inherit">Home</Button></Link>            <Button onClick={props.openLogIn} color="inherit">SignUp/Login</Button>
-            <div className="weather-container">
-              <div className="display-weather">
-                <p> {weatherContent} </p>
-              </div>
+          {isMatch ? (
+            <div className="mobile-view">
+              <Toolbar>
+                <div className="weather-container">
+                    <div className="display-weather">
+                      <p> {weatherContent} </p>
+                    </div>
+                </div>
+                  <NavDrawer></NavDrawer> 
+              </Toolbar>               
             </div>
-          </Toolbar>        
+          ) : (
+            <div className="desktop-view">
+              <Toolbar>
+                <Grid container spacing="12" sx={{placeItems: "left"}}>
+                  <Typography variant="h6"  />
+                    <Grid item xs={9}>
+                      <Stack direction="row" ></Stack>
+                      <Link to={'/'}><Button color="inherit">Home</Button></Link>            
+                      <Button onClick={props.openLogIn} color="inherit">SignUp/Login</Button>
+                    </Grid>
+                </Grid>
+                <div className="weather-container">
+                  <div className="display-weather">
+                    <p> {weatherContent} </p>
+                  </div>
+                </div>
+              </Toolbar>
+            </div>
+          
+          )
+          }
+               
       </AppBar>
     </div>
   );

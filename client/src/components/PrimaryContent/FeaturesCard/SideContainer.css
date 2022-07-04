@@ -1,14 +1,15 @@
 .side-container {
     margin-left: .5rem;
     margin-top: 12rem;
+    margin-right: .5rem;
     max-width: 25rem; 
-    background-color: aqua;
+    background-color: whitesmoke;
     position: absolute;
-    margin-bottom: .5rem;
+    height: 70%;
     border-radius: 10px;
     white-space: normal;
     overflow:hidden;
-    height: 79%;
+    box-shadow: 2px 12px 24px 0px rgba(0,0,0,0.43);
     z-index: 2;
    
 }

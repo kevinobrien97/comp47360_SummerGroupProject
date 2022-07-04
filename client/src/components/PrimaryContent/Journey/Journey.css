@@ -32,6 +32,7 @@
     background-color: black;
     border-radius: 5px;
     border: 1px;
+    color: white;
     margin-left: 1.3rem;
     width: 14rem; 
     padding: 5px;
@@ -48,9 +49,17 @@
     margin-top: 7rem;
     height: 2.7rem;
     position:left;
-    margin-left: -3rem;
-    max-width: 105%;  
+    margin-right: 3rem;
+    margin-left: -4rem;
+    max-width: 110%;  
 } 
+
+.reverse-button {
+    margin-left: 14rem;
+    margin-top: 1.8rem;
+    position: absolute;
+
+}
 
 .journey-container {
     margin-left: .5rem;
@@ -59,11 +68,11 @@
     max-width: 25rem;
     margin-right: .5rem;
     height: 11rem;
-    background-color: rgb(230, 225, 225);
+    background-color: whitesmoke;
     position: absolute;
     border-radius: 10px;
     white-space: normal;
     overflow: hidden;
     z-index: 2;
     display: flex;
-}
+    box-shadow: 2px 12px 24px 0px rgba(0,0,0,0.43);}

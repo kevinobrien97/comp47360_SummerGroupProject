@@ -5,18 +5,12 @@
     justify-content: center;
     align-items: center; 
     font-size: 1rem; 
-    margin-bottom: 1rem;
     
 }
 .mininav-menu { 
     display: grid; 
-    grid-template-columns: repeat(5, auto); 
-    grid-gap: 1.5rem; 
-    list-style: none; 
     text-align: center; 
-    width: 70vw; 
     justify-content: end; 
-    margin-right: 2rem;
    
 
 

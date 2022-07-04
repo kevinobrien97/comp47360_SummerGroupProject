@@ -5,12 +5,9 @@ import Route from "./Route";
 import Stop from "./Stop";
 import Favourites from "./Favourites";
 import { useState } from "react";
-import {Drawer, IconButton} from '@mui/material';
-import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 
 
 const SideContainer = (props) => {
-  const [toggleDrawer, setDrawer] = useState(false)
 
   const [sidebarOption, setSidebarOption] = useState({
     nearest: true,
@@ -37,7 +34,6 @@ const SideContainer = (props) => {
   ]
 
   return (
-    // <Drawer open={toggleDrawer} onClose={() => setDrawer(false)}>
       <div className="side-container">
         <MiniNav setSidebarOption={setSidebarOption}/>
         
@@ -47,10 +43,6 @@ const SideContainer = (props) => {
         {sidebarOption.stop && <Stop stops={stops}></Stop>} 
         {sidebarOption.favourites && <Favourites></Favourites>} 
         </div>
-        {/* <IconButton sx={{color:"skyblue"}} onClick={()=>setDrawer(!toggleDrawer)}>
-                <MenuRoundedIcon/>
-            </IconButton>
- */}
       </div>
   );
 };

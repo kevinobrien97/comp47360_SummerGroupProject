@@ -4,7 +4,6 @@ import "./Journey.css";
 import { FaEllipsisV } from "react-icons/fa";
 import { FaLocationArrow, FaArrowsAltV } from "react-icons/fa";
 import { useRef } from "react";
-// import SideContainer from "./PrimaryContent/FeaturesCard/SideContainer.js"
 
 const searchLimits = {
   componentRestrictions: { country: ["ie"] },
@@ -113,6 +112,16 @@ const Journey = (props) => {
             </Autocomplete>
           </div>
         </Grid>
+        <div className="reverse-button">
+          <Button
+            aria-label="center back"
+            size="medium"
+            onClick={reverseJourney}
+          >
+            {<FaArrowsAltV />}
+          </Button>
+          </div>
+
         <div className="route-planner">
         <ButtonGroup>
           <Button type="submit" onClick={triggerRouteCalculator}>
@@ -120,13 +129,6 @@ const Journey = (props) => {
           </Button>
           <Button type="submit" onClick={triggerCancelRoute}>
             Cancel
-          </Button>
-          <Button
-            aria-label="center back"
-            size="medium"
-            onClick={reverseJourney}
-          >
-            {<FaArrowsAltV />}
           </Button>
           {/* will need to change this to users location at some stage */}
           <Button aria-label="center back" size="large" onClick={centerMap}>

@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {Link} from "react-router-dom";
-import {Drawer, List, ListItemButton, ListItemIcon, ListItemText, IconButton} from '@mui/material';
+import {Drawer, List, ListItemButton, ListItemText, IconButton} from '@mui/material';
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 const NavDrawer = (props) => {
     const [openDrawer, setOpenDrawer] = useState(false)
@@ -22,7 +22,7 @@ const NavDrawer = (props) => {
                     </ListItemButton>
                 </List>
             </Drawer>
-            <IconButton sx={{color:"skyblue"}} onClick={()=>setOpenDrawer(!openDrawer)}>
+            <IconButton sx={{color:"white"}} onClick={()=>setOpenDrawer(!openDrawer)}>
                 <MenuRoundedIcon/>
             </IconButton>
 

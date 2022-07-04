@@ -2,19 +2,24 @@ import "./MiniNav.css";
 import "./SideContainer.css";
 import { AppBar, Toolbar, Typography, Stack, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { yellow } from "@mui/material/colors";
 // npm install @mui/material @emotion/react @emotion/styled
 const MiniNav = (props) => {
+  // const navStyles = makeStyles((theme) => ({
+
+
+  // })
   return (
     <div className="mininav-items">
       <AppBar
         position="static"
         style={{
           boxShadow: "0px 0px 0px 0px",
-          borderRadius: "10px",
+          backgroundColor: "#F1B23E",
         }}
       >
         <Toolbar>
-          <Typography variant="h7" fontSize={8} component="div" />
+          <Typography variant="h6" component="div" />
           <Stack direction="row"></Stack>
           <Button
             color="inherit"

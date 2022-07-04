@@ -22,6 +22,9 @@ const MiniNav = (props) => {
           <Typography variant="h6" component="div" />
           <Stack direction="row"></Stack>
           <Button
+             sx={{
+               height:"4rem",
+            }}           
             color="inherit"
             fontSize={8}
             type="button"
@@ -38,6 +41,9 @@ const MiniNav = (props) => {
             Nearest Stops
           </Button>
           <Button
+              sx={{
+              height:"4rem",
+            }}                    
             color="inherit"
             type="button"
             onClick={() =>
@@ -66,6 +72,10 @@ const MiniNav = (props) => {
             Stop Search
           </Button>
           <Button
+             sx={{
+              height:"4rem",
+              padding: 2,
+           }}           
             color="inherit"
             type="button"
             onClick={() =>

@@ -47,14 +47,12 @@ weatherContent = <p>...</p>;
 const theme = useTheme();
 const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
 console.log(isMatch);
-const [value, setValue] = useState(); 
 return (
     <div className="nav-items">
       <AppBar
         position="static"
         style={{
-          boxShadow: "0px 0px 0px 0px",
-          backgroundColor: "darkgrey",
+          backgroundColor: "#323336",
         }}>
       
           {isMatch ? (
@@ -75,8 +73,33 @@ return (
                   <Typography variant="h6"  />
                     <Grid item xs={9}>
                       <Stack direction="row" ></Stack>
-                      <Link to={'/'}><Button color="inherit">Home</Button></Link>            
-                      <Button onClick={props.openLogIn} color="inherit">SignUp/Login</Button>
+                      <Link to={'/'}>
+                        <Button 
+                        sx={{
+                        backgroundColor: "#F1B23E",
+                        height: "4rem",
+                        marginLeft: -3,
+                        borderRadius: 0,
+                        padding: 3,
+                        color: "white",
+                        '&:hover': {
+                          backgroundColor: '#fff',
+                          color: 'black',
+                        }
+                      }}>Home</Button></Link>            
+                      <Button
+                      sx={{
+                        backgroundColor: "black",
+                        height: "4rem",
+                        borderRadius: 0,
+                        '&:hover': {
+                          backgroundColor: '#fff',
+                          color: 'black',
+                        }
+
+  
+                      }} 
+                      onClick={props.openLogIn} color="inherit">SignUp/Login</Button>
                     </Grid>
                 </Grid>
                 <div className="weather-container">

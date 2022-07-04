@@ -114,6 +114,9 @@ const Journey = (props) => {
         </Grid>
         <div className="reverse-button">
           <Button
+            sx={{
+              color: "#323336",
+            }}
             aria-label="center back"
             size="medium"
             onClick={reverseJourney}
@@ -123,18 +126,55 @@ const Journey = (props) => {
           </div>
 
         <div className="route-planner">
-        <ButtonGroup>
-          <Button type="submit" onClick={triggerRouteCalculator}>
+        <ButtonGroup
+                    sx={{
+                      backgroundColor: "#d8d8d5",
+                      '& .MuiButtonGroup-grouped': {
+                        color: "#323336",
+                      },
+                      '& .MuiButtonGroup-grouped:not(:last-of-type)': {
+                        borderColor: "darkgrey",
+                      },
+
+                    }}
+        >
+          <Button 
+            sx={{
+              '&:hover': {
+                backgroundColor: '#EEEAEA',
+              }
+            }}
+          type="submit" onClick={triggerRouteCalculator}>
             Calculate Route
           </Button>
-          <Button type="submit" onClick={triggerCancelRoute}>
+          <Button 
+            sx={{
+              '&:hover': {
+                backgroundColor: '#EEEAEA',
+              }
+            }}
+          type="submit" onClick={triggerCancelRoute}>
             Cancel
           </Button>
           {/* will need to change this to users location at some stage */}
-          <Button aria-label="center back" size="large" onClick={centerMap}>
+          <Button
+            sx={{
+              '&:hover': {
+                backgroundColor: '#EEEAEA',
+              }
+            }}
+           aria-label="center back" size="large" onClick={centerMap}>
             {<FaLocationArrow />}
           </Button>
-          <Button aria-label="center back" size="large" onClick={props.toggleDrawer}>
+          <Button aria-label="center back" size="large" onClick={props.toggleDrawer}
+          sx ={{
+            borderColor: "darkgrey",
+            color: "black",
+            '&:hover': {
+              backgroundColor: '#EEEAEA',
+            }
+          
+        }}>
             {<FaEllipsisV />}
           </Button>
         </ButtonGroup>

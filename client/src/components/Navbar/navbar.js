@@ -9,7 +9,6 @@ const Navbar = (props) => {
   const [weather, setWeather] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
   const fetchWeatherData = useCallback(async () => {
   setError(null);
   setIsLoading(true);
@@ -91,6 +90,8 @@ return (
                       sx={{
                         backgroundColor: "black",
                         height: "4rem",
+                        borderLeft: 1,
+                        borderColor: "#323336",
                         borderRadius: 0,
                         '&:hover': {
                           backgroundColor: '#fff',
@@ -99,7 +100,22 @@ return (
 
   
                       }} 
-                      onClick={props.openLogIn} color="inherit">SignUp/Login</Button>
+                      onClick={props.openLogIn} color="inherit">Login</Button>
+                      <Button
+                      sx={{
+                        backgroundColor: "black",
+                        height: "4rem",
+                        borderLeft: 1,
+                        borderColor: "#323336",
+                        borderRadius: 0,
+                        '&:hover': {
+                          backgroundColor: '#fff',
+                          color: 'black',
+                        }
+
+  
+                      }} 
+                      onClick={props.openSignUp} color="inherit">Sign-Up</Button>                      
                     </Grid>
                 </Grid>
                 <div className="weather-container">

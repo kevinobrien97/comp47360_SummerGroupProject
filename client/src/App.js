@@ -3,19 +3,31 @@ import React, { useState, useCallback, useEffect } from "react";
 import Map from "./components/PrimaryContent/Map";
 import Navbar from "./components/Navbar/Navbar";
 import SideContainer from "./components/PrimaryContent/FeaturesCard/SideContainer.js"
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes} from "react-router-dom";
 import LogIn from "./components/Navbar/LogIn";
-
+import SignUp from "./components/Navbar/SignUp";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import  { AuthProvider }  from "./context/AuthContext";
 function App() {
   const [logInWindow, setLogInWindow] = useState(false);
 
-
-  const toggleLogIn = () => {
-    // set the opposite of what it is
-    setLogInWindow(!logInWindow);
-    console.log("Hello");
+  const closeLogIn = () => {
+    setLogInWindow(false);
   };
 
+  const openLogIn = () => {
+    setLogInWindow(true);
+  };
+
+  const [SignUpWindow, setSignUpWindow] = useState(false);
+
+  const closeSignUp = () => {
+    setSignUpWindow(false);
+  };
+
+  const openSignUp = () => {
+    setSignUpWindow(true);
+  };
 
 
   const [stops, setStops] = useState({});
@@ -70,30 +82,18 @@ function App() {
   return (
     // initially divided as I intended to incorporate mobile optimisations by using 2 different renders in app js (one for desktop and one for mobile)
     //don't think it is needed anymore - flagged for future change 
-    <BrowserRouter>
-      {isDesktop ? (
-      <div> 
-        <Navbar openLogIn={toggleLogIn}></Navbar>
+    <div className="App">
+      <Router>
+        <AuthProvider>
+        <Navbar openLogIn={openLogIn} openSignUp={openSignUp}></Navbar>
         <Routes>
           <Route path="/" element={<Map/>}/>
         </Routes>
-        {logInWindow && <LogIn closeLogIn={toggleLogIn}></LogIn>}
-      </div>
-      ) : (
-      <div>
-        <Navbar openLogIn={toggleLogIn}></Navbar>
-        {logInWindow && <LogIn closeLogIn={toggleLogIn}></LogIn>}
-        <Routes>
-          <Route path="/" element={<Map/>}/>
-        </Routes>
-
-        <SideContainer/>
-
-      </div>
-      )}
-
-    </BrowserRouter>
-  );
+        {logInWindow && <LogIn closeLogIn={closeLogIn}></LogIn>}
+        {SignUpWindow && <SignUp closeSignUp={closeSignUp}></SignUp>}        </AuthProvider>
+      </Router>
+    </div>
+  )
 }
 
 export default App;

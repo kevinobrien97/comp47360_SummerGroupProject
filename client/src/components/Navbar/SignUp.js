@@ -62,7 +62,7 @@ const SignUp = (props) => {
             </div>
 
             <div>
-            <Button  type="submit">Register</Button>
+            <Button type="submit" variant="contained" color="primary">Register</Button>
             </div>
             Already have account? <Button>Login</Button>
              {/* <Link to="/login">Login</Link> */}

@@ -43,7 +43,7 @@ const LogIn = (props) => {
       <div className={classes.log_in_modal}>
         <div className={classes.log_in_modal_content}>
           <header>
-            <h3>Sign In</h3>
+            <h2>Log In</h2>
           </header>
           
           <div>
@@ -72,7 +72,7 @@ const LogIn = (props) => {
             {/* <Button onClick={props.closeLogIn}>close me</Button> */}
             {/* <Button onClick={() => { console.log(username) }}>output test</Button> */}
             </div>
-            
+            No account? <Button>Register</Button>
             </form>
           </div>
           <div>

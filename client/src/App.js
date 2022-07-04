@@ -8,8 +8,7 @@ import LogIn from "./components/Navbar/LogIn";
 import SignUp from "./components/Navbar/SignUp";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import  { AuthProvider }  from "./context/AuthContext";
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+// import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
 
 

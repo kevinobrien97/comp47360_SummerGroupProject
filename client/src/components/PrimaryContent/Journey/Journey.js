@@ -3,7 +3,8 @@ import { Autocomplete } from "@react-google-maps/api";
 import "./Journey.css";
 import { FaLocationArrow } from "react-icons/fa";
 import { useRef } from "react";
-
+import React from 'react'
+import ReactDOM from 'react-dom'
 const searchLimits = {
   componentRestrictions: { country: ["ie"] },
 };

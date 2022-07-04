@@ -1,6 +1,6 @@
 import classes from "./LogInSignUp.module.css";
 // import React from "react";
-import { Card, Button } from "@mui/material";
+import { Card, Button,TextField } from "@mui/material";
 import React, { useState, useContext  } from "react";
 import Form from "react-bootstrap/Form";
 // import { Link } from "react-router-dom";
@@ -15,6 +15,7 @@ const SignUp = (props) => {
   const handleSubmit = async e => {
     e.preventDefault();
     registerUser(username, password, password2);
+    props.closeSignUp();
   };
 
 
@@ -27,51 +28,49 @@ const SignUp = (props) => {
             <h3>Sign Up</h3>
           </header>
           <div>
-          <p>I'm A Pop Up!!!</p>
-          </div>
+          <form className={classes.root} onSubmit={handleSubmit}>
           <div>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group size="lg" controlId="username">
-            <Form.Label>Username:</Form.Label>
-            <Form.Control
-              autoFocus
-              type="text"
-              value={username}
-              placeholder="Enter user name"
-              onChange={(e) => setUsername(e.target.value)}
+            <TextField
+            label="username"
+            variant="filled"
+            required
+            value={username}
+            onChange={e => setUsername(e.target.value)}
             />
-            </Form.Group>
+            </div>
 
-            <Form.Group size="lg" controlId="password">
-            <Form.Label>Password:</Form.Label>
-            <Form.Control
-              type="password"
-              value={password}
-              placeholder="Enter password"
-              onChange={(e) => setPassword(e.target.value)}
+            <div>
+            <TextField
+            label="password"
+            type="password"
+            variant="filled"
+            required
+            value={password}
+            onChange={e => setPassword(e.target.value)}
             />
-            </Form.Group>
+            </div>
 
-            <Form.Group size="lg" controlId="password2">
-            <Form.Label>Confirm Password:</Form.Label>
-            <Form.Control
-              type="password"
-              value={password2}
-              placeholder="Confirm password"
-              onChange={(e) => setPassword2(e.target.value)}
+            <div>
+            <TextField
+            label="password2"
+            type="password"
+            variant="filled"
+            required
+            value={password2}
+            onChange={e => setPassword2(e.target.value)}
             />
-            </Form.Group>
+            </div>
+
+            <div>
             <Button  type="submit">Register</Button>
-            </Form>
-            <p className="mt-2">
-              Already have account? </p><Button>Login</Button>
-            
-              {/* <Link to="/login">Login</Link> */}
-            
+            </div>
+            Already have account? <Button>Login</Button>
+             {/* <Link to="/login">Login</Link> */}
+          </form>
           </div>
-          <div>
+          {/* <div>
           <Button onClick={props.closeSignUp}>close me</Button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

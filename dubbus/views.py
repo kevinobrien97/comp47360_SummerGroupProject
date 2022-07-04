@@ -22,8 +22,6 @@ class StopsView(viewsets.ModelViewSet):
     queryset = Stops.objects.all()     
 
 
-
-
 # Create your views here.
 
 class MyTokenObtainPairView(TokenObtainPairView):

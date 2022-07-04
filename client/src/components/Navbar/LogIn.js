@@ -1,24 +1,43 @@
 import React, { useState } from "react";
-import { Card, Button,FormControl } from "@mui/material";
+
+import { Card, Button,FormControl,FormGroup,TextField,InputLabel } from "@mui/material";
+import { styled as makeStyles,ThemeProvider } from '@mui/material/styles';
 import Form from "react-bootstrap/Form";
 import classes from "./LogInSignUp.module.css";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
-// import 'bootstrap/dist/css/bootstrap.min.css';
+
+// const useStyles = makeStyles(theme => ({
+//   root: {
+//     display: 'flex',
+//     flexDirection: 'column',
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     padding: theme.spacing(2),
+
+//     '& .MuiTextField-root': {
+//       margin: theme.spacing(1),
+//       width: '300px',
+//     },
+//     '& .MuiButtonBase-root': {
+//       margin: theme.spacing(2),
+//     },
+//   },
+// }));
+
 const LogIn = (props) => {
+  // const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { loginUser } = useContext(AuthContext);
-  // function validateForm() {
-  //   return username.length > 0 && password.length > 0;
-    
-  // }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     loginUser(username, password);
+    props.closeLogIn();
   }
   return (
+    // <ThemeProvider theme={useStyles}>
     <div>
     <div className={classes.back_drop} onClick={props.closeLogIn}></div>
       <div className={classes.log_in_modal}>
@@ -26,45 +45,43 @@ const LogIn = (props) => {
           <header>
             <h3>Sign In</h3>
           </header>
-          <div>
-          <p>I'm A Pop Up!!!</p>
-          </div>
-          <div>
-            <form onSubmit={handleSubmit}>
-            <Form.Group size="lg" controlId="username">
-            <Form.Label>Username:</Form.Label>
-            <Form.Control
-              autoFocus
-              type="text"
-              value={username}
-              placeholder="Enter user name"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            </Form.Group>
-
-            <Form.Group size="lg" controlId="password">
-            <Form.Label>Password:</Form.Label>
-            <Form.Control
-              type="password"
-              value={password}
-              placeholder="Enter password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            </Form.Group>
           
-            {/* <Button block="true" size="lg" type="submit" disabled={!validateForm()}>
-            Login
-            </Button> */}
-            <Button type="submit">Login</Button>
-            {/* <Button onClick={() => { console.log(password) }}>output test</Button> */}
+          <div>
+            <form className={classes.root} onSubmit={handleSubmit}>
+            <div>
+            <TextField
+            label="username"
+            variant="filled"
+            required
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+            />
+            </div>
+            <div>
+            <TextField
+            label="password"
+            type="password"
+            variant="filled"
+            required
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            />
+            </div>
+            <div>
+            <Button type="submit" variant="contained" color="primary">Login</Button>
+            {/* <Button onClick={props.closeLogIn}>close me</Button> */}
+            {/* <Button onClick={() => { console.log(username) }}>output test</Button> */}
+            </div>
+            
             </form>
           </div>
           <div>
-          <Button onClick={props.closeLogIn}>close me</Button>
+          
           </div>
         </div>
       </div>
     </div>
+    // </ThemeProvider>
   );
 };
 

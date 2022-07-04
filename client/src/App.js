@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useContext } from "react";
 import "./App.css";
 import Map from "./components/PrimaryContent/Map";
 // import RouteOptions from "./components/Map/RouteOptions";
@@ -6,11 +6,14 @@ import Navbar from "./components/Navbar/navbar";
 import SideContainer from "./components/FeaturesCard/SideContainer";
 import LogIn from "./components/Navbar/LogIn";
 import SignUp from "./components/Navbar/SignUp";
-
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import  { AuthProvider }  from "./context/AuthContext";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
+
+
   const [logInWindow, setLogInWindow] = useState(false);
-  const [SignUpWindow, setSignUpWindow] = useState(false);
 
   const closeLogIn = () => {
     setLogInWindow(false);
@@ -19,6 +22,8 @@ function App() {
   const openLogIn = () => {
     setLogInWindow(true);
   };
+
+  const [SignUpWindow, setSignUpWindow] = useState(false);
 
   const closeSignUp = () => {
     setSignUpWindow(false);
@@ -68,12 +73,17 @@ function App() {
   }
 
   return (
+    
     <div className="App">
+      <Router>
+      <AuthProvider>
       <Navbar openLogIn={openLogIn} openSignUp={openSignUp}></Navbar>
       <SideContainer />
       <Map />
       {logInWindow && <LogIn closeLogIn={closeLogIn}></LogIn>}
       {SignUpWindow && <SignUp closeSignUp={closeSignUp}></SignUp>}
+      </AuthProvider>
+      </Router>
     </div>
   );
 }

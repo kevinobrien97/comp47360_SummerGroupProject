@@ -15,19 +15,30 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.conf.urls import url
+from django.urls import re_path as url
 
 from rest_framework import routers
 from dubbus import views 
 
+from rest_framework_simplejwt.views import (
+    TokenRefreshView,
+)
 # django.conf.urls.url() was deprecated in Django 3.0, and is removed in Django 4.0+.
 # The easiest fix is to replace url() with re_path(). 
 router = routers.DefaultRouter()                   
 router.register(r'stops', views.StopsView, 'dubbus')  
 
 urlpatterns = [
+    
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('api/token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/register/', views.RegisterView.as_view(), name='auth_register'),
+    #path('', views.getRoutes),
+    path('test/', views.testEndPoint, name='test'),
     url(r'^api/v1/', include('djoser.urls')),
     url(r'^api/v1/', include('djoser.urls.authtoken')),  
 ]
+
+urlpatterns += router.urls

@@ -1,7 +1,8 @@
-import "./Navbar.css"
+import "./navbar.css"
 import {AppBar, Toolbar, Typography, Stack, Button} from "@mui/material"
 // npm install @mui/material @emotion/react @emotion/styled
 const Navbar = (props) => {
+    
     return (
         <div className="nav-items">
             <AppBar position='static' 

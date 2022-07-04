@@ -1,13 +1,23 @@
-import React from "react";
-import { Card, Button } from "@mui/material";
+import React, { useState } from "react";
+import { Card, Button,FormControl } from "@mui/material";
+import Form from "react-bootstrap/Form";
 import classes from "./LogInSignUp.module.css";
-
-// import { withRouter } from "react-router-dom";  // new import 
-// import { connect } from "react-redux";          // new import 
-// import PropTypes from "prop-types";             // new import 
-// import { Container,  Row, Col, Form } from "react-bootstrap";
-
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
+// import 'bootstrap/dist/css/bootstrap.min.css';
 const LogIn = (props) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const { loginUser } = useContext(AuthContext);
+  // function validateForm() {
+  //   return username.length > 0 && password.length > 0;
+    
+  // }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    loginUser(username, password);
+  }
   return (
     <div>
     <div className={classes.back_drop} onClick={props.closeLogIn}></div>
@@ -19,61 +29,36 @@ const LogIn = (props) => {
           <div>
           <p>I'm A Pop Up!!!</p>
           </div>
-
-
-
           <div>
-          <form action="login" method="POST">
-          <p>Username: </p>
-          <input type="text" name="username"/>
-          <p>Password:</p>
-          <input type="password" name="password"/>
-          <br/>
-          <input type="submit"/>
-          </form>
-          </div>
+            <form onSubmit={handleSubmit}>
+            <Form.Group size="lg" controlId="username">
+            <Form.Label>Username:</Form.Label>
+            <Form.Control
+              autoFocus
+              type="text"
+              value={username}
+              placeholder="Enter user name"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            </Form.Group>
 
-{/* <Container>
-        <Row>
-          <Col md="4">
-            <h1>Login</h1>
-            <Form>
-              <Form.Group controlId="usernameId">
-                <Form.Label>User name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="username"
-                  placeholder="Enter user name"
-                  value={this.state.username}
-                  onChange={this.onChange}
-                />
-              </Form.Group>
-
-              <Form.Group controlId="passwordId">
-                <Form.Label>Your password</Form.Label>
-                <Form.Control
-                  type="password"
-                  name="password"
-                  placeholder="Enter password"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                />
-              </Form.Group>
-            </Form>
-            <Button color="primary" onClick={this.onLoginClick}>
-              Login
-            </Button>
-            <p className="mt-2">
-              Don't have account? <Link to="/signup">Signup</Link>
-            </p>
-          </Col>
-        </Row>
-      </Container> */}
-
-
-
-
+            <Form.Group size="lg" controlId="password">
+            <Form.Label>Password:</Form.Label>
+            <Form.Control
+              type="password"
+              value={password}
+              placeholder="Enter password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            </Form.Group>
           
+            {/* <Button block="true" size="lg" type="submit" disabled={!validateForm()}>
+            Login
+            </Button> */}
+            <Button type="submit">Login</Button>
+            {/* <Button onClick={() => { console.log(password) }}>output test</Button> */}
+            </form>
+          </div>
           <div>
           <Button onClick={props.closeLogIn}>close me</Button>
           </div>

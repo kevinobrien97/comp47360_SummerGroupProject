@@ -1,3 +1,15 @@
+
+.LogIn{
+  font-family: sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  height: 100vh;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  background-color: #f8f9fd;
+}
 .log_in_modal {
   position: fixed;
   display: flex;
@@ -12,7 +24,7 @@
 
 .log_in_modal_content {
   position: absolute;
-  background-color: green;
+  background-color: white;
   width:50%;
 }
 

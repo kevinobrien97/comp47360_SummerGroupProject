@@ -1,5 +1,7 @@
+import React from "react";
 import classes from "./RouteOptions.module.css";
 import { Button } from "@mui/material";
+import { FaBus, FaWalking } from "react-icons/fa";
 
 const RouteOptions = (props) => {
   //   const [chosenRoute, setChosenRoute] = useState();
@@ -16,41 +18,57 @@ const RouteOptions = (props) => {
     if (id === parseInt(props.chosenRoute)) {
       return { backgroundColor: "blue" };
     }
-    return { backgroundColor: "white" };
   };
 
   const hideRoutes = () => {
     props.removeRoutes();
   };
   return (
-    <div style={{ display: "flex", justifyContent: "left" }}>
+    <div style={{ display: "flex", justifyContent: "center" }}>
       <div className={classes.back_ground} onClick={hideRoutes}></div>
-      <div className={classes.route}style={{marginTop:"10rem", marginLeft:"3.5%"}}>
-        <ul className={classes.route_options}>
-          <div className="test">
-          {props.options.map((option) => (
-            <li key={option.id}>
+      <div className={classes.route}style={{marginLeft:"0%"}}>
+      <ul className={classes.route_options}>
+          {props.options.map((route, index) => (
+            <React.Fragment key={index}>
+            <li>
               <Button
-                value={option.id}
+                style={bgColor(index)}
+                value={index}
                 onClick={pickRoute}
                 sx={{
-                  marginTop: ".5rem",
-                  backgroundColor: "black",
-                  width: 370,
+                  
+                  width: 260,
                   color: "white",
+                  backgroundColor: 'black',
                   border: 2,
-                  padding: 1.5,
+                  padding: 0.5,
                   '&:hover': {
-                    backgroundColor: '#fff',
+                    backgroundColor: 'white',
                     color: 'black',
                   }
                 }}    
               >
-                Arrival Time: {option.time}
+
+                {route.legs[0].steps.map((step,idx) => (
+
+                  (idx === 0 ?
+                // if its the first then dont want an arrow (i.e. '>')
+                    (step.travel_mode === "WALKING" ? 
+                  <span key={idx} style={{ pointerEvents: "none" }}><FaWalking /></span>:
+                  <span key={idx} style={{ pointerEvents: "none" }}><FaBus /> {step.transit.line.short_name}</span>)
+                    :
+              
+                  (step.travel_mode === "WALKING" ? 
+                  <span key={idx} style={{ pointerEvents: "none" }}>{'>'}<FaWalking /> </span>:
+                  <span key={idx} style={{ pointerEvents: "none" }}>{'>'}<FaBus /> {step.transit.line.short_name}</span>))
+
+                ))}
+                  ETA: {route.legs[0].arrival_time.text}
+       
               </Button>
             </li>
+            </React.Fragment>
           ))}
-          </div>
         </ul>
       </div>
     </div>

@@ -7,8 +7,8 @@
     /* left: 430px;
     right: 10px; 
     margin-top: 5px; 
-    margin-bottom: 5px;
-    z-index: -1; */
+    margin-bottom: 5px; */
+    z-index: -1;
 }
 
 
@@ -20,4 +20,16 @@
     background: rgba(0, 0, 0, 0.8);
   } */
   
-    
+  .journey-container {
+    margin-left: .5rem;
+  margin-top: 0.5rem;
+    margin-right: .5rem;
+    height: 11rem; 
+    width: 25rem;
+    /* background-color: aqua; */
+    position: absolute;
+    border-radius: 10px;
+    box-shadow: 0px 12px 24px 0px rgba(0,0,0,0.43);
+    white-space: normal;
+    overflow: hidden;
+}

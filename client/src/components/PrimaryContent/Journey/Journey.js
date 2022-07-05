@@ -90,7 +90,7 @@ const Journey = (props) => {
   }
 
   return (
-    <div className="journey-container">
+    <div className="journey1-container">
       <div className="journey-headings">
         <h3>From: </h3>
         <h3>To: </h3>

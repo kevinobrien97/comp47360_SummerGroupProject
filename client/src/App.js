@@ -89,8 +89,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Map/>}/>
         </Routes>
-        {logInWindow && <LogIn closeLogIn={closeLogIn}></LogIn>}
-        {SignUpWindow && <SignUp closeSignUp={closeSignUp}></SignUp>}        </AuthProvider>
+        {logInWindow && <LogIn closeLogIn={closeLogIn} openSignUp={openSignUp}></LogIn>}
+        {SignUpWindow && <SignUp closeSignUp={closeSignUp} openLogIn={openLogIn}></SignUp>}        </AuthProvider>
       </Router>
     </div>
   )

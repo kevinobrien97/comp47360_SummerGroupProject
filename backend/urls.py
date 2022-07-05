@@ -34,8 +34,8 @@ urlpatterns = [
     path('api/register/', views.RegisterView.as_view(), name='auth_register'),
     #path('', views.getRoutes),
     path('test/', views.testEndPoint, name='test'),
-    url(r'^api/v1/', include('djoser.urls')),
-    url(r'^api/v1/', include('djoser.urls.authtoken')),  
+    # url(r'^api/v1/', include('djoser.urls')),
+    # url(r'^api/v1/', include('djoser.urls.authtoken')),  
 ]
 
 urlpatterns += router.urls

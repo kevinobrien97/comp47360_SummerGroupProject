@@ -2,7 +2,6 @@ import classes from "./LogInSignUp.module.css";
 // import React from "react";
 import { Card, Button,TextField } from "@mui/material";
 import React, { useState, useContext  } from "react";
-import Form from "react-bootstrap/Form";
 // import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 
@@ -17,6 +16,12 @@ const SignUp = (props) => {
     registerUser(username, password, password2);
     props.closeSignUp();
   };
+
+const switchLogIn = async e =>{
+  e.preventDefault();
+  props.closeSignUp();
+  props.openLogIn();
+}
 
 
   return (
@@ -71,11 +76,12 @@ const SignUp = (props) => {
             </div>
 
             <div>
-            <Button  type="submit">Register</Button>
+            <Button  type="submit" variant="contained" color="primary">Register</Button>
             </div>
-            Already have an account? <Button>Login</Button>
+            
              {/* <Link to="/login">Login</Link> */}
           </form>
+          Already have an account? <Button onClick={switchLogIn}>Login</Button>
           </div>
           {/* <div>
           <Button onClick={props.closeSignUp}>close me</Button>

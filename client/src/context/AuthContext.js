@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { useNavigate} from "react-router-dom";
-
+import { Alert,AlertTitle } from "@mui/material";
 const AuthContext = createContext();
 
 // export default AuthContext;
@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
   );
   const [loading, setLoading] = useState(true);
 
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   const loginUser = async (username, password) => {
     const response = await fetch("http://127.0.0.1:8000/api/token/", {
@@ -38,8 +38,12 @@ export const AuthProvider = ({ children }) => {
       setAuthTokens(data);
       setUser(jwt_decode(data.access));
       localStorage.setItem("authTokens", JSON.stringify(data));
-      // history.push("/");
+      navigate("/");
       alert("Login successfully!")
+//       <Alert severity="success">
+//   <AlertTitle>Success</AlertTitle>
+//   This is a success alert — <strong>check it out!</strong>
+// </Alert>
     } else {
       alert("Something went wrong!");
     }
@@ -69,7 +73,7 @@ export const AuthProvider = ({ children }) => {
     setAuthTokens(null);
     setUser(null);
     localStorage.removeItem("authTokens");
-    history.push("/");
+    navigate("/");
   };
 
   const contextData = {

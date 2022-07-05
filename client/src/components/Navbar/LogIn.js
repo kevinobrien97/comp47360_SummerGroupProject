@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Card, Button,FormControl,FormGroup,TextField,InputLabel } from "@mui/material";
 import { styled as makeStyles,ThemeProvider } from '@mui/material/styles';
-import Form from "react-bootstrap/Form";
+// import Form from "react-bootstrap/Form";
 import classes from "./LogInSignUp.module.css";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
@@ -36,6 +36,13 @@ const LogIn = (props) => {
     loginUser(username, password);
     props.closeLogIn();
   }
+
+  const switchRegister= async e =>{
+    e.preventDefault();
+    props.closeLogIn();
+    props.openSignUp();
+  }
+
   return (
     // <ThemeProvider theme={useStyles}>
     <div>
@@ -80,6 +87,7 @@ const LogIn = (props) => {
             </div>
             
             </form>
+            No account? <Button onClick={switchRegister}>Register</Button>
           </div>
           <div>
           

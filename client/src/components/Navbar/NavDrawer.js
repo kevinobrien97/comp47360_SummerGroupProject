@@ -17,9 +17,15 @@ const NavDrawer = (props) => {
                     </Link>                    
                     <ListItemButton onClick={props.openLogIn} color="inherit">
                         <ListItemText>
-                            Signup/Login
+                            Login
                         </ListItemText>
                     </ListItemButton>
+                    <ListItemButton onClick={props.openLogIn} color="inherit">
+                        <ListItemText>
+                            Sign-Up
+                        </ListItemText>
+                    </ListItemButton>
+
                 </List>
             </Drawer>
             <IconButton sx={{color:"white"}} onClick={()=>setOpenDrawer(!openDrawer)}>

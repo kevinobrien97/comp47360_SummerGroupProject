@@ -91,6 +91,7 @@ return (
                         backgroundColor: "black",
                         height: "4rem",
                         borderLeft: 1,
+                        padding: 2.5,
                         borderColor: "#323336",
                         borderRadius: 0,
                         '&:hover': {
@@ -106,6 +107,7 @@ return (
                         backgroundColor: "black",
                         height: "4rem",
                         borderLeft: 1,
+                        padding: 2,
                         borderColor: "#323336",
                         borderRadius: 0,
                         '&:hover': {

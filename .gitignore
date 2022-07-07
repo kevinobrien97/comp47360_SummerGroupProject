@@ -9,3 +9,7 @@
 client/src/components/subnav/subMenu.js 
 
 client/src/components/subnav/subMenu.js 
+
+
+**/__pycache__
+ *.pyc

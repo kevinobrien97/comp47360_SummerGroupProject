@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Stops, Weather
+from .models import Stops, Weather, Routes
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -14,6 +14,11 @@ class WeatherSerializer(serializers.ModelSerializer):
     class Meta: 
         model = Weather 
         fields = ('temperature', 'feels_like', 'time_stamp')
+
+class RoutesSerializer(serializers.ModelSerializer): 
+    class Meta: 
+        model = Routes
+        fields = ('route_id', 'agency_id', 'route_short_name', 'route_long_name', 'route_type')
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from .serializers import StopsSerializer, WeatherSerializer
+from .serializers import StopsSerializer, WeatherSerializer, RoutesSerializer
 from rest_framework import viewsets, generics, status      
-from .models import Stops, Weather     
+from .models import Stops, Weather, Routes     
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from rest_framework.decorators import api_view
@@ -19,10 +19,12 @@ class StopsView(viewsets.ModelViewSet):
 
 class WeatherView(viewsets.ModelViewSet):
     serializer_class = WeatherSerializer
-    queryset = Weather.objects.all()     
+    queryset = Weather.objects.all()
 
+class RoutesView(viewsets.ModelViewSet): 
+    serializer_class = RoutesSerializer
+    queryset = Routes.objects.all()     
 
-# Create your views here.
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer

@@ -2,23 +2,33 @@ import React, { useState, useCallback, useEffect } from "react";
 // import "./App.css";
 import Map from "./components/PrimaryContent/Map";
 import Navbar from "./components/Navbar/Navbar";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SideContainer from "./components/PrimaryContent/FeaturesCard/SideContainer.js"
+import { BrowserRouter, Routes} from "react-router-dom";
 import LogIn from "./components/Navbar/LogIn";
-
+import SignUp from "./components/Navbar/SignUp";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import  { AuthProvider }  from "./context/AuthContext";
 function App() {
   const [logInWindow, setLogInWindow] = useState(false);
-  const [drawer, setDrawer] = useState(true);
 
-  const toggleLogIn = () => {
-    // set the opposite of what it is
-    setLogInWindow(!logInWindow);
-    console.log("Hello");
+  const closeLogIn = () => {
+    setLogInWindow(false);
   };
 
-  const toggleDrawer = () => {
-    // set the opposite of what it is
-    setDrawer(!drawer);
+  const openLogIn = () => {
+    setLogInWindow(true);
   };
+
+  const [SignUpWindow, setSignUpWindow] = useState(false);
+
+  const closeSignUp = () => {
+    setSignUpWindow(false);
+  };
+
+  const openSignUp = () => {
+    setSignUpWindow(true);
+  };
+
 
   const [stops, setStops] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -58,50 +68,32 @@ function App() {
   if (isLoading) {
     content = <p>Loading data...</p>;
   }
-  // for testing first
-  // const [weather, setWeather] = useState({});
-  // const fetchWeatherData = useCallback(async () => {
-  //   setError(null);
-  //   setIsLoading(true);
-  //   try {
-  //     const response = await fetch("http://127.0.0.1:8000/api/weather/");
-  //     if (!response.ok) {
-  //       throw new Error("Something went wrong loading weather");
-  //     }
-  //     const data = await response.json();
-  //     console.log(data[0]);
-  //     setWeather(data[0]);
-  //   } catch (error) {
-  //     setError(error.message);
-  //   }
-  //   setIsLoading(false);
-  // }, []);
 
-  // useEffect(() => {
-  //   fetchWeatherData();
-  // }, [fetchWeatherData]);
+  const [isDesktop, setDesktop] = useState(window.innerWidth > 480);
+  const updateMedia = () => {
+    setDesktop(window.innerWidth > 480);
+  };
 
-  // // handling possible output states
-  // let content = <p>Sending request...</p>;
-  // if (Object.keys(weather).length > 0) {
-  //   content = <p>{weather["temperature"]}</p>;
-  // }
-  // if (error) {
-  //   content = <p>{error}</p>;
-  // }
-  // if (isLoading) {
-  //   content = <p>Loading data...</p>;
-  // }
+  useEffect(() => {
+    window.addEventListener("resize", updateMedia);
+    return () => window.removeEventListener("resize", updateMedia);
+  });
 
   return (
-    <BrowserRouter>
-      <Navbar openLogIn={toggleLogIn} toggleDrawer={toggleDrawer}></Navbar>
-      <Routes>
-        <Route path="/" element={<Map drawer={drawer} />}/>
-      </Routes>
-      {logInWindow && <LogIn closeLogIn={toggleLogIn}></LogIn>}
-    </BrowserRouter>
-  );
+    // initially divided as I intended to incorporate mobile optimisations by using 2 different renders in app js (one for desktop and one for mobile)
+    //don't think it is needed anymore - flagged for future change 
+    <div className="App">
+      <Router>
+        <AuthProvider>
+        <Navbar openLogIn={openLogIn} openSignUp={openSignUp}></Navbar>
+        <Routes>
+          <Route path="/" element={<Map/>}/>
+        </Routes>
+        {logInWindow && <LogIn closeLogIn={closeLogIn}></LogIn>}
+        {SignUpWindow && <SignUp closeSignUp={closeSignUp}></SignUp>}        </AuthProvider>
+      </Router>
+    </div>
+  )
 }
 
 export default App;

@@ -5,35 +5,12 @@
     width: 100%;
     position: absolute; 
     /* left: 430px;
-    right: 10px; */
-    /* margin-top: 5px;
+    right: 10px; 
+    margin-top: 5px; 
     margin-bottom: 5px; */
     z-index: -1;
 }
 
-.origin-select {
-    margin-top: -60px;
-}
- .destination-select {
-    margin-top: 10px; 
-} 
-
-.MuiButtonGroup-root {
-    margin-top: 30px;
-    margin-left: -150px;
-}
-
-.journey-container {
-    margin-left: 5px;
-    margin-top: 5px;
-    height: 170px; 
-    width: 414px;
-    background-color: aqua;
-    position: absolute;
-    border-radius: 10px;
-    white-space: normal;
-    overflow: hidden;
-}
 
 /* .journey-container.journey_back_drop {
     display: inline-block;
@@ -43,4 +20,16 @@
     background: rgba(0, 0, 0, 0.8);
   } */
   
-    
+  .journey-container {
+    margin-left: .5rem;
+  margin-top: 0.5rem;
+    margin-right: .5rem;
+    height: 11rem; 
+    width: 25rem;
+    /* background-color: aqua; */
+    position: absolute;
+    border-radius: 10px;
+    box-shadow: 0px 12px 24px 0px rgba(0,0,0,0.43);
+    white-space: normal;
+    overflow: hidden;
+}

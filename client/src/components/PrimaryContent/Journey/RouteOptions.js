@@ -19,18 +19,17 @@ const RouteOptions = (props) => {
     if (id === parseInt(props.chosenRoute)) {
       return { backgroundColor: "blue" };
     }
-    return { backgroundColor: "white" };
   };
 
   const hideRoutes = () => {
     props.removeRoutes();
   };
-
   return (
     <div style={{ display: "flex", justifyContent: "center"}}>
       <div className={classes.back_ground} onClick={hideRoutes}></div>
-      <div className={classes.route}>
-        <ul className={classes.route_options}>
+
+      <div className={classes.route}style={{marginLeft:"0%"}}>
+      <ul className={classes.route_options}>
           {props.options.map((route, index) => (
             <React.Fragment key={index}>
             <li>
@@ -38,7 +37,17 @@ const RouteOptions = (props) => {
                 style={bgColor(index)}
                 value={index}
                 onClick={pickRoute}
-               
+                sx={{      
+                  width: 260,
+                  color: "white",
+                  backgroundColor: 'black',
+                  border: 2,
+                  padding: 0.5,
+                  '&:hover': {
+                    backgroundColor: 'white',
+                    color: 'black',
+                  }
+                }}    
               >
 
                 {route.legs[0].steps.map((step,idx) => (

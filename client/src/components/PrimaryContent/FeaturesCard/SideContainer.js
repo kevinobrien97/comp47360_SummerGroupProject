@@ -6,7 +6,9 @@ import Stop from "./Stop";
 import Favourites from "./Favourites";
 import { useState } from "react";
 
+
 const SideContainer = (props) => {
+
   const [sidebarOption, setSidebarOption] = useState({
     nearest: true,
     route: false,
@@ -32,16 +34,16 @@ const SideContainer = (props) => {
   ]
 
   return (
-    <div className="side-container">
-      <MiniNav setSidebarOption={setSidebarOption}/>
-      
-      <div className="display">
-      {sidebarOption.nearest && <Nearest></Nearest>} 
-      {sidebarOption.route && <Route></Route>} 
-      {sidebarOption.stop && <Stop stops={stops}></Stop>} 
-      {sidebarOption.favourites && <Favourites></Favourites>} 
+      <div className="side-container">
+        <MiniNav setSidebarOption={setSidebarOption}/>
+        
+        <div className="display">
+        {sidebarOption.nearest && <Nearest></Nearest>} 
+        {sidebarOption.route && <Route></Route>} 
+        {sidebarOption.stop && <Stop stops={stops}></Stop>} 
+        {sidebarOption.favourites && <Favourites></Favourites>} 
+        </div>
       </div>
-    </div>
   );
 };
 export default SideContainer;

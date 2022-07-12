@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import { Autocomplete, Button } from "@mui/material";
 import classes from "./Stop.module.css";
-
+import Box from '@mui/material/Box';
 const Stop = (props) => {
   const [selectedStop, setSelectedStop] = useState();
   const [selectedStopList, setSelectedStopList] = useState();
@@ -24,32 +24,55 @@ const Stop = (props) => {
   };
 
   // const { stop: { stop.stop_number, stop.stop_id } } = props.stops;
-
   return (
     <div className={classes.stop}>
-      <Autocomplete
-        value={selectedStop}
-        onChange={(event, newStop) => {
-          console.log(newStop.key);
-          setSelectedStop(newStop.key);
-        }}
-        disablePortal
-        id="stop-search"
-        options={busStops}
-        sx={{ width: 300 }}
-        renderInput={(params) => <TextField {...params} label="Bus Stop" />}
-      />
-      {console.log("sel", selectedStop)}
+      <Box 
+        sx={{
+          marginTop:3,
+          borderColor: "black",
+          color: "black"
 
+        }}
+      > 
+        <Autocomplete
+          value={selectedStop}
+          onChange={(event, newStop) => {
+            console.log(newStop.key);
+            setSelectedStop(newStop.key);
+          }}
+          disablePortal
+          id="stop-search"
+          options={busStops}
+          sx={{ width: 300 }}
+          renderInput={(params) => <TextField {...params} label="Select Bus Stop" />}
+          classes = {{ 
+            root: classes.root
+          }}
+        />
+      </Box>
+      {console.log("sel", selectedStop)}
+    <Box className="stop-info">
       {!selectedStop && <ul className={classes.stop_options}>
         {props.stops.map((stop) => (
           <li key={stop.stop_id}>
             <Button
-              style={bgColor(stop.stop_id)}
+            sx={{
+              backgroundColor: "black",
+              width: 370,
+              color: "white",
+              border: 3,
+              borderRadius: 5,
+              padding: 1,
+              '&:hover': {
+                backgroundColor: '#fff',
+                color: 'black',
+              }
+            }}
+              
               value={stop.stop_id}
               onClick={pickStops}
             >
-              Stop Name: {stop.stop_name}
+              {stop.stop_name}
             </Button>
           </li>
         ))}
@@ -60,7 +83,17 @@ const Stop = (props) => {
               stop.stop_id=== selectedStop ?
           <li key={stop.stop_id}>
             <Button
-              style={bgColor(stop.stop_id)}
+            sx={{
+              backgroundColor: "black",
+              width: 370,
+              color: "white",
+              border: 3,
+              borderRadius: 5,
+              '&:hover': {
+                backgroundColor: '#fff',
+                color: 'black',
+              }
+            }}
               value={stop.stop_id}
               onClick={pickStops}
             >
@@ -69,6 +102,7 @@ const Stop = (props) => {
           </li> : null
         ))}
       </ul>}
+      </Box>
     </div>
   );
 };

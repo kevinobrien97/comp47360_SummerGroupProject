@@ -1,6 +1,7 @@
 import { ButtonGroup, Button, Box, Grid } from "@mui/material";
 import { Autocomplete } from "@react-google-maps/api";
 import "./Journey.css";
+import { FaEllipsisV } from "react-icons/fa";
 import { FaLocationArrow, FaArrowsAltV } from "react-icons/fa";
 import { useRef } from "react";
 
@@ -89,7 +90,7 @@ const Journey = (props) => {
   }
 
   return (
-    <div>
+    <div className="journey1-container">
       <div className="journey-headings">
         <h3>From: </h3>
         <h3>To: </h3>
@@ -111,26 +112,73 @@ const Journey = (props) => {
             </Autocomplete>
           </div>
         </Grid>
-
-        <ButtonGroup>
-          <Button type="submit" onClick={triggerRouteCalculator}>
-            Calculate Route
-          </Button>
-          <Button type="submit" onClick={triggerCancelRoute}>
-            Cancel
-          </Button>
+        <div className="reverse-button">
           <Button
+            sx={{
+              color: "#323336",
+            }}
             aria-label="center back"
             size="medium"
             onClick={reverseJourney}
           >
             {<FaArrowsAltV />}
           </Button>
+          </div>
+
+        <div className="route-planner">
+        <ButtonGroup
+                    sx={{
+                      backgroundColor: "#d8d8d5",
+                      '& .MuiButtonGroup-grouped': {
+                        color: "#323336",
+                      },
+                      '& .MuiButtonGroup-grouped:not(:last-of-type)': {
+                        borderColor: "darkgrey",
+                      },
+
+                    }}
+        >
+          <Button 
+            sx={{
+              '&:hover': {
+                backgroundColor: '#EEEAEA',
+              }
+            }}
+          type="submit" onClick={triggerRouteCalculator}>
+            Calculate Route
+          </Button>
+          <Button 
+            sx={{
+              '&:hover': {
+                backgroundColor: '#EEEAEA',
+              }
+            }}
+          type="submit" onClick={triggerCancelRoute}>
+            Cancel
+          </Button>
           {/* will need to change this to users location at some stage */}
-          <Button aria-label="center back" size="large" onClick={centerMap}>
+          <Button
+            sx={{
+              '&:hover': {
+                backgroundColor: '#EEEAEA',
+              }
+            }}
+           aria-label="center back" size="large" onClick={centerMap}>
             {<FaLocationArrow />}
           </Button>
+          <Button aria-label="center back" size="large" onClick={props.toggleDrawer}
+          sx ={{
+            borderColor: "darkgrey",
+            color: "black",
+            '&:hover': {
+              backgroundColor: '#EEEAEA',
+            }
+          
+        }}>
+            {<FaEllipsisV />}
+          </Button>
         </ButtonGroup>
+        </div>
       </Box>
     </div>
   );

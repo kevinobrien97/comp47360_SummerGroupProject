@@ -1,22 +1,16 @@
 .mininav-items { 
     background: darkgray;
-    height: 50px;
+    height: 3rem;
     display: flex;
     justify-content: center;
     align-items: center; 
-    font-size: 10px; 
-    margin-bottom: 1rem;
+    font-size: 1rem; 
     
 }
 .mininav-menu { 
     display: grid; 
-    grid-template-columns: repeat(5, auto); 
-    grid-gap: 2px; 
-    list-style: none; 
     text-align: center; 
-    width: 70vw; 
     justify-content: end; 
-    margin-right: 2rem;
    
 
 

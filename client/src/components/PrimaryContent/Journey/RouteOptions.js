@@ -3,6 +3,7 @@ import classes from "./RouteOptions.module.css";
 import { Button } from "@mui/material";
 import { FaBus, FaWalking } from "react-icons/fa";
 
+
 const RouteOptions = (props) => {
   //   const [chosenRoute, setChosenRoute] = useState();
 
@@ -24,8 +25,9 @@ const RouteOptions = (props) => {
     props.removeRoutes();
   };
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div style={{ display: "flex", justifyContent: "center"}}>
       <div className={classes.back_ground} onClick={hideRoutes}></div>
+
       <div className={classes.route}style={{marginLeft:"0%"}}>
       <ul className={classes.route_options}>
           {props.options.map((route, index) => (
@@ -35,8 +37,7 @@ const RouteOptions = (props) => {
                 style={bgColor(index)}
                 value={index}
                 onClick={pickRoute}
-                sx={{
-                  
+                sx={{      
                   width: 260,
                   color: "white",
                   backgroundColor: 'black',

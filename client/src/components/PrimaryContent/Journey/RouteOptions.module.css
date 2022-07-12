@@ -2,7 +2,14 @@
   list-style-type: none;
   /* removes the space bullets took up to allow centering */
   padding-left: 0;
+  
+  
 }
+
+  .route_options li Button {
+   min-width: 100%;
+  }
+
 
 .route {
   position: fixed;

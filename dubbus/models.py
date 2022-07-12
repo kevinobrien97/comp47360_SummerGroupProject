@@ -24,13 +24,12 @@ class Weather(models.Model):
 
 class Routes(models.Model):
     route_id = models.CharField(primary_key=True, max_length=30)
-    agency_id = models.IntegerField()
-    route_short_name = models.CharField(max_length=4)
-    route_long_name = models.CharField(blank=True, null=True)
-    route_type = models.IntegerField(null=True, blank=True)
+    agency_id = models.CharField(max_length=30, blank=True, null=True)
+    route_short_name = models.CharField(max_length=30, blank=True, null=True)
+    route_long_name = models.CharField(max_length=255, blank=True, null=True)
+    route_type = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        # keep false so Django doesnt change our tables (django specific tables should be True)
         managed = False
         db_table = 'routes'
 

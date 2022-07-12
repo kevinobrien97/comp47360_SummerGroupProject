@@ -4,23 +4,27 @@ import { Autocomplete, Button } from "@mui/material";
 import classes from "./Stop.module.css";
 import Box from "@mui/material/Box";
 const Stop = (props) => {
-  const [selectedStop, setSelectedStop] = useState();
-  const [selectedStopList, setSelectedStopList] = useState();
-
-  console.log('stops123', props.stops1);
+  // const busStops = props.stops.map((stop) => {
+  //   return { label: stop.stop_name, key: stop.stop_id };
+  // });
   const busStops = props.stops.map((stop) => {
     return { label: stop.stop_name, key: stop.stop_id };
   });
+
+  const [selectedStop, setSelectedStop] = useState();
+  const [autocompleteSelection, setAutocompleteSelection] = useState("");
+  const [selectedStopList, setSelectedStopList] = useState(false);
+
   const bgColor = (id) => {
-    console.log("1,", id);
-    console.log("12,", selectedStopList);
-    if (id === selectedStopList) {
-      return { backgroundColor: "blue" };
+    if (id === selectedStop) {
+      return { backgroundColor: "#fff", color: "black" };
     }
-    return { backgroundColor: "white" };
   };
   const pickStops = (event) => {
-    setSelectedStopList(event.target.value);
+    const stop = props.stops[event.target.value]
+    console.log("here", props.stops[event.target.value]);
+    setSelectedStop(stop.stop_id);
+    props.setMarker(stop.stop_lat, stop.stop_long)
   };
 
   // const { stop: { stop.stop_number, stop.stop_id } } = props.stops;
@@ -33,11 +37,15 @@ const Stop = (props) => {
           color: "black",
         }}
       >
-        <Autocomplete
-          value={selectedStop}
+        {/* <Autocomplete
+          value={selectedStopList}
           onChange={(event, newStop) => {
-            console.log(newStop.key);
-            setSelectedStop(newStop.key);
+            console.log("0", newStop);
+            setSelectedStopList(newStop);
+          }}
+          inputValue={autocompleteSelection}
+          onInputChange={(event, newInputValue) => {
+            setAutocompleteSelection(newInputValue);
           }}
           disablePortal
           id="stop-search"
@@ -46,16 +54,16 @@ const Stop = (props) => {
           renderInput={(params) => (
             <TextField {...params} label="Select Bus Stop" />
           )}
-          classes={{
-            root: classes.root,
-          }}
-        />
+          // classes={{
+          //   root: classes.root,
+          // }}
+        /> */}
       </Box>
       {console.log("sel", selectedStop)}
       <Box className="stop-info">
-        {!selectedStop && (
+        {!selectedStopList && (
           <ul className={classes.stop_options}>
-            {props.stops.map((stop) => (
+            {props.stops.map((stop, index) => (
               <li key={stop.stop_id}>
                 <Button
                   sx={{
@@ -70,7 +78,8 @@ const Stop = (props) => {
                       color: "black",
                     },
                   }}
-                  value={stop.stop_id}
+                  style={bgColor(stop.stop_id)}
+                  value={index}
                   onClick={pickStops}
                 >
                   {stop.stop_name}
@@ -80,10 +89,10 @@ const Stop = (props) => {
           </ul>
         )}
 
-        {selectedStop && (
+        {selectedStopList && (
           <ul className={classes.stop_option}>
             {props.stops.map((stop) =>
-              stop.stop_id === selectedStop ? (
+              stop.stop_id === selectedStopList.key ? (
                 <li key={stop.stop_id}>
                   <Button
                     sx={{
@@ -100,7 +109,7 @@ const Stop = (props) => {
                     value={stop.stop_id}
                     onClick={pickStops}
                   >
-                    Stop Name: {stop.stop_name}
+                    {stop.stop_name}
                   </Button>
                 </li>
               ) : null

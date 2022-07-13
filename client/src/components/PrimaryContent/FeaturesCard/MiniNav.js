@@ -20,16 +20,37 @@ const MiniNav = (props) => {
       >
         <Toolbar>
           <Typography variant="h6" component="div" />
+          <Button
+             sx={{
+               height:"4rem",
+            }}           
+            color="inherit"
+           
+            type="button"
+            onClick={() =>
+              props.setSidebarOption({
+                journey: true,
+                nearest: false,
+                route: false,
+                stop: false,
+                favourites: false,
+              })
+            }
+          >
+
+            Journey
+          </Button>
           <Stack direction="row"></Stack>
           <Button
              sx={{
                height:"4rem",
             }}           
             color="inherit"
-            fontSize={8}
+     
             type="button"
             onClick={() =>
               props.setSidebarOption({
+                journey: false,
                 nearest: true,
                 route: false,
                 stop: false,
@@ -38,7 +59,7 @@ const MiniNav = (props) => {
             }
           >
 
-            Nearest Stops
+            Nearest
           </Button>
           <Button
               sx={{
@@ -48,6 +69,7 @@ const MiniNav = (props) => {
             type="button"
             onClick={() =>
                 props.setSidebarOption({
+                  journey: false,
                   nearest: false,
                   route: true,
                   stop: false,
@@ -55,13 +77,17 @@ const MiniNav = (props) => {
                 })
               }
           >
-            Route Search
+            Routes
           </Button>
           <Button
+           sx={{
+            height:"4rem",
+          }}  
             color="inherit"
             type="button"
             onClick={() =>
                 props.setSidebarOption({
+                  journey: false,
                   nearest: false,
                   route: false,
                   stop: true,
@@ -69,7 +95,7 @@ const MiniNav = (props) => {
                 })
               }
           >
-            Stop Search
+            Stops
           </Button>
           <Button
              sx={{
@@ -80,6 +106,7 @@ const MiniNav = (props) => {
             type="button"
             onClick={() =>
                 props.setSidebarOption({
+                  journey: false,
                   nearest: false,
                   route: false,
                   stop: false,

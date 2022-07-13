@@ -23,7 +23,13 @@ const Map = (props) => {
   const [showRoutes, setShowRoutes] = useState(false);
   const [distance, setDistance] = useState("");
   const [drawer, setDrawer] = useState(true);
+  const [selectedStop, setSelectedStop] = useState(null);
 
+  const setStopMarker = (coords) => {
+    setSelectedStop(coords);
+    mapLoaded.panTo(coords);
+    mapLoaded.setZoom(15);
+  };
 
   const selectedRouteHandler = (selection) => {
     setChosenRoute(selection);
@@ -31,7 +37,7 @@ const Map = (props) => {
 
   const toggleDrawer = () => {
     // set the opposite of what it is
-    console.log('triggered')
+    console.log("triggered");
     setDrawer(!drawer);
   };
 
@@ -98,10 +104,7 @@ const Map = (props) => {
   return (
     <div>
       {/* <div className={`journey-container ${showRoutes ? 'journey_back_drop' : ''}`}> */}
-      
-      
-        
-      
+
       <div className="journey-container">
         {allRoutes && showRoutes && (
           <RouteOptions
@@ -117,25 +120,25 @@ const Map = (props) => {
           centerMap={centerMap}
           toggleDrawer={toggleDrawer}
         ></Journey>
-      
       </div>
-      {drawer && <div>
-  
-      <SideContainer></SideContainer>
-      </div>}
+      {drawer && (
+        <div>
+          <SideContainer setStopMarker={setStopMarker}></SideContainer>
+        </div>
+      )}
       {/* </Drawer> */}
       <div className="google-map">
         <GoogleMap
           // to do -- center map on users current location
           center={center}
-          zoom={15}
+          zoom={13}
           mapContainerStyle={{ width: "100%", height: "100%" }}
           // can remove any default controls - should not need these for our app
           options={{ fullscreenControl: false, streetViewControl: false }}
           onLoad={(mapLoaded) => setMapLoaded(mapLoaded)}
         >
           {/* will need a variant of the below later */}
-          {/* <Marker position={center}></Marker> */}
+          <Marker position={selectedStop}></Marker>
           {directionsOutput && (
             <DirectionsRenderer
               directions={directionsOutput}

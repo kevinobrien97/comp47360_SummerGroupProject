@@ -93,6 +93,12 @@ const SideContainer = (props) => {
       <div className="display">
         {sidebarOption.journey && (
           <div>
+            <Journey
+              routeCalculator={routeCalculator}
+              cancelRoute={cancelRoute}
+              centerMap={centerMap}
+            ></Journey>
+
             {props.allRoutes && props.showRoutes && (
               <RouteOptions
                 removeRoutes={removeRoutes}
@@ -101,12 +107,6 @@ const SideContainer = (props) => {
                 selectedRoute={selectedRoute}
               ></RouteOptions>
             )}
-
-            <Journey
-              routeCalculator={routeCalculator}
-              cancelRoute={cancelRoute}
-              centerMap={centerMap}
-            ></Journey>
           </div>
         )}
         {sidebarOption.nearest && <Nearest></Nearest>}

@@ -85,34 +85,21 @@ const Journey = (props) => {
 
   function reverseJourney() {
     let temp = originRef.current.value;
-    originRef.current.value = destinationRef.current.value
-    destinationRef.current.value = temp
+    originRef.current.value = destinationRef.current.value;
+    destinationRef.current.value = temp;
   }
 
   return (
     <div className="journey1-container">
-      <div className="journey-headings">
-        <h3>From: </h3>
-        <h3>To: </h3>
-      </div>
       <Box className="journey-planner">
-        <Grid container direction="column" spacing={2}>
-          <div className="origin-select">
+        {/* <Grid container direction="column" spacing={2}> */}
+        <div className="journey-options">
+          <div className="input-options">
             <Autocomplete options={searchLimits}>
               <input id="origin" placeholder="Origin" ref={originRef} />
             </Autocomplete>
           </div>
-          <div className="destination-select">
-            <Autocomplete options={searchLimits}>
-              <input
-                id="destination"
-                placeholder="Destination"
-                ref={destinationRef}
-              />
-            </Autocomplete>
-          </div>
-        </Grid>
-        <div className="reverse-button">
+          <div className="reverse-button">
           <Button
             sx={{
               color: "#323336",
@@ -123,61 +110,86 @@ const Journey = (props) => {
           >
             {<FaArrowsAltV />}
           </Button>
+        </div>
+          <div className="input-options">
+            <Autocomplete options={searchLimits}>
+              <input
+                id="destination"
+                placeholder="Destination"
+                ref={destinationRef}
+              />
+            </Autocomplete>
           </div>
-
-        <div className="route-planner">
-        <ButtonGroup
-                    sx={{
-                      backgroundColor: "#d8d8d5",
-                      '& .MuiButtonGroup-grouped': {
-                        color: "#323336",
-                      },
-                      '& .MuiButtonGroup-grouped:not(:last-of-type)': {
-                        borderColor: "darkgrey",
-                      },
-
-                    }}
-        >
-          <Button 
-            sx={{
-              '&:hover': {
-                backgroundColor: '#EEEAEA',
-              }
-            }}
-          type="submit" onClick={triggerRouteCalculator}>
-            Calculate Route
-          </Button>
-          <Button 
-            sx={{
-              '&:hover': {
-                backgroundColor: '#EEEAEA',
-              }
-            }}
-          type="submit" onClick={triggerCancelRoute}>
-            Cancel
-          </Button>
-          {/* will need to change this to users location at some stage */}
-          <Button
-            sx={{
-              '&:hover': {
-                backgroundColor: '#EEEAEA',
-              }
-            }}
-           aria-label="center back" size="large" onClick={centerMap}>
-            {<FaLocationArrow />}
-          </Button>
-          <Button aria-label="center back" size="large" onClick={props.toggleDrawer}
-          sx ={{
-            borderColor: "darkgrey",
-            color: "black",
-            '&:hover': {
-              backgroundColor: '#EEEAEA',
-            }
           
-        }}>
-            {<FaEllipsisV />}
-          </Button>
-        </ButtonGroup>
+        </div>
+        {/* <input type="datetime-local"/> */}
+        {/* </Grid> */}
+        
+
+        <div className="buttons">
+          <ButtonGroup
+            sx={{
+              backgroundColor: "#d8d8d5",
+              "& .MuiButtonGroup-grouped": {
+                color: "#323336",
+              },
+              "& .MuiButtonGroup-grouped:not(:last-of-type)": {
+                borderColor: "darkgrey",
+              },
+              // display: "flex",
+              // justifyContent: "center"
+            }}
+          >
+            <Button
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#EEEAEA",
+                },
+              }}
+              type="submit"
+              onClick={triggerRouteCalculator}
+            >
+              Calculate
+            </Button>
+            <Button
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#EEEAEA",
+                },
+              }}
+              type="submit"
+              onClick={triggerCancelRoute}
+            >
+              Cancel
+            </Button>
+            {/* will need to change this to users location at some stage */}
+            <Button
+              sx={{
+                "&:hover": {
+                  backgroundColor: "#EEEAEA",
+                },
+              }}
+              aria-label="center back"
+              size="large"
+              onClick={centerMap}
+            >
+              {<FaLocationArrow />}
+            </Button>
+            <Button
+              aria-label="center back"
+              size="large"
+              onClick={props.toggleDrawer}
+              sx={{
+                borderColor: "darkgrey",
+                color: "black",
+                "&:hover": {
+                  backgroundColor: "#EEEAEA",
+                },
+              }}
+            >
+              {<FaEllipsisV />}
+            </Button>
+          </ButtonGroup>
         </div>
       </Box>
     </div>

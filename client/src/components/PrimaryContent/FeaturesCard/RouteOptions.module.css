@@ -12,20 +12,14 @@
 
 
 .route {
-  position: fixed;
-
- 
-
-
   z-index: 30;
   white-space: normal;
   overflow: hidden;
-  /* box-shadow: 0 2px 8px rgba(143, 103, 103, 0.26); */
   border-radius: 10px;
-
+  
 }
 
-.back_ground {
+/* .back_ground {
   left: 0;
   top: 0;
   position: absolute;
@@ -33,4 +27,4 @@
   width: 100%;
   z-index: 20;
   background: rgba(0, 0, 0, 0.8);
-}
+} */

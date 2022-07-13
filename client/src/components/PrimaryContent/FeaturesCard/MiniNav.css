@@ -1,8 +1,8 @@
 .mininav-items { 
-    background: darkgray;
+
     height: 3rem;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center; 
     font-size: 1rem; 
     
@@ -11,7 +11,4 @@
     display: grid; 
     text-align: center; 
     justify-content: end; 
-   
-
-
 }

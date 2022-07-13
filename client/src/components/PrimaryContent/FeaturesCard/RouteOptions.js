@@ -21,12 +21,12 @@ const RouteOptions = (props) => {
     }
   };
 
-  const hideRoutes = () => {
-    props.removeRoutes();
-  };
+  // const hideRoutes = () => {
+  //   props.removeRoutes();
+  // };
   return (
     <div style={{ display: "flex", justifyContent: "center"}}>
-      <div className={classes.back_ground} onClick={hideRoutes}></div>
+      {/* <div className={classes.back_ground} onClick={hideRoutes}></div> */}
 
       <div className={classes.route}style={{marginLeft:"0%"}}>
       <ul className={classes.route_options}>

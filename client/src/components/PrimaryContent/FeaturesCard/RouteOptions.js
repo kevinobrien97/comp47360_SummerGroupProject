@@ -36,7 +36,8 @@ const RouteOptions = (props) => {
                
                 value={index}
                 onClick={pickRoute}> */}
-          <Accordion>
+          <Accordion
+          disableGutters={true}>
             <AccordionSummary
              sx={{display: "flex", justifyContent: "flex-start"}}
               expandIcon={<ExpandMoreIcon />}
@@ -91,10 +92,17 @@ const RouteOptions = (props) => {
                 )}
                 </span>
                 <span style={{ backgroundColor: "red", borderRadius: "10px", padding: "3px", marginLeft: "auto"}}>xx:xx</span>
-       
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>placeholder</Typography>
+              <Typography>{route.legs[0].steps.map((step, idx) =>
+             <>
+             <span> {step.instructions} </span><br></br>
+             <span> {step.distance.text} </span><br></br>
+             <span> {step.duration.text} </span><br></br>
+           
+             </>
+              )}
+              </Typography>
             </AccordionDetails>
           </Accordion>
         </React.Fragment>
@@ -102,5 +110,4 @@ const RouteOptions = (props) => {
     </div>
   );
 };
-
 export default RouteOptions;

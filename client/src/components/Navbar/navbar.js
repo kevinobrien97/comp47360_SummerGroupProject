@@ -32,16 +32,16 @@ fetchWeatherData();
 }, [fetchWeatherData]);
 
 // handling possible output states
-let weatherContent = <p>Sending request...</p>;
-if (Object.keys(weather).length >= 0) {
-weatherContent = <p>{weather["temperature"]}ºC</p>;
-}
-if (error) {
-weatherContent = <p>{error}</p>;
-}
-if (isLoading) {
-weatherContent = <p>...</p>;
-}
+// let weatherContent = <p>Sending request...</p>;
+// if (Object.keys(weather).length >= 0) {
+// weatherContent = <p>{weather["temperature"]}ºC</p>;
+// }
+// if (error) {
+// weatherContent = <p>{error}</p>;
+// }
+// if (isLoading) {
+// weatherContent = <p>...</p>;
+// }
 
 const theme = useTheme();
 const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
@@ -59,7 +59,7 @@ return (
               <Toolbar>
                 <div className="weather-container">
                     <div className="display-weather">
-                      {weatherContent}
+                      {/* {weatherContent} */}
                     </div>
                 </div>
                   <NavDrawer></NavDrawer> 
@@ -122,7 +122,7 @@ return (
                 </Grid>
                 <div className="weather-container">
                   <div className="display-weather">
-                    {weatherContent}
+                    {/* {weatherContent} */}
                   </div>
                 </div>
               </Toolbar>

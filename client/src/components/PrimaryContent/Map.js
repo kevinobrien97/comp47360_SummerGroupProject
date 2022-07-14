@@ -6,8 +6,8 @@ import {
   DirectionsRenderer,
 } from "@react-google-maps/api";
 import { useState } from "react";
-import Journey from "./Journey/Journey";
-import RouteOptions from "./Journey/RouteOptions";
+// import Journey from "./Journey/Journey";
+// import RouteOptions from "./Journey/RouteOptions";
 import SideContainer from "./FeaturesCard/SideContainer";
 import { Drawer } from "@mui/material";
 
@@ -50,15 +50,20 @@ const Map = (props) => {
 
   if (!isLoaded) return console.log("error loading map");
 
-  async function routeCalculator(or, des) {
+  async function routeCalculator(or, des, time) {
+    console.log("map", time);
     // eslint-disable-next-line no-undef
     const dirServ = new google.maps.DirectionsService();
     const results = await dirServ.route({
       origin: or,
       destination: des,
+
       // eslint-disable-next-line no-undef
       travelMode: google.maps.TravelMode.TRANSIT,
-      transitOptions: { modes: ["BUS"] },
+      transitOptions: {
+        departureTime: time,
+        modes: ["BUS"],
+      },
       provideRouteAlternatives: true,
     });
     console.log("res", results);
@@ -70,13 +75,6 @@ const Map = (props) => {
 
   const getRoutesHandler = (r) => {
     console.log("app", r);
-
-    // const transformedRoutes = r.map((route, index) => {
-    //   return {
-    //     id: index,
-    //     time: route.legs[0].arrival_time.text,
-    //   };
-    // });
     setAllRoutes(r);
     setShowRoutes(true);
   };
@@ -103,30 +101,38 @@ const Map = (props) => {
 
   return (
     <div>
-      {/* <div className={`journey-container ${showRoutes ? 'journey_back_drop' : ''}`}> */}
-
-      <div className="journey-container">
-        {allRoutes && showRoutes && (
+      {/* <div className="journey-container"> */}
+      {/* {allRoutes && showRoutes && (
           <RouteOptions
             removeRoutes={removeRoutes}
             chosenRoute={chosenRoute}
             options={allRoutes}
             selectedRoute={selectedRouteHandler}
           ></RouteOptions>
-        )}
-        <Journey
+        )} */}
+      {/* <Journey
           routeCalculator={routeCalculator}
           cancelRoute={cancelRoute}
           centerMap={centerMap}
-          toggleDrawer={toggleDrawer}
-        ></Journey>
-      </div>
+          // toggleDrawer={toggleDrawer}
+        ></Journey> */}
+      {/* </div> */}
       {drawer && (
         <div>
-          <SideContainer setStopMarker={setStopMarker}></SideContainer>
+          <SideContainer
+            removeRoutes={removeRoutes}
+            chosenRoute={chosenRoute}
+            options={allRoutes}
+            selectedRoute={selectedRouteHandler}
+            allRoutes={allRoutes}
+            showRoutes={showRoutes}
+            routeCalculator={routeCalculator}
+            cancelRoute={cancelRoute}
+            centerMap={centerMap}
+            setStopMarker={setStopMarker}
+          ></SideContainer>
         </div>
       )}
-      {/* </Drawer> */}
       <div className="google-map">
         <GoogleMap
           // to do -- center map on users current location

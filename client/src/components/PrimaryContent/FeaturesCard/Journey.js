@@ -1,13 +1,14 @@
 import { ButtonGroup, Button, Box, Grid, TextField } from "@mui/material";
 import { Autocomplete } from "@react-google-maps/api";
 import "./Journey.css";
+import CachedIcon from "@mui/icons-material/Cached";
 import { FaEllipsisV } from "react-icons/fa";
 import { FaLocationArrow, FaArrowsAltV } from "react-icons/fa";
 import { useRef, useState, useEffect } from "react";
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 // date-fns
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 const searchLimits = {
   componentRestrictions: { country: ["ie"] },
@@ -20,9 +21,7 @@ const Journey = (props) => {
   const destinationRef = useRef("");
   const [dateTime, setDateTime] = useState(currentTime);
 
-  useEffect(() => {
-    console.log(dateTime);
-  }, [dateTime]);
+  useEffect(() => {}, [dateTime]);
 
   console.log("time", currentTime);
 
@@ -103,8 +102,11 @@ const Journey = (props) => {
     destinationRef.current.value = temp;
   }
 
-  function handleTimeChange (value) {
-    setDateTime(value)
+  function handleTimeChange(value) {
+    setDateTime(value);
+  }
+  function resetTime() {
+    setDateTime(new Date());
   }
 
   return (
@@ -139,21 +141,34 @@ const Journey = (props) => {
               </Autocomplete>
             </div>
           </div>
-          <div className="input-options">
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DateTimePicker
-          label="Departure Time"
-          value={dateTime}
-          onChange={handleTimeChange}
-          renderInput={(params) => <TextField {...params} />}
-        />
-        </LocalizationProvider>
-            {/* <input
-              type="datetime-local"
-              id="datetime"
-              onChange={(selection) => setDateTime(selection.target.value)}
-              value={dateTime}
-            /> */}
+          <div className="timing">
+            <div className="input-options">
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DateTimePicker
+                  label="Departure Time"
+                  minDateTime={currentTime}
+                  value={dateTime}
+                  onChange={handleTimeChange}
+                  renderInput={(params) => (
+                    <TextField {...params} size="small" />
+                  )}
+                />
+              </LocalizationProvider>
+            </div>
+            <Button
+              aria-label="center back"
+              size="large"
+              onClick={resetTime}
+              sx={{
+                borderColor: "darkgrey",
+                color: "black",
+                "&:hover": {
+                  backgroundColor: "#EEEAEA",
+                },
+              }}
+            >
+              {<CachedIcon />}
+            </Button>
           </div>
         </div>
 

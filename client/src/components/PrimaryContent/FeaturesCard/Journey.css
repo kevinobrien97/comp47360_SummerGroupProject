@@ -15,6 +15,11 @@
   margin: 0.25rem;
 }
 
+.timing {
+    display: flex;
+    justify-content: center;
+}
+
 #destination,
 #origin {
   height: 1.5rem;
@@ -24,6 +29,7 @@
   border-radius: 5px;
   box-shadow: lightgrey;
 }
+
 #datetime {
   height: 1.5rem;
   width: 12rem;
@@ -32,6 +38,7 @@
   border-radius: 5px;
   box-shadow: lightgrey;
 }
+
 .buttons {
   display: flex;
   justify-content: center;

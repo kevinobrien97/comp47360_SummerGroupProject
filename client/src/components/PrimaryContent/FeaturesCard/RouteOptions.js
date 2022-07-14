@@ -21,36 +21,14 @@ const RouteOptions = (props) => {
   };
 
   // conditionally sets bg colour of options
-  const bgColor = (id) => {
-    if (id === parseInt(props.chosenRoute)) {
-      return;
-      // return { backgroundColor: "blue" };
-    }
-  };
-
-  // const hideRoutes = () => {
-  //   props.removeRoutes();
+  // const bgColor = (id) => {
+  //   if (id === parseInt(props.chosenRoute)) {
+  //     return;
+  //     // return { backgroundColor: "blue" };
+  //   }
   // };
+
   return (
-    // <div style={{ display: "flex", justifyContent: "center"}}>
-
-    //   <div className={classes.route}>
-    //   <ul className={classes.route_options}>
-    //       {props.options.map((route, index) => (
-    //         <React.Fragment key={index}>
-    //         <li className="list-elems">
-    //           <Button
-    //             style={bgColor(index)}
-    //             value={index}
-    //             onClick={pickRoute}
-    //             sx={{
-
-    //               '&:hover': {
-    //                 backgroundColor: 'white',
-    //                 color: 'black',
-    //               }
-    //             }}
-    //           >
     <div>
       {props.options.map((route, index) => (
         <React.Fragment key={index}>
@@ -60,14 +38,17 @@ const RouteOptions = (props) => {
                 onClick={pickRoute}> */}
           <Accordion>
             <AccordionSummary
+             sx={{display: "flex", justifyContent: "flex-start"}}
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               id="panel1a-header"
               // value={index}
               onClick={() => {props.selectedRoute(index);}}
             >
-              <Typography>
+             
+                <span style={{marginRight: "auto"}}>
                 {route.legs[0].steps.map((step, idx) =>
+              
                   idx === 0 ? (
                     // {/* if its the first then dont want an arrow (i.e. '>') */}
                     step.travel_mode === "WALKING" ? (
@@ -75,9 +56,17 @@ const RouteOptions = (props) => {
                         <FaWalking />
                       </span>
                     ) : (
+                      // the below query checks if the bus used is outside main network (this will have line.name instead of line.short_name) and gives different bg colour
+                    // could use similar logic later for whether we have our own prediction or not
+                    (step.transit.line.short_name ?
                       <span key={idx} style={{ pointerEvents: "none" }}>
                         <FaBus /> <span style={{ backgroundColor: "green", borderRadius: "10px", padding: "3px"}}> {step.transit.line.short_name}</span>
                       </span>
+                      :
+                      <span key={idx} style={{ pointerEvents: "none" }}>
+                        <FaBus /> <span style={{ backgroundColor: "yellow", borderRadius: "10px", padding: "3px"}}> {step.transit.line.name}</span>
+                      </span>
+                    )
                     )
                   ) : step.travel_mode === "WALKING" ? (
                     <span key={idx} style={{ pointerEvents: "none" }}>
@@ -100,8 +89,9 @@ const RouteOptions = (props) => {
                     )
                   )
                 )}
-               {/* <span style={{ pointerEvents: "none" }}>{route.legs[0].arrival_time.text}</span> */}
-              </Typography>
+                </span>
+                <span style={{ backgroundColor: "red", borderRadius: "10px", padding: "3px", marginLeft: "auto"}}>xx:xx</span>
+       
             </AccordionSummary>
             <AccordionDetails>
               <Typography>placeholder</Typography>
@@ -110,13 +100,6 @@ const RouteOptions = (props) => {
         </React.Fragment>
       ))}
     </div>
-    //               </Button>
-    //             </li>
-    //             </React.Fragment>
-    //           ))}
-    //         </ul>
-    //       </div>
-    //     </div>
   );
 };
 

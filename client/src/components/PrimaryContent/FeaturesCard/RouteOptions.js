@@ -76,25 +76,28 @@ const RouteOptions = (props) => {
                       </span>
                     ) : (
                       <span key={idx} style={{ pointerEvents: "none" }}>
-                        <FaBus /> {step.transit.line.short_name}
+                        <FaBus /> <span style={{ backgroundColor: "green", borderRadius: "10px", padding: "3px"}}> {step.transit.line.short_name}</span>
                       </span>
                     )
                   ) : step.travel_mode === "WALKING" ? (
                     <span key={idx} style={{ pointerEvents: "none" }}>
-                      {">"}
-                      <FaWalking />{" "}
+                      {" > "}
+                      <FaWalking />
                     </span>
                   ) : (
+             
                     <span key={idx} style={{ pointerEvents: "none" }}>
-                      {">"}
-                      <FaBus /> {step.transit.line.short_name}
+                      {" > "}
+                      <FaBus />  <span style={{ backgroundColor: "#F1B23E", borderRadius: "10px", padding: "3px"}}> {step.transit.line.short_name}</span> 
                     </span>
+                    
                   )
                 )}
+               {/* <span style={{ pointerEvents: "none" }}>{route.legs[0].arrival_time.text}</span> */}
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>ETA: {route.legs[0].arrival_time.text}</Typography>
+              <Typography>placeholder</Typography>
             </AccordionDetails>
           </Accordion>
         </React.Fragment>

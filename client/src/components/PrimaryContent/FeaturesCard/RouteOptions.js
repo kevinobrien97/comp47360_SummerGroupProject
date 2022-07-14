@@ -85,12 +85,19 @@ const RouteOptions = (props) => {
                       <FaWalking />
                     </span>
                   ) : (
-             
+                    // the below query checks if the bus used is outside main network (this will have line.name instead of line.short_name) and gives different bg colour
+                    // could use similar logic later for whether we have our own prediction or not
+                    (step.transit.line.short_name ?
                     <span key={idx} style={{ pointerEvents: "none" }}>
                       {" > "}
                       <FaBus />  <span style={{ backgroundColor: "#F1B23E", borderRadius: "10px", padding: "3px"}}> {step.transit.line.short_name}</span> 
                     </span>
-                    
+                    : 
+                    <span key={idx} style={{ pointerEvents: "none" }}>
+                      {" > "}
+                      <FaBus />  <span style={{ backgroundColor: "yellow", borderRadius: "10px", padding: "3px"}}> {step.transit.line.name}</span> 
+                    </span>
+                    )
                   )
                 )}
                {/* <span style={{ pointerEvents: "none" }}>{route.legs[0].arrival_time.text}</span> */}

@@ -8,16 +8,21 @@ from datetime import datetime, timedelta
 import os
 
 api = os.environ['API']
-
-def pull_weather(api):
+accuapi = os.environ['ACCUAPI']
+def pull_weather(api, accuapi):
+    accu_weather = f"http://dataservice.accuweather.com/currentconditions/v1/207931?apikey={accuapi}"
     open_weather = f"http://api.openweathermap.org/data/2.5/weather?lat=53.33306&lon=-6.24889&appid={api}&units=metric"
 
-    data = requests.get(open_weather).json()  
+    curr_temp = requests.get(open_weather).json()
+    curr_conditions = requests.get(accu_weather).json() 
 
-    temperature = math.floor(data['main']['temp'])
-    feels_like = math.floor(data['main']['feels_like'])
+    temperature = math.floor(curr_temp['main']['temp'])
+    feels_like = math.floor(curr_temp['main']['feels_like'])
     time_stamp = datetime.now() + timedelta(hours=1)
+
+    weather_description = curr_conditions[0]['WeatherText']
     return {
+    'weather_text': weather_description,
     'temperature': temperature,
     'feels_like': feels_like,
     'time_stamp': time_stamp
@@ -26,7 +31,8 @@ def pull_weather(api):
 con = connect_db
 con.create_weather_table()
 while True:
-    weather = pull_weather(api)
+    weather = pull_weather(api, accuapi)
     start = time.time()
     con.insert_weather(weather)
     time.sleep(3600 - (time.time() - start) % 3600)
+

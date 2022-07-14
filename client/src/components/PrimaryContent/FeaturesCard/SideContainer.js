@@ -17,8 +17,8 @@ const SideContainer = (props) => {
     favourites: false,
   });
 
-  function routeCalculator(or, des) {
-    props.routeCalculator(or, des);
+  function routeCalculator(or, des, time) {
+    props.routeCalculator(or, des, time);
   }
 
   function cancelRoute() {

@@ -14,9 +14,6 @@ const searchLimits = {
 };
 
 const currentTime = new Date();
-// currentTime.setMinutes(currentTime.getMinutes() - currentTime.getTimezoneOffset());
-
-
 
 const Journey = (props) => {
   const originRef = useRef("");
@@ -35,7 +32,8 @@ const Journey = (props) => {
     }
     props.routeCalculator(
       originRef.current.value,
-      destinationRef.current.value
+      destinationRef.current.value,
+      dateTime
     );
   };
 

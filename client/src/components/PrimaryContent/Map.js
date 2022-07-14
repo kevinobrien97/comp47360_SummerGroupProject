@@ -50,15 +50,20 @@ const Map = (props) => {
 
   if (!isLoaded) return console.log("error loading map");
 
-  async function routeCalculator(or, des) {
+  async function routeCalculator(or, des, time) {
+    console.log("map", time);
     // eslint-disable-next-line no-undef
     const dirServ = new google.maps.DirectionsService();
     const results = await dirServ.route({
       origin: or,
       destination: des,
+
       // eslint-disable-next-line no-undef
       travelMode: google.maps.TravelMode.TRANSIT,
-      transitOptions: { modes: ["BUS"] },
+      transitOptions: {
+        departureTime: time,
+        modes: ["BUS"],
+      },
       provideRouteAlternatives: true,
     });
     console.log("res", results);

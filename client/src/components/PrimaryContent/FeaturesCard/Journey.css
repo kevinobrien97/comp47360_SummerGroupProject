@@ -1,93 +1,52 @@
 .journey-planner {
-    margin-top: 1.2rem;
-    /* z-index:2; */
+  margin-top: 1.2rem;
 }
-/* .journey-headings {
-    margin-top:0;
-    margin-left: 10px;
-    font-family: Helvetica;;
-} */
 
-.journey-options {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 6rem;
+.journey-options,
+.origin-destination {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .input-options {
-    display: flex;
-    justify-content: center;
-    margin: 0.5rem;
+  display: flex;
+  justify-content: center;
+  margin: 0.25rem;
 }
 
-#destination, #origin {
-    height: 1.5rem;
-    width: 18rem;
-    background-color: black;
-    color: white;
-    border-radius: 5px;
-    box-shadow: lightgrey;
+#destination,
+#origin {
+  height: 1.5rem;
+  width: 18rem;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  box-shadow: lightgrey;
 }
-
+#datetime {
+  height: 1.5rem;
+  width: 12rem;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  box-shadow: lightgrey;
+}
 .buttons {
-    display: flex;
-    justify-content: center;
-    margin: 0.5rem;
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem;
 }
-
-/* #origin {
-    margin-top: 1.5rem;
-    margin-left: 1.3rem;
-    
-    box-shadow: lightgrey;
-    border-radius: 5px;
-    border: 1px;
-   
-    position: absolute;
-
-}
-
- #destination {
-    margin-top: 4rem;
-    position: absolute;
-    background-color: black;
-    border-radius: 5px;
-    border: 1px;
-    color: white;
-    margin-left: 1.3rem;
-    width: 14rem; 
-    padding: 5px;
-    z-index: 2;
-
- } */
-
-/* .route-planner {
-     margin-top: 7rem;
-     z-index: 2;
-     position: center;
- } */
-/* .MuiButtonGroup-root {
-    margin-top: 7rem;
-    height: 2.7rem;
-    position:left;
-
-    max-width: 110%;  
-}  */
 
 .reverse-button {
-    /* margin-left: 14rem;
-    margin-top: 1.8rem;
-    position: absolute; */
-    align-self:  flex-end;
-    position: absolute;
+  align-self: flex-end;
+  position: absolute;
 }
 
 .journey1-container {
-    margin-top: .5rem;
-    /* height: 11rem; */
-    width: 25rem;
-    background-color: whitesmoke;
-    border-radius: 10px;
-    z-index: 2;
+  margin-top: 0.5rem;
+  width: 25rem;
+  background-color: whitesmoke;
+  border-radius: 10px;
+  z-index: 2;
 }

@@ -1,17 +1,33 @@
-import { ButtonGroup, Button, Box, Grid } from "@mui/material";
+import { ButtonGroup, Button, Box, Grid, TextField } from "@mui/material";
 import { Autocomplete } from "@react-google-maps/api";
 import "./Journey.css";
 import { FaEllipsisV } from "react-icons/fa";
 import { FaLocationArrow, FaArrowsAltV } from "react-icons/fa";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+// date-fns
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 const searchLimits = {
   componentRestrictions: { country: ["ie"] },
 };
 
+const currentTime = new Date();
+// currentTime.setMinutes(currentTime.getMinutes() - currentTime.getTimezoneOffset());
+
+
+
 const Journey = (props) => {
   const originRef = useRef("");
   const destinationRef = useRef("");
+  const [dateTime, setDateTime] = useState(currentTime);
+
+  useEffect(() => {
+    console.log(dateTime);
+  }, [dateTime]);
+
+  console.log("time", currentTime);
 
   const triggerRouteCalculator = () => {
     if (originRef.current.value === "" || destinationRef.current.value === "") {
@@ -89,42 +105,59 @@ const Journey = (props) => {
     destinationRef.current.value = temp;
   }
 
+  function handleTimeChange (value) {
+    setDateTime(value)
+  }
+
   return (
     <div className="journey1-container">
       <Box className="journey-planner">
-        {/* <Grid container direction="column" spacing={2}> */}
         <div className="journey-options">
-          <div className="input-options">
-            <Autocomplete options={searchLimits}>
-              <input id="origin" placeholder="Origin" ref={originRef} />
-            </Autocomplete>
+          <div className="origin-destination">
+            <div className="input-options">
+              <Autocomplete options={searchLimits}>
+                <input id="origin" placeholder="Origin" ref={originRef} />
+              </Autocomplete>
+            </div>
+            <div className="reverse-button">
+              <Button
+                sx={{
+                  color: "#323336",
+                }}
+                aria-label="center back"
+                size="medium"
+                onClick={reverseJourney}
+              >
+                {<FaArrowsAltV />}
+              </Button>
+            </div>
+            <div className="input-options">
+              <Autocomplete options={searchLimits}>
+                <input
+                  id="destination"
+                  placeholder="Destination"
+                  ref={destinationRef}
+                />
+              </Autocomplete>
+            </div>
           </div>
-          <div className="reverse-button">
-          <Button
-            sx={{
-              color: "#323336",
-            }}
-            aria-label="center back"
-            size="medium"
-            onClick={reverseJourney}
-          >
-            {<FaArrowsAltV />}
-          </Button>
-        </div>
           <div className="input-options">
-            <Autocomplete options={searchLimits}>
-              <input
-                id="destination"
-                placeholder="Destination"
-                ref={destinationRef}
-              />
-            </Autocomplete>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DateTimePicker
+          label="Departure Time"
+          value={dateTime}
+          onChange={handleTimeChange}
+          renderInput={(params) => <TextField {...params} />}
+        />
+        </LocalizationProvider>
+            {/* <input
+              type="datetime-local"
+              id="datetime"
+              onChange={(selection) => setDateTime(selection.target.value)}
+              value={dateTime}
+            /> */}
           </div>
-          
         </div>
-        {/* <input type="datetime-local"/> */}
-        {/* </Grid> */}
-        
 
         <div className="buttons">
           <ButtonGroup
@@ -136,8 +169,6 @@ const Journey = (props) => {
               "& .MuiButtonGroup-grouped:not(:last-of-type)": {
                 borderColor: "darkgrey",
               },
-              // display: "flex",
-              // justifyContent: "center"
             }}
           >
             <Button

@@ -9,7 +9,7 @@
     max-height: 100%;
     border-radius: 10px;
     white-space: normal;
-    overflow:scroll;
+    overflow-x:scroll;
     box-shadow: 2px 12px 24px 0px rgba(0,0,0,0.43);
     z-index: 2;
    

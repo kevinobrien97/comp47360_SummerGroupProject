@@ -35,24 +35,7 @@ const MiniNav = (props) => {
             Journey
           </Button>
 
-          <Button
-            sx={{
-              height: "4rem",
-            }}
-            color="inherit"
-            type="button"
-            onClick={() =>
-              props.setSidebarOption({
-                journey: false,
-                nearest: true,
-                route: false,
-                stop: false,
-                favourites: false,
-              })
-            }
-          >
-            Nearest
-          </Button>
+       
           <Button
             sx={{
               height: "4rem",

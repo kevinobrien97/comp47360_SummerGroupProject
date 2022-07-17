@@ -12,12 +12,17 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
+
+from rest_framework.views import APIView
+
 # Create your views here.
-class StopsView(viewsets.ModelViewSet):  
+class StopsView(viewsets.ModelViewSet): 
+    permission_classes = (AllowAny,) 
     serializer_class = StopsSerializer   
     queryset = Stops.objects.all()
 
 class WeatherView(viewsets.ModelViewSet):
+    permission_classes = (AllowAny,)
     serializer_class = WeatherSerializer
     queryset = Weather.objects.all()
 
@@ -29,10 +34,24 @@ class RoutesView(viewsets.ModelViewSet):
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
-class RegisterView(generics.CreateAPIView):
+# class RegisterView(generics.CreateAPIView):
+class RegisterView(APIView):
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
-    serializer_class = RegisterSerializer
+    # serializer_class = RegisterSerializer
+    def post(self, request, format='json'):
+        serializer = RegisterSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            if user:
+                json = serializer.data
+                return Response(json, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class SampleHelloWorldView(APIView):
+    
+    def get(self, request):
+        return Response(data={"hello":"world"}, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])

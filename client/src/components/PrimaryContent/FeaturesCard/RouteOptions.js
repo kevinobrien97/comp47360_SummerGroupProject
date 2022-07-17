@@ -59,6 +59,9 @@ const RouteOptions = (props) => {
                     ) : (
                       // the below query checks if the bus used is outside main network (this will have line.name instead of line.short_name) and gives different bg colour
                     // could use similar logic later for whether we have our own prediction or not
+                    // <span key={idx} style={{ pointerEvents: "none" }}>
+                    //     <FaBus /> <span style={{ backgroundColor: "yellow", borderRadius: "10px", padding: "3px"}}> {step.transit.line.short_name || step.transit.line.short_name}</span>
+                      // </span>
                     (step.transit.line.short_name ?
                       <span key={idx} style={{ pointerEvents: "none" }}>
                         <FaBus /> <span style={{ backgroundColor: "green", borderRadius: "10px", padding: "3px"}}> {step.transit.line.short_name}</span>

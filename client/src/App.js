@@ -42,18 +42,26 @@ function App() {
   return (
     // initially divided as I intended to incorporate mobile optimisations by using 2 different renders in app js (one for desktop and one for mobile)
     //don't think it is needed anymore - flagged for future change 
+
     <div className="App">
-      <Router>
+        <Router>
         <AuthProvider>
         <Navbar openLogIn={openLogIn} openSignUp={openSignUp}></Navbar>
+        {/* <Switch> */}
         <Routes>
-          <Route path="/" element={<Map/>}/>
+          <Route path="/" element={
+          <Map/>
+          }/>
+        {/* </Routes>
+        <Routes> */}
+        {logInWindow && <Route path="/login/" element={<LogIn closeLogIn={closeLogIn}></LogIn>}/>}
         </Routes>
-        {logInWindow && <LogIn closeLogIn={closeLogIn}></LogIn>}
+        {/* </Switch> */}
         {SignUpWindow && <SignUp closeSignUp={closeSignUp}></SignUp>}        
         </AuthProvider>
-      </Router>
+        </Router>
     </div>
+    
   )
 }
 

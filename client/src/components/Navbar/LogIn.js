@@ -1,37 +1,9 @@
 import React, { useState } from "react";
-
-import {
-  Card,
-  Button,
-  FormControl,
-  FormGroup,
-  TextField,
-  InputLabel,
-} from "@mui/material";
-
+import { Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
 import classes from "./LogInSignUp.module.css";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
-
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     display: 'flex',
-//     flexDirection: 'column',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     padding: theme.spacing(2),
-
-//     '& .MuiTextField-root': {
-//       margin: theme.spacing(1),
-//       width: '300px',
-//     },
-//     '& .MuiButtonBase-root': {
-//       margin: theme.spacing(2),
-//     },
-//   },
-// }));
 
 const LogIn = (props) => {
   // const classes = useStyles();
@@ -47,7 +19,6 @@ const LogIn = (props) => {
     props.closeLogIn();
   };
   return (
-    // <ThemeProvider theme={useStyles}>
     <div>
       <div className={classes.back_drop} onClick={props.closeLogIn}></div>
       <div className={classes.log_in_modal}>
@@ -87,8 +58,6 @@ const LogIn = (props) => {
                 <Button type="submit" variant="contained" color="primary">
                   Login
                 </Button>
-                {/* <Button onClick={props.closeLogIn}>close me</Button> */}
-                {/* <Button onClick={() => { console.log(username) }}>output test</Button> */}
               </div>
             </form>
           </div>
@@ -96,7 +65,6 @@ const LogIn = (props) => {
         </div>
       </div>
     </div>
-    // </ThemeProvider>
   );
 };
 

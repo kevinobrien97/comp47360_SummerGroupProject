@@ -32,10 +32,6 @@ const RouteOptions = (props) => {
     <div>
       {props.options.map((route, index) => (
         <React.Fragment key={index}>
-          {/* <Button
-               
-                value={index}
-                onClick={pickRoute}> */}
           <Accordion
           disableGutters={true}>
             <AccordionSummary

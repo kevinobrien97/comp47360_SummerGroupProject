@@ -75,16 +75,16 @@ const SideContainer = (props) => {
   }, [fetchStopsData]);
 
   // handling possible output states
-  let content = <p>Sending request...</p>;
-  if (Object.keys(stops).length > 0) {
-    content = <p>{stops["stop_name"]}</p>;
-  }
-  if (error) {
-    content = <p>{error}</p>;
-  }
-  if (isLoading) {
-    content = <p>Loading data...</p>;
-  }
+  // let content = <p>Sending request...</p>;
+  // if (Object.keys(stops).length > 0) {
+  //   content = <p>{stops["stop_name"]}</p>;
+  // }
+  // if (error) {
+  //   content = <p>{error}</p>;
+  // }
+  // if (isLoading) {
+  //   content = <p>Loading data...</p>;
+  // }
 
   return (
     <div className="side-container">

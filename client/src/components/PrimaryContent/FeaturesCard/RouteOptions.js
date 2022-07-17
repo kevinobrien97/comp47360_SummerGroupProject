@@ -1,7 +1,5 @@
 import React from "react";
-import classes from "./RouteOptions.module.css";
 import {
-  Button,
   Accordion,
   AccordionSummary,
   AccordionDetails,
@@ -15,10 +13,10 @@ const RouteOptions = (props) => {
 
   console.log("props", props.options);
 
-  const pickRoute = (event) => {
-    console.log("triggered", event.target.value);
-    props.selectedRoute(event.target.value);
-  };
+  // const pickRoute = (event) => {
+  //   console.log("triggered", event.target.value);
+  //   props.selectedRoute(event.target.value);
+  // };
 
   // conditionally sets bg colour of options
   // const bgColor = (id) => {

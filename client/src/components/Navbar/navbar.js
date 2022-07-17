@@ -116,13 +116,14 @@ const Navbar = (props) => {
                     Login
                   </Button>
                 </Link>
-
+                <Link to={"/register/"} style={{ textDecoration: "none" }}>
                 <Button
                   sx={{
                     backgroundColor: "black",
                     height: "4rem",
                     minWidth: "6rem",
                     borderColor: "#323336",
+                    color: "white",
                     "&:hover": {
                       backgroundColor: "#fff",
                       color: "black",
@@ -131,8 +132,9 @@ const Navbar = (props) => {
                   onClick={props.openSignUp}
                   color="inherit"
                 >
-                  Sign-Up
+                  Register
                 </Button>
+                </Link>
               </span>
             ) : (
               <AccountOptions user={user} logoutUser={logoutUser}></AccountOptions>

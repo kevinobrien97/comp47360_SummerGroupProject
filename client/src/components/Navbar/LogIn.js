@@ -1,26 +1,21 @@
 import React, { useState } from "react";
 import { Button, TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import classes from "./LogInSignUp.module.css";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 
-const LogIn = (props) => {
-  // const classes = useStyles();
+const LogIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { loginUser } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     // prevent reload
     event.preventDefault();
-    loginUser(username, password, navigate);
-    props.closeLogIn();
+    loginUser(username, password);
   };
   return (
     <div>
-      <div className={classes.back_drop} onClick={props.closeLogIn}></div>
       <div className={classes.log_in_modal}>
         <div className={classes.log_in_modal_content}>
           <header>

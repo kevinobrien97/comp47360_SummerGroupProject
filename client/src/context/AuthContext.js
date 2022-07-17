@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
   console.log("userauth", user);
   const navigate = useNavigate();
 
-  const loginUser = async (username, password, navigate) => {
+  const loginUser = async (username, password) => {
     const response = await fetch("http://127.0.0.1:8000/api/token/", {
       method: "POST",
       headers: {
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
       setAuthTokens(data);
       setUser(jwt_decode(data.access));
       localStorage.setItem("authTokens", JSON.stringify(data));
-      // history.push("/");
+      console.log(response)
       navigate("/");
       // navigate('/')
       // return <Navigate to="/" />
@@ -63,9 +63,10 @@ export const AuthProvider = ({ children }) => {
       }),
     });
     if (response.status === 201) {
+      console.log(response)
       // history.push("/login");
+      navigate('/register/');
       
-      alert("Create successfully!");
     } else {
       alert("Something went wrong!");
     }

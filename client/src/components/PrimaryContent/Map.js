@@ -9,7 +9,6 @@ import { useState } from "react";
 // import Journey from "./Journey/Journey";
 // import RouteOptions from "./Journey/RouteOptions";
 import SideContainer from "./FeaturesCard/SideContainer";
-import { Drawer } from "@mui/material";
 
 const center = { lat: 53.3473, lng: -6.2591 };
 // not setting libraries directly to prevent a bug
@@ -21,7 +20,6 @@ const Map = (props) => {
   const [mapLoaded, setMapLoaded] = useState(null);
   const [directionsOutput, setDirectionsOutput] = useState(null);
   const [showRoutes, setShowRoutes] = useState(false);
-  const [distance, setDistance] = useState("");
   const [drawer, setDrawer] = useState(true);
   const [selectedStop, setSelectedStop] = useState(null);
 
@@ -68,7 +66,6 @@ const Map = (props) => {
     });
     console.log("res", results);
     setDirectionsOutput(results);
-    setDistance(results.routes[0].legs[0].distance.text);
     getRoutesHandler(results.routes);
     setChosenRoute(0);
   }
@@ -81,7 +78,6 @@ const Map = (props) => {
 
   function cancelRoute() {
     setDirectionsOutput(null);
-    setDistance("");
     setChosenRoute();
     setAllRoutes();
   }

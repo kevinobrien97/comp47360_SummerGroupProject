@@ -1,7 +1,7 @@
 import "./MiniNav.css";
 import "./SideContainer.css";
-import { AppBar, Toolbar, Typography, Stack, Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { AppBar, Toolbar, Button } from "@mui/material";
+
 const MiniNav = (props) => {
   return (
     <div className="mininav-items">
@@ -9,12 +9,9 @@ const MiniNav = (props) => {
         position="static"
         style={{
           backgroundColor: "#F1B23E",
-   
         }}
       >
         <Toolbar>
-          {/* <Typography variant="h6" component="div" /> */}
-          {/* <Stack direction="row"></Stack> */}
        
           <Button
             sx={{
@@ -25,7 +22,6 @@ const MiniNav = (props) => {
             onClick={() =>
               props.setSidebarOption({
                 journey: true,
-                nearest: false,
                 route: false,
                 stop: false,
                 favourites: false,
@@ -44,25 +40,6 @@ const MiniNav = (props) => {
             onClick={() =>
               props.setSidebarOption({
                 journey: false,
-                nearest: true,
-                route: false,
-                stop: false,
-                favourites: false,
-              })
-            }
-          >
-            Nearest
-          </Button>
-          <Button
-            sx={{
-              height: "4rem",
-            }}
-            color="inherit"
-            type="button"
-            onClick={() =>
-              props.setSidebarOption({
-                journey: false,
-                nearest: false,
                 route: true,
                 stop: false,
                 favourites: false,
@@ -80,7 +57,6 @@ const MiniNav = (props) => {
             onClick={() =>
               props.setSidebarOption({
                 journey: false,
-                nearest: false,
                 route: false,
                 stop: true,
                 favourites: false,
@@ -99,7 +75,6 @@ const MiniNav = (props) => {
             onClick={() =>
               props.setSidebarOption({
                 journey: false,
-                nearest: false,
                 route: false,
                 stop: false,
                 favourites: true,

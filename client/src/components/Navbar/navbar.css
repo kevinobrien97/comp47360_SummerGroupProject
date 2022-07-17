@@ -1,15 +1,23 @@
 .weather-container {
-    margin-left: 80%;
-    background-color: black;
-    position: absolute;
-    border-radius: 30px;
-    width: 3rem;
-    display: flex;
-
-
+  margin-left: 80%;
+  background-color: black;
+  position: absolute;
+  border-radius: 30px;
+  width: 3rem;
+  display: flex;
 }
 .display-weather {
-    font-weight: bold;
-    margin-left: .3rem;
-
+  font-weight: bold;
+  margin-left: 0.3rem;
 }
+
+/* .Button {
+  margin-left: 2rem;
+  background-color: yellow;
+  color: green;
+}
+
+.Button:hover {
+  background-color: #fff;
+  color: black;
+} */

@@ -1,7 +1,5 @@
 import React from "react";
-import classes from "./RouteOptions.module.css";
 import {
-  Button,
   Accordion,
   AccordionSummary,
   AccordionDetails,
@@ -15,10 +13,10 @@ const RouteOptions = (props) => {
 
   console.log("props", props.options);
 
-  const pickRoute = (event) => {
-    console.log("triggered", event.target.value);
-    props.selectedRoute(event.target.value);
-  };
+  // const pickRoute = (event) => {
+  //   console.log("triggered", event.target.value);
+  //   props.selectedRoute(event.target.value);
+  // };
 
   // conditionally sets bg colour of options
   // const bgColor = (id) => {
@@ -32,10 +30,6 @@ const RouteOptions = (props) => {
     <div>
       {props.options.map((route, index) => (
         <React.Fragment key={index}>
-          {/* <Button
-               
-                value={index}
-                onClick={pickRoute}> */}
           <Accordion
           disableGutters={true}>
             <AccordionSummary
@@ -59,6 +53,9 @@ const RouteOptions = (props) => {
                     ) : (
                       // the below query checks if the bus used is outside main network (this will have line.name instead of line.short_name) and gives different bg colour
                     // could use similar logic later for whether we have our own prediction or not
+                    // <span key={idx} style={{ pointerEvents: "none" }}>
+                    //     <FaBus /> <span style={{ backgroundColor: "yellow", borderRadius: "10px", padding: "3px"}}> {step.transit.line.short_name || step.transit.line.short_name}</span>
+                      // </span>
                     (step.transit.line.short_name ?
                       <span key={idx} style={{ pointerEvents: "none" }}>
                         <FaBus /> <span style={{ backgroundColor: "green", borderRadius: "10px", padding: "3px"}}> {step.transit.line.short_name}</span>

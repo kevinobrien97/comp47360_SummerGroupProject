@@ -38,7 +38,9 @@ urlpatterns = [
     #path('', views.getRoutes),
     path('test/', views.testEndPoint, name='test'),
     url(r'^api/v1/', include('djoser.urls')),
-    url(r'^api/v1/', include('djoser.urls.authtoken')),  
+    url(r'^api/v1/', include('djoser.urls.authtoken')),
+
+    path('api/hello/', views.SampleHelloWorldView.as_view(), name='hello_world'),
 ]
 
 urlpatterns += router.urls

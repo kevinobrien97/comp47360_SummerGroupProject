@@ -23,8 +23,6 @@ const Journey = (props) => {
 
   useEffect(() => {}, [dateTime]);
 
-  console.log("time", currentTime);
-
   const triggerRouteCalculator = () => {
     if (originRef.current.value === "" || destinationRef.current.value === "") {
       return;

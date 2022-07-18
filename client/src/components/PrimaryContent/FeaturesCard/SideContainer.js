@@ -82,7 +82,7 @@ const SideContainer = (props) => {
           <LoadingSpinner text={"Loading Stops..."}></LoadingSpinner>
         )}
         {sidebarOption.favourites && !props.isLoading && (
-          <Favourites stops={props.stops}></Favourites>
+          <Favourites stops={props.stops} setMarker={setMarker}></Favourites>
         )}
       </div>
     </div>

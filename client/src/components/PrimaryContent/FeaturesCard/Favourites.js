@@ -21,47 +21,42 @@ const Favourites = (props) => {
     <div className={classes.fav_container}>
       <h6></h6>
       <div>
-      <Autocomplete
-        value={selectedStopList}
-        onChange={(event, newStop) => {
-          console.log("0", newStop);
-          setSelectedStopList(newStop);
-        }}
-        inputValue={autocompleteSelection}
-        onInputChange={(event, newInputValue) => {
-          setAutocompleteSelection(newInputValue);
-        }}
-        disablePortal
-        id="stop-search"
-        options={busStops}
-        sx={{ width: 300 }}
-        renderInput={(params) => (
-          <TextField {...params} label="Select Bus Stop" />
-        )}
-      />
+        <Autocomplete
+          value={selectedStopList}
+          onChange={(event, newStop) => {
+            console.log("0", newStop);
+            setSelectedStopList(newStop);
+          }}
+          inputValue={autocompleteSelection}
+          onInputChange={(event, newInputValue) => {
+            setAutocompleteSelection(newInputValue);
+          }}
+          disablePortal
+          id="stop-search"
+          options={busStops}
+          sx={{ width: 300 }}
+          renderInput={(params) => (
+            <TextField {...params} label="Select Bus Stop" />
+          )}
+        />
       </div>
       <div>
-      {user ? (
-        <FavouriteStops></FavouriteStops>
-      ) : (
-        <div className={classes.loggedOut}>
-          <h4>You are not logged in.</h4>
-          <p> <Link to={"/login/"} style={{ textDecoration: "none" }}> 
-              <Button type="submit">
-                Login
-              </Button>
+        {user ? (
+          <FavouriteStops></FavouriteStops>
+        ) : (
+          <div className={classes.loggedOut}>
+            <h4>You are not logged in.</h4>
+            <p>
+              {" "}
+              <Link to={"/login/"} style={{ textDecoration: "none" }}>
+                <Button type="submit">Login</Button>
               </Link>
-              {"or"} 
-
-                <Button type="submit">
-                  Register
-                </Button>
-        
-         to view your favourites.
-              
-          </p>
-        </div>
-      )}
+              {"or"}
+              <Button type="submit">Register</Button>
+              to view your favourites.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

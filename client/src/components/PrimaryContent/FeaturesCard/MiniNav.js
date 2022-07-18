@@ -11,10 +11,12 @@ const MiniNav = (props) => {
           backgroundColor: "#F1B23E",
         }}
       >
-        <Toolbar style={{
-          display:"flex",
-          justifyContent: "space-evenly",
-        }}>
+        <Toolbar
+          style={{
+            display: "flex",
+            justifyContent: "space-evenly",
+          }}
+        >
           <Button
             sx={{
               height: "4rem",

@@ -11,8 +11,10 @@ const MiniNav = (props) => {
           backgroundColor: "#F1B23E",
         }}
       >
-        <Toolbar>
-       
+        <Toolbar style={{
+          display:"flex",
+          justifyContent: "space-evenly",
+        }}>
           <Button
             sx={{
               height: "4rem",
@@ -30,7 +32,6 @@ const MiniNav = (props) => {
           >
             Journey
           </Button>
-
           <Button
             sx={{
               height: "4rem",
@@ -68,7 +69,6 @@ const MiniNav = (props) => {
           <Button
             sx={{
               height: "4rem",
-              padding: 2,
             }}
             color="inherit"
             type="button"
@@ -83,7 +83,6 @@ const MiniNav = (props) => {
           >
             Favourites
           </Button>
-       
         </Toolbar>
       </AppBar>
     </div>

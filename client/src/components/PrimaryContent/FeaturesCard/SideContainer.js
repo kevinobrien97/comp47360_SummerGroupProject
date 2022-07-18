@@ -7,6 +7,7 @@ import Nearest from "./Nearest";
 import Route from "./Route";
 import Stop from "./Stop";
 import Favourites from "./Favourites";
+import LoadingSpinner from "../../LoadingSpinner";
 
 const SideContainer = (props) => {
   const [sidebarOption, setSidebarOption] = useState({
@@ -46,9 +47,6 @@ const SideContainer = (props) => {
     props.selectedRoute(sel);
   }
 
-
-
-
   return (
     <div className="side-container">
       <MiniNav setSidebarOption={setSidebarOption} />
@@ -74,10 +72,18 @@ const SideContainer = (props) => {
         )}
         {sidebarOption.nearest && <Nearest></Nearest>}
         {sidebarOption.route && <Route></Route>}
+        {sidebarOption.stop && props.isLoading && (
+          <LoadingSpinner text={"Loading Stops..."}></LoadingSpinner>
+        )}
         {sidebarOption.stop && !props.isLoading && (
           <Stop stops={props.stops} setMarker={setMarker}></Stop>
         )}
-        {sidebarOption.favourites && <Favourites stops={props.stops}></Favourites>}
+        {sidebarOption.favourites && props.isLoading && (
+          <LoadingSpinner text={"Loading Stops..."}></LoadingSpinner>
+        )}
+        {sidebarOption.favourites && !props.isLoading && (
+          <Favourites stops={props.stops}></Favourites>
+        )}
       </div>
     </div>
   );

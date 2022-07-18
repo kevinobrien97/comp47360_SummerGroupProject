@@ -4,6 +4,7 @@ import LogIn from "./components/Navbar/LogIn";
 import SignUp from "./components/Navbar/SignUp";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 function App() {
 

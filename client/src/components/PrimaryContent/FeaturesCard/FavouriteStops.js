@@ -10,7 +10,8 @@ const FavouriteStops = (props) => {
   return (
     <div className={classes.favouriteStops}>
       <h3>Your Favourite Stops</h3>
-      {props.stops ? (
+      {console.log('bug',props.stops)}
+      {props.stops[0] ? (
         <ul className={classes.stop_options}>
           {props.stops.map((stop, index) => (
             <li key={stop.stop_id}>

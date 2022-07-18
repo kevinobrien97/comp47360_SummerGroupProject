@@ -8,27 +8,40 @@ import { Link } from "react-router-dom";
 const Favourites = (props) => {
   const { user } = useContext(AuthContext);
 
-  const busStops = props.stops.map((stop) => {
+  const busStops = props.stops.map((stop, index) => {
     return { label: stop.stop_name, key: stop.stop_id };
   });
 
-  const [selectedStop, setSelectedStop] = useState();
+  const [stopsList, setStopsList] = useState([])
+
+  const addStop = (stop) => {
+    const idx = Object.keys(busStops).find(key => busStops[key]===stop)
+    const stopObj = props.stops[idx]
+    console.log(props.stops[stopObj])
+    setStopsList((prevStopsList) => {
+      return [...prevStopsList, stopObj];
+    });
+  };
+
+  // const [selectedStop, setSelectedStop] = useState();
   const [autocompleteSelection, setAutocompleteSelection] = useState("");
-  const [selectedStopList, setSelectedStopList] = useState();
+  const [selectedStopList, setSelectedStopList] = useState(null);
 
   console.log(busStops);
   return (
     <div className={classes.fav_container}>
-      <h6></h6>
       <div>
         <Autocomplete
           value={selectedStopList}
-          onChange={(event, newStop) => {
-            console.log("0", newStop);
+          onChange={(_event, newStop) => {
+            console.log("0", typeof newStop);
+            console.log("1", typeof busStops[0]);
+            console.log(newStop === busStops[0]);
             setSelectedStopList(newStop);
+            addStop(newStop);
           }}
           inputValue={autocompleteSelection}
-          onInputChange={(event, newInputValue) => {
+          onInputChange={(_event, newInputValue) => {
             setAutocompleteSelection(newInputValue);
           }}
           disablePortal
@@ -42,7 +55,7 @@ const Favourites = (props) => {
       </div>
       <div>
         {user ? (
-          <FavouriteStops></FavouriteStops>
+          <FavouriteStops stops={stopsList} setMarker={props.setMarker}></FavouriteStops>
         ) : (
           <div className={classes.loggedOut}>
             <h4>You are not logged in.</h4>

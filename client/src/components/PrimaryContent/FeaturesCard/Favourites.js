@@ -4,23 +4,38 @@ import classes from "./Favourites.module.css";
 import FavouriteStops from "./FavouriteStops";
 import AuthContext from "../../../context/AuthContext";
 import { Link } from "react-router-dom";
+import Warning from "./Warning";
 
 const Favourites = (props) => {
   const { user } = useContext(AuthContext);
+  const [error, setError] = useState(null);
 
   const busStops = props.stops.map((stop, index) => {
     return { label: stop.stop_name, key: stop.stop_id };
   });
 
-  const [stopsList, setStopsList] = useState([])
+  const [stopsList, setStopsList] = useState([]);
 
   const addStop = (stop) => {
-    const idx = Object.keys(busStops).find(key => busStops[key]===stop)
-    const stopObj = props.stops[idx]
-    console.log(props.stops[stopObj])
-    setStopsList((prevStopsList) => {
-      return [...prevStopsList, stopObj];
-    });
+    // remove error initially, reset below on conditional
+    setError(null);
+    // if not blank
+    if (stop) {
+      const idx = Object.keys(busStops).find((key) => busStops[key] === stop);
+      const stopObj = props.stops[idx];
+      console.log(props.stops[stopObj]);
+
+      // returns true if the stop is already in stopsList
+      const inArr = stopsList.some((elem) => elem.stop_id === stopObj.stop_id);
+
+      if (!inArr) {
+        setStopsList((prevStopsList) => {
+          return [...prevStopsList, stopObj];
+        });
+      } else {
+        setError("Chosen stop is already in your favourites");
+      }
+    }
   };
 
   // const [selectedStop, setSelectedStop] = useState();
@@ -53,9 +68,13 @@ const Favourites = (props) => {
           )}
         />
       </div>
+      {error && <Warning error={error}></Warning>}
       <div>
         {user ? (
-          <FavouriteStops stops={stopsList} setMarker={props.setMarker}></FavouriteStops>
+          <FavouriteStops
+            stops={stopsList}
+            setMarker={props.setMarker}
+          ></FavouriteStops>
         ) : (
           <div className={classes.loggedOut}>
             <h4>You are not logged in.</h4>

@@ -9,7 +9,7 @@ const FavouriteStops = (props) => {
   };
   return (
     <div className={classes.favouriteStops}>
-      <h3>Your Favourite Stops</h3>
+      <h3 style={{marginTop: "0.75rem", marginBottom: "0.75rem"}}>Your Favourite Stops</h3>
       {console.log('bug',props.stops)}
       {props.stops[0] ? (
         <ul className={classes.stop_options}>

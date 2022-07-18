@@ -63,6 +63,7 @@ const Navbar = (props) => {
       position="static"
       style={{
         backgroundColor: "#323336",
+        
       }}
     >
       {isMatch ? (

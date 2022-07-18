@@ -78,7 +78,7 @@ const Stop = (props) => {
                       color: "black",
                     },
                   }}
-                  style={bgColor(stop.stop_id)}
+                  // style={bgColor(stop.stop_id)}
                   value={index}
                   onClick={pickStops}
                 >

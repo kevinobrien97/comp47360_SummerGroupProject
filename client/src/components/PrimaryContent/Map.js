@@ -1,3 +1,4 @@
+import { React, useState, useCallback, useEffect } from "react";
 import "./Map.css";
 import {
   useJsApiLoader,
@@ -5,7 +6,7 @@ import {
   Marker,
   DirectionsRenderer,
 } from "@react-google-maps/api";
-import { useState } from "react";
+
 // import Journey from "./Journey/Journey";
 // import RouteOptions from "./Journey/RouteOptions";
 import SideContainer from "./FeaturesCard/SideContainer";
@@ -15,6 +16,46 @@ const center = { lat: 53.3473, lng: -6.2591 };
 const libraries = ["places"];
 
 const Map = (props) => {
+  const [stops, setStops] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fetchStopsData = useCallback(async () => {
+    setError(null);
+    setIsLoading(true);
+    try {
+      // fetch returns a promise
+      // is asynchronous
+      const response = await fetch("http://127.0.0.1:8000/api/stops/");
+      if (!response.ok) {
+        // wont continue with next line if error thrown
+        throw new Error("Something went wrong loading stops");
+      }
+      const data = await response.json();
+      console.log('in stops');
+      setStops(data);
+    } catch (error) {
+      setError(error.message);
+    }
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    fetchStopsData();
+  }, [fetchStopsData]);
+
+  // handling possible output states
+  // let content = <p>Sending request...</p>;
+  // if (Object.keys(stops).length > 0) {
+  //   content = <p>{stops["stop_name"]}</p>;
+  // }
+  // if (error) {
+  //   content = <p>{error}</p>;
+  // }
+  // if (isLoading) {
+  //   content = <p>Loading data...</p>;
+  // }
+
   const [allRoutes, setAllRoutes] = useState();
   const [chosenRoute, setChosenRoute] = useState();
   const [mapLoaded, setMapLoaded] = useState(null);
@@ -96,11 +137,14 @@ const Map = (props) => {
   }
 
   return (
-    <div style={{ height: "calc(100vh - 64px)",
-      width: "100%",
-      zIndex: "0",
-      position: "absolute"
-    }}>
+    <div
+      style={{
+        height: "calc(100vh - 64px)",
+        width: "100%",
+        zIndex: "0",
+        position: "absolute",
+      }}
+    >
       {/* <div className="journey-container"> */}
       {/* {allRoutes && showRoutes && (
           <RouteOptions
@@ -120,6 +164,8 @@ const Map = (props) => {
       {drawer && (
         <div>
           <SideContainer
+            isLoading={isLoading}
+            stops={stops}
             removeRoutes={removeRoutes}
             chosenRoute={chosenRoute}
             options={allRoutes}
@@ -138,12 +184,15 @@ const Map = (props) => {
           // to do -- center map on users current location
           center={center}
           zoom={13}
-          mapContainerStyle={{ width: "100%", height: "calc(100vh - 64px)", position: "relative" }}
+          mapContainerStyle={{
+            width: "100%",
+            height: "100%",
+            position: "relative",
+          }}
           // can remove any default controls - should not need these for our app
           options={{ fullscreenControl: false, streetViewControl: false }}
           onLoad={(mapLoaded) => setMapLoaded(mapLoaded)}
         >
-          {/* will need a variant of the below later */}
           <Marker position={selectedStop}></Marker>
           {directionsOutput && (
             <DirectionsRenderer

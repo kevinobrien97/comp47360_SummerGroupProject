@@ -1,7 +1,7 @@
 import { React, useState, useContext } from "react";
 import classes from "./LogInSignUp.module.css";
 import { Button, TextField } from "@mui/material";
-
+import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 
 const SignUp = () => {
@@ -67,11 +67,14 @@ const SignUp = () => {
                   Register
                 </Button>
               </div>
+              </form>
               Already have an account?{"  "}
+              <Link to={"/login/"} style={{ textDecoration: "none" }}> 
               <Button type="submit" variant="contained" style={{ color: "#2196f3", backgroundColor: "white" }}>
                 Login
               </Button>
-            </form>
+              </Link>
+     
           </div>
         </div>
       </div>

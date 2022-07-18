@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
   console.log("userauth", user);
   const navigate = useNavigate();
 
+
   const loginUser = async (username, password) => {
     const response = await fetch("http://127.0.0.1:8000/api/token/", {
       method: "POST",
@@ -65,7 +66,7 @@ export const AuthProvider = ({ children }) => {
     if (response.status === 201) {
       console.log(response)
       // history.push("/login");
-      navigate('/register/');
+      navigate('/login/');
       
     } else {
       alert("Something went wrong!");

@@ -96,7 +96,11 @@ const Map = (props) => {
   }
 
   return (
-    <div>
+    <div style={{ height: "calc(100vh - 64px)",
+      width: "100%",
+      zIndex: "0",
+      position: "absolute"
+    }}>
       {/* <div className="journey-container"> */}
       {/* {allRoutes && showRoutes && (
           <RouteOptions
@@ -134,7 +138,7 @@ const Map = (props) => {
           // to do -- center map on users current location
           center={center}
           zoom={13}
-          mapContainerStyle={{ width: "100%", height: "100%" }}
+          mapContainerStyle={{ width: "100%", height: "calc(100vh - 64px)", position: "relative" }}
           // can remove any default controls - should not need these for our app
           options={{ fullscreenControl: false, streetViewControl: false }}
           onLoad={(mapLoaded) => setMapLoaded(mapLoaded)}

@@ -8,7 +8,7 @@ import { AuthProvider } from "./context/AuthContext";
 function App() {
 
   return (
-    <div className="App">
+    <div>
       <Router>
         <AuthProvider>
           <Navbar></Navbar>

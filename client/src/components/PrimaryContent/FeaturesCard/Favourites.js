@@ -19,21 +19,28 @@ const Favourites = (props) => {
   const addStop = (stop) => {
     // remove error initially, reset below on conditional
     setError(null);
+
     // if not blank
     if (stop) {
-      const idx = Object.keys(busStops).find((key) => busStops[key] === stop);
-      const stopObj = props.stops[idx];
-      console.log(props.stops[stopObj]);
+      if (user) {
+        const idx = Object.keys(busStops).find((key) => busStops[key] === stop);
+        const stopObj = props.stops[idx];
+        console.log(props.stops[stopObj]);
 
-      // returns true if the stop is already in stopsList
-      const inArr = stopsList.some((elem) => elem.stop_id === stopObj.stop_id);
+        // returns true if the stop is already in stopsList
+        const inArr = stopsList.some(
+          (elem) => elem.stop_id === stopObj.stop_id
+        );
 
-      if (!inArr) {
-        setStopsList((prevStopsList) => {
-          return [...prevStopsList, stopObj];
-        });
+        if (!inArr) {
+          setStopsList((prevStopsList) => {
+            return [...prevStopsList, stopObj];
+          });
+        } else {
+          setError("Chosen stop is already in your favourites");
+        }
       } else {
-        setError("Chosen stop is already in your favourites");
+        setError("You need to be logged in to set favourites");
       }
     }
   };

@@ -6,6 +6,7 @@ import AuthContext from "../../../context/AuthContext";
 import { Link } from "react-router-dom";
 import Warning from "./Warning";
 import useAxios from "../../../utils/useAxios";
+import LoadingSpinner from "../../LoadingSpinner";
 
 const Favourites = (props) => {
   const { user } = useContext(AuthContext);
@@ -14,14 +15,13 @@ const Favourites = (props) => {
   // const [selectedStop, setSelectedStop] = useState();
   const [autocompleteSelection, setAutocompleteSelection] = useState("");
   const [selectedStopList, setSelectedStopList] = useState(null);
+  const [loadingFavourites, setLoadingFavourites] = useState(false);
 
-  const [favs, setFavs] = useState("");
-  console.log("exp", user.exp);
-
+  // const [favs, setFavs] = useState("");
   const api = useAxios();
 
   // function to add a favourite stop to the database for the user
-  const postSample = async (id) => {
+  const postStop = async (id) => {
     const response = await api.post("/favourites/", {
       stop_id: id,
     });
@@ -33,19 +33,27 @@ const Favourites = (props) => {
     }
   };
 
-  const fetchData = async () => {
-    try {
-      const response = await api.get("/favourites/");
-      console.log("!!", response.data);
-      setFavs(response.data);
-    } catch {
-      // change
-      setFavs("Something went wrong");
-    }
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      setLoadingFavourites(true);
+      let response;
+      try {
+        response = await api.get("/favourites/");
+      } catch {
+        // change
+        console.log('bug')
+      }
+      for (let i = 0; i < response.data.length; i++) {
+        const item = props.stops.find((x) => x.stop_id === response.data[i].stop_id);
+        setStopsList((prevStopsList) => {
+          return [...prevStopsList, item];
+        });
+        console.log("idx", item);
+      }
+      setLoadingFavourites(false);
+    };
     fetchData();
+    console.log("fetching");
     // only want it to run on load - they are being added to the db via postSample above, and also to the stops list
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -53,16 +61,6 @@ const Favourites = (props) => {
   const busStops = props.stops.map((stop, index) => {
     return { label: stop.stop_name, key: stop.stop_id };
   });
-
-  const initialStops = (apiRes) => {
-    // check only once
-    console.log('here')
-    for (let i = 0; i < apiRes.length; i++) {
-      console.log(apiRes[i].stop_id);
-    }
-  }
-  initialStops(favs)
- 
 
   const addStop = (stop) => {
     // remove error initially, reset below on conditional
@@ -73,7 +71,6 @@ const Favourites = (props) => {
       if (user) {
         const idx = Object.keys(busStops).find((key) => busStops[key] === stop);
         const stopObj = props.stops[idx];
-        console.log(props.stops[stopObj]);
 
         // returns true if the stop is already in stopsList
         const inArr = stopsList.some(
@@ -81,7 +78,7 @@ const Favourites = (props) => {
         );
 
         if (!inArr) {
-          postSample(stop.key);
+          postStop(stop.key);
           setStopsList((prevStopsList) => {
             return [...prevStopsList, stopObj];
           });
@@ -94,16 +91,12 @@ const Favourites = (props) => {
     }
   };
 
-  console.log(busStops);
   return (
     <div className={classes.fav_container}>
       <div>
         <Autocomplete
           value={selectedStopList}
           onChange={(_event, newStop) => {
-            console.log("0", typeof newStop);
-            console.log("1", typeof busStops[0]);
-            console.log(newStop === busStops[0]);
             setSelectedStopList(newStop);
             addStop(newStop);
           }}
@@ -123,10 +116,18 @@ const Favourites = (props) => {
       {error && <Warning error={error}></Warning>}
       <div>
         {user ? (
-          <FavouriteStops
-            stops={stopsList}
-            setMarker={props.setMarker}
-          ></FavouriteStops>
+          <div>
+            {console.log("stops list", stopsList)}
+            {loadingFavourites && (
+              <LoadingSpinner text={"Loading Favourites..."}></LoadingSpinner>
+            )}
+            {!loadingFavourites && (
+              <FavouriteStops
+                stops={stopsList}
+                setMarker={props.setMarker}
+              ></FavouriteStops>
+            )}
+          </div>
         ) : (
           <div className={classes.loggedOut}>
             <h4>You are not logged in.</h4>

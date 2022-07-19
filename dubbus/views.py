@@ -57,11 +57,6 @@ class FavouritesView(viewsets.ModelViewSet):
     def get_queryset(self):
         return self.queryset.filter(created_by=self.request.user)
 
-class SampleHelloWorldView(APIView):
-    
-    def get(self, request):
-        return Response(data={"hello":"world"}, status=status.HTTP_200_OK)
-
 @api_view(['GET'])
 def getRoutes(request):
     routes = [

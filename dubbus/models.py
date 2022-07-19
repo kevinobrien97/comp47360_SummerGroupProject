@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 # Create your models here.
 # test class
@@ -32,5 +35,16 @@ class Routes(models.Model):
     class Meta:
         managed = False
         db_table = 'routes'
+
+class FavouriteStops(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    # delete for user if the user is deleted
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    stop_id = models.CharField(max_length=300)
+
+    class Meta:
+        managed = True
+        db_table = 'favouritestops'
+
 
 

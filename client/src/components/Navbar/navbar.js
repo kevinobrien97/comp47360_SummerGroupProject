@@ -1,5 +1,4 @@
-import { React, useState, useContext, useCallback, useEffect } from "react";
-import "./Navbar.css";
+import { React, useContext } from "react";
 import {
   AppBar,
   Toolbar,
@@ -12,66 +11,24 @@ import NavDrawer from "./NavDrawer";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import AccountOptions from "./AccountOptions";
+import WeatherStatus from "./WeatherStatus";
 
-// npm install @mui/material @emotion/react @emotion/styled
 const Navbar = (props) => {
-  const [weather, setWeather] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
   const { user, logoutUser } = useContext(AuthContext);
-
-  const fetchWeatherData = useCallback(async () => {
-    setError(null);
-    setIsLoading(true);
-
-    try {
-      const response = await fetch("http://127.0.0.1:8000/api/weather/");
-      if (!response.ok) {
-        throw new Error("404");
-      }
-      const data = await response.json();
-      console.log(data[0]);
-      setWeather(data[0]);
-    } catch (error) {
-      setError(error.message);
-    }
-    setIsLoading(false);
-  }, []);
-
-  useEffect(() => {
-    fetchWeatherData();
-  }, [fetchWeatherData]);
-
-  // handling possible output states
-  let weatherContent = <p>Sending request...</p>;
-  if (Object.keys(weather).length >= 0) {
-    weatherContent = <p>{weather["temperature"]}ºC</p>;
-  }
-  if (error) {
-    weatherContent = <p>{error}</p>;
-  }
-  if (isLoading) {
-    weatherContent = <p>...</p>;
-  }
 
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
-  console.log(isMatch);
   return (
     <AppBar
       position="static"
       style={{
         backgroundColor: "#323336",
-        
       }}
     >
       {isMatch ? (
         // mobile
         <Toolbar>
-          <div className="weather-container">
-            <div className="display-weather">{weatherContent}</div>
-          </div>
+          <WeatherStatus></WeatherStatus>
           <NavDrawer />
         </Toolbar>
       ) : (
@@ -118,32 +75,33 @@ const Navbar = (props) => {
                   </Button>
                 </Link>
                 <Link to={"/register/"} style={{ textDecoration: "none" }}>
-                <Button
-                  sx={{
-                    backgroundColor: "black",
-                    height: "4rem",
-                    minWidth: "6rem",
-                    borderColor: "#323336",
-                    color: "white",
-                    "&:hover": {
-                      backgroundColor: "#fff",
-                      color: "black",
-                    },
-                  }}
-                  onClick={props.openSignUp}
-                  color="inherit"
-                >
-                  Register
-                </Button>
+                  <Button
+                    sx={{
+                      backgroundColor: "black",
+                      height: "4rem",
+                      minWidth: "6rem",
+                      borderColor: "#323336",
+                      color: "white",
+                      "&:hover": {
+                        backgroundColor: "#fff",
+                        color: "black",
+                      },
+                    }}
+                    onClick={props.openSignUp}
+                    color="inherit"
+                  >
+                    Register
+                  </Button>
                 </Link>
               </span>
             ) : (
-              <AccountOptions user={user} logoutUser={logoutUser}></AccountOptions>
+              <AccountOptions
+                user={user}
+                logoutUser={logoutUser}
+              ></AccountOptions>
             )}
           </Grid>
-          <div className="weather-container">
-            <div className="display-weather">{weatherContent}</div>
-          </div>
+          <WeatherStatus></WeatherStatus>
         </Toolbar>
       )}
     </AppBar>

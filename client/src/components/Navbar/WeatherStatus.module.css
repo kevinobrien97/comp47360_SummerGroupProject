@@ -1,4 +1,4 @@
-.weather-container {
+.weather_container {
   margin-left: 80%;
   background-color: black;
   position: absolute;
@@ -6,7 +6,7 @@
   width: 3rem;
   display: flex;
 }
-.display-weather {
+.display_weather {
   font-weight: bold;
   margin-left: 0.3rem;
 }

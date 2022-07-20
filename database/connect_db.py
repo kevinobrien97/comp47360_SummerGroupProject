@@ -8,7 +8,7 @@ engine = create_engine("mysql+mysqlconnector://shuttleup:" + SQLPW + "@shupdubli
 connection = engine.connect()
 
 def create_weather_table():
-    create_table = f"CREATE TABLE IF NOT EXISTS weather (temperature INTEGER, feels_like INTEGER, time_stamp DATETIME, weather_icon INTEGER)"
+    create_table = f"CREATE TABLE IF NOT EXISTS weather (temperature INTEGER, feels_like INTEGER, time_stamp DATETIME, weather_icon VARCHAR(5))"
     try:
         print(connection.execute(create_table).fetchall())
     except Exception as error:

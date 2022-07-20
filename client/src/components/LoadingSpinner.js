@@ -5,7 +5,8 @@ const LoadingSpinner = (props) => {
   return (
     <div style={{display: "flex", alignItems: "center", flexDirection: "column"}}>
       <ThreeDots color="#F1B23E" height={80} width={80} />
-      <p>{props.text}</p>
+      {props.text ? <p>{props.text}</p> : null}
+      
     </div>
   );
 };

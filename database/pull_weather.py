@@ -19,7 +19,6 @@ def pull_weather(api, accuapi):
     temperature = math.floor(curr_temp['main']['temp'])
     feels_like = math.floor(curr_temp['main']['feels_like'])
     time_stamp = datetime.now() + timedelta(hours=1)
-
     weather_icon = curr_temp['weather'][0]['icon']
     return {
     'weather_icon': weather_icon,

@@ -6,17 +6,17 @@ import { FaTrash } from "react-icons/fa";
 const FavouriteStops = (props) => {
   const pickStops = (event) => {
     const stop = props.stops[event.target.value];
-    console.log(stop)
+    console.log(stop);
     props.setMarker(stop.stop_lat, stop.stop_long);
   };
 
-  const removeStop = (event) => {
-    const stop = props.stops[event.target.value];
+  const removeStop = (idx) => {
+    const stop = props.stops[idx];
     console.log(stop);
     // update stopIDList
-    props.setStopsList(props.stops.filter(item => item !== stop));
+    props.setStopsList(props.stops.filter((item) => item !== stop));
     // call method to delete from database
-    props.deleteStop(stop.stop_id)
+    props.deleteStop(stop.stop_id);
   };
 
   return (
@@ -32,7 +32,7 @@ const FavouriteStops = (props) => {
               <Button
                 sx={{
                   backgroundColor: "black",
-                  width: 370,
+                  width: 330,
                   color: "white",
                   border: 3,
                   borderRadius: 5,
@@ -48,13 +48,9 @@ const FavouriteStops = (props) => {
               >
                 {stop.stop_name}
               </Button>
-              <Button
-                aria-label="delete"
-                value={index}
-                onClick={removeStop}
-              >
-                Remove
-              </Button>
+              <IconButton onClick={(e) => removeStop(index)} size="sm">
+                <FaTrash />
+              </IconButton>
             </li>
           ))}
         </ul>

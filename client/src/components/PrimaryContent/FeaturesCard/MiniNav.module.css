@@ -1,4 +1,4 @@
-.mininav-items { 
+.mininav_items { 
     height: 3rem;
     display: flex;
     justify-content: space-evenly;
@@ -6,7 +6,7 @@
     font-size: 1rem; 
     
 }
-.mininav-menu { 
+.mininav_menu { 
     display: grid; 
     text-align: center; 
     justify-content: end; 

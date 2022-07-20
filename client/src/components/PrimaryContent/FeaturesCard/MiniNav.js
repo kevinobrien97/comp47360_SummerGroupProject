@@ -1,10 +1,10 @@
-import "./MiniNav.css";
-import "./SideContainer.css";
+import classes from "./MiniNav.module.css";
+// import classes from "./SideContainer.module.css";
 import { AppBar, Toolbar, Button } from "@mui/material";
 
 const MiniNav = (props) => {
   return (
-    <div className="mininav-items">
+    <div className={classes.mininav_items}>
       <AppBar
         position="static"
         style={{

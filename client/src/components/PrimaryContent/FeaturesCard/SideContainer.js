@@ -1,5 +1,5 @@
-import { React, useState, useCallback, useEffect } from "react";
-import "./SideContainer.css";
+import { React, useState, } from "react";
+import classes from "./SideContainer.module.css";
 import MiniNav from "./MiniNav.js";
 import Journey from "./Journey";
 import RouteOptions from "./RouteOptions";
@@ -12,60 +12,35 @@ import LoadingSpinner from "../../LoadingSpinner";
 const SideContainer = (props) => {
   const [sidebarOption, setSidebarOption] = useState({
     journey: true,
-    nearest: false,
     route: false,
     stop: false,
     favourites: false,
   });
-
-  function routeCalculator(or, des, time) {
-    props.routeCalculator(or, des, time);
-  }
-
-  function cancelRoute() {
-    props.cancelRoute();
-  }
-
-  function centerMap(latLng) {
-    props.centerMap(latLng);
-  }
 
   function setMarker(lat, long) {
     const pos = { lat: lat, lng: long };
     props.setStopMarker(pos);
   }
 
-  function removeRoutes() {
-    props.removeRoutes();
-  }
-
-  let chosenRoute = props.chosenRoute;
-
-  let allRoutes = props.allRoutes;
-
-  function selectedRoute(sel) {
-    props.selectedRoute(sel);
-  }
-
   return (
-    <div className="side-container">
+    <div className={classes.side_container}>
       <MiniNav setSidebarOption={setSidebarOption} />
 
-      <div className="display">
+      <div>
         {sidebarOption.journey && (
           <div>
             <Journey
-              routeCalculator={routeCalculator}
-              cancelRoute={cancelRoute}
-              centerMap={centerMap}
+              routeCalculator={props.routeCalculator}
+              cancelRoute={props.cancelRoute}
+              centerMap={props.centerMap}
             ></Journey>
 
             {props.allRoutes && props.showRoutes && (
               <RouteOptions
-                removeRoutes={removeRoutes}
-                chosenRoute={chosenRoute}
-                options={allRoutes}
-                selectedRoute={selectedRoute}
+                removeRoutes={props.removeRoutes}
+                chosenRoute={props.chosenRoute}
+                options={props.allRoutes}
+                selectedRoute={props.selectedRoute}
               ></RouteOptions>
             )}
           </div>

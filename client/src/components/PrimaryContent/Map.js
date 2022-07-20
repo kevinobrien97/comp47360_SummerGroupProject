@@ -1,5 +1,5 @@
 import { React, useState, useCallback, useEffect } from "react";
-import "./Map.css";
+import classes from "./Map.module.css";
 import {
   useJsApiLoader,
   GoogleMap,
@@ -145,22 +145,6 @@ const Map = (props) => {
         position: "absolute",
       }}
     >
-      {/* <div className="journey-container"> */}
-      {/* {allRoutes && showRoutes && (
-          <RouteOptions
-            removeRoutes={removeRoutes}
-            chosenRoute={chosenRoute}
-            options={allRoutes}
-            selectedRoute={selectedRouteHandler}
-          ></RouteOptions>
-        )} */}
-      {/* <Journey
-          routeCalculator={routeCalculator}
-          cancelRoute={cancelRoute}
-          centerMap={centerMap}
-          // toggleDrawer={toggleDrawer}
-        ></Journey> */}
-      {/* </div> */}
       {drawer && (
         <div>
           <SideContainer
@@ -179,7 +163,7 @@ const Map = (props) => {
           ></SideContainer>
         </div>
       )}
-      <div className="google-map">
+      <div className={classes.google_map}>
         <GoogleMap
           // to do -- center map on users current location
           center={center}

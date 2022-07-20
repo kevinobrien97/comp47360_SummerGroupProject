@@ -1,15 +1,15 @@
-.journey-planner {
+.journey_planner {
   margin-top: 1.2rem;
 }
 
-.journey-options,
-.origin-destination {
+.journey_options,
+.origin_destination {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.input-options {
+.input_options {
   display: flex;
   justify-content: center;
   margin: 0.25rem;
@@ -20,19 +20,10 @@
     justify-content: center;
 }
 
-#destination,
-#origin {
+.destination,
+.origin {
   height: 1.5rem;
   width: 18rem;
-  background-color: black;
-  color: white;
-  border-radius: 5px;
-  box-shadow: lightgrey;
-}
-
-#datetime {
-  height: 1.5rem;
-  width: 12rem;
   background-color: black;
   color: white;
   border-radius: 5px;
@@ -45,15 +36,7 @@
   margin: 0.5rem;
 }
 
-.reverse-button {
+.reverse_button {
   align-self: flex-end;
   position: absolute;
-}
-
-.journey1-container {
-  margin-top: 0.5rem;
-  width: 25rem;
-  background-color: whitesmoke;
-  border-radius: 10px;
-  z-index: 2;
 }

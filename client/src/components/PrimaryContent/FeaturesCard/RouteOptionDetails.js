@@ -6,7 +6,7 @@ import { IconContext } from "react-icons";
 
 const RouteOptionDetails = (props) => {
   return (
-    <AccordionDetails>
+    <AccordionDetails sx={{ backgroundColor: "whitesmoke" }}>
       <p>
         {"Departure: "}
         <strong>{props.route.legs[0].departure_time.text}</strong>

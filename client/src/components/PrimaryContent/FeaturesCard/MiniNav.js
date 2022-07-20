@@ -1,3 +1,4 @@
+import { React } from "react";
 import classes from "./MiniNav.module.css";
 // import classes from "./SideContainer.module.css";
 import { AppBar, Toolbar, Button } from "@mui/material";
@@ -32,7 +33,6 @@ const MiniNav = (props) => {
             Journey
           </Button>
           <Button
-       
             color="inherit"
             type="button"
             onClick={() =>
@@ -73,6 +73,20 @@ const MiniNav = (props) => {
             }
           >
             Favourites
+          </Button>
+          <Button
+            onClick={props.toggleContainer}
+            sx={{
+              backgroundColor: "#F1B23E",
+              marginLeft: -3,
+              color: "white",
+              "&:hover": {
+                backgroundColor: "#fff",
+                color: "black",
+              },
+            }}
+          >
+            Hide
           </Button>
         </Toolbar>
       </AppBar>

@@ -145,7 +145,6 @@ const Map = (props) => {
         position: "absolute",
       }}
     >
-      {drawer && (
         <div>
           <SideContainer
             isLoading={isLoading}
@@ -162,7 +161,6 @@ const Map = (props) => {
             setStopMarker={setStopMarker}
           ></SideContainer>
         </div>
-      )}
       <div className={classes.google_map}>
         <GoogleMap
           // to do -- center map on users current location

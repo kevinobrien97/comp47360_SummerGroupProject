@@ -20,7 +20,7 @@ class Weather(models.Model):
     temperature = models.IntegerField()
     feels_like = models.IntegerField()
     time_stamp = models.DateTimeField(primary_key=True, unique=True)
-    weather_icon = models.IntegerField()
+    weather_icon = models.CharField(max_length=5)
 
     class Meta: 
         managed = False

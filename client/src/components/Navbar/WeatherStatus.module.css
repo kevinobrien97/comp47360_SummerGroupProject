@@ -1,12 +1,16 @@
-.weather_container {
-  margin-left: 80%;
-  background-color: black;
+.widget_container {
   position: absolute;
+  margin-left: 65%;
+  width: 8rem;
+  display: flex;
+  align-items: center;
+}
+
+.weather_container {
+  background-color: black;
   border-radius: 30px;
   width: 3rem;
-  display: flex;
-}
-.display_weather {
+  height: 3rem;
   font-weight: bold;
-  margin-left: 0.3rem;
+  text-align: center;
 }

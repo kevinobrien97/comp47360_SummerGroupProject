@@ -1,31 +1,35 @@
-import { React, useState, useCallback, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import classes from "./WeatherStatus.module.css";
+import LoadingSpinner from "../LoadingSpinner";
 
 const WeatherStatus = (props) => {
   const [weather, setWeather] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const fetchWeatherData = useCallback(async () => {
-    setError(null);
-    setIsLoading(true);
-
-    try {
-      const response = await fetch("http://127.0.0.1:8000/api/weather/");
-      if (!response.ok) {
-        throw new Error("404");
-      }
-      const data = await response.json();
-      console.log(data[0]);
-      setWeather(data[0]);
-    } catch (error) {
-      setError(error.message);
-    }
-    setIsLoading(false);
-  }, []);
+  //   const [weatherImage, setWeatherImage] = useState(null);
 
   useEffect(() => {
+    const fetchWeatherData = async () => {
+      setError(null);
+      setIsLoading(true);
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/weather/");
+        if (!response.ok) {
+          throw new Error("404");
+        }
+        const data = await response.json();
+        setWeather(data[0]);
+        // const iconCode = weather.weather_icon;
+        // console.log(iconCode);
+        // setWeatherImage(`http://openweathermap.org/img/wn/${weather.weather_icon}@2x.png`);
+      } catch (error) {
+        setError(error.message);
+      }
+      setIsLoading(false);
+    };
     fetchWeatherData();
-  }, [fetchWeatherData]);
+  }, []);
 
   // handling possible output states
   let weatherContent = <p>Sending request...</p>;
@@ -35,14 +39,31 @@ const WeatherStatus = (props) => {
   if (error) {
     weatherContent = <p>{error}</p>;
   }
-  if (isLoading) {
-    weatherContent = <p>...</p>;
-  }
+  //   if (isLoading) {
+  //     weatherContent = <p>...</p>;
+  //   }
 
   return (
-    <div className={classes.weather_container}>
-      <div className={classes.display_weather}>{weatherContent}</div>
-    </div>
+    <>
+      {!isLoading ? (
+        <div className={classes.widget_container}>
+          <div className={classes.weather_container}>
+            <div>{weatherContent}</div>
+          </div>
+          <div>
+            <img
+              src={`http://openweathermap.org/img/wn/${weather.weather_icon}@2x.png`}
+              alt="Weather Icon"
+              style={{ width: "80px", height: "80px" }}
+            ></img>
+          </div>
+        </div>
+      ) : (
+        <div className={classes.widget_container}>
+          <LoadingSpinner></LoadingSpinner>
+        </div>
+      )}
+    </>
   );
 };
 

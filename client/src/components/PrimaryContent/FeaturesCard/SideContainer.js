@@ -7,6 +7,7 @@ import Nearest from "./Nearest";
 import Route from "./Route";
 import Stop from "./Stop";
 import Favourites from "./Favourites";
+import LoadingSpinner from "../../LoadingSpinner";
 
 const SideContainer = (props) => {
   const [sidebarOption, setSidebarOption] = useState({
@@ -46,46 +47,6 @@ const SideContainer = (props) => {
     props.selectedRoute(sel);
   }
 
-  const [stops, setStops] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const fetchStopsData = useCallback(async () => {
-    setError(null);
-    setIsLoading(true);
-    try {
-      // fetch returns a promise
-      // is asynchronous
-      const response = await fetch("http://127.0.0.1:8000/api/stops/");
-      if (!response.ok) {
-        // wont continue with next line if error thrown
-        throw new Error("Something went wrong loading stops");
-      }
-      const data = await response.json();
-      console.log(data[0]);
-      setStops(data);
-    } catch (error) {
-      setError(error.message);
-    }
-    setIsLoading(false);
-  }, []);
-
-  useEffect(() => {
-    fetchStopsData();
-  }, [fetchStopsData]);
-
-  // handling possible output states
-  // let content = <p>Sending request...</p>;
-  // if (Object.keys(stops).length > 0) {
-  //   content = <p>{stops["stop_name"]}</p>;
-  // }
-  // if (error) {
-  //   content = <p>{error}</p>;
-  // }
-  // if (isLoading) {
-  //   content = <p>Loading data...</p>;
-  // }
-
   return (
     <div className="side-container">
       <MiniNav setSidebarOption={setSidebarOption} />
@@ -111,10 +72,18 @@ const SideContainer = (props) => {
         )}
         {sidebarOption.nearest && <Nearest></Nearest>}
         {sidebarOption.route && <Route></Route>}
-        {sidebarOption.stop && !isLoading && (
-          <Stop stops={stops} setMarker={setMarker}></Stop>
+        {sidebarOption.stop && props.isLoading && (
+          <LoadingSpinner text={"Loading Stops..."}></LoadingSpinner>
         )}
-        {sidebarOption.favourites && <Favourites></Favourites>}
+        {sidebarOption.stop && !props.isLoading && (
+          <Stop stops={props.stops} setMarker={setMarker}></Stop>
+        )}
+        {sidebarOption.favourites && props.isLoading && (
+          <LoadingSpinner text={"Loading Stops..."}></LoadingSpinner>
+        )}
+        {sidebarOption.favourites && !props.isLoading && (
+          <Favourites stops={props.stops} setMarker={setMarker}></Favourites>
+        )}
       </div>
     </div>
   );

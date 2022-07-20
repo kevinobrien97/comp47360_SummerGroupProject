@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Stops, Weather, Routes
+from .models import Stops, Weather, Routes, FavouriteStops
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -55,3 +55,19 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+
+class FavouriteStopsSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = FavouriteStops
+        read_only_fields = (
+            "id",
+            "created_at",
+            "created_by",
+        )
+        fields = (
+            "id",
+            "created_at",
+            "created_by",
+            "stop_id"
+        )

@@ -26,6 +26,7 @@ router = routers.DefaultRouter()
 router.register(r'stops', views.StopsView, 'dubbus')  
 router.register(r'weather', views.WeatherView, 'dubbus')
 router.register(r'routes', views.RoutesView, 'dubbus')
+router.register(r'favourites', views.FavouritesView, 'dubbus')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,12 +36,11 @@ urlpatterns = [
     path('api/token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/register/', views.RegisterView.as_view(), name='auth_register'),
+    path('api/favourites/', include(router.urls)),
     #path('', views.getRoutes),
     path('test/', views.testEndPoint, name='test'),
     url(r'^api/v1/', include('djoser.urls')),
     url(r'^api/v1/', include('djoser.urls.authtoken')),
-
-    path('api/hello/', views.SampleHelloWorldView.as_view(), name='hello_world'),
 ]
 
 urlpatterns += router.urls

@@ -1,13 +1,10 @@
 from django.shortcuts import render, redirect
-from .serializers import StopsSerializer, WeatherSerializer, RoutesSerializer
-from rest_framework import viewsets, generics, status      
-from .models import Stops, Weather, Routes     
-from django.contrib.auth.models import User, auth
-from django.contrib import messages
+from .serializers import StopsSerializer, WeatherSerializer, RoutesSerializer, MyTokenObtainPairSerializer, RegisterSerializer, FavouriteStopsSerializer
+from rest_framework import viewsets, status    
+from .models import Stops, Weather, Routes, FavouriteStops   
+from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.http import JsonResponse
-from .serializers import MyTokenObtainPairSerializer, RegisterSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -48,11 +45,19 @@ class RegisterView(APIView):
                 return Response(json, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class SampleHelloWorldView(APIView):
-    
-    def get(self, request):
-        return Response(data={"hello":"world"}, status=status.HTTP_200_OK)
+class FavouritesView(viewsets.ModelViewSet):
+    serializer_class = FavouriteStopsSerializer
+    queryset = FavouriteStops.objects.all()
 
+    # save the user that created the favourite
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    # only return stops saved by logged in user
+    def get_queryset(self):
+        return self.queryset.filter(created_by=self.request.user)
+
+    # don't need custom method for deleting
 
 @api_view(['GET'])
 def getRoutes(request):

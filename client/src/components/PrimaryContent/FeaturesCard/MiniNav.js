@@ -18,9 +18,6 @@ const MiniNav = (props) => {
           }}
         >
           <Button
-            sx={{
-              height: "4rem",
-            }}
             color="inherit"
             type="button"
             onClick={() =>
@@ -35,9 +32,7 @@ const MiniNav = (props) => {
             Journey
           </Button>
           <Button
-            sx={{
-              height: "4rem",
-            }}
+       
             color="inherit"
             type="button"
             onClick={() =>
@@ -52,9 +47,6 @@ const MiniNav = (props) => {
             Routes
           </Button>
           <Button
-            sx={{
-              height: "4rem",
-            }}
             color="inherit"
             type="button"
             onClick={() =>
@@ -69,9 +61,6 @@ const MiniNav = (props) => {
             Stops
           </Button>
           <Button
-            sx={{
-              height: "4rem",
-            }}
             color="inherit"
             type="button"
             onClick={() =>

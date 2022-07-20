@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from .serializers import StopsSerializer, WeatherSerializer, RoutesSerializer, MyTokenObtainPairSerializer, RegisterSerializer, FavouriteStopsSerializer
-from rest_framework import viewsets, generics, status      
+from rest_framework import viewsets, status    
 from .models import Stops, Weather, Routes, FavouriteStops   
-from django.contrib.auth.models import User, auth
+from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -56,6 +56,8 @@ class FavouritesView(viewsets.ModelViewSet):
     # only return stops saved by logged in user
     def get_queryset(self):
         return self.queryset.filter(created_by=self.request.user)
+
+    # don't need custom method for deleting
 
 @api_view(['GET'])
 def getRoutes(request):

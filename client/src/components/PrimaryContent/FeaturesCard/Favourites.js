@@ -17,6 +17,11 @@ const Favourites = (props) => {
   const [selectedStopList, setSelectedStopList] = useState(null);
   const [loadingFavourites, setLoadingFavourites] = useState(false);
 
+  // stopIDList holds array of database IDs and their associated bus stop
+  // need it to pass delete requests to DB
+  // cannot store ID in stopsList as new IDs made on a post request
+  const [stopIDList, setStopIDList] = useState([]);
+
   // const [favs, setFavs] = useState("");
   const api = useAxios();
 
@@ -25,6 +30,30 @@ const Favourites = (props) => {
     const response = await api.post("/favourites/", {
       stop_id: id,
     });
+    if (response.status === 201) {
+      console.log(response);
+
+      // need to add response array to stopIDList to store the ID
+      const arr = response.data;
+      setStopIDList((prevStopIDList) => {
+        return [...prevStopIDList, arr];
+      });
+
+    } else {
+      // change
+      alert("Something went wrong!");
+    }
+  };
+
+  // function to delete a favourite stop to the database for the user
+  const deleteStop = async (id) => {
+    // need to delete via pk of database, but only have stop_id in list populating favouritestops
+    // use stopIDList which has updated for every post and the initial get request
+    const obj = stopIDList.find(
+      (x) => x.stop_id === id
+    );
+    const primaryKey = obj.id;
+    const response = await api.delete(`/favourites/${primaryKey}`);
     if (response.status === 201) {
       console.log(response);
     } else {
@@ -39,21 +68,30 @@ const Favourites = (props) => {
       let response;
       try {
         response = await api.get("/favourites/");
+        console.log(response);
       } catch {
         // change
-        console.log('bug')
+        console.log("bug");
       }
       for (let i = 0; i < response.data.length; i++) {
-        const item = props.stops.find((x) => x.stop_id === response.data[i].stop_id);
+        const item = props.stops.find(
+          (x) => x.stop_id === response.data[i].stop_id
+        );
         setStopsList((prevStopsList) => {
           return [...prevStopsList, item];
         });
-        console.log("idx", item);
+
+        const arr = response.data[i];
+        setStopIDList((prevStopIDList) => {
+          return [...prevStopIDList, arr];
+        });
       }
       setLoadingFavourites(false);
     };
     fetchData();
-    console.log("fetching");
+    // console.log("deleting");
+
+
     // only want it to run on load - they are being added to the db via postSample above, and also to the stops list
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -117,7 +155,8 @@ const Favourites = (props) => {
       <div>
         {user ? (
           <div>
-            {console.log("stops list", stopsList)}
+            {console.log("stops list", stopIDList)}
+            
             {loadingFavourites && (
               <LoadingSpinner text={"Loading Favourites..."}></LoadingSpinner>
             )}

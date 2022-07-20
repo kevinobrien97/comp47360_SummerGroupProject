@@ -1,32 +1,10 @@
 import React from "react";
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-} from "@mui/material";
+import { Accordion, AccordionSummary } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { FaBus, FaWalking } from "react-icons/fa";
 import RouteOptionDetails from "./RouteOptionDetails";
 
 const RouteOptions = (props) => {
-  //   const [chosenRoute, setChosenRoute] = useState();
-
-  console.log("props", props.options);
-
-  // const pickRoute = (event) => {
-  //   console.log("triggered", event.target.value);
-  //   props.selectedRoute(event.target.value);
-  // };
-
-  // conditionally sets bg colour of options
-  // const bgColor = (id) => {
-  //   if (id === parseInt(props.chosenRoute)) {
-  //     return;
-  //     // return { backgroundColor: "blue" };
-  //   }
-  // };
-
   return (
     <>
       {props.options.map((route, index) => (
@@ -48,7 +26,10 @@ const RouteOptions = (props) => {
                   idx === 0 ? (
                     // {/* if its the first then dont want an arrow (i.e. '>') */}
                     step.travel_mode === "WALKING" ? (
-                      <span key={Math.random()} style={{ pointerEvents: "none" }}>
+                      <span
+                        key={Math.random()}
+                        style={{ pointerEvents: "none" }}
+                      >
                         <FaWalking />
                       </span>
                     ) : // the below query checks if the bus used is outside main network (this will have line.name instead of line.short_name) and gives different bg colour
@@ -57,7 +38,10 @@ const RouteOptions = (props) => {
                     //     <FaBus /> <span style={{ backgroundColor: "yellow", borderRadius: "10px", padding: "3px"}}> {step.transit.line.short_name || step.transit.line.short_name}</span>
                     // </span>
                     step.transit.line.short_name ? (
-                      <span key={Math.random()} style={{ pointerEvents: "none" }}>
+                      <span
+                        key={Math.random()}
+                        style={{ pointerEvents: "none" }}
+                      >
                         <FaBus />{" "}
                         <span
                           style={{
@@ -71,7 +55,10 @@ const RouteOptions = (props) => {
                         </span>
                       </span>
                     ) : (
-                      <span key={Math.random()} style={{ pointerEvents: "none" }}>
+                      <span
+                        key={Math.random()}
+                        style={{ pointerEvents: "none" }}
+                      >
                         <FaBus />{" "}
                         <span
                           style={{
@@ -133,7 +120,7 @@ const RouteOptions = (props) => {
                   marginLeft: "auto",
                 }}
               >
-                xx:xx
+                xx mins
               </span>
             </AccordionSummary>
             <RouteOptionDetails route={route}></RouteOptionDetails>

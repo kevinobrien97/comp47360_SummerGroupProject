@@ -13,7 +13,7 @@ class StopsSerializer(serializers.ModelSerializer):
 class WeatherSerializer(serializers.ModelSerializer):
     class Meta: 
         model = Weather 
-        fields = ('temperature', 'feels_like', 'time_stamp')
+        fields = ('temperature', 'feels_like', 'time_stamp', 'weather_icon')
 
 class RoutesSerializer(serializers.ModelSerializer): 
     class Meta: 

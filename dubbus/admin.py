@@ -9,7 +9,7 @@ class StopsAdmin(admin.ModelAdmin):
 admin.site.register(Stops, StopsAdmin)
 
 class WeatherAdmin(admin.ModelAdmin): 
-    list=('temperature', 'feels_like', 'timestamp')
+    list=('temperature', 'feels_like', 'timestamp', 'weather_icon')
 
 admin.site.register(Weather, WeatherAdmin)
 

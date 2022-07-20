@@ -54,8 +54,11 @@ const Favourites = (props) => {
     );
     const primaryKey = obj.id;
     const response = await api.delete(`/favourites/${primaryKey}`);
-    if (response.status === 201) {
+    console.log('del res', response)
+    if (response.status === 204) {
       console.log(response);
+      // update stopIDList
+      setStopIDList(stopIDList.filter(item => item !== obj));
     } else {
       // change
       alert("Something went wrong!");
@@ -163,7 +166,9 @@ const Favourites = (props) => {
             {!loadingFavourites && (
               <FavouriteStops
                 stops={stopsList}
+                setStopsList={setStopsList}
                 setMarker={props.setMarker}
+                deleteStop={deleteStop}
               ></FavouriteStops>
             )}
           </div>

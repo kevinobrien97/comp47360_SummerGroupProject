@@ -19,7 +19,7 @@ trips = "CREATE TABLE `trips`(`route_id` varchar(30),`service_id` varchar(30),`t
 
 # created files
 routes_updated = "CREATE TABLE `routes_updated`(`route_id` varchar(30), `route_short_name` varchar(30), `trip_headsign` varchar(255));"
-route_stops = "CREATE TABLE `route_stops`(`stop_id` varchar(255), `trip_headsign` varchar(255), `route_id` varchar(30));"
+route_stops = "CREATE TABLE `route_stops`(`stop_id` varchar(255), `trip_headsign` varchar(255), `route_id` varchar(30), `stop_lat` double,`stop_long` double);"
 stop_times_updated = "CREATE TABLE `stop_times_updated`(`trip_id` varchar(255), `arrival_time` time, `departure_time` time, `stop_id` varchar(255), `stop_sequence` int, `stop_headsign` varchar(255), `route_id` varchar(30), `service_id` varchar(30), `trip_headsign` varchar(255));"
 
 connection.execute(calendar_dates)

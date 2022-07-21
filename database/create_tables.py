@@ -18,9 +18,9 @@ transfers = "CREATE TABLE `transfers`(`from_stop_id` varchar(30),`to_stop_id` va
 trips = "CREATE TABLE `trips`(`route_id` varchar(30),`service_id` varchar(30),`trip_id` varchar(255),`shape_id` varchar(30),`trip_headsign` varchar(255),`direction_id` int);"
 
 # created files
-routes_updated = "CREATE TABLE `routes_updated`(`route_id` varchar(30), `route_short_name` varchar(30), `trip_headsign` varchar(255));"
-route_stops = "CREATE TABLE `route_stops`(`stop_id` varchar(255), `trip_headsign` varchar(255), `route_id` varchar(30),`stop_name` varchar(255), `stop_lat` double,`stop_long` double);"
-stop_times_updated = "CREATE TABLE `stop_times_updated`(`trip_id` varchar(255), `arrival_time` time, `departure_time` time, `stop_id` varchar(255), `stop_sequence` int, `stop_headsign` varchar(255), `route_id` varchar(30), `service_id` varchar(30), `trip_headsign` varchar(255));"
+routes_updated = "CREATE TABLE `routes_updated`(`trip_headsign` varchar(255), `route_short_name` varchar(30));"
+route_stops = "CREATE TABLE `route_stops`(`stop_id` varchar(255), `trip_headsign` varchar(255), `route_short_name` varchar(30),`stop_name` varchar(255), `stop_lat` double,`stop_long` double);"
+stop_times_updated = "CREATE TABLE `stop_times_updated`(`trip_id` varchar(255), `departure_time` time, `stop_id` varchar(255), `stop_sequence` int, `stop_headsign` varchar(255), `route_id` varchar(30), `service_id` varchar(30), `trip_headsign` varchar(255), `route_short_name` varchar(30));"
 
 connection.execute(calendar_dates)
 connection.execute(calendar)

@@ -53,7 +53,7 @@ const Navbar = (props) => {
               </Button>
             </Link>
 
-            {!user ? (
+                {!user ? (
               // span is parent element of ternary - using so it keeps to the same line
               <span>
                 <Link to={"/login/"} style={{ textDecoration: "none" }}>

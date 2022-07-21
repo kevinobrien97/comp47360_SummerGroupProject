@@ -1,6 +1,6 @@
-import { ButtonGroup, Button, Box, Grid, TextField } from "@mui/material";
+import { ButtonGroup, Button, Box, TextField } from "@mui/material";
 import { Autocomplete } from "@react-google-maps/api";
-import "./Journey.css";
+import classes from "./Journey.module.css";
 import CachedIcon from "@mui/icons-material/Cached";
 import { FaEllipsisV } from "react-icons/fa";
 import { FaLocationArrow, FaArrowsAltV } from "react-icons/fa";
@@ -39,10 +39,6 @@ const Journey = (props) => {
     destinationRef.current.value = "";
     props.cancelRoute();
   };
-
-  // const panMap = () => {
-  //   props.centerMap();
-  // };
 
   function centerMap() {
     if (navigator.geolocation) {
@@ -108,16 +104,20 @@ const Journey = (props) => {
   }
 
   return (
-    <div className="journey1-container">
-      <Box className="journey-planner">
-        <div className="journey-options">
-          <div className="origin-destination">
-            <div className="input-options">
+      <Box className={classes.journey_planner}>
+        <div className={classes.journey_options}>
+          <div className={classes.origin_destination}>
+            <div className={classes.input_options}>
               <Autocomplete options={searchLimits}>
-                <input id="origin" placeholder="Origin" ref={originRef} />
+                <input
+                  className={classes.origin}
+                  id="origin"
+                  placeholder="Origin"
+                  ref={originRef}
+                />
               </Autocomplete>
             </div>
-            <div className="reverse-button">
+            <div className={classes.reverse_button}>
               <Button
                 sx={{
                   color: "#323336",
@@ -129,9 +129,10 @@ const Journey = (props) => {
                 {<FaArrowsAltV />}
               </Button>
             </div>
-            <div className="input-options">
+            <div className={classes.input_options}>
               <Autocomplete options={searchLimits}>
                 <input
+                  className={classes.destination}
                   id="destination"
                   placeholder="Destination"
                   ref={destinationRef}
@@ -139,8 +140,8 @@ const Journey = (props) => {
               </Autocomplete>
             </div>
           </div>
-          <div className="timing">
-            <div className="input-options">
+          <div className={classes.timing}>
+            <div className={classes.input_options}>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DateTimePicker
                   label="Departure Time"
@@ -170,7 +171,7 @@ const Journey = (props) => {
           </div>
         </div>
 
-        <div className="buttons">
+        <div className={classes.buttons}>
           <ButtonGroup
             sx={{
               backgroundColor: "#d8d8d5",
@@ -217,24 +218,9 @@ const Journey = (props) => {
             >
               {<FaLocationArrow />}
             </Button>
-            <Button
-              aria-label="center back"
-              size="large"
-              onClick={props.toggleDrawer}
-              sx={{
-                borderColor: "darkgrey",
-                color: "black",
-                "&:hover": {
-                  backgroundColor: "#EEEAEA",
-                },
-              }}
-            >
-              {<FaEllipsisV />}
-            </Button>
-          </ButtonGroup>
+               </ButtonGroup>
         </div>
       </Box>
-    </div>
   );
 };
 

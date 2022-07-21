@@ -1,26 +1,26 @@
-import "./MiniNav.css";
-import "./SideContainer.css";
+import { React } from "react";
+import classes from "./MiniNav.module.css";
+// import classes from "./SideContainer.module.css";
 import { AppBar, Toolbar, Button } from "@mui/material";
 
 const MiniNav = (props) => {
   return (
-    <div className="mininav-items">
+    <div className={classes.mininav_items}>
       <AppBar
         position="static"
         style={{
           backgroundColor: "#F1B23E",
+          borderRadius: "10px",
         }}
       >
         <Toolbar
           style={{
             display: "flex",
             justifyContent: "space-evenly",
+        
           }}
         >
           <Button
-            sx={{
-              height: "4rem",
-            }}
             color="inherit"
             type="button"
             onClick={() =>
@@ -35,9 +35,6 @@ const MiniNav = (props) => {
             Journey
           </Button>
           <Button
-            sx={{
-              height: "4rem",
-            }}
             color="inherit"
             type="button"
             onClick={() =>
@@ -52,9 +49,6 @@ const MiniNav = (props) => {
             Routes
           </Button>
           <Button
-            sx={{
-              height: "4rem",
-            }}
             color="inherit"
             type="button"
             onClick={() =>
@@ -69,9 +63,6 @@ const MiniNav = (props) => {
             Stops
           </Button>
           <Button
-            sx={{
-              height: "4rem",
-            }}
             color="inherit"
             type="button"
             onClick={() =>

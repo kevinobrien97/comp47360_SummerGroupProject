@@ -1,0 +1,43 @@
+.journey_planner {
+  margin-top: 0.5rem;
+  max-height: 100%;
+}
+
+.journey_options,
+.origin_destination {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.input_options {
+  display: flex;
+  justify-content: center;
+  margin: 0.25rem;
+}
+
+.timing {
+    display: flex;
+    justify-content: center;
+}
+
+.destination,
+.origin {
+  height: 1.5rem;
+  width: 18rem;
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+  padding-bottom: 0.75rem;
+}
+
+.reverse_button {
+  align-self: flex-end;
+  position: absolute;
+}

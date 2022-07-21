@@ -1,13 +1,14 @@
-.mininav-items { 
-    height: 3rem;
+.mininav_items { 
     display: flex;
     justify-content: space-evenly;
     align-items: center; 
     font-size: 1rem; 
+ 
     
 }
-.mininav-menu { 
+.mininav_menu { 
     display: grid; 
     text-align: center; 
     justify-content: end; 
+    border-radius: 10px;
 }

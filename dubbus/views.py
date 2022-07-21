@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from .serializers import StopsSerializer, WeatherSerializer, RoutesSerializer, MyTokenObtainPairSerializer, RegisterSerializer, FavouriteStopsSerializer
+from .serializers import StopsSerializer, WeatherSerializer, MyTokenObtainPairSerializer, RegisterSerializer, FavouriteStopsSerializer, RoutesUpdatedSerializer, FavouriteRoutesSerializer, StopTimesUpdatedSerializer, RouteStopsSerializer
 from rest_framework import viewsets, status    
-from .models import Stops, Weather, Routes, FavouriteStops   
+from .models import Stops, Weather, FavouriteStops, RoutesUpdated, FavouriteRoutes, StopTimesUpdated, RouteStops
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -12,7 +12,6 @@ from rest_framework.decorators import api_view, permission_classes
 
 from rest_framework.views import APIView
 
-# Create your views here.
 class StopsView(viewsets.ModelViewSet): 
     permission_classes = (AllowAny,) 
     serializer_class = StopsSerializer   
@@ -23,15 +22,9 @@ class WeatherView(viewsets.ModelViewSet):
     serializer_class = WeatherSerializer
     queryset = Weather.objects.all()
 
-class RoutesView(viewsets.ModelViewSet): 
-    serializer_class = RoutesSerializer
-    queryset = Routes.objects.all()     
-
-
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
-# class RegisterView(generics.CreateAPIView):
 class RegisterView(APIView):
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
@@ -58,6 +51,35 @@ class FavouritesView(viewsets.ModelViewSet):
         return self.queryset.filter(created_by=self.request.user)
 
     # don't need custom method for deleting
+
+class RoutesUpdatedView(viewsets.ModelViewSet): 
+    permission_classes = (AllowAny,) 
+    serializer_class = RoutesUpdatedSerializer   
+    queryset = RoutesUpdated.objects.all()
+
+class FavouriteRoutesView(viewsets.ModelViewSet):
+    serializer_class = FavouriteRoutesSerializer
+    queryset = FavouriteRoutes.objects.all()
+
+    # save the user that created the favourite
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    # only return routes saved by logged in user
+    def get_queryset(self):
+        return self.queryset.filter(created_by=self.request.user)
+
+    # don't need custom method for deleting
+
+class StopTimesUpdatedView(viewsets.ModelViewSet): 
+    permission_classes = (AllowAny,) 
+    serializer_class = StopTimesUpdatedSerializer   
+    queryset = StopTimesUpdated.objects.all()
+
+class RouteStopsView(viewsets.ModelViewSet): 
+    permission_classes = (AllowAny,) 
+    serializer_class = RouteStopsSerializer   
+    queryset = RouteStops.objects.all()
 
 @api_view(['GET'])
 def getRoutes(request):

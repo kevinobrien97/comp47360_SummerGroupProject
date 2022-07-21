@@ -25,14 +25,22 @@ from rest_framework_simplejwt.views import (
 router = routers.DefaultRouter()                   
 router.register(r'stops', views.StopsView, 'dubbus')  
 router.register(r'weather', views.WeatherView, 'dubbus')
-router.register(r'routes', views.RoutesView, 'dubbus')
+# router.register(r'routes', views.RoutesView, 'dubbus')
 router.register(r'favourites', views.FavouritesView, 'dubbus')
+router.register(r'routes', views.RoutesUpdatedView, 'dubbus')
+router.register(r'favouriteroutes', views.FavouriteRoutesView, 'dubbus')
+router.register(r'stoptimes', views.StopTimesUpdatedView, 'dubbus')
+router.register(r'routestops', views.RouteStopsView, 'dubbus')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('weather/', include(router.urls)),
-    path('routes/', include(router.urls)),
+    path('api/routes/', include(router.urls)),
+    path('api/favouriteroutes/', include(router.urls)),
+    path('api/stoptimes/', include(router.urls)),
+    path('api/routestops/', include(router.urls)),
     path('api/token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/register/', views.RegisterView.as_view(), name='auth_register'),

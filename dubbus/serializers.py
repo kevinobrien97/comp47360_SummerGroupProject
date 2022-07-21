@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Stops, Weather, Routes, FavouriteStops
+from .models import Stops, Weather, FavouriteStops, RoutesUpdated, FavouriteRoutes, StopTimesUpdated, RouteStops
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -14,11 +14,6 @@ class WeatherSerializer(serializers.ModelSerializer):
     class Meta: 
         model = Weather 
         fields = ('temperature', 'feels_like', 'time_stamp', 'weather_icon')
-
-class RoutesSerializer(serializers.ModelSerializer): 
-    class Meta: 
-        model = Routes
-        fields = ('route_id', 'agency_id', 'route_short_name', 'route_long_name', 'route_type')
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -71,3 +66,37 @@ class FavouriteStopsSerializer(serializers.ModelSerializer):
             "created_by",
             "stop_id"
         )
+
+class RoutesUpdatedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RoutesUpdated
+        fields = ('trip_headsign', 'route_short_name')
+
+class FavouriteRoutesSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = FavouriteRoutes
+        read_only_fields = (
+            "id",
+            "created_at",
+            "created_by",
+        )
+        fields = (
+            "id",
+            "created_at",
+            "created_by",
+            "trip_headsign",
+            "route_short_name",
+        )
+
+class StopTimesUpdatedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StopTimesUpdated
+        # using '__all__' instead of listing each
+        fields = '__all__'
+
+class RouteStopsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RouteStops
+        # using '__all__' instead of listing each
+        fields = '__all__'

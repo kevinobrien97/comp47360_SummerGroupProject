@@ -10,12 +10,14 @@ const MiniNav = (props) => {
         position="static"
         style={{
           backgroundColor: "#F1B23E",
+          borderRadius: "10px",
         }}
       >
         <Toolbar
           style={{
             display: "flex",
             justifyContent: "space-evenly",
+        
           }}
         >
           <Button
@@ -73,20 +75,6 @@ const MiniNav = (props) => {
             }
           >
             Favourites
-          </Button>
-          <Button
-            onClick={props.toggleContainer}
-            sx={{
-              backgroundColor: "#F1B23E",
-              marginLeft: -3,
-              color: "white",
-              "&:hover": {
-                backgroundColor: "#fff",
-                color: "black",
-              },
-            }}
-          >
-            Hide
           </Button>
         </Toolbar>
       </AppBar>

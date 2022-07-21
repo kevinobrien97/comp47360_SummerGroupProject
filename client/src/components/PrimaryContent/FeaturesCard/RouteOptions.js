@@ -12,7 +12,11 @@ const RouteOptions = (props) => {
           {console.log(index)}
           <Accordion disableGutters={true}>
             <AccordionSummary
-              sx={{ display: "flex", justifyContent: "flex-start", borderTop: "0.05rem solid lightgrey"}}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-start",
+                borderTop: "0.05rem solid lightgrey",
+              }}
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
               id="panel1a-header"

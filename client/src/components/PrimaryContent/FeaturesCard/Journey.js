@@ -218,21 +218,7 @@ const Journey = (props) => {
             >
               {<FaLocationArrow />}
             </Button>
-            <Button
-              aria-label="center back"
-              size="large"
-              onClick={props.toggleDrawer}
-              sx={{
-                borderColor: "darkgrey",
-                color: "black",
-                "&:hover": {
-                  backgroundColor: "#EEEAEA",
-                },
-              }}
-            >
-              {<FaEllipsisV />}
-            </Button>
-          </ButtonGroup>
+               </ButtonGroup>
         </div>
       </Box>
   );

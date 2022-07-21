@@ -8,6 +8,7 @@ import Route from "./Route";
 import Stop from "./Stop";
 import Favourites from "./Favourites";
 import LoadingSpinner from "../../LoadingSpinner";
+import { Button } from "@mui/material";
 
 const SideContainer = (props) => {
   const [sidebarOption, setSidebarOption] = useState({
@@ -32,46 +33,51 @@ const SideContainer = (props) => {
 
   return (
     <div className={classes.side_container}>
-      <MiniNav
-        setSidebarOption={setSidebarOption}
-        toggleContainer={toggleContainer}
-      />
-      {container && (
-        <div>
-          {sidebarOption.journey && (
-            <div>
-              <Journey
-                routeCalculator={props.routeCalculator}
-                cancelRoute={props.cancelRoute}
-                centerMap={props.centerMap}
-              ></Journey>
+      <div className={classes.side_main}>
+        <MiniNav setSidebarOption={setSidebarOption} />
+        {container && (
+          <div>
+            {sidebarOption.journey && (
+              <div>
+                <Journey
+                  routeCalculator={props.routeCalculator}
+                  cancelRoute={props.cancelRoute}
+                  centerMap={props.centerMap}
+                ></Journey>
 
-              {props.allRoutes && props.showRoutes && (
-                <RouteOptions
-                  removeRoutes={props.removeRoutes}
-                  chosenRoute={props.chosenRoute}
-                  options={props.allRoutes}
-                  selectedRoute={props.selectedRoute}
-                ></RouteOptions>
-              )}
-            </div>
-          )}
-          {sidebarOption.nearest && <Nearest></Nearest>}
-          {sidebarOption.route && <Route></Route>}
-          {sidebarOption.stop && props.isLoading && (
-            <LoadingSpinner text={"Loading Stops..."}></LoadingSpinner>
-          )}
-          {sidebarOption.stop && !props.isLoading && (
-            <Stop stops={props.stops} setMarker={setMarker}></Stop>
-          )}
-          {sidebarOption.favourites && props.isLoading && (
-            <LoadingSpinner text={"Loading Stops..."}></LoadingSpinner>
-          )}
-          {sidebarOption.favourites && !props.isLoading && (
-            <Favourites stops={props.stops} setMarker={setMarker}></Favourites>
-          )}
-        </div>
-      )}
+                {props.allRoutes && props.showRoutes && (
+                  <div className={classes.overflow}>
+                    <RouteOptions
+                      removeRoutes={props.removeRoutes}
+                      chosenRoute={props.chosenRoute}
+                      options={props.allRoutes}
+                      selectedRoute={props.selectedRoute}
+                    ></RouteOptions>
+                  </div>
+                )}
+              </div>
+            )}
+            {sidebarOption.nearest && <Nearest></Nearest>}
+            {sidebarOption.route && <Route></Route>}
+            {sidebarOption.stop && props.isLoading && (
+              <LoadingSpinner text={"Loading Stops..."}></LoadingSpinner>
+            )}
+            {sidebarOption.stop && !props.isLoading && (
+              <Stop stops={props.stops} setMarker={setMarker}></Stop>
+            )}
+            {sidebarOption.favourites && props.isLoading && (
+              <LoadingSpinner text={"Loading Stops..."}></LoadingSpinner>
+            )}
+            {sidebarOption.favourites && !props.isLoading && (
+              <Favourites
+                stops={props.stops}
+                setMarker={setMarker}
+              ></Favourites>
+            )}
+          </div>
+        )}
+      </div>
+      <Button onClick={toggleContainer}>Click</Button>
     </div>
   );
 };

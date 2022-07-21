@@ -39,9 +39,6 @@ const WeatherStatus = (props) => {
   if (error) {
     weatherContent = <p>{error}</p>;
   }
-  //   if (isLoading) {
-  //     weatherContent = <p>...</p>;
-  //   }
 
   return (
     <>

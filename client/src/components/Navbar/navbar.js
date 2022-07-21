@@ -53,25 +53,7 @@ const Navbar = (props) => {
               </Button>
             </Link>
 
-            <Button
-            onClick={props.toggleContainer}
-                sx={{
-                  backgroundColor: "#F1B23E",
-                  height: "4rem",
-                  minWidth: "6rem",
-                  
-                  marginLeft: -3,
-                  color: "white",
-                  "&:hover": {
-                    backgroundColor: "#fff",
-                    color: "black",
-                  },
-                }}
-              >
-                Hide
-              </Button>
-
-            {!user ? (
+                {!user ? (
               // span is parent element of ternary - using so it keeps to the same line
               <span>
                 <Link to={"/login/"} style={{ textDecoration: "none" }}>

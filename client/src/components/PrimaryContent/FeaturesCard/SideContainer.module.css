@@ -3,14 +3,29 @@
   margin-top: 0.5rem;
   margin-right: 0.5rem;
   width: 25rem;
-  background-color: white;
   position: absolute;
+  
+  white-space: normal;
+  /* overflow-x: scroll; */
+  border-radius: 10px;
+  z-index: 2;
+  /* height: auto; */
+  max-height: 100%;
+}
+
+.side_main {
+  background-color: white;
+  box-shadow: 2px 6px 6px 0px rgba(0, 0, 0, 0.43);
   height: auto;
   max-height: 100%;
   border-radius: 10px;
-  white-space: normal;
-  overflow-x: scroll;
-  box-shadow: 2px 6px 6px 0px rgba(0, 0, 0, 0.43);
-  z-index: 2;
+ 
 }
 /* min and max width of mobile device */
+
+.overflow {
+  overflow:hidden;
+  overflow-y: scroll;
+  height: auto;
+  max-height: 33rem;  
+}

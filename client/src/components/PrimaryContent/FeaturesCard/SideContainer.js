@@ -79,9 +79,15 @@ const SideContainer = (props) => {
           onClick={() => {
             setContainer(!container);
           }}
+          style={{
+            width: "3rem",
+            height: "1.5rem",
+            // backgroundColor: "#F1B23E",
+            // borderRadius: "10px",
+          }}
         >
           <IconContext.Provider
-            value={{ size: "2rem", color: "black"}}
+            value={{ size: "2rem", color: "white"}}
           >
             {!container ? (
               <MdOutlineKeyboardArrowDown />

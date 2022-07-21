@@ -77,7 +77,9 @@ const SideContainer = (props) => {
           </div>
         )}
       </div>
-      <Button onClick={toggleContainer}>Click</Button>
+      <div>
+      <Button sx={{backgroundColor: "pink", color:"red"}}onClick={toggleContainer}> Click</Button>
+      </div>
     </div>
   );
 };

@@ -10,6 +10,7 @@
   z-index: 2;
   /* height: auto; */
   max-height: 80vh;
+ 
 }
 
 .side_main {
@@ -25,3 +26,23 @@
   overflow-x: hidden; */
 }
 /* min and max width of mobile device */
+
+.toggleButton {
+  display: flex;
+  justify-content: center;
+  margin-top: -0.3rem;
+}
+
+/* .toggleButton.rotate {
+  animation: rotate-keyframes 1s;
+ }
+ 
+ @keyframes rotate-keyframes {
+  from {
+   transform: rotate(0deg);
+  }
+ 
+  to {
+   transform: rotate(180deg);
+  }
+ } */

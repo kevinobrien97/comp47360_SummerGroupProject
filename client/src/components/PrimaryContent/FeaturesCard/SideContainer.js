@@ -8,7 +8,10 @@ import Route from "./Route";
 import Stop from "./Stop";
 import Favourites from "./Favourites";
 import LoadingSpinner from "../../LoadingSpinner";
-import { Button } from "@mui/material";
+import { IconButton } from "@mui/material";
+import { MdKeyboardArrowUp, MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { BsCaretDownSquare, BsCaretUpSquare } from "react-icons/bs";
+import { IconContext } from "react-icons";
 
 const SideContainer = (props) => {
   const [sidebarOption, setSidebarOption] = useState({
@@ -19,12 +22,6 @@ const SideContainer = (props) => {
   });
 
   const [container, setContainer] = useState(true);
-
-  const toggleContainer = () => {
-    // set the opposite of what it is
-    console.log("triggered");
-    setContainer(!container);
-  };
 
   function setMarker(lat, long) {
     const pos = { lat: lat, lng: long };
@@ -77,8 +74,22 @@ const SideContainer = (props) => {
           </div>
         )}
       </div>
-      <div>
-      <Button sx={{backgroundColor: "pink", color:"red"}}onClick={toggleContainer}> Click</Button>
+      <div className={classes.toggleButton}>
+        <IconButton
+          onClick={() => {
+            setContainer(!container);
+          }}
+        >
+          <IconContext.Provider
+            value={{ size: "2rem", color: "black"}}
+          >
+            {!container ? (
+              <MdOutlineKeyboardArrowDown />
+            ) : (
+              <MdKeyboardArrowUp />
+            )}{" "}
+          </IconContext.Provider>
+        </IconButton>
       </div>
     </div>
   );

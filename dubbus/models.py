@@ -69,7 +69,7 @@ class FavouriteRoutes(models.Model):
 
 class StopTimesUpdated(models.Model):
     trip_id = models.CharField(max_length=255)
-    departure_time = models.TimeField(blank=True, null=True)
+    departure_time = models.CharField(max_length=30)
     stop_id = models.CharField(primary_key=True, max_length=255)
     stop_sequence = models.IntegerField(blank=True, null=True)
     stop_headsign = models.CharField(max_length=255, blank=True, null=True)

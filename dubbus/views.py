@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .serializers import StopsSerializer, WeatherSerializer, MyTokenObtainPairSerializer, RegisterSerializer, FavouriteStopsSerializer, RoutesUpdatedSerializer, FavouriteRoutesSerializer, StopTimesUpdatedSerializer, RouteStopsSerializer
-from rest_framework import viewsets, status    
+from rest_framework import viewsets, status, generics  
 from .models import Stops, Weather, FavouriteStops, RoutesUpdated, FavouriteRoutes, StopTimesUpdated, RouteStops
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
@@ -71,15 +71,34 @@ class FavouriteRoutesView(viewsets.ModelViewSet):
 
     # don't need custom method for deleting
 
-class StopTimesUpdatedView(viewsets.ModelViewSet): 
+class StopTimesUpdatedView(generics.ListAPIView): 
     permission_classes = (AllowAny,) 
     serializer_class = StopTimesUpdatedSerializer   
-    queryset = StopTimesUpdated.objects.all()
 
-class RouteStopsView(viewsets.ModelViewSet): 
+    def get_queryset(self):
+        route_short_name = self.kwargs['route_short_name']
+        trip_headsign = self.kwargs['trip_headsign']
+        return StopTimesUpdated.objects.filter(route_short_name=route_short_name, trip_headsign=trip_headsign)   
+
+class RouteStopsView(generics.ListAPIView): 
     permission_classes = (AllowAny,) 
-    serializer_class = RouteStopsSerializer   
-    queryset = RouteStops.objects.all()
+    serializer_class = RouteStopsSerializer
+    # RouteStops.objects.get(route_short_name='1')
+    
+    # def get_queryset(request):
+    #     print('findthisown',request)
+    #     # route_short_name= self.request['route_short_name']
+    #     # headSign= self.request.GET['headSign']
+    #     return RouteStops.objects.filter(route_short_name='1')  
+    
+    def get_queryset(self):
+        route_short_name = self.kwargs['route_short_name']
+        trip_headsign = self.kwargs['trip_headsign']
+        # short_name = self.kwargs.get('short_name')
+        # headsign = self.kwargs.get('headsign')
+        # queryset = StopTimesUpdated.objects.all()
+        # print('hello',self.kwargs)
+        return RouteStops.objects.filter(route_short_name=route_short_name, trip_headsign=trip_headsign)   
 
 @api_view(['GET'])
 def getRoutes(request):

@@ -17,6 +17,8 @@ const libraries = ["places"];
 
 const Map = (props) => {
   const [stops, setStops] = useState({});
+  const [routes, setRoutes] = useState({});
+  const [routesIsLoading, setRoutesIsLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -32,7 +34,6 @@ const Map = (props) => {
         throw new Error("Something went wrong loading stops");
       }
       const data = await response.json();
-      console.log('in stops');
       setStops(data);
     } catch (error) {
       setError(error.message);
@@ -43,6 +44,40 @@ const Map = (props) => {
   useEffect(() => {
     fetchStopsData();
   }, [fetchStopsData]);
+
+  useEffect(() => {
+    const fetchRoutesData = async () => {
+      // setError(null);
+      setRoutesIsLoading(true);
+      try {
+        // fetch returns a promise
+        // is asynchronous
+        const response = await fetch("http://127.0.0.1:8000/api/routes/");
+        if (!response.ok) {
+          // wont continue with next line if error thrown
+          throw new Error("Something went wrong loading routes");
+        }
+        const allRoutes = await response.json();
+        // sorting alphanumerically but the bus route
+        const collator = new Intl.Collator(undefined, {
+          numeric: true,
+          sensitivity: "base",
+        });
+        const sorted = allRoutes.sort((a, b) => {
+          return collator.compare(a.route_short_name, b.route_short_name);
+          // return (a.route_short_name).localeCompare((b.route_short_name), undefined, {
+          //   numeric: true,
+          //   sensitivity: "base",
+          // });
+        });
+        setRoutes(sorted);
+      } catch (error) {
+        setError(error.message);
+      }
+      setRoutesIsLoading(false);
+    };
+    fetchRoutesData();
+  }, []);
 
   // handling possible output states
   // let content = <p>Sending request...</p>;
@@ -61,7 +96,6 @@ const Map = (props) => {
   const [mapLoaded, setMapLoaded] = useState(null);
   const [directionsOutput, setDirectionsOutput] = useState(null);
   const [showRoutes, setShowRoutes] = useState(false);
-  const [drawer, setDrawer] = useState(true);
   const [selectedStop, setSelectedStop] = useState(null);
 
   const setStopMarker = (coords) => {
@@ -72,12 +106,6 @@ const Map = (props) => {
 
   const selectedRouteHandler = (selection) => {
     setChosenRoute(selection);
-  };
-
-  const toggleDrawer = () => {
-    // set the opposite of what it is
-    console.log("triggered");
-    setDrawer(!drawer);
   };
 
   // below loads google maps script
@@ -145,22 +173,24 @@ const Map = (props) => {
         position: "absolute",
       }}
     >
-        <div>
-          <SideContainer
-            isLoading={isLoading}
-            stops={stops}
-            removeRoutes={removeRoutes}
-            chosenRoute={chosenRoute}
-            options={allRoutes}
-            selectedRoute={selectedRouteHandler}
-            allRoutes={allRoutes}
-            showRoutes={showRoutes}
-            routeCalculator={routeCalculator}
-            cancelRoute={cancelRoute}
-            centerMap={centerMap}
-            setStopMarker={setStopMarker}
-          ></SideContainer>
-        </div>
+      <div>
+        <SideContainer
+          isLoading={isLoading}
+          routesIsLoading={routesIsLoading}
+          stops={stops}
+          routes={routes}
+          removeRoutes={removeRoutes}
+          chosenRoute={chosenRoute}
+          options={allRoutes}
+          selectedRoute={selectedRouteHandler}
+          allRoutes={allRoutes}
+          showRoutes={showRoutes}
+          routeCalculator={routeCalculator}
+          cancelRoute={cancelRoute}
+          centerMap={centerMap}
+          setStopMarker={setStopMarker}
+        ></SideContainer>
+      </div>
       <div className={classes.google_map}>
         <GoogleMap
           // to do -- center map on users current location

@@ -1,9 +1,8 @@
 .side_container {
   display: flex;
   margin-top: 0.5rem;
- margin-left: 0.5rem;
+  margin-left: 0.5rem;
   flex-direction: column;
-  width: 25rem;
   position: absolute;
   /* white-space: normal;
   overflow-x: hidden; */
@@ -19,7 +18,8 @@
   height: inherit;
   max-height: inherit;
   border-radius: 10px;
-
+  min-width: 23rem;
+  max-width: 25rem;
   white-space: normal;
   overflow-x: hidden;
   /* white-space: normal;

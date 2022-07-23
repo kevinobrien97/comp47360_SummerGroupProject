@@ -5,6 +5,7 @@ import {
   GoogleMap,
   Marker,
   DirectionsRenderer,
+  InfoWindow,
 } from "@react-google-maps/api";
 
 // import Journey from "./Journey/Journey";
@@ -22,6 +23,7 @@ const Map = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [routeMarkers, setRouteMarkers] = useState([]);
+  const [currentClickedMarker, setCurrentClickedMarker] = useState(null);
 
   useEffect(() => {
     const fetchStopsData = async () => {
@@ -155,7 +157,7 @@ const Map = (props) => {
   function removeRoutes() {
     setShowRoutes(false);
   }
-
+ 
   return (
     <div
       style={{
@@ -190,6 +192,7 @@ const Map = (props) => {
       <div className={classes.google_map}>
         <GoogleMap
           // to do -- center map on users current location
+          onClick={() => setCurrentClickedMarker(null)}
           center={center}
           zoom={13}
           mapContainerStyle={{
@@ -202,11 +205,31 @@ const Map = (props) => {
           onLoad={(mapLoaded) => setMapLoaded(mapLoaded)}
         >
           ({/* mapping the markers set by clicking a route */}
-          {routeMarkers.map((stop) => (
+          {routeMarkers.map((stop, index) => (
             <Marker
               position={{ lat: stop.stop_lat, lng: stop.stop_long }}
               key={stop.stop_id}
-            />
+              onClick={() => {
+                setCurrentClickedMarker(stop.stop_id);
+              }}
+            >
+              {currentClickedMarker === stop.stop_id ? (
+                <InfoWindow
+                options= {{maxWidth : 250 }}
+                  onCloseClick={() => {
+                    setCurrentClickedMarker(null);
+                  }}
+                >
+                  <body>
+                    <header><h4>{stop.stop_name}</h4></header>
+                    <div>
+                      Stop{" "}on route{" "}{stop.route_short_name}{" "}from{" "}
+                      {stop.trip_headsign}
+                    </div>
+                  </body>
+                </InfoWindow>
+              ) : null}
+            </Marker>
           ))}
           )<Marker position={selectedStopMarker}></Marker>
           {directionsOutput && (

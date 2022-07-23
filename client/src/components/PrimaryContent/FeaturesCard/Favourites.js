@@ -160,7 +160,7 @@ const Favourites = (props) => {
             {console.log("stops list", stopIDList)}
             
             {loadingFavourites && (
-              <LoadingSpinner text={"Loading Favourites..."}></LoadingSpinner>
+              <LoadingSpinner text={"Loading Favourite Stops..."}></LoadingSpinner>
             )}
             {!loadingFavourites && (
               <FavouriteStops

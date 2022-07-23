@@ -161,7 +161,7 @@ const Route = (props) => {
         {user ? (
           <div>
             {loadingFavourites && (
-              <LoadingSpinner text={"Loading Favourites..."}></LoadingSpinner>
+              <LoadingSpinner text={"Loading Favourite Routes..."}></LoadingSpinner>
             )}
             {!loadingFavourites && (
 

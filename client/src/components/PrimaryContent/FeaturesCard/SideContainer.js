@@ -30,7 +30,12 @@ const SideContainer = (props) => {
   return (
     <div className={classes.side_container}>
       <div className={classes.side_main}>
-        <MiniNav setSidebarOption={setSidebarOption} setRouteMarkers={props.setRouteMarkers} setSelectedStopMarker={props.setSelectedStopMarker}/>
+        <MiniNav
+          setSidebarOption={setSidebarOption}
+          setRouteMarkers={props.setRouteMarkers}
+          setSelectedStopMarker={props.setSelectedStopMarker}
+          reCenter={props.reCenter}
+        />
         {container && (
           <div>
             {sidebarOption.journey && (
@@ -58,7 +63,10 @@ const SideContainer = (props) => {
               <LoadingSpinner text={"Loading Routes..."}></LoadingSpinner>
             )}
             {sidebarOption.route && !props.routesIsLoading && (
-              <Route routes={props.routes} setRouteMarkers={props.setRouteMarkers}></Route>
+              <Route
+                routes={props.routes}
+                setRouteMarkers={props.setRouteMarkers}
+              ></Route>
             )}
             {sidebarOption.stop && props.isLoading && (
               <LoadingSpinner text={"Loading Stops..."}></LoadingSpinner>

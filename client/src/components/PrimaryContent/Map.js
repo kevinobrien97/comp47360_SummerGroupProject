@@ -87,9 +87,14 @@ const Map = (props) => {
   const [selectedStopMarker, setSelectedStopMarker] = useState(null);
 
   const setStopMarker = (coords) => {
-    selectedStopMarker(coords);
+    setSelectedStopMarker(coords);
     mapLoaded.panTo(coords);
     mapLoaded.setZoom(15);
+  };
+
+  const reCenter = () => {
+    mapLoaded.setZoom(13);
+    mapLoaded.panTo(center);
   };
 
   const selectedRouteHandler = (selection) => {
@@ -154,6 +159,7 @@ const Map = (props) => {
   return (
     <div
       style={{
+        // manually calc height to take up space minus navbar space
         height: "calc(100vh - 64px)",
         width: "100%",
         zIndex: "0",
@@ -162,6 +168,7 @@ const Map = (props) => {
     >
       <div>
         <SideContainer
+          reCenter={reCenter}
           isLoading={isLoading}
           routesIsLoading={routesIsLoading}
           stops={stops}

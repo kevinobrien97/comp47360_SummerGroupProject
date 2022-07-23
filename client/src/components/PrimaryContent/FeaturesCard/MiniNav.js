@@ -32,6 +32,7 @@ const MiniNav = (props) => {
               // remove stops on click
               props.setRouteMarkers([]);
               props.setSelectedStopMarker(null);
+              props.reCenter();
             }}
           >
             Journey
@@ -49,6 +50,7 @@ const MiniNav = (props) => {
               // remove stops on click
               props.setRouteMarkers([]);
               props.setSelectedStopMarker(null);
+              props.reCenter();
             }}
           >
             Routes
@@ -80,6 +82,7 @@ const MiniNav = (props) => {
               // remove stops on click
               props.setRouteMarkers([]);
               props.setSelectedStopMarker(null);
+              props.reCenter();
             }}
           >
             Favourites

@@ -17,34 +17,41 @@ const MiniNav = (props) => {
           style={{
             display: "flex",
             justifyContent: "space-evenly",
-        
           }}
         >
           <Button
             color="inherit"
             type="button"
-            onClick={() =>
+            onClick={() => {
               props.setSidebarOption({
                 journey: true,
                 route: false,
                 stop: false,
                 favourites: false,
-              })
-            }
+              });
+              // remove stops on click
+              props.setRouteMarkers([]);
+              props.setSelectedStopMarker(null);
+              props.reCenter();
+            }}
           >
             Journey
           </Button>
           <Button
             color="inherit"
             type="button"
-            onClick={() =>
+            onClick={() => {
               props.setSidebarOption({
                 journey: false,
                 route: true,
                 stop: false,
                 favourites: false,
-              })
-            }
+              });
+              // remove stops on click
+              props.setRouteMarkers([]);
+              props.setSelectedStopMarker(null);
+              props.reCenter();
+            }}
           >
             Routes
           </Button>
@@ -65,14 +72,18 @@ const MiniNav = (props) => {
           <Button
             color="inherit"
             type="button"
-            onClick={() =>
+            onClick={() => {
               props.setSidebarOption({
                 journey: false,
                 route: false,
                 stop: false,
                 favourites: true,
-              })
-            }
+              });
+              // remove stops on click
+              props.setRouteMarkers([]);
+              props.setSelectedStopMarker(null);
+              props.reCenter();
+            }}
           >
             Favourites
           </Button>

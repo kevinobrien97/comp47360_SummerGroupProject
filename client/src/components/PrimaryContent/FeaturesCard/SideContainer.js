@@ -10,7 +10,6 @@ import Favourites from "./Favourites";
 import LoadingSpinner from "../../LoadingSpinner";
 import { IconButton } from "@mui/material";
 import { MdKeyboardArrowUp, MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { BsCaretDownSquare, BsCaretUpSquare } from "react-icons/bs";
 import { IconContext } from "react-icons";
 
 const SideContainer = (props) => {
@@ -31,7 +30,12 @@ const SideContainer = (props) => {
   return (
     <div className={classes.side_container}>
       <div className={classes.side_main}>
-        <MiniNav setSidebarOption={setSidebarOption} />
+        <MiniNav
+          setSidebarOption={setSidebarOption}
+          setRouteMarkers={props.setRouteMarkers}
+          setSelectedStopMarker={props.setSelectedStopMarker}
+          reCenter={props.reCenter}
+        />
         {container && (
           <div>
             {sidebarOption.journey && (
@@ -55,7 +59,15 @@ const SideContainer = (props) => {
               </div>
             )}
             {sidebarOption.nearest && <Nearest></Nearest>}
-            {sidebarOption.route && <Route></Route>}
+            {sidebarOption.route && props.routesIsLoading && (
+              <LoadingSpinner text={"Loading Routes..."}></LoadingSpinner>
+            )}
+            {sidebarOption.route && !props.routesIsLoading && (
+              <Route
+                routes={props.routes}
+                setRouteMarkers={props.setRouteMarkers}
+              ></Route>
+            )}
             {sidebarOption.stop && props.isLoading && (
               <LoadingSpinner text={"Loading Stops..."}></LoadingSpinner>
             )}
@@ -86,9 +98,7 @@ const SideContainer = (props) => {
             // borderRadius: "10px",
           }}
         >
-          <IconContext.Provider
-            value={{ size: "2rem", color: "white"}}
-          >
+          <IconContext.Provider value={{ size: "2rem", color: "white" }}>
             {!container ? (
               <MdOutlineKeyboardArrowDown />
             ) : (

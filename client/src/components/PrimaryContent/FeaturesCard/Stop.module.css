@@ -1,35 +1,32 @@
 .stop_options {
-    list-style-type: none;
-    /* removes the space bullets took up to allow centering */
-    padding-left: 0;
-    overflow:hidden;
-    overflow-y: scroll;
-    height: 25rem;   
-  }
+  list-style-type: none;
+  /* removes the space bullets took up to allow centering */
+  padding-left: 0;
+  overflow: hidden;
+  overflow-y: scroll;
+  height: 25rem;
+}
 
-  .stop_option {
-    list-style-type: none;
-    /* removes the space bullets took up to allow centering */
-    padding-left: 0;
-   
-  }
+.stop_option {
+  list-style-type: none;
+  /* removes the space bullets took up to allow centering */
+  padding-left: 0;
+}
 
-  .stop_options li Button {
-    min-width: 100%;
-    display: flex;
-    justify-content: left;
-   }
+.stop_options li Button {
+  min-width: 100%;
+  display: flex;
+  justify-content: left;
+}
 
 .stop {
-    display: flex;
-     justify-content: center;
-     align-items: center; 
-     flex-direction: column; 
-     
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 
-.stop-select { 
+.stop-select {
   position: absolute;
   margin-left: 3rem;
 }
-

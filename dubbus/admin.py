@@ -1,6 +1,6 @@
 from django.contrib import admin
 # test model
-from .models import Stops, Weather, Routes
+from .models import Stops, Weather
 
 # Register your models here.
 class StopsAdmin(admin.ModelAdmin):
@@ -13,7 +13,7 @@ class WeatherAdmin(admin.ModelAdmin):
 
 admin.site.register(Weather, WeatherAdmin)
 
-class RoutesAdmin(admin.ModelAdmin): 
-    list=('route_id', 'agency_id', 'route_short_name', 'route_long_name', 'route_type' )
+# class RoutesAdmin(admin.ModelAdmin): 
+#     list=('route_id', 'agency_id', 'route_short_name', 'route_long_name', 'route_type' )
 
-admin.site.register(Routes, RoutesAdmin)
+# admin.site.register(Routes, RoutesAdmin)

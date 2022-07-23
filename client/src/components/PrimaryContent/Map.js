@@ -1,10 +1,11 @@
-import { React, useState, useCallback, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import classes from "./Map.module.css";
 import {
   useJsApiLoader,
   GoogleMap,
   Marker,
   DirectionsRenderer,
+  InfoWindow,
 } from "@react-google-maps/api";
 
 // import Journey from "./Journey/Journey";
@@ -17,67 +18,89 @@ const libraries = ["places"];
 
 const Map = (props) => {
   const [stops, setStops] = useState({});
+  const [routes, setRoutes] = useState({});
+  const [routesIsLoading, setRoutesIsLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [routeMarkers, setRouteMarkers] = useState([]);
+  const [currentClickedMarker, setCurrentClickedMarker] = useState(null);
 
-  const fetchStopsData = useCallback(async () => {
-    setError(null);
-    setIsLoading(true);
-    try {
-      // fetch returns a promise
-      // is asynchronous
-      const response = await fetch("http://127.0.0.1:8000/api/stops/");
-      if (!response.ok) {
-        // wont continue with next line if error thrown
-        throw new Error("Something went wrong loading stops");
+  useEffect(() => {
+    const fetchStopsData = async () => {
+      setError(null);
+      setIsLoading(true);
+      try {
+        // fetch returns a promise
+        // is asynchronous
+        const response = await fetch("http://127.0.0.1:8000/api/stops/");
+        if (!response.ok) {
+          // wont continue with next line if error thrown
+          throw new Error("Something went wrong loading stops");
+        }
+        const data = await response.json();
+        setStops(data);
+      } catch (error) {
+        setError(error.message);
       }
-      const data = await response.json();
-      console.log('in stops');
-      setStops(data);
-    } catch (error) {
-      setError(error.message);
-    }
-    setIsLoading(false);
+      setIsLoading(false);
+    };
+    fetchStopsData();
   }, []);
 
   useEffect(() => {
-    fetchStopsData();
-  }, [fetchStopsData]);
-
-  // handling possible output states
-  // let content = <p>Sending request...</p>;
-  // if (Object.keys(stops).length > 0) {
-  //   content = <p>{stops["stop_name"]}</p>;
-  // }
-  // if (error) {
-  //   content = <p>{error}</p>;
-  // }
-  // if (isLoading) {
-  //   content = <p>Loading data...</p>;
-  // }
+    const fetchRoutesData = async () => {
+      // setError(null);
+      setRoutesIsLoading(true);
+      try {
+        // fetch returns a promise
+        // is asynchronous
+        const response = await fetch("http://127.0.0.1:8000/api/routes/");
+        if (!response.ok) {
+          // wont continue with next line if error thrown
+          throw new Error("Something went wrong loading routes");
+        }
+        const allRoutes = await response.json();
+        // sorting alphanumerically but the bus route
+        const collator = new Intl.Collator(undefined, {
+          numeric: true,
+          sensitivity: "base",
+        });
+        const sorted = allRoutes.sort((a, b) => {
+          return collator.compare(a.route_short_name, b.route_short_name);
+          // return (a.route_short_name).localeCompare((b.route_short_name), undefined, {
+          //   numeric: true,
+          //   sensitivity: "base",
+          // });
+        });
+        setRoutes(sorted);
+      } catch (error) {
+        setError(error.message);
+      }
+      setRoutesIsLoading(false);
+    };
+    fetchRoutesData();
+  }, []);
 
   const [allRoutes, setAllRoutes] = useState();
   const [chosenRoute, setChosenRoute] = useState();
   const [mapLoaded, setMapLoaded] = useState(null);
   const [directionsOutput, setDirectionsOutput] = useState(null);
   const [showRoutes, setShowRoutes] = useState(false);
-  const [drawer, setDrawer] = useState(true);
-  const [selectedStop, setSelectedStop] = useState(null);
+  const [selectedStopMarker, setSelectedStopMarker] = useState(null);
 
   const setStopMarker = (coords) => {
-    setSelectedStop(coords);
+    setSelectedStopMarker(coords);
     mapLoaded.panTo(coords);
     mapLoaded.setZoom(15);
   };
 
-  const selectedRouteHandler = (selection) => {
-    setChosenRoute(selection);
+  const reCenter = () => {
+    mapLoaded.setZoom(13);
+    mapLoaded.panTo(center);
   };
 
-  const toggleDrawer = () => {
-    // set the opposite of what it is
-    console.log("triggered");
-    setDrawer(!drawer);
+  const selectedRouteHandler = (selection) => {
+    setChosenRoute(selection);
   };
 
   // below loads google maps script
@@ -96,7 +119,6 @@ const Map = (props) => {
     const results = await dirServ.route({
       origin: or,
       destination: des,
-
       // eslint-disable-next-line no-undef
       travelMode: google.maps.TravelMode.TRANSIT,
       transitOptions: {
@@ -135,35 +157,42 @@ const Map = (props) => {
   function removeRoutes() {
     setShowRoutes(false);
   }
-
+ 
   return (
     <div
       style={{
+        // manually calc height to take up space minus navbar space
         height: "calc(100vh - 64px)",
         width: "100%",
         zIndex: "0",
         position: "absolute",
       }}
     >
-        <div>
-          <SideContainer
-            isLoading={isLoading}
-            stops={stops}
-            removeRoutes={removeRoutes}
-            chosenRoute={chosenRoute}
-            options={allRoutes}
-            selectedRoute={selectedRouteHandler}
-            allRoutes={allRoutes}
-            showRoutes={showRoutes}
-            routeCalculator={routeCalculator}
-            cancelRoute={cancelRoute}
-            centerMap={centerMap}
-            setStopMarker={setStopMarker}
-          ></SideContainer>
-        </div>
+      <div>
+        <SideContainer
+          reCenter={reCenter}
+          isLoading={isLoading}
+          routesIsLoading={routesIsLoading}
+          stops={stops}
+          routes={routes}
+          removeRoutes={removeRoutes}
+          chosenRoute={chosenRoute}
+          options={allRoutes}
+          selectedRoute={selectedRouteHandler}
+          allRoutes={allRoutes}
+          showRoutes={showRoutes}
+          routeCalculator={routeCalculator}
+          cancelRoute={cancelRoute}
+          centerMap={centerMap}
+          setStopMarker={setStopMarker}
+          setRouteMarkers={setRouteMarkers}
+          setSelectedStopMarker={setSelectedStopMarker}
+        ></SideContainer>
+      </div>
       <div className={classes.google_map}>
         <GoogleMap
           // to do -- center map on users current location
+          onClick={() => setCurrentClickedMarker(null)}
           center={center}
           zoom={13}
           mapContainerStyle={{
@@ -175,7 +204,34 @@ const Map = (props) => {
           options={{ fullscreenControl: false, streetViewControl: false }}
           onLoad={(mapLoaded) => setMapLoaded(mapLoaded)}
         >
-          <Marker position={selectedStop}></Marker>
+          ({/* mapping the markers set by clicking a route */}
+          {routeMarkers.map((stop, index) => (
+            <Marker
+              position={{ lat: stop.stop_lat, lng: stop.stop_long }}
+              key={stop.stop_id}
+              onClick={() => {
+                setCurrentClickedMarker(stop.stop_id);
+              }}
+            >
+              {currentClickedMarker === stop.stop_id ? (
+                <InfoWindow
+                options= {{maxWidth : 250 }}
+                  onCloseClick={() => {
+                    setCurrentClickedMarker(null);
+                  }}
+                >
+                  <body>
+                    <header><h4>{stop.stop_name}</h4></header>
+                    <div>
+                      Stop{" "}on route{" "}{stop.route_short_name}{" "}from{" "}
+                      {stop.trip_headsign}
+                    </div>
+                  </body>
+                </InfoWindow>
+              ) : null}
+            </Marker>
+          ))}
+          )<Marker position={selectedStopMarker}></Marker>
           {directionsOutput && (
             <DirectionsRenderer
               directions={directionsOutput}

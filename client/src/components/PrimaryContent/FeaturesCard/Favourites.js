@@ -22,7 +22,6 @@ const Favourites = (props) => {
   // cannot store ID in stopsList as new IDs made on a post request
   const [stopIDList, setStopIDList] = useState([]);
 
-  // const [favs, setFavs] = useState("");
   const api = useAxios();
 
   // function to add a favourite stop to the database for the user
@@ -95,7 +94,7 @@ const Favourites = (props) => {
     // console.log("deleting");
 
 
-    // only want it to run on load - they are being added to the db via postSample above, and also to the stops list
+    // only want it to run on load - they are being added to the db via postStop above, and also to the stops list
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -17,7 +17,6 @@ const MiniNav = (props) => {
           style={{
             display: "flex",
             justifyContent: "space-evenly",
-        
           }}
         >
           <Button

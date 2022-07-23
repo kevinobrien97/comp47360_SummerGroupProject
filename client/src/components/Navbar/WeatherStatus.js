@@ -42,7 +42,7 @@ const WeatherStatus = (props) => {
 
   return (
     <>
-    {/* only load if weather icon has loaded (will mean weather description has also loaded) */}
+      {/* only load if weather icon has loaded (will mean weather description has also loaded) */}
       {weather.weather_icon ? (
         <div className={classes.widget_container}>
           <div className={classes.weather_container}>

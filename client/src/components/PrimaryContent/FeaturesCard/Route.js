@@ -34,6 +34,8 @@ const Route = (props) => {
 
       // need to add response array to routeIDList to store the ID
       const arr = response.data;
+
+      // working
       setRouteIDList((prevRouteIDList) => {
         return [...prevRouteIDList, arr];
       });
@@ -73,11 +75,12 @@ const Route = (props) => {
         console.log("bug");
       }
       for (let i = 0; i < response.data.length; i++) {
-        const item = props.routes.find(
-          (x) => x.stop_id === response.data[i].stop_id
-        );
+        const tempObj = {trip_headsign: response.data[i].trip_headsign, route_short_name: response.data[i].route_short_name}
+        // const item = props.routes.find(
+        //   (x) => x === tempObj
+        // );
         setRouteList((prevRouteList) => {
-          return [...prevRouteList, item];
+          return [...prevRouteList, tempObj];
         });
 
         const arr = response.data[i];
@@ -88,9 +91,7 @@ const Route = (props) => {
       setLoadingFavourites(false);
     };
     fetchData();
-    // console.log("deleting");
-
-    // only want it to run on load - they are being added to the db via postRoute above, and also to the routes list
+      // only want it to run on load - they are being added to the db via postRoute above, and also to the routes list
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -103,7 +104,7 @@ const Route = (props) => {
   const addRoute = (route) => {
     // remove error initially, reset below on conditional
     setError(null);
-
+    
     // if not blank
     if (route) {
       if (user) {
@@ -111,12 +112,10 @@ const Route = (props) => {
           (key) => busRoutes[key] === route
         );
         const routeObj = props.routes[idx];
-        console.log(routeObj);
         // returns true if the stop is already in routeList
         const inArr = routeList.some(
           (elem) => elem === routeObj
         );
-          console.log(route)
         if (!inArr) {
           postRoute(routeObj.trip_headsign, routeObj.route_short_name);
           setRouteList((prevRouteList) => {
@@ -159,7 +158,7 @@ const Route = (props) => {
       <div>
         {user ? (
           <div>
-            {console.log("routes list", routeIDList)}
+            {console.log("routes list", routeList)}
 
             {loadingFavourites && (
               <LoadingSpinner text={"Loading Favourites..."}></LoadingSpinner>

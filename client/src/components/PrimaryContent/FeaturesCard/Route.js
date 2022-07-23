@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Warning from "./Warning";
 import useAxios from "../../../utils/useAxios";
 import LoadingSpinner from "../../LoadingSpinner";
+import RouteFavourites from "./RouteFavourites";
 
 const Route = (props) => {
   const { user } = useContext(AuthContext);
@@ -46,12 +47,13 @@ const Route = (props) => {
   };
 
   // function to delete a favourite route to the database for the user
-  const deleteRoute = async (id) => {
-    // need to delete via pk of database, but don't have this in list populating favouritestops
+  const deleteRoute = async (trip_headsign, route_short_name) => {
+    // need to delete via pk of database, but don't have this in list populating favouriteroutes
     // use routeIDList which has updated for every post and the initial get request
-    const obj = routeIDList.find((x) => x.stop_id === id);
+    const obj = routeIDList.find((x) => x.trip_headsign === trip_headsign && x.route_short_name === route_short_name);
+    console.log(obj)
     const primaryKey = obj.id;
-    const response = await api.delete(`/favourites/${primaryKey}`);
+    const response = await api.delete(`/favouriteroutes/${primaryKey}`);
     console.log("del res", response);
     if (response.status === 204) {
       console.log(response);
@@ -75,6 +77,8 @@ const Route = (props) => {
         console.log("bug");
       }
       for (let i = 0; i < response.data.length; i++) {
+
+        // creating a temporary object for each elem of the response to be added to the list that will be displayed on screen
         const tempObj = {trip_headsign: response.data[i].trip_headsign, route_short_name: response.data[i].route_short_name}
         // const item = props.routes.find(
         //   (x) => x === tempObj
@@ -82,7 +86,7 @@ const Route = (props) => {
         setRouteList((prevRouteList) => {
           return [...prevRouteList, tempObj];
         });
-
+        // adding arr to routeIDList - used for deletions (stores primary key used in database)
         const arr = response.data[i];
         setRouteIDList((prevRouteIDList) => {
           return [...prevRouteIDList, arr];
@@ -164,13 +168,13 @@ const Route = (props) => {
               <LoadingSpinner text={"Loading Favourites..."}></LoadingSpinner>
             )}
             {!loadingFavourites && (
-              <p>update</p>
-              // <FavouriteStops
-              //   stops={stopsList}
-              //   setStopsList={setStopsList}
-              //   // setMarker={props.setMarker}
-              //   deleteStop={deleteStop}
-              // ></FavouriteStops>
+
+              <RouteFavourites
+                routes={routeList}
+                setRouteList={setRouteList}
+                // {/* // setMarker={props.setMarker} */}
+                deleteRoute={deleteRoute}
+              ></RouteFavourites>
             )}
           </div>
         ) : (

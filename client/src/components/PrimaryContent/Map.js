@@ -84,10 +84,10 @@ const Map = (props) => {
   const [mapLoaded, setMapLoaded] = useState(null);
   const [directionsOutput, setDirectionsOutput] = useState(null);
   const [showRoutes, setShowRoutes] = useState(false);
-  const [selectedStop, setSelectedStop] = useState(null);
+  const [selectedStopMarker, setSelectedStopMarker] = useState(null);
 
   const setStopMarker = (coords) => {
-    setSelectedStop(coords);
+    selectedStopMarker(coords);
     mapLoaded.panTo(coords);
     mapLoaded.setZoom(15);
   };
@@ -177,6 +177,7 @@ const Map = (props) => {
           centerMap={centerMap}
           setStopMarker={setStopMarker}
           setRouteMarkers={setRouteMarkers}
+          setSelectedStopMarker={setSelectedStopMarker}
         ></SideContainer>
       </div>
       <div className={classes.google_map}>
@@ -193,11 +194,14 @@ const Map = (props) => {
           options={{ fullscreenControl: false, streetViewControl: false }}
           onLoad={(mapLoaded) => setMapLoaded(mapLoaded)}
         >
-         
-          ({routeMarkers.map(stop =>
-            <Marker position={{ lat: stop.stop_lat, lng: stop.stop_long}} key={stop.stop_id}/>)})
-          {console.log(routeMarkers)}
-          <Marker position={selectedStop}></Marker>
+          ({/* mapping the markers set by clicking a route */}
+          {routeMarkers.map((stop) => (
+            <Marker
+              position={{ lat: stop.stop_lat, lng: stop.stop_long }}
+              key={stop.stop_id}
+            />
+          ))}
+          )<Marker position={selectedStopMarker}></Marker>
           {directionsOutput && (
             <DirectionsRenderer
               directions={directionsOutput}

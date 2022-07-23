@@ -30,7 +30,7 @@ const SideContainer = (props) => {
   return (
     <div className={classes.side_container}>
       <div className={classes.side_main}>
-        <MiniNav setSidebarOption={setSidebarOption} />
+        <MiniNav setSidebarOption={setSidebarOption} setRouteMarkers={props.setRouteMarkers} setSelectedStopMarker={props.setSelectedStopMarker}/>
         {container && (
           <div>
             {sidebarOption.journey && (

@@ -22,28 +22,34 @@ const MiniNav = (props) => {
           <Button
             color="inherit"
             type="button"
-            onClick={() =>
+            onClick={() => {
               props.setSidebarOption({
                 journey: true,
                 route: false,
                 stop: false,
                 favourites: false,
-              })
-            }
+              });
+              // remove stops on click
+              props.setRouteMarkers([]);
+              props.setSelectedStopMarker(null);
+            }}
           >
             Journey
           </Button>
           <Button
             color="inherit"
             type="button"
-            onClick={() =>
+            onClick={() => {
               props.setSidebarOption({
                 journey: false,
                 route: true,
                 stop: false,
                 favourites: false,
-              })
-            }
+              });
+              // remove stops on click
+              props.setRouteMarkers([]);
+              props.setSelectedStopMarker(null);
+            }}
           >
             Routes
           </Button>
@@ -64,14 +70,17 @@ const MiniNav = (props) => {
           <Button
             color="inherit"
             type="button"
-            onClick={() =>
+            onClick={() => {
               props.setSidebarOption({
                 journey: false,
                 route: false,
                 stop: false,
                 favourites: true,
-              })
-            }
+              });
+              // remove stops on click
+              props.setRouteMarkers([]);
+              props.setSelectedStopMarker(null);
+            }}
           >
             Favourites
           </Button>

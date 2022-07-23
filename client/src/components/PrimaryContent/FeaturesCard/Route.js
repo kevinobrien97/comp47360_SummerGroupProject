@@ -51,7 +51,6 @@ const Route = (props) => {
     // need to delete via pk of database, but don't have this in list populating favouriteroutes
     // use routeIDList which has updated for every post and the initial get request
     const obj = routeIDList.find((x) => x.trip_headsign === trip_headsign && x.route_short_name === route_short_name);
-    console.log(obj)
     const primaryKey = obj.id;
     const response = await api.delete(`/favouriteroutes/${primaryKey}`);
     console.log("del res", response);
@@ -140,7 +139,6 @@ const Route = (props) => {
         <Autocomplete
           value={selectedRouteList}
           onChange={(_event, newStop) => {
-            console.log(newStop);
             setSelectedRouteList(newStop);
             addRoute(newStop);
           }}
@@ -162,8 +160,6 @@ const Route = (props) => {
       <div>
         {user ? (
           <div>
-            {console.log("routes list", routeList)}
-
             {loadingFavourites && (
               <LoadingSpinner text={"Loading Favourites..."}></LoadingSpinner>
             )}
@@ -172,7 +168,7 @@ const Route = (props) => {
               <RouteFavourites
                 routes={routeList}
                 setRouteList={setRouteList}
-                // {/* // setMarker={props.setMarker} */}
+                setRouteMarkers={props.setRouteMarkers}
                 deleteRoute={deleteRoute}
               ></RouteFavourites>
             )}

@@ -1,13 +1,40 @@
-import { React } from "react";
+import { React, useState, useEffect } from "react";
 import { Button, IconButton } from "@mui/material";
 import classes from "./Favourites.module.css";
 import { FaTrash } from "react-icons/fa";
 
 const RouteFavourites = (props) => {
+    const [loadingRouteStops, setLoadingRouteStops] = useState(false)
+
   const pickRoutes = (event) => {
     const route = props.routes[event.target.value];
+    const short_name = route.route_short_name
+    const headsign = route.trip_headsign
+    fetchRoutesData(short_name, headsign)
     console.log(route);
+
     // props.setMarker(stop.stop_lat, stop.stop_long);
+  };
+
+  const fetchRoutesData = async (short_name, headsign) => {
+    // setError(null);
+    setLoadingRouteStops(true);
+    try {
+      // fetch returns a promise
+      // is asynchronous
+      const response = await fetch(`http://127.0.0.1:8000/api/routestops/${short_name}/${headsign}/`);
+      if (!response.ok) {
+        // wont continue with next line if error thrown
+        throw new Error("Something went wrong loading routes");
+      }
+      const allStops = await response.json();
+      console.log(allStops)     
+      props.setRouteMarkers(allStops);
+    } catch (error) {
+      console.log(error.message)
+      // setError(error.message);
+    }
+    setLoadingRouteStops(false);
   };
 
   const removeRoute = (idx) => {

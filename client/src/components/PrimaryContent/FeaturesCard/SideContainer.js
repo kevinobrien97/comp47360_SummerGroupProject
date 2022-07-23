@@ -10,7 +10,6 @@ import Favourites from "./Favourites";
 import LoadingSpinner from "../../LoadingSpinner";
 import { IconButton } from "@mui/material";
 import { MdKeyboardArrowUp, MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { BsCaretDownSquare, BsCaretUpSquare } from "react-icons/bs";
 import { IconContext } from "react-icons";
 
 const SideContainer = (props) => {
@@ -59,7 +58,7 @@ const SideContainer = (props) => {
               <LoadingSpinner text={"Loading Routes..."}></LoadingSpinner>
             )}
             {sidebarOption.route && !props.routesIsLoading && (
-              <Route routes={props.routes}></Route>
+              <Route routes={props.routes} setRouteMarkers={props.setRouteMarkers}></Route>
             )}
             {sidebarOption.stop && props.isLoading && (
               <LoadingSpinner text={"Loading Stops..."}></LoadingSpinner>

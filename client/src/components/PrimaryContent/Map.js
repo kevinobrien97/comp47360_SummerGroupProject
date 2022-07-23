@@ -1,4 +1,4 @@
-import { React, useState, useCallback, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import classes from "./Map.module.css";
 import {
   useJsApiLoader,
@@ -21,29 +21,29 @@ const Map = (props) => {
   const [routesIsLoading, setRoutesIsLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  const fetchStopsData = useCallback(async () => {
-    setError(null);
-    setIsLoading(true);
-    try {
-      // fetch returns a promise
-      // is asynchronous
-      const response = await fetch("http://127.0.0.1:8000/api/stops/");
-      if (!response.ok) {
-        // wont continue with next line if error thrown
-        throw new Error("Something went wrong loading stops");
-      }
-      const data = await response.json();
-      setStops(data);
-    } catch (error) {
-      setError(error.message);
-    }
-    setIsLoading(false);
-  }, []);
+  const [routeMarkers, setRouteMarkers] = useState([]);
 
   useEffect(() => {
+    const fetchStopsData = async () => {
+      setError(null);
+      setIsLoading(true);
+      try {
+        // fetch returns a promise
+        // is asynchronous
+        const response = await fetch("http://127.0.0.1:8000/api/stops/");
+        if (!response.ok) {
+          // wont continue with next line if error thrown
+          throw new Error("Something went wrong loading stops");
+        }
+        const data = await response.json();
+        setStops(data);
+      } catch (error) {
+        setError(error.message);
+      }
+      setIsLoading(false);
+    };
     fetchStopsData();
-  }, [fetchStopsData]);
+  }, []);
 
   useEffect(() => {
     const fetchRoutesData = async () => {
@@ -79,18 +79,6 @@ const Map = (props) => {
     fetchRoutesData();
   }, []);
 
-  // handling possible output states
-  // let content = <p>Sending request...</p>;
-  // if (Object.keys(stops).length > 0) {
-  //   content = <p>{stops["stop_name"]}</p>;
-  // }
-  // if (error) {
-  //   content = <p>{error}</p>;
-  // }
-  // if (isLoading) {
-  //   content = <p>Loading data...</p>;
-  // }
-
   const [allRoutes, setAllRoutes] = useState();
   const [chosenRoute, setChosenRoute] = useState();
   const [mapLoaded, setMapLoaded] = useState(null);
@@ -124,7 +112,6 @@ const Map = (props) => {
     const results = await dirServ.route({
       origin: or,
       destination: des,
-
       // eslint-disable-next-line no-undef
       travelMode: google.maps.TravelMode.TRANSIT,
       transitOptions: {
@@ -189,6 +176,7 @@ const Map = (props) => {
           cancelRoute={cancelRoute}
           centerMap={centerMap}
           setStopMarker={setStopMarker}
+          setRouteMarkers={setRouteMarkers}
         ></SideContainer>
       </div>
       <div className={classes.google_map}>
@@ -205,6 +193,10 @@ const Map = (props) => {
           options={{ fullscreenControl: false, streetViewControl: false }}
           onLoad={(mapLoaded) => setMapLoaded(mapLoaded)}
         >
+         
+          ({routeMarkers.map(stop =>
+            <Marker position={{ lat: stop.stop_lat, lng: stop.stop_long}} key={stop.stop_id}/>)})
+          {console.log(routeMarkers)}
           <Marker position={selectedStop}></Marker>
           {directionsOutput && (
             <DirectionsRenderer

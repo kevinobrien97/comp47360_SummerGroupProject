@@ -75,6 +75,7 @@ const RouteFavourites = (props) => {
               >
                 {route.route_short_name.concat(": ", route.trip_headsign)}
               </Button>
+              
               <IconButton onClick={(e) => removeRoute(index)} size="sm">
                 <FaTrash />
               </IconButton>

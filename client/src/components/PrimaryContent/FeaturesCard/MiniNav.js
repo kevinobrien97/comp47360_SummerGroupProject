@@ -27,7 +27,6 @@ const MiniNav = (props) => {
                 journey: true,
                 route: false,
                 stop: false,
-                favourites: false,
               });
               // remove stops on click
               props.setRouteMarkers([]);
@@ -45,7 +44,6 @@ const MiniNav = (props) => {
                 journey: false,
                 route: true,
                 stop: false,
-                favourites: false,
               });
               // remove stops on click
               props.setRouteMarkers([]);
@@ -55,7 +53,7 @@ const MiniNav = (props) => {
           >
             Routes
           </Button>
-          <Button
+          {/* <Button
             color="inherit"
             type="button"
             onClick={() =>
@@ -68,7 +66,7 @@ const MiniNav = (props) => {
             }
           >
             Stops
-          </Button>
+          </Button> */}
           <Button
             color="inherit"
             type="button"
@@ -76,8 +74,7 @@ const MiniNav = (props) => {
               props.setSidebarOption({
                 journey: false,
                 route: false,
-                stop: false,
-                favourites: true,
+                stop: true,
               });
               // remove stops on click
               props.setRouteMarkers([]);
@@ -85,7 +82,7 @@ const MiniNav = (props) => {
               props.reCenter();
             }}
           >
-            Favourites
+            Stops
           </Button>
         </Toolbar>
       </AppBar>

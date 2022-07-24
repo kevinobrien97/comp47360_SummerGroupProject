@@ -17,8 +17,7 @@ const SideContainer = (props) => {
     journey: true,
     route: false,
     stop: false,
-    favourites: false,
-  });
+   });
 
   const [container, setContainer] = useState(true);
 
@@ -68,16 +67,16 @@ const SideContainer = (props) => {
                 setRouteMarkers={props.setRouteMarkers}
               ></Route>
             )}
-            {sidebarOption.stop && props.isLoading && (
+            {/* {sidebarOption.stop && props.isLoading && (
               <LoadingSpinner text={"Loading Stops..."}></LoadingSpinner>
             )}
             {sidebarOption.stop && !props.isLoading && (
               <Stop stops={props.stops} setMarker={setMarker}></Stop>
-            )}
-            {sidebarOption.favourites && props.isLoading && (
+            )} */}
+            {sidebarOption.stop && props.isLoading && (
               <LoadingSpinner text={"Loading Stops..."}></LoadingSpinner>
             )}
-            {sidebarOption.favourites && !props.isLoading && (
+            {sidebarOption.stop && !props.isLoading && (
               <Favourites
                 stops={props.stops}
                 setMarker={setMarker}

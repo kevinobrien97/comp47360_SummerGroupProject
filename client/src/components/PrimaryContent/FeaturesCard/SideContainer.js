@@ -47,7 +47,7 @@ const SideContainer = (props) => {
                 ></Journey>
 
                 {props.allRoutes && props.showRoutes && (
-                  <div className={classes.overflow}>
+                  <div>
                     <RouteOptions
                       removeRoutes={props.removeRoutes}
                       chosenRoute={props.chosenRoute}

@@ -22,6 +22,11 @@
     height: 25rem;   
   }
 
+  .scheduleTime {
+      display: flex;
+      justify-content: center;
+      padding-top: 1rem;
+  }
   /* .favouriteStops {
       text-align: center;
   } */

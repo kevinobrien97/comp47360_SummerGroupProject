@@ -13,6 +13,7 @@ const StopDetails = (props) => {
       // setError(null);
       setLoadingSchedule(true);
       try {
+          console.log("here")
         // fetch returns a promise
         // is asynchronous
         const response = await fetch(
@@ -25,7 +26,7 @@ const StopDetails = (props) => {
         const stopSchedule = await response.json();
         // filter out any times less than current time
         const filtered = stopSchedule.filter((d) => {
-            return d.departure_time >= props.day.toTimeString().split(' ')[0];
+            return d.departure_time >= props.time.toTimeString().split(' ')[0];
           });
         // sort remaining values by time 
         const collator = new Intl.Collator(undefined, {
@@ -35,9 +36,9 @@ const StopDetails = (props) => {
         const sorted = filtered.sort((a, b) => {
           return collator.compare(a.departure_time, b.departure_time);
         });
-        const noDuplicates = sorted.reduce((unique, o) => {
-            if(!unique.some(obj => obj.departure_time === o.departure_time && obj.stop_headsign===o.stop_headsign)) {
-              unique.push(o);
+        const noDuplicates = sorted.reduce((unique, t) => {
+            if(!unique.some(trip => trip.departure_time === t.departure_time && trip.stop_headsign===t.stop_headsign)) {
+              unique.push(t);
             }
             return unique;
         },[]);
@@ -49,17 +50,17 @@ const StopDetails = (props) => {
       }
       setLoadingSchedule(false);
     };
-    getSchedule(props.stop.stop_id, props.day.getDay());
-  }, []);
+    getSchedule(props.stop.stop_id, props.daySelection);
+    // rerender whenever time is changed
+  }, [props.daySelection, props.time]);
 
   return (
     <AccordionDetails sx={{ backgroundColor: "whitesmoke" }}>
-      {console.log(schedule)}
-      {loadingSchedule && (
+       {loadingSchedule && (
         <LoadingSpinner text={"Loading Schedule..."}></LoadingSpinner>
       )}
       {!loadingSchedule && (
-        <StopTable schedule={schedule} day={props.day}></StopTable>
+        <StopTable schedule={schedule} time={props.time} daySelection={props.daySelection}></StopTable>
       )}
     </AccordionDetails>
   );

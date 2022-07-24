@@ -22,9 +22,9 @@ const StopTable = (props) => {
   return (
     <div>
       <h4 style={{ marginTop: "0.5rem" }}>
-        {days[props.day.getDay()]}
+        {days[props.daySelection]}
         {" schedule from "}
-        {props.day.toTimeString().split(" ")[0].slice(0, -3)}
+        {props.time.toTimeString().split(" ")[0].slice(0, -3)}
         {" onwards."}
       </h4>
       {!props.schedule[0] ? (

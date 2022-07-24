@@ -35,8 +35,14 @@ const StopDetails = (props) => {
         const sorted = filtered.sort((a, b) => {
           return collator.compare(a.departure_time, b.departure_time);
         });
+        const noDuplicates = sorted.reduce((unique, o) => {
+            if(!unique.some(obj => obj.departure_time === o.departure_time && obj.stop_headsign===o.stop_headsign)) {
+              unique.push(o);
+            }
+            return unique;
+        },[]);
         // set schedule to next 10 bus stops
-        setSchedule(sorted.splice(0,10));
+        setSchedule(noDuplicates.splice(0,10));
       } catch (error) {
         console.log(error.message);
         // setError(error.message);

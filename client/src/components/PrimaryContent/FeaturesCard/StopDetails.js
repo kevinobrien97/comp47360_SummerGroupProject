@@ -1,6 +1,8 @@
 import { React, useState, useEffect } from "react";
 import { AccordionDetails } from "@mui/material";
 import LoadingSpinner from "../../LoadingSpinner";
+import StopTable from "./StopTable"
+
 
 const StopDetails = (props) => {
   const [loadingSchedule, setLoadingSchedule] = useState(false);
@@ -45,10 +47,13 @@ const StopDetails = (props) => {
   }, []);
 
   return (
-    <AccordionDetails>
+    <AccordionDetails sx={{ backgroundColor: "whitesmoke" }}>
       {console.log(schedule)}
       {loadingSchedule && (
         <LoadingSpinner text={"Loading Schedule..."}></LoadingSpinner>
+      )}
+      {!loadingSchedule && (
+        <StopTable schedule={schedule} day={props.day}></StopTable>
       )}
     </AccordionDetails>
   );

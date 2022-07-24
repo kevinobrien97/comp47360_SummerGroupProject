@@ -6,9 +6,9 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import StopDetails from "./StopDetails";
 
 const FavouriteStops = (props) => {
-  const day = new Date().getDay();
+  const day = new Date();
  
-  console.log(day)
+  console.log(day.toTimeString().split(' ')[0])
   const removeStop = (idx) => {
     const stop = props.stops[idx];
     console.log(stop);

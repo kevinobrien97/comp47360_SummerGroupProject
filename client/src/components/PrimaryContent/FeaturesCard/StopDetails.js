@@ -21,27 +21,32 @@ const StopDetails = (props) => {
           throw new Error("Something went wrong loading schedule");
         }
         const stopSchedule = await response.json();
+        // filter out any times less than current time
+        const filtered = stopSchedule.filter((d) => {
+            return d.departure_time >= props.day.toTimeString().split(' ')[0];
+          });
+        // sort remaining values by time 
         const collator = new Intl.Collator(undefined, {
-            numeric: true,
-            // sensitivity: "base",
-          });
-          const sorted = stopSchedule.sort((a, b) => {
-            return collator.compare(a.departure_time, b.departure_time);
-       
-          });
-        setSchedule(sorted);
+          numeric: true,
+          // sensitivity: "base",
+        });
+        const sorted = filtered.sort((a, b) => {
+          return collator.compare(a.departure_time, b.departure_time);
+        });
+        // set schedule to next 10 bus stops
+        setSchedule(sorted.splice(0,10));
       } catch (error) {
         console.log(error.message);
         // setError(error.message);
       }
       setLoadingSchedule(false);
     };
-    getSchedule(props.stop.stop_id, props.day);
+    getSchedule(props.stop.stop_id, props.day.getDay());
   }, []);
 
   return (
     <AccordionDetails>
-        {console.log(schedule)}
+      {console.log(schedule)}
       {loadingSchedule && (
         <LoadingSpinner text={"Loading Schedule..."}></LoadingSpinner>
       )}

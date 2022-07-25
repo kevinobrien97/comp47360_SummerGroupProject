@@ -178,42 +178,52 @@ const Favourites = (props) => {
             <TextField {...params} label="Select Bus Stop" />
           )}
         />
-        <ScheduleTime daySelection={daySelection} setDaySelection={setDaySelection} time={time} setTime={setTime}></ScheduleTime>
+        <ScheduleTime
+          daySelection={daySelection}
+          setDaySelection={setDaySelection}
+          time={time}
+          setTime={setTime}
+        ></ScheduleTime>
       </div>
-      
+
       {error && <Warning error={error}></Warning>}
       <div>
-        {viewFavourites && (<div>
-        {user ? (
+        {viewFavourites && (
           <div>
-            {loadingFavourites && (
-              <LoadingSpinner
-                text={"Loading Favourite Stops..."}
-              ></LoadingSpinner>
-            )}
-            {!loadingFavourites && (
-              <FavouriteStops
-                stops={stopsList}
-                setStopsList={setStopsList}
-                setMarker={props.setMarker}
-                deleteStop={deleteStop}
-              ></FavouriteStops>
+            {user ? (
+              <div>
+                {loadingFavourites && (
+                  <LoadingSpinner
+                    text={"Loading Favourite Stops..."}
+                  ></LoadingSpinner>
+                )}
+                {!loadingFavourites && (
+                  <FavouriteStops
+                    daySelection={daySelection}
+                    time={time}
+                    stops={stopsList}
+                    setStopsList={setStopsList}
+                    setMarker={props.setMarker}
+                    deleteStop={deleteStop}
+                  ></FavouriteStops>
+                )}
+              </div>
+            ) : (
+              <div className={classes.loggedOut}>
+                <h4>You are not logged in.</h4>
+                <p>
+                  {" "}
+                  <Link to={"/login/"} style={{ textDecoration: "none" }}>
+                    <Button type="submit">Login</Button>
+                  </Link>
+                  {"or"}
+                  <Button type="submit">Register</Button>
+                  to view your favourites.
+                </p>
+              </div>
             )}
           </div>
-        ) : (
-          <div className={classes.loggedOut}>
-            <h4>You are not logged in.</h4>
-            <p>
-              {" "}
-              <Link to={"/login/"} style={{ textDecoration: "none" }}>
-                <Button type="submit">Login</Button>
-              </Link>
-              {"or"}
-              <Button type="submit">Register</Button>
-              to view your favourites.
-            </p>
-          </div>
-        )}</div>)}
+        )}
       </div>
     </div>
   );

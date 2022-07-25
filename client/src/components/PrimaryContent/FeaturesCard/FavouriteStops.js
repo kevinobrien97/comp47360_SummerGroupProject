@@ -1,21 +1,11 @@
-import { React, useState } from "react";
-import {
-  IconButton,
-  Accordion,
-  AccordionSummary,
-} from "@mui/material";
+import { React } from "react";
+import { IconButton, Accordion, AccordionSummary } from "@mui/material";
 import classes from "./Favourites.module.css";
 import { FaTrash } from "react-icons/fa";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import StopDetails from "./StopDetails";
 
 const FavouriteStops = (props) => {
-  const day = new Date();
-  const [daySelection, setDaySelection] = useState(day.getDay(0));
-  const [time, setTime] = useState(day);
-  
-
-  console.log(day.toTimeString().split(" ")[0]);
   const removeStop = (idx) => {
     const stop = props.stops[idx];
     console.log(stop);
@@ -24,17 +14,9 @@ const FavouriteStops = (props) => {
     // call method to delete from database
     props.deleteStop(stop.stop_id);
   };
-  const handleDateChange = (event) => {
-    setDaySelection(event.target.value);
-  };
-
-  const handleTimeChange = (val) => {
-    setTime(val);
-  };
 
   return (
     <div className={classes.favouriteStops}>
-  
       <h3
         style={{
           marginTop: "0.75rem",
@@ -95,8 +77,8 @@ const FavouriteStops = (props) => {
                 </AccordionSummary>
                 <StopDetails
                   stop={stop}
-                  time={time}
-                  daySelection={daySelection}
+                  time={props.time}
+                  daySelection={props.daySelection}
                 ></StopDetails>
               </Accordion>
             </div>

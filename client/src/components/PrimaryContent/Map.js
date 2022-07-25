@@ -231,7 +231,8 @@ const Map = (props) => {
               ) : null}
             </Marker>
           ))}
-          )<Marker position={selectedStopMarker}></Marker>
+          )
+          <Marker position={selectedStopMarker}></Marker>
           {directionsOutput && (
             <DirectionsRenderer
               directions={directionsOutput}

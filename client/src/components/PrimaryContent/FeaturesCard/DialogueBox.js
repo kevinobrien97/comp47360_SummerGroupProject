@@ -3,19 +3,17 @@ import classes from "./DialogueBox.module.css";
 import { Card, Button, ButtonGroup } from "@mui/material/";
 
 const DialogueBox = (props) => {
-    const deleteFav = () => {
-        
-            console.log(props.stops)
-          props.setStopsList(
-            props.stops.filter((stop) => stop !== props.item)
-          );
-          console.log(props.stops)
-          console.log(props.item);
-          props.setDialogueController(false);
-          props.func(props.item);
-          // update stopIDList
-        
-    }
+  const deleteFav = () => {
+    console.log(props.stops);
+    props.setStopsList(props.stops.filter((stop) => stop !== props.item));
+    console.log(props.stops);
+    console.log(props.item);
+    props.setDialogueController(false);
+    props.func(props.item);
+    props.reCenter();
+    props.setSelectedStopMarker(null)
+    // update stopIDList
+  };
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
@@ -31,27 +29,28 @@ const DialogueBox = (props) => {
           <h4>{props.header}</h4>
         </header>
         <div className={classes.content}>
-          {props.item.label || props.item.stop_name} will be {props.body} your favourites. Do you want to continue?
+          {props.item.label || props.item.stop_name} will be {props.body} your
+          favourites. Do you want to continue?
         </div>
         {console.log(props.item)}
         <footer className={classes.footer}>
           <ButtonGroup sx={{ width: "100%", background: "rgba(0, 0, 0, 0.8)" }}>
             {props.setStopsList ? (
               <Button
-                sx={{ width: "50%" }}
+                sx={{ width: "50%", backgroundColor:"#F1B23E" }}
                 type="submit"
                 variant="contained"
-                color="primary"
+                
                 onClick={deleteFav}
               >
                 Confirm
               </Button>
             ) : (
               <Button
-                sx={{ width: "50%" }}
+                sx={{ width: "50%", backgroundColor:"#F1B23E" }}
                 type="submit"
                 variant="contained"
-                color="primary"
+               
                 onClick={() => {
                   props.setDialogueController(false);
                   props.func(props.item);

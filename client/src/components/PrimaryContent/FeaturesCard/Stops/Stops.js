@@ -258,6 +258,8 @@ const Stops = (props) => {
                         stops={favStopsList}
                         setSelectedItem={setDeleteFavourite}
                         setStopsList={setFavStopsList}
+                        reCenter={props.reCenter}
+                        setSelectedStopMarker={props.setSelectedStopMarker}
                       ></DialogueBox>
                     )}
                     <StopList
@@ -298,7 +300,6 @@ const Stops = (props) => {
             stops={stopsList}
             setStopsList={setStopsList}
             setMarker={props.setMarker}
-            // deleteStop={deleteStop}
           ></StopList>
         )}
       </div>

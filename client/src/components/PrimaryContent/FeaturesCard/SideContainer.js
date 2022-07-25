@@ -79,6 +79,8 @@ const SideContainer = (props) => {
               <Stops
                 stops={props.stops}
                 setMarker={setMarker}
+                setSelectedStopMarker={props.setSelectedStopMarker}
+                reCenter={props.reCenter}
               ></Stops>
             )}
           </div>

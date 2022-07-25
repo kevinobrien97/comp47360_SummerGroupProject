@@ -5,8 +5,7 @@ import Journey from "./Journey";
 import RouteOptions from "./RouteOptions";
 import Nearest from "./Nearest";
 import Route from "./Route";
-import Stop from "./Stop";
-import Favourites from "./Favourites";
+import Stops from "./Stops/Stops";
 import LoadingSpinner from "../../LoadingSpinner";
 import { IconButton } from "@mui/material";
 import { MdKeyboardArrowUp, MdOutlineKeyboardArrowDown } from "react-icons/md";
@@ -17,8 +16,7 @@ const SideContainer = (props) => {
     journey: true,
     route: false,
     stop: false,
-    favourites: false,
-  });
+   });
 
   const [container, setContainer] = useState(true);
 
@@ -47,7 +45,7 @@ const SideContainer = (props) => {
                 ></Journey>
 
                 {props.allRoutes && props.showRoutes && (
-                  <div className={classes.overflow}>
+                  <div>
                     <RouteOptions
                       removeRoutes={props.removeRoutes}
                       chosenRoute={props.chosenRoute}
@@ -68,20 +66,20 @@ const SideContainer = (props) => {
                 setRouteMarkers={props.setRouteMarkers}
               ></Route>
             )}
-            {sidebarOption.stop && props.isLoading && (
+            {/* {sidebarOption.stop && props.isLoading && (
               <LoadingSpinner text={"Loading Stops..."}></LoadingSpinner>
             )}
             {sidebarOption.stop && !props.isLoading && (
               <Stop stops={props.stops} setMarker={setMarker}></Stop>
-            )}
-            {sidebarOption.favourites && props.isLoading && (
+            )} */}
+            {sidebarOption.stop && props.isLoading && (
               <LoadingSpinner text={"Loading Stops..."}></LoadingSpinner>
             )}
-            {sidebarOption.favourites && !props.isLoading && (
-              <Favourites
+            {sidebarOption.stop && !props.isLoading && (
+              <Stops
                 stops={props.stops}
                 setMarker={setMarker}
-              ></Favourites>
+              ></Stops>
             )}
           </div>
         )}

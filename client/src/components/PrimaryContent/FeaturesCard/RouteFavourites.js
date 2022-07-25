@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { Button, IconButton } from "@mui/material";
-import classes from "./Favourites.module.css";
+import classes from "./Stops/Favourites.module.css";
 import { FaTrash } from "react-icons/fa";
 
 const RouteFavourites = (props) => {
@@ -75,6 +75,7 @@ const RouteFavourites = (props) => {
               >
                 {route.route_short_name.concat(": ", route.trip_headsign)}
               </Button>
+              
               <IconButton onClick={(e) => removeRoute(index)} size="sm">
                 <FaTrash />
               </IconButton>

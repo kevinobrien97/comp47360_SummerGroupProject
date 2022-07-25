@@ -1,6 +1,6 @@
 import { React, useState, useContext, useEffect } from "react";
 import { Autocomplete, TextField, Button } from "@mui/material";
-import classes from "./Favourites.module.css";
+import classes from "./Stops/Favourites.module.css";
 // import FavouriteStops from "./FavouriteStops";
 import AuthContext from "../../../context/AuthContext";
 import { Link } from "react-router-dom";
@@ -107,7 +107,7 @@ const Route = (props) => {
   const addRoute = (route) => {
     // remove error initially, reset below on conditional
     setError(null);
-    
+    console.log(route)
     // if not blank
     if (route) {
       if (user) {

@@ -1,12 +1,13 @@
 import { React, useState, useContext, useEffect } from "react";
 import { Autocomplete, TextField, Button } from "@mui/material";
-import classes from "../Favourites.module.css";
+import classes from "../Stops_routes.module.css";
 import AuthContext from "../../../../context/AuthContext";
 import { Link } from "react-router-dom";
 import Warning from "../Warning";
 import useAxios from "../../../../utils/useAxios";
 import LoadingSpinner from "../../../LoadingSpinner";
 import RouteFavourites from "./RouteFavourites";
+import ToggleFavourites from "../ToggleFavourites";
 
 const Route = (props) => {
   const { user } = useContext(AuthContext);
@@ -15,6 +16,7 @@ const Route = (props) => {
   const [autocompleteSelection, setAutocompleteSelection] = useState("");
   const [selectedRouteList, setSelectedRouteList] = useState(null);
   const [loadingFavourites, setLoadingFavourites] = useState(false);
+  const [viewFavourites, setViewFavourites] = useState(false);
 
   // routeIDList holds array of database IDs and their associated bus route
   // need it to pass delete requests to DB
@@ -133,8 +135,12 @@ const Route = (props) => {
   };
 
   return (
-    <div className={classes.fav_container}>
-      <div>
+    <div>
+      <ToggleFavourites
+        viewFavourites={viewFavourites}
+        setViewFavourites={setViewFavourites}
+      ></ToggleFavourites>
+      <div className={classes.fav_container}>
         <Autocomplete
           value={selectedRouteList}
           onChange={(_event, newStop) => {

@@ -1,6 +1,6 @@
 import { React, useState, useContext, useEffect } from "react";
 import { Button } from "@mui/material";
-import classes from "../Favourites.module.css";
+import classes from "../Stops_routes.module.css";
 import StopList from "./StopList";
 import AuthContext from "../../../../context/AuthContext";
 import { Link } from "react-router-dom";
@@ -14,6 +14,7 @@ import {
 import ScheduleTime from "../ScheduleTime";
 import StopDropdown from "./StopDropdown";
 import DialogueBox from "../DialogueBox";
+import ToggleFavourites from "../ToggleFavourites";
 
 const Stops = (props) => {
   const { user } = useContext(AuthContext);
@@ -180,37 +181,10 @@ const Stops = (props) => {
           )}
         </Button>
       </div> */}
-      {!viewFavourites && (
-        <div className={classes.viewingFavs}>
-          <Button
-            onClick={() => {
-              setViewFavourites(true);
-              // setSelectedStopList(null);
-            }}
-          >
-            <span style={{ color: "#F1B23E" }}>
-              View Favourite Stops &nbsp;
-              <HiOutlineArrowNarrowRight />
-            </span>
-          </Button>
-        </div>
-      )}
-      {viewFavourites && (
-        <div className={classes.regularView}>
-          <Button
-            onClick={() => {
-              setViewFavourites(false);
-              // setSelectedStopList(null);
-            }}
-          >
-            <span style={{ color: "#F1B23E" }}>
-              <HiOutlineArrowNarrowLeft />
-              &nbsp;Back to Stop Search
-            </span>
-          </Button>
-        </div>
-      )}
-
+      <ToggleFavourites
+        viewFavourites={viewFavourites}
+        setViewFavourites={setViewFavourites}
+      ></ToggleFavourites>
       <div className={classes.fav_container}>
         {/* pass different add function to dropdown depending on if in favourites or regular stop view */}
         {!viewFavourites ? (

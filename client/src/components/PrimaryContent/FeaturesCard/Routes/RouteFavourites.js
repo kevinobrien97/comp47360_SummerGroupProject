@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { Button, IconButton } from "@mui/material";
-import classes from "../Favourites.module.css";
+import classes from "../Stops_routes.module.css";
 import { FaTrash } from "react-icons/fa";
 
 const RouteFavourites = (props) => {

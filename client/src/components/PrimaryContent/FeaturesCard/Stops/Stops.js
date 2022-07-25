@@ -1,6 +1,6 @@
 import { React, useState, useContext, useEffect } from "react";
 import { Button } from "@mui/material";
-import classes from "./Favourites.module.css";
+import classes from "../Favourites.module.css";
 import StopList from "./StopList";
 import AuthContext from "../../../../context/AuthContext";
 import { Link } from "react-router-dom";

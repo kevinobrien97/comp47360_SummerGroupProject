@@ -1,12 +1,11 @@
 import { React, useState, useContext, useEffect } from "react";
 import { Autocomplete, TextField, Button } from "@mui/material";
-import classes from "./Stops/Favourites.module.css";
-// import FavouriteStops from "./FavouriteStops";
-import AuthContext from "../../../context/AuthContext";
+import classes from "../Favourites.module.css";
+import AuthContext from "../../../../context/AuthContext";
 import { Link } from "react-router-dom";
-import Warning from "./Warning";
-import useAxios from "../../../utils/useAxios";
-import LoadingSpinner from "../../LoadingSpinner";
+import Warning from "../Warning";
+import useAxios from "../../../../utils/useAxios";
+import LoadingSpinner from "../../../LoadingSpinner";
 import RouteFavourites from "./RouteFavourites";
 
 const Route = (props) => {

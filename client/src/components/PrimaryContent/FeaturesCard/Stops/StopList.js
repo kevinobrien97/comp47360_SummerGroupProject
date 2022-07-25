@@ -1,6 +1,6 @@
 import { React } from "react";
 import { IconButton, Accordion, AccordionSummary } from "@mui/material";
-import classes from "./Favourites.module.css";
+import classes from "../Favourites.module.css";
 import { FaTrash } from "react-icons/fa";
 import { MdClear } from "react-icons/md";
 

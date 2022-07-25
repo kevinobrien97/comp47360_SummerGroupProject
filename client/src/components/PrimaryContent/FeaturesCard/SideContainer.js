@@ -4,7 +4,7 @@ import MiniNav from "./MiniNav.js";
 import Journey from "./Journey";
 import RouteOptions from "./RouteOptions";
 import Nearest from "./Nearest";
-import Route from "./Route";
+import Route from "./Routes/Route";
 import Stops from "./Stops/Stops";
 import LoadingSpinner from "../../LoadingSpinner";
 import { IconButton } from "@mui/material";

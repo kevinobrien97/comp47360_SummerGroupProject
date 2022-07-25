@@ -3,7 +3,6 @@
   margin-top: 0.5rem;
   margin-left: 0.5rem;
   flex-direction: column;
-  width: 25rem;
   position: absolute;
   border-radius: 10px;
   z-index: 2;
@@ -16,6 +15,8 @@
   height: inherit;
   max-height: inherit;
   border-radius: 10px;
+  min-width: 23rem;
+  max-width: 25rem;
   white-space: normal;
   overflow-x: hidden;
 }

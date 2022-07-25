@@ -220,13 +220,13 @@ const Map = (props) => {
                     setCurrentClickedMarker(null);
                   }}
                 >
-                  <body>
+                  <div>
                     <header><h4>{stop.stop_name}</h4></header>
                     <div>
                       Stop{" "}on route{" "}{stop.route_short_name}{" "}from{" "}
                       {stop.trip_headsign}
                     </div>
-                  </body>
+                  </div>
                 </InfoWindow>
               ) : null}
             </Marker>

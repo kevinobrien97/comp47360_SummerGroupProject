@@ -1,36 +1,34 @@
 import { React, useState, useContext, useEffect } from "react";
-import { Autocomplete, TextField, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import classes from "./Favourites.module.css";
 import FavouriteStops from "./FavouriteStops";
-import AuthContext from "../../../context/AuthContext";
+import AuthContext from "../../../../context/AuthContext";
 import { Link } from "react-router-dom";
-import Warning from "./Warning";
-import useAxios from "../../../utils/useAxios";
-import LoadingSpinner from "../../LoadingSpinner";
+import Warning from "../Warning";
+import useAxios from "../../../../utils/useAxios";
+import LoadingSpinner from "../../../LoadingSpinner";
 import {
   HiOutlineArrowNarrowLeft,
   HiOutlineArrowNarrowRight,
 } from "react-icons/hi";
-import ScheduleTime from "./ScheduleTime";
+import ScheduleTime from "../ScheduleTime";
+import StopDropdown from "./StopDropdown";
 
-const Favourites = (props) => {
+const Stops = (props) => {
   const { user } = useContext(AuthContext);
   const [error, setError] = useState(null);
-  const [stopsList, setStopsList] = useState([]);
-  // const [selectedStop, setSelectedStop] = useState();
-  const [autocompleteSelection, setAutocompleteSelection] = useState("");
-  const [selectedStopList, setSelectedStopList] = useState(null);
-  const [loadingFavourites, setLoadingFavourites] = useState(false);
-  const [viewFavourites, setViewFavourites] = useState(false);
-
-  const day = new Date();
-  const [daySelection, setDaySelection] = useState(day.getDay(0));
-  const [time, setTime] = useState(day);
+  const [favStopsList, setFavStopsList] = useState([]);
 
   // stopIDList holds array of database IDs and their associated bus stop
   // need it to pass delete requests to DB
   // cannot store ID in stopsList as new IDs made on a post request
   const [stopIDList, setStopIDList] = useState([]);
+
+  const [loadingFavourites, setLoadingFavourites] = useState(false);
+  const [viewFavourites, setViewFavourites] = useState(false);
+  const day = new Date();
+  const [daySelection, setDaySelection] = useState(day.getDay(0));
+  const [time, setTime] = useState(day);
 
   const api = useAxios();
 
@@ -86,7 +84,7 @@ const Favourites = (props) => {
         const item = props.stops.find(
           (x) => x.stop_id === response.data[i].stop_id
         );
-        setStopsList((prevStopsList) => {
+        setFavStopsList((prevStopsList) => {
           return [...prevStopsList, item];
         });
 
@@ -108,7 +106,7 @@ const Favourites = (props) => {
     return { label: stop.stop_name, key: stop.stop_id };
   });
 
-  const addStop = (stop) => {
+  const addFavStop = (stop) => {
     // remove error initially, reset below on conditional
     setError(null);
 
@@ -119,13 +117,13 @@ const Favourites = (props) => {
         const stopObj = props.stops[idx];
 
         // returns true if the stop is already in stopsList
-        const inArr = stopsList.some(
+        const inArr = favStopsList.some(
           (elem) => elem.stop_id === stopObj.stop_id
         );
 
         if (!inArr) {
           postStop(stop.key);
-          setStopsList((prevStopsList) => {
+          setFavStopsList((prevStopsList) => {
             return [...prevStopsList, stopObj];
           });
         } else {
@@ -138,7 +136,7 @@ const Favourites = (props) => {
   };
 
   return (
-    <div className={classes.fav_container}>
+    <div>
       {!viewFavourites && (
         <div className={classes.viewingFavs}>
           <Button onClick={() => setViewFavourites(true)}>
@@ -159,25 +157,10 @@ const Favourites = (props) => {
           </Button>
         </div>
       )}
-      <div>
-        <Autocomplete
-          value={selectedStopList}
-          onChange={(_event, newStop) => {
-            setSelectedStopList(newStop);
-            addStop(newStop);
-          }}
-          inputValue={autocompleteSelection}
-          onInputChange={(_event, newInputValue) => {
-            setAutocompleteSelection(newInputValue);
-          }}
-          disablePortal
-          id="stop-search"
-          options={busStops}
-          sx={{ width: 300 }}
-          renderInput={(params) => (
-            <TextField {...params} label="Select Bus Stop" />
-          )}
-        />
+
+      <div className={classes.fav_container}>
+        <StopDropdown options={busStops} addStop={addFavStop}></StopDropdown>
+        {error && <Warning error={error}></Warning>}
         <ScheduleTime
           daySelection={daySelection}
           setDaySelection={setDaySelection}
@@ -186,9 +169,8 @@ const Favourites = (props) => {
         ></ScheduleTime>
       </div>
 
-      {error && <Warning error={error}></Warning>}
       <div>
-        {viewFavourites && (
+        {viewFavourites ? (
           <div>
             {user ? (
               <div>
@@ -201,8 +183,8 @@ const Favourites = (props) => {
                   <FavouriteStops
                     daySelection={daySelection}
                     time={time}
-                    stops={stopsList}
-                    setStopsList={setStopsList}
+                    stops={favStopsList}
+                    setStopsList={setFavStopsList}
                     setMarker={props.setMarker}
                     deleteStop={deleteStop}
                   ></FavouriteStops>
@@ -217,16 +199,18 @@ const Favourites = (props) => {
                     <Button type="submit">Login</Button>
                   </Link>
                   {"or"}
-                  <Button type="submit">Register</Button>
+                  <Link to={"/register/"} style={{ textDecoration: "none" }}>
+                    <Button type="submit">Register</Button>{" "}
+                  </Link>
                   to view your favourites.
                 </p>
               </div>
             )}
           </div>
-        )}
+        ):(<div></div>)}
       </div>
     </div>
   );
 };
 
-export default Favourites;
+export default Stops;

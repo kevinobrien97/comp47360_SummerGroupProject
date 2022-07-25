@@ -29,9 +29,6 @@ router.register(r'weather', views.WeatherView, 'dubbus')
 router.register(r'favourites', views.FavouritesView, 'dubbus')
 router.register(r'routes', views.RoutesUpdatedView, 'dubbus')
 router.register(r'favouriteroutes', views.FavouriteRoutesView, 'dubbus')
-# router.register(r'stoptimes', views.StopTimesUpdatedView, 'dubbus')
-# router.register(r'routestops', views.RouteStopsView, 'dubbus')
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),

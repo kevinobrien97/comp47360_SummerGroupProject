@@ -5,8 +5,7 @@ import Journey from "./Journey";
 import RouteOptions from "./RouteOptions";
 import Nearest from "./Nearest";
 import Route from "./Route";
-import Stop from "./Stop";
-import Favourites from "./Favourites";
+import Stops from "./Stops/Stops";
 import LoadingSpinner from "../../LoadingSpinner";
 import { IconButton } from "@mui/material";
 import { MdKeyboardArrowUp, MdOutlineKeyboardArrowDown } from "react-icons/md";
@@ -77,10 +76,10 @@ const SideContainer = (props) => {
               <LoadingSpinner text={"Loading Stops..."}></LoadingSpinner>
             )}
             {sidebarOption.stop && !props.isLoading && (
-              <Favourites
+              <Stops
                 stops={props.stops}
                 setMarker={setMarker}
-              ></Favourites>
+              ></Stops>
             )}
           </div>
         )}

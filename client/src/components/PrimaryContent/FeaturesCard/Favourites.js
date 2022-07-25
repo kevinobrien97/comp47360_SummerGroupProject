@@ -7,6 +7,11 @@ import { Link } from "react-router-dom";
 import Warning from "./Warning";
 import useAxios from "../../../utils/useAxios";
 import LoadingSpinner from "../../LoadingSpinner";
+import {
+  HiOutlineArrowNarrowLeft,
+  HiOutlineArrowNarrowRight,
+} from "react-icons/hi";
+import ScheduleTime from "./ScheduleTime";
 
 const Favourites = (props) => {
   const { user } = useContext(AuthContext);
@@ -16,6 +21,11 @@ const Favourites = (props) => {
   const [autocompleteSelection, setAutocompleteSelection] = useState("");
   const [selectedStopList, setSelectedStopList] = useState(null);
   const [loadingFavourites, setLoadingFavourites] = useState(false);
+  const [viewFavourites, setViewFavourites] = useState(false);
+
+  const day = new Date();
+  const [daySelection, setDaySelection] = useState(day.getDay(0));
+  const [time, setTime] = useState(day);
 
   // stopIDList holds array of database IDs and their associated bus stop
   // need it to pass delete requests to DB
@@ -37,7 +47,6 @@ const Favourites = (props) => {
       setStopIDList((prevStopIDList) => {
         return [...prevStopIDList, arr];
       });
-
     } else {
       // change
       alert("Something went wrong!");
@@ -48,16 +57,14 @@ const Favourites = (props) => {
   const deleteStop = async (id) => {
     // need to delete via pk of database, but only have stop_id in list populating favouritestops
     // use stopIDList which has updated for every post and the initial get request
-    const obj = stopIDList.find(
-      (x) => x.stop_id === id
-    );
+    const obj = stopIDList.find((x) => x.stop_id === id);
     const primaryKey = obj.id;
     const response = await api.delete(`/favourites/${primaryKey}`);
-    console.log('del res', response)
+    console.log("del res", response);
     if (response.status === 204) {
       console.log(response);
       // update stopIDList
-      setStopIDList(stopIDList.filter(item => item !== obj));
+      setStopIDList(stopIDList.filter((item) => item !== obj));
     } else {
       // change
       alert("Something went wrong!");
@@ -92,7 +99,6 @@ const Favourites = (props) => {
     };
     fetchData();
     // console.log("deleting");
-
 
     // only want it to run on load - they are being added to the db via postStop above, and also to the stops list
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -133,6 +139,26 @@ const Favourites = (props) => {
 
   return (
     <div className={classes.fav_container}>
+      {!viewFavourites && (
+        <div className={classes.viewingFavs}>
+          <Button onClick={() => setViewFavourites(true)}>
+            <span style={{ color: "#F1B23E" }}>
+              View Favourite Stops &nbsp;
+              <HiOutlineArrowNarrowRight />
+            </span>
+          </Button>
+        </div>
+      )}
+      {viewFavourites && (
+        <div className={classes.regularView}>
+          <Button onClick={() => setViewFavourites(false)}>
+            <span style={{ color: "#F1B23E" }}>
+              <HiOutlineArrowNarrowLeft />
+              &nbsp;Back to Stop Search
+            </span>
+          </Button>
+        </div>
+      )}
       <div>
         <Autocomplete
           value={selectedStopList}
@@ -152,15 +178,18 @@ const Favourites = (props) => {
             <TextField {...params} label="Select Bus Stop" />
           )}
         />
+        <ScheduleTime daySelection={daySelection} setDaySelection={setDaySelection} time={time} setTime={setTime}></ScheduleTime>
       </div>
+      
       {error && <Warning error={error}></Warning>}
       <div>
+        {viewFavourites && (<div>
         {user ? (
           <div>
-            {console.log("stops list", stopIDList)}
-            
             {loadingFavourites && (
-              <LoadingSpinner text={"Loading Favourite Stops..."}></LoadingSpinner>
+              <LoadingSpinner
+                text={"Loading Favourite Stops..."}
+              ></LoadingSpinner>
             )}
             {!loadingFavourites && (
               <FavouriteStops
@@ -184,7 +213,7 @@ const Favourites = (props) => {
               to view your favourites.
             </p>
           </div>
-        )}
+        )}</div>)}
       </div>
     </div>
   );

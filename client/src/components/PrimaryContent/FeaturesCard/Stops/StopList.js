@@ -2,11 +2,14 @@ import { React } from "react";
 import { IconButton, Accordion, AccordionSummary } from "@mui/material";
 import classes from "./Favourites.module.css";
 import { FaTrash } from "react-icons/fa";
+import { ImCancelCircle } from "react-icons/im";
+
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import StopDetails from "./StopDetails";
 
 const FavouriteStops = (props) => {
-  const removeStop = (idx) => {
+  // different delete methods depending if viewing favourites or not
+  const removeFavStop = (idx) => {
     const stop = props.stops[idx];
     console.log(stop);
     // update stopIDList
@@ -15,17 +18,19 @@ const FavouriteStops = (props) => {
     props.deleteStop(stop.stop_id);
   };
 
+  const removeStop = (idx) => {
+    const stop = props.stops[idx];
+    props.setStopsList(props.stops.filter((item) => item !== stop));
+  };
+
   return (
     <div className={classes.favouriteStops}>
-      <h3
-        style={{
-          marginTop: "0.75rem",
-          marginBottom: "0.75rem",
-          textAlign: "center",
-        }}
-      >
-        Your Favourite Stops
-      </h3>
+      {props.viewFavourites ? (
+        <h3 className={classes.h3}>Your Favourite Stops</h3>
+      ) : (
+        <h3 className={classes.h3}>Selected Stops</h3>
+      )}
+
       {props.stops[0] ? (
         <div>
           {props.stops.map((stop, index) => (
@@ -50,10 +55,6 @@ const FavouriteStops = (props) => {
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1a-content"
                   id="panel1a-header"
-                  // value={index}
-                  // onClick={() => {
-                  //   props.selectedRoute(index);
-                  // }}
                 >
                   <div
                     style={{
@@ -70,9 +71,18 @@ const FavouriteStops = (props) => {
                       marginLeft: "auto",
                     }}
                   >
-                    <IconButton onClick={(e) => removeStop(index)} size="sm">
-                      <FaTrash />
-                    </IconButton>
+                    {props.viewFavourites ? (
+                      <IconButton
+                        onClick={(e) => removeFavStop(index)}
+                        size="sm"
+                      >
+                        <FaTrash />
+                      </IconButton>
+                    ) : (
+                      <IconButton onClick={(e) => removeStop(index)} size="sm">
+                        <ImCancelCircle />
+                      </IconButton>
+                    )}
                   </div>
                 </AccordionSummary>
                 <StopDetails
@@ -84,45 +94,14 @@ const FavouriteStops = (props) => {
             </div>
           ))}
         </div>
-      ) : (
-        <div>
+      ) : (<div style={{textAlign: "center"}}>
+        {props.viewFavourites ? (<div>
           <p>You haven't selected any favourite stops yet.</p>
           <p>Add stops with the search bar to stay updated!</p>
+        </div>):(<p>Add stops with the search bar to view schdeule information.</p>)}
         </div>
       )}
     </div>
-    //   {console.log("bug", props.stops)}
-    //   {props.stops[0] ? (
-    //     <ul className={classes.stop_options}>
-    //       {props.stops.map((stop, index) => (
-    //         <li key={stop.stop_id}>
-    //           <Button
-    //             sx={{
-    //               backgroundColor: "black",
-    //               width: 330,
-    //               color: "white",
-    //               border: 3,
-    //               borderRadius: 5,
-    //               padding: 1,
-    //               "&:hover": {
-    //                 backgroundColor: "#fff",
-    //                 color: "black",
-    //               },
-    //             }}
-    //             // style={bgColor(stop.stop_id)}
-    //             value={index}
-    //             onClick={pickStops}
-    //           >
-    //             {stop.stop_name}
-    //           </Button>
-    //           <IconButton onClick={(e) => removeStop(index)} size="sm">
-    //             <FaTrash />
-    //           </IconButton>
-    //         </li>
-    //       ))}
-    //     </ul>
-    //   )
-    // </div>
   );
 };
 

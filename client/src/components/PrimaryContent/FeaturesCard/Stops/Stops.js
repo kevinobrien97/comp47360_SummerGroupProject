@@ -1,7 +1,7 @@
 import { React, useState, useContext, useEffect } from "react";
 import { Button } from "@mui/material";
 import classes from "./Favourites.module.css";
-import FavouriteStops from "./FavouriteStops";
+import StopList from "./StopList";
 import AuthContext from "../../../../context/AuthContext";
 import { Link } from "react-router-dom";
 import Warning from "../Warning";
@@ -18,6 +18,7 @@ const Stops = (props) => {
   const { user } = useContext(AuthContext);
   const [error, setError] = useState(null);
   const [favStopsList, setFavStopsList] = useState([]);
+  const [stopsList, setStopsList] = useState([]);
 
   // stopIDList holds array of database IDs and their associated bus stop
   // need it to pass delete requests to DB
@@ -116,7 +117,7 @@ const Stops = (props) => {
         const idx = Object.keys(busStops).find((key) => busStops[key] === stop);
         const stopObj = props.stops[idx];
 
-        // returns true if the stop is already in stopsList
+        // returns true if the stop is already in favStopsList
         const inArr = favStopsList.some(
           (elem) => elem.stop_id === stopObj.stop_id
         );
@@ -135,8 +136,48 @@ const Stops = (props) => {
     }
   };
 
+  const addStop = (stop) => {
+    // remove error initially, reset below on conditional
+    setError(null);
+    // if not blank
+    if (stop) {
+      const idx = Object.keys(busStops).find((key) => busStops[key] === stop);
+      const stopObj = props.stops[idx];
+
+      // returns true if the stop is already in stopsList
+      const inArr = stopsList.some((elem) => elem.stop_id === stopObj.stop_id);
+
+      if (!inArr) {
+        setStopsList((prevStopsList) => {
+          return [...prevStopsList, stopObj];
+        });
+      } else {
+        setError("Chosen stop is already in your favourites");
+      }
+    }
+  };
+
   return (
     <div>
+      {/* <div
+        className={`"classes.${
+          viewFavourites ? "regularView" : "viewingFavs"
+        }"`}
+      >
+        <Button onClick={() => setViewFavourites(!viewFavourites)}>
+          {!viewFavourites ? (
+            <span style={{ color: "#F1B23E" }}>
+              View Your Favourite Stops &nbsp;
+              <HiOutlineArrowNarrowRight />
+            </span>
+          ) : (
+            <span style={{ color: "#F1B23E" }}>
+              <HiOutlineArrowNarrowLeft />
+              &nbsp;Back to Stop Search
+            </span>
+          )}
+        </Button>
+      </div> */}
       {!viewFavourites && (
         <div className={classes.viewingFavs}>
           <Button onClick={() => setViewFavourites(true)}>
@@ -159,7 +200,12 @@ const Stops = (props) => {
       )}
 
       <div className={classes.fav_container}>
-        <StopDropdown options={busStops} addStop={addFavStop}></StopDropdown>
+        {/* pass different add function to dropdown depending on if in favourites or regular stop view */}
+        {!viewFavourites ? (
+          <StopDropdown options={busStops} addStop={addStop}></StopDropdown>
+        ) : (
+          <StopDropdown options={busStops} addStop={addFavStop}></StopDropdown>
+        )}
         {error && <Warning error={error}></Warning>}
         <ScheduleTime
           daySelection={daySelection}
@@ -180,14 +226,15 @@ const Stops = (props) => {
                   ></LoadingSpinner>
                 )}
                 {!loadingFavourites && (
-                  <FavouriteStops
+                  <StopList
+                    viewFavourites={viewFavourites}
                     daySelection={daySelection}
                     time={time}
                     stops={favStopsList}
                     setStopsList={setFavStopsList}
                     setMarker={props.setMarker}
                     deleteStop={deleteStop}
-                  ></FavouriteStops>
+                  ></StopList>
                 )}
               </div>
             ) : (
@@ -207,7 +254,17 @@ const Stops = (props) => {
               </div>
             )}
           </div>
-        ):(<div></div>)}
+        ) : (
+          <StopList
+            viewFavourites={viewFavourites}
+            daySelection={daySelection}
+            time={time}
+            stops={stopsList}
+            setStopsList={setStopsList}
+            setMarker={props.setMarker}
+            // deleteStop={deleteStop}
+          ></StopList>
+        )}
       </div>
     </div>
   );

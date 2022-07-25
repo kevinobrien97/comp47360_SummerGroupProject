@@ -29,7 +29,6 @@
   } */
 
 .viewingFavs {
-  font: #f1b23e;
   padding-top: 0.2rem;
   text-align: end;
   /* margin-left: auto; */
@@ -38,4 +37,10 @@
 .regularView {
   padding-top: 0.2rem;
   /* margin-right: auto; */
+}
+
+.h3 {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  text-align: center;
 }

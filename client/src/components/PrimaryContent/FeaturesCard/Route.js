@@ -107,7 +107,7 @@ const Route = (props) => {
   const addRoute = (route) => {
     // remove error initially, reset below on conditional
     setError(null);
-    
+    console.log(route)
     // if not blank
     if (route) {
       if (user) {

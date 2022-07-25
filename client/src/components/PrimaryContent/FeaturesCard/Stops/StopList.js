@@ -2,7 +2,7 @@ import { React } from "react";
 import { IconButton, Accordion, AccordionSummary } from "@mui/material";
 import classes from "./Favourites.module.css";
 import { FaTrash } from "react-icons/fa";
-import { ImCancelCircle } from "react-icons/im";
+import { MdClear } from "react-icons/md";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import StopDetails from "./StopDetails";
@@ -80,7 +80,7 @@ const FavouriteStops = (props) => {
                       </IconButton>
                     ) : (
                       <IconButton onClick={(e) => removeStop(index)} size="sm">
-                        <ImCancelCircle />
+                        <MdClear />
                       </IconButton>
                     )}
                   </div>
@@ -94,11 +94,16 @@ const FavouriteStops = (props) => {
             </div>
           ))}
         </div>
-      ) : (<div style={{textAlign: "center"}}>
-        {props.viewFavourites ? (<div>
-          <p>You haven't selected any favourite stops yet.</p>
-          <p>Add stops with the search bar to stay updated!</p>
-        </div>):(<p>Add stops with the search bar to view schdeule information.</p>)}
+      ) : (
+        <div style={{ textAlign: "center" }}>
+          {props.viewFavourites ? (
+            <div>
+              <p>You haven't selected any favourite stops yet.</p>
+              <p>Add stops with the search bar to stay updated!</p>
+            </div>
+          ) : (
+            <p>Add stops with the search bar to view schedule information.</p>
+          )}
         </div>
       )}
     </div>

@@ -20,6 +20,9 @@ const Stops = (props) => {
   const [favStopsList, setFavStopsList] = useState([]);
   const [stopsList, setStopsList] = useState([]);
 
+
+  const [deleteFavourite, setDeleteFavourite] = useState(false);
+
   // stopIDList holds array of database IDs and their associated bus stop
   // need it to pass delete requests to DB
   // cannot store ID in stopsList as new IDs made on a post request
@@ -97,8 +100,6 @@ const Stops = (props) => {
       setLoadingFavourites(false);
     };
     fetchData();
-    // console.log("deleting");
-
     // only want it to run on load - they are being added to the db via postStop above, and also to the stops list
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -110,14 +111,15 @@ const Stops = (props) => {
   const addFavStop = (stop) => {
     // remove error initially, reset below on conditional
     setError(null);
-
     // if not blank
     if (stop) {
       if (user) {
+        console.log(stop)
         const idx = Object.keys(busStops).find((key) => busStops[key] === stop);
         const stopObj = props.stops[idx];
-
+        console.log(stopObj)
         // returns true if the stop is already in favStopsList
+        console.log(favStopsList)
         const inArr = favStopsList.some(
           (elem) => elem.stop_id === stopObj.stop_id
         );
@@ -143,16 +145,14 @@ const Stops = (props) => {
     if (stop) {
       const idx = Object.keys(busStops).find((key) => busStops[key] === stop);
       const stopObj = props.stops[idx];
-
       // returns true if the stop is already in stopsList
       const inArr = stopsList.some((elem) => elem.stop_id === stopObj.stop_id);
-
       if (!inArr) {
         setStopsList((prevStopsList) => {
           return [...prevStopsList, stopObj];
         });
       } else {
-        setError("Chosen stop is already in your favourites");
+        setError("Chosen stop is already shown");
       }
     }
   };
@@ -180,7 +180,12 @@ const Stops = (props) => {
       </div> */}
       {!viewFavourites && (
         <div className={classes.viewingFavs}>
-          <Button onClick={() => setViewFavourites(true)}>
+          <Button
+            onClick={() => {
+              setViewFavourites(true);
+              // setSelectedStopList(null);
+            }}
+          >
             <span style={{ color: "#F1B23E" }}>
               View Favourite Stops &nbsp;
               <HiOutlineArrowNarrowRight />
@@ -190,7 +195,12 @@ const Stops = (props) => {
       )}
       {viewFavourites && (
         <div className={classes.regularView}>
-          <Button onClick={() => setViewFavourites(false)}>
+          <Button
+            onClick={() => {
+              setViewFavourites(false);
+              // setSelectedStopList(null);
+            }}
+          >
             <span style={{ color: "#F1B23E" }}>
               <HiOutlineArrowNarrowLeft />
               &nbsp;Back to Stop Search
@@ -202,9 +212,22 @@ const Stops = (props) => {
       <div className={classes.fav_container}>
         {/* pass different add function to dropdown depending on if in favourites or regular stop view */}
         {!viewFavourites ? (
-          <StopDropdown options={busStops} addStop={addStop}></StopDropdown>
+          <StopDropdown
+            options={busStops}
+            addStop={addStop}
+            viewFavourites={viewFavourites}
+            // selectedStopList={selectedStopList}
+            // setSelectedStopList={setSelectedStopList}
+          ></StopDropdown>
         ) : (
-          <StopDropdown options={busStops} addStop={addFavStop}></StopDropdown>
+          <StopDropdown
+            options={busStops}
+            addStop={addFavStop}
+            viewFavourites={viewFavourites}
+            setError={setError}
+            // selectedStopList={selectedStopList}
+            // setSelectedStopList={setSelectedStopList}
+          ></StopDropdown>
         )}
         {error && <Warning error={error}></Warning>}
         <ScheduleTime

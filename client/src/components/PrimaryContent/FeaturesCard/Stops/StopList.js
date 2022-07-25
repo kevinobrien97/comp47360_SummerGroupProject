@@ -9,17 +9,17 @@ import StopDetails from "./StopDetails";
 
 const FavouriteStops = (props) => {
   // different delete methods depending if viewing favourites or not
+
   const removeFavStop = (idx) => {
     const stop = props.stops[idx];
-    console.log(stop);
-    // update stopIDList
-    props.setStopsList(props.stops.filter((item) => item !== stop));
-    // call method to delete from database
-    props.deleteStop(stop.stop_id);
+    // open dialogue
+    props.deleteStop(stop);
+    props.setShowDelete(true);
   };
 
   const removeStop = (idx) => {
     const stop = props.stops[idx];
+    console.log(stop)
     props.setStopsList(props.stops.filter((item) => item !== stop));
   };
 

@@ -33,9 +33,10 @@ const StopDropdown = (props) => {
           />
           {selectedStopList && addFavourite ? (
             <DialogueBox
-              text={"Add"}
+              header={"Add Stop to Favourites?"}
+              body={"added to"}
               setDialogueController={setAddFavourite}
-              addFunc={props.addStop}
+              func={props.addStop}
               item={selectedStopList}
               setSelectedItem={setSelectedStopList}
             ></DialogueBox>

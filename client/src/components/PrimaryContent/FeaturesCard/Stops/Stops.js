@@ -13,6 +13,7 @@ import {
 } from "react-icons/hi";
 import ScheduleTime from "../ScheduleTime";
 import StopDropdown from "./StopDropdown";
+import DialogueBox from "../DialogueBox";
 
 const Stops = (props) => {
   const { user } = useContext(AuthContext);
@@ -20,8 +21,8 @@ const Stops = (props) => {
   const [favStopsList, setFavStopsList] = useState([]);
   const [stopsList, setStopsList] = useState([]);
 
-
-  const [deleteFavourite, setDeleteFavourite] = useState(false);
+  const [deleteFavourite, setDeleteFavourite] = useState(null);
+  const [showDelete, setShowDelete] = useState(false);
 
   // stopIDList holds array of database IDs and their associated bus stop
   // need it to pass delete requests to DB
@@ -56,7 +57,8 @@ const Stops = (props) => {
   };
 
   // function to delete a favourite stop to the database for the user
-  const deleteStop = async (id) => {
+  const deleteStop = async (stop) => {
+    const id = stop.stop_id;
     // need to delete via pk of database, but only have stop_id in list populating favouritestops
     // use stopIDList which has updated for every post and the initial get request
     const obj = stopIDList.find((x) => x.stop_id === id);
@@ -114,12 +116,12 @@ const Stops = (props) => {
     // if not blank
     if (stop) {
       if (user) {
-        console.log(stop)
+        console.log(stop);
         const idx = Object.keys(busStops).find((key) => busStops[key] === stop);
         const stopObj = props.stops[idx];
-        console.log(stopObj)
+        console.log(stopObj);
         // returns true if the stop is already in favStopsList
-        console.log(favStopsList)
+        console.log(favStopsList);
         const inArr = favStopsList.some(
           (elem) => elem.stop_id === stopObj.stop_id
         );
@@ -216,8 +218,6 @@ const Stops = (props) => {
             options={busStops}
             addStop={addStop}
             viewFavourites={viewFavourites}
-            // selectedStopList={selectedStopList}
-            // setSelectedStopList={setSelectedStopList}
           ></StopDropdown>
         ) : (
           <StopDropdown
@@ -225,8 +225,6 @@ const Stops = (props) => {
             addStop={addFavStop}
             viewFavourites={viewFavourites}
             setError={setError}
-            // selectedStopList={selectedStopList}
-            // setSelectedStopList={setSelectedStopList}
           ></StopDropdown>
         )}
         {error && <Warning error={error}></Warning>}
@@ -249,15 +247,30 @@ const Stops = (props) => {
                   ></LoadingSpinner>
                 )}
                 {!loadingFavourites && (
-                  <StopList
-                    viewFavourites={viewFavourites}
-                    daySelection={daySelection}
-                    time={time}
-                    stops={favStopsList}
-                    setStopsList={setFavStopsList}
-                    setMarker={props.setMarker}
-                    deleteStop={deleteStop}
-                  ></StopList>
+                  <div>
+                    {showDelete && (
+                      <DialogueBox
+                        header={"Remove Stop from Favourites?"}
+                        body={"removed from"}
+                        setDialogueController={setShowDelete}
+                        func={deleteStop}
+                        item={deleteFavourite}
+                        stops={favStopsList}
+                        setSelectedItem={setDeleteFavourite}
+                        setStopsList={setFavStopsList}
+                      ></DialogueBox>
+                    )}
+                    <StopList
+                      viewFavourites={viewFavourites}
+                      daySelection={daySelection}
+                      time={time}
+                      stops={favStopsList}
+                      setStopsList={setFavStopsList}
+                      setMarker={props.setMarker}
+                      deleteStop={setDeleteFavourite}
+                      setShowDelete={setShowDelete}
+                    ></StopList>
+                  </div>
                 )}
               </div>
             ) : (

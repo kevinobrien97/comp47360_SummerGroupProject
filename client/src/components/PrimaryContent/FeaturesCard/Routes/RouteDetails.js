@@ -63,6 +63,7 @@ const RouteDetails = (props) => {
         const filtered = routeSchedule.filter((d) => {
           return d.departure_time >= props.time.toTimeString().split(" ")[0];
         });
+        console.log('getting schedule')
         // sort remaining values by time
         const collator = new Intl.Collator(undefined, {
           numeric: true,
@@ -109,7 +110,7 @@ const RouteDetails = (props) => {
         <div>
           {routeStops[0] &&
             routeStops.map((stop, index) => (
-              <Accordion disableGutters={true}>
+              <Accordion disableGutters={true} key={stop.stop_id}>
                 <AccordionSummary
                   sx={{
                     display: "flex",
@@ -121,7 +122,6 @@ const RouteDetails = (props) => {
                   id="panel1a-header"
                 >
                   {" "}
-                  {console.log(stop)}
                   <div
                     style={{
                       marginTop: "auto",
@@ -136,7 +136,7 @@ const RouteDetails = (props) => {
                 <StopTable
                   schedule={schedule.filter((item) => {
                     return item.stop_id === stop.stop_id;
-                  })}   
+                  }).splice(0,3)}   
                   time={props.time}
                   daySelection={props.daySelection}
                 ></StopTable>

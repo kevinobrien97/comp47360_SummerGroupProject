@@ -243,7 +243,6 @@ const Route = (props) => {
                         resetMarker={[]}
                       ></DialogueBox>
                     )}
-                    {console.log(favRouteList)}
                     <RouteList
                       viewFavourites={viewFavourites}
                       routes={favRouteList}

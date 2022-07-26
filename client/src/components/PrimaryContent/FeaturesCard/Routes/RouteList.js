@@ -50,9 +50,10 @@ const RouteFavourites = (props) => {
   const removeFavRoute = (idx) => {
     const route = props.routes[idx];
     console.log(route);
-    props.setRouteList(props.routes.filter((item) => item !== route));
+    // props.setRouteList(props.routes.filter((item) => item !== route));
     // call method to delete from database
-    props.deleteRoute(route.trip_headsign, route.route_short_name);
+    props.deleteRoute(route);
+    props.setShowDelete(true);
   };
 
   const removeRoute = (idx) => {

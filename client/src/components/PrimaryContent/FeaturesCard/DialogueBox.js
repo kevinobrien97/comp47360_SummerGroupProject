@@ -4,15 +4,11 @@ import { Card, Button, ButtonGroup } from "@mui/material/";
 
 const DialogueBox = (props) => {
   const deleteFav = () => {
-    console.log(props.stops);
-    props.setStopsList(props.stops.filter((stop) => stop !== props.item));
-    console.log(props.stops);
-    console.log(props.item);
+    props.setList(props.list.filter((stop) => stop !== props.item));
     props.setDialogueController(false);
     props.func(props.item);
     props.reCenter();
-    props.setSelectedStopMarker(null)
-    // update stopIDList
+    props.setMarker(props.resetMarker);
   };
 
   return (
@@ -29,28 +25,32 @@ const DialogueBox = (props) => {
           <h4>{props.header}</h4>
         </header>
         <div className={classes.content}>
-          {props.item.label || props.item.stop_name} will be {props.body} your
-          favourites. Do you want to continue?
+          {console.log(props.item)}
+          {props.item.label ||
+            props.item.stop_name ||
+            props.item.route_short_name.concat(
+              ": ",
+              props.item.trip_headsign
+            )}{" "}
+          will be {props.body} your favourites. Do you want to continue?
         </div>
         {console.log(props.item)}
         <footer className={classes.footer}>
           <ButtonGroup sx={{ width: "100%", background: "rgba(0, 0, 0, 0.8)" }}>
-            {props.setStopsList ? (
+            {props.setList ? (
               <Button
-                sx={{ width: "50%", backgroundColor:"#F1B23E" }}
+                sx={{ width: "50%", backgroundColor: "#F1B23E" }}
                 type="submit"
                 variant="contained"
-                
                 onClick={deleteFav}
               >
                 Confirm
               </Button>
             ) : (
               <Button
-                sx={{ width: "50%", backgroundColor:"#F1B23E" }}
+                sx={{ width: "50%", backgroundColor: "#F1B23E" }}
                 type="submit"
                 variant="contained"
-               
                 onClick={() => {
                   props.setDialogueController(false);
                   props.func(props.item);

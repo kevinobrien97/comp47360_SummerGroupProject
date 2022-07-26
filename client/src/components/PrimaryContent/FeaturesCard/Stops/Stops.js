@@ -228,11 +228,12 @@ const Stops = (props) => {
                         setDialogueController={setShowDelete}
                         func={deleteStop}
                         item={deleteFavourite}
-                        stops={favStopsList}
+                        list={favStopsList}
                         setSelectedItem={setDeleteFavourite}
-                        setStopsList={setFavStopsList}
+                        setList={setFavStopsList}
                         reCenter={props.reCenter}
-                        setSelectedStopMarker={props.setSelectedStopMarker}
+                        setMarker={props.setSelectedStopMarker}
+                        resetMarker = {null}
                       ></DialogueBox>
                     )}
                     <StopList
@@ -240,7 +241,7 @@ const Stops = (props) => {
                       daySelection={daySelection}
                       time={time}
                       stops={favStopsList}
-                      setStopsList={setFavStopsList}
+                      // setStopsList={setFavStopsList}
                       setMarker={props.setMarker}
                       deleteStop={setDeleteFavourite}
                       setShowDelete={setShowDelete}

@@ -1,5 +1,5 @@
 import { React, useState, useContext, useEffect } from "react";
-import { Autocomplete, TextField, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import classes from "../Stops_routes.module.css";
 import AuthContext from "../../../../context/AuthContext";
 import { Link } from "react-router-dom";
@@ -10,6 +10,7 @@ import RouteList from "./RouteList";
 import ToggleFavourites from "../ToggleFavourites";
 import Dropdown from "../Dropdown";
 import ScheduleTime from "../ScheduleTime";
+import DialogueBox from "../DialogueBox";
 
 const Route = (props) => {
   const { user } = useContext(AuthContext);
@@ -18,6 +19,9 @@ const Route = (props) => {
   const [routeList, setRouteList] = useState([]);
   const [loadingFavourites, setLoadingFavourites] = useState(false);
   const [viewFavourites, setViewFavourites] = useState(false);
+
+  const [deleteFavourite, setDeleteFavourite] = useState(null);
+  const [showDelete, setShowDelete] = useState(false);
 
   // routeIDList holds array of database IDs and their associated bus route
   // need it to pass delete requests to DB
@@ -52,7 +56,9 @@ const Route = (props) => {
   };
 
   // function to delete a favourite route to the database for the user
-  const deleteRoute = async (trip_headsign, route_short_name) => {
+  const deleteRoute = async (route) => {
+    const trip_headsign = route.trip_headsign
+    const route_short_name = route.route_short_name
     // need to delete via pk of database, but don't have this in list populating favouriteroutes
     // use routeIDList which has updated for every post and the initial get request
     const obj = routeIDList.find(
@@ -208,13 +214,31 @@ const Route = (props) => {
                   ></LoadingSpinner>
                 )}
                 {!loadingFavourites && (
-                  <RouteList
-                    viewFavourites={viewFavourites}
-                    routes={favRouteList}
-                    setRouteList={setFavRouteList}
-                    setRouteMarkers={props.setRouteMarkers}
-                    deleteRoute={deleteRoute}
-                  ></RouteList>
+                  <div>
+                    {showDelete && (
+                      <DialogueBox
+                        header={"Remove Route from Favourites?"}
+                        body={"removed from"}
+                        setDialogueController={setShowDelete}
+                        func={deleteRoute}
+                        item={deleteFavourite}
+                        list={favRouteList}
+                        setSelectedItem={setDeleteFavourite}
+                        setList={setFavRouteList}
+                        reCenter={props.reCenter}
+                        setMarker={props.setRouteMarkers}
+                        resetMarker = {[]}
+                      ></DialogueBox>
+                    )}
+                    <RouteList
+                      viewFavourites={viewFavourites}
+                      routes={favRouteList}
+                      setRouteList={setFavRouteList}
+                      setRouteMarkers={props.setRouteMarkers}
+                      deleteRoute={setDeleteFavourite}
+                      setShowDelete={setShowDelete}
+                    ></RouteList>
+                  </div>
                 )}
               </div>
             ) : (

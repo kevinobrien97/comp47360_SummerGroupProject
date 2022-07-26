@@ -64,6 +64,7 @@ const SideContainer = (props) => {
               <Route
                 routes={props.routes}
                 setRouteMarkers={props.setRouteMarkers}
+                reCenter={props.reCenter}
               ></Route>
             )}
             {/* {sidebarOption.stop && props.isLoading && (

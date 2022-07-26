@@ -6,15 +6,16 @@ import { Link } from "react-router-dom";
 import Warning from "../Warning";
 import useAxios from "../../../../utils/useAxios";
 import LoadingSpinner from "../../../LoadingSpinner";
-import RouteFavourites from "./RouteFavourites";
+import RouteList from "./RouteList";
 import ToggleFavourites from "../ToggleFavourites";
+import StopDropdown from "../Dropdown";
+import ScheduleTime from "../ScheduleTime";
 
 const Route = (props) => {
   const { user } = useContext(AuthContext);
   const [error, setError] = useState(null);
+  const [favRouteList, setFavRouteList] = useState([]);
   const [routeList, setRouteList] = useState([]);
-  const [autocompleteSelection, setAutocompleteSelection] = useState("");
-  const [selectedRouteList, setSelectedRouteList] = useState(null);
   const [loadingFavourites, setLoadingFavourites] = useState(false);
   const [viewFavourites, setViewFavourites] = useState(false);
 
@@ -22,6 +23,9 @@ const Route = (props) => {
   // need it to pass delete requests to DB
   // cannot store ID in routeList as new IDs made on a post request
   const [routeIDList, setRouteIDList] = useState([]);
+  const day = new Date();
+  const [daySelection, setDaySelection] = useState(day.getDay(0));
+  const [time, setTime] = useState(day);
 
   const api = useAxios();
 
@@ -51,7 +55,11 @@ const Route = (props) => {
   const deleteRoute = async (trip_headsign, route_short_name) => {
     // need to delete via pk of database, but don't have this in list populating favouriteroutes
     // use routeIDList which has updated for every post and the initial get request
-    const obj = routeIDList.find((x) => x.trip_headsign === trip_headsign && x.route_short_name === route_short_name);
+    const obj = routeIDList.find(
+      (x) =>
+        x.trip_headsign === trip_headsign &&
+        x.route_short_name === route_short_name
+    );
     const primaryKey = obj.id;
     const response = await api.delete(`/favouriteroutes/${primaryKey}`);
     console.log("del res", response);
@@ -77,13 +85,15 @@ const Route = (props) => {
         console.log("bug");
       }
       for (let i = 0; i < response.data.length; i++) {
-
         // creating a temporary object for each elem of the response to be added to the list that will be displayed on screen
-        const tempObj = {trip_headsign: response.data[i].trip_headsign, route_short_name: response.data[i].route_short_name}
+        const tempObj = {
+          trip_headsign: response.data[i].trip_headsign,
+          route_short_name: response.data[i].route_short_name,
+        };
         // const item = props.routes.find(
         //   (x) => x === tempObj
         // );
-        setRouteList((prevRouteList) => {
+        setFavRouteList((prevRouteList) => {
           return [...prevRouteList, tempObj];
         });
         // adding arr to routeIDList - used for deletions (stores primary key used in database)
@@ -95,7 +105,7 @@ const Route = (props) => {
       setLoadingFavourites(false);
     };
     fetchData();
-      // only want it to run on load - they are being added to the db via postRoute above, and also to the routes list
+    // only want it to run on load - they are being added to the db via postRoute above, and also to the routes list
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -105,10 +115,10 @@ const Route = (props) => {
     return { label: label, key: index };
   });
 
-  const addRoute = (route) => {
+  const addFavRoute = (route) => {
     // remove error initially, reset below on conditional
     setError(null);
-    console.log(route)
+    console.log(route);
     // if not blank
     if (route) {
       if (user) {
@@ -116,13 +126,11 @@ const Route = (props) => {
           (key) => busRoutes[key] === route
         );
         const routeObj = props.routes[idx];
-        // returns true if the stop is already in routeList
-        const inArr = routeList.some(
-          (elem) => elem === routeObj
-        );
+        // returns true if the stop is already in favRouteList
+        const inArr = favRouteList.some((elem) => elem === routeObj);
         if (!inArr) {
           postRoute(routeObj.trip_headsign, routeObj.route_short_name);
-          setRouteList((prevRouteList) => {
+          setFavRouteList((prevRouteList) => {
             return [...prevRouteList, routeObj];
           });
         } else {
@@ -134,63 +142,104 @@ const Route = (props) => {
     }
   };
 
+  const addRoute = (route) => {
+    // remove error initially, reset below on conditional
+    setError(null);
+    console.log(route);
+    // if not blank
+    if (route) {
+      const idx = Object.keys(busRoutes).find(
+        (key) => busRoutes[key] === route
+      );
+      const routeObj = props.routes[idx];
+      // returns true if the stop is already in routeList
+      const inArr = routeList.some((elem) => elem === routeObj);
+      if (!inArr) {
+        setRouteList((prevRouteList) => {
+          return [...prevRouteList, routeObj];
+        });
+      } else {
+        setError("Chosen route is already is already shown");
+      }
+    }
+  };
+
   return (
     <div>
       <ToggleFavourites
         viewFavourites={viewFavourites}
         setViewFavourites={setViewFavourites}
+        setError={setError}
       ></ToggleFavourites>
       <div className={classes.fav_container}>
-        <Autocomplete
-          value={selectedRouteList}
-          onChange={(_event, newStop) => {
-            setSelectedRouteList(newStop);
-            addRoute(newStop);
-          }}
-          inputValue={autocompleteSelection}
-          onInputChange={(_event, newInputValue) => {
-            setAutocompleteSelection(newInputValue);
-          }}
-          groupBy={(option) => option.firstLetter}
-          disablePortal
-          id="route-search"
-          options={busRoutes}
-          sx={{ width: 300 }}
-          renderInput={(params) => (
-            <TextField {...params} label="Select Bus Route" />
-          )}
-        />
+        {!viewFavourites ? (
+          <StopDropdown
+            text={"Route"}
+            options={busRoutes}
+            addStop={addRoute}
+            viewFavourites={viewFavourites}
+          ></StopDropdown>
+        ) : (
+          <StopDropdown
+            text={"Route"}
+            options={busRoutes}
+            addStop={addFavRoute}
+            viewFavourites={viewFavourites}
+            setError={setError}
+          ></StopDropdown>
+        )}
       </div>
       {error && <Warning error={error}></Warning>}
-      <div>
-        {user ? (
-          <div>
-            {loadingFavourites && (
-              <LoadingSpinner text={"Loading Favourite Routes..."}></LoadingSpinner>
-            )}
-            {!loadingFavourites && (
+      <ScheduleTime
+        daySelection={daySelection}
+        setDaySelection={setDaySelection}
+        time={time}
+        setTime={setTime}
+      ></ScheduleTime>
 
-              <RouteFavourites
-                routes={routeList}
-                setRouteList={setRouteList}
-                setRouteMarkers={props.setRouteMarkers}
-                deleteRoute={deleteRoute}
-              ></RouteFavourites>
+      <div>
+        {viewFavourites ? (
+          <div>
+            {user ? (
+              <div>
+                {loadingFavourites && (
+                  <LoadingSpinner
+                    text={"Loading Favourite Routes..."}
+                  ></LoadingSpinner>
+                )}
+                {!loadingFavourites && (
+                  <RouteList
+                    viewFavourites={viewFavourites}
+                    routes={favRouteList}
+                    setRouteList={setFavRouteList}
+                    setRouteMarkers={props.setRouteMarkers}
+                    deleteRoute={deleteRoute}
+                  ></RouteList>
+                )}
+              </div>
+            ) : (
+              <div className={classes.loggedOut}>
+                <h4>You are not logged in.</h4>
+                <p>
+                  {" "}
+                  <Link to={"/login/"} style={{ textDecoration: "none" }}>
+                    <Button type="submit">Login</Button>
+                  </Link>
+                  {"or"}
+                  <Button type="submit">Register</Button>
+                  to view your favourites.
+                </p>
+              </div>
             )}
           </div>
         ) : (
-          <div className={classes.loggedOut}>
-            <h4>You are not logged in.</h4>
-            <p>
-              {" "}
-              <Link to={"/login/"} style={{ textDecoration: "none" }}>
-                <Button type="submit">Login</Button>
-              </Link>
-              {"or"}
-              <Button type="submit">Register</Button>
-              to view your favourites.
-            </p>
-          </div>
+          <RouteList
+            viewFavourites={viewFavourites}
+            routes={routeList}
+            setRouteList={setRouteList}
+            setRouteMarkers={props.setRouteMarkers}
+            deleteRoute={deleteRoute}
+          ></RouteList>
         )}
       </div>
     </div>

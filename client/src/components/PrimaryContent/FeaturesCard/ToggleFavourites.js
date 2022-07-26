@@ -14,11 +14,12 @@ const ToggleFavourites = (props) => {
           <Button
             onClick={() => {
               props.setViewFavourites(true);
+              props.setError(null);
               // setSelectedStopList(null);
             }}
           >
             <span style={{ color: "#F1B23E" }}>
-              View Favourite Stops &nbsp;
+              View Favourites &nbsp;
               <HiOutlineArrowNarrowRight />
             </span>
           </Button>
@@ -28,12 +29,13 @@ const ToggleFavourites = (props) => {
           <Button
             onClick={() => {
               props.setViewFavourites(false);
+              props.setError(null);
               // setSelectedStopList(null);
             }}
           >
             <span style={{ color: "#F1B23E" }}>
               <HiOutlineArrowNarrowLeft />
-              &nbsp;Back to Stop Search
+              &nbsp;Back to Search
             </span>
           </Button>
         </div>

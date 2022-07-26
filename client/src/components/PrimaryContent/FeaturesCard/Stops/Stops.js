@@ -7,12 +7,8 @@ import { Link } from "react-router-dom";
 import Warning from "../Warning";
 import useAxios from "../../../../utils/useAxios";
 import LoadingSpinner from "../../../LoadingSpinner";
-import {
-  HiOutlineArrowNarrowLeft,
-  HiOutlineArrowNarrowRight,
-} from "react-icons/hi";
 import ScheduleTime from "../ScheduleTime";
-import StopDropdown from "./StopDropdown";
+import StopDropdown from "../Dropdown";
 import DialogueBox from "../DialogueBox";
 import ToggleFavourites from "../ToggleFavourites";
 
@@ -184,17 +180,20 @@ const Stops = (props) => {
       <ToggleFavourites
         viewFavourites={viewFavourites}
         setViewFavourites={setViewFavourites}
+        setError={setError}
       ></ToggleFavourites>
       <div className={classes.fav_container}>
         {/* pass different add function to dropdown depending on if in favourites or regular stop view */}
         {!viewFavourites ? (
           <StopDropdown
+            text={"Stop"}
             options={busStops}
             addStop={addStop}
             viewFavourites={viewFavourites}
           ></StopDropdown>
         ) : (
           <StopDropdown
+            text={"Stop"}
             options={busStops}
             addStop={addFavStop}
             viewFavourites={viewFavourites}

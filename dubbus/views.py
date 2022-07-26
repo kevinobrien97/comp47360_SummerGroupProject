@@ -96,6 +96,29 @@ class StopTimesUpdatedView(generics.ListAPIView):
         # trip_headsign = self.kwargs['trip_headsign']
         # return StopTimesUpdated.objects.filter(stop_id=stop_id)   
 
+class FullRouteStopTimesUpdatedView(generics.ListAPIView): 
+    permission_classes = (AllowAny,) 
+    serializer_class = StopTimesUpdatedSerializer   
+
+    def get_queryset(self):
+        route_short_name = self.kwargs['route_short_name']
+        trip_headsign = self.kwargs['trip_headsign']
+        day = self.kwargs['day']
+        print(day)
+        # only return the stop schedule for the day specified
+        if day == "0":
+            query = reduce(operator.or_, (Q(service_id = item) for item in ["y1003", "3"]))
+        elif day == "1":
+            query = reduce(operator.or_, (Q(service_id = item) for item in ["y1003", "2"]))
+        elif day == "2" or day =="3" or day =="4" or day == "5":
+            query = reduce(operator.or_, (Q(service_id = item) for item in ["y1002", "2"]))
+        # day == "6"
+        else: 
+            query = reduce(operator.or_, (Q(service_id = item) for item in ["y1001", "0"]))
+        return StopTimesUpdated.objects.filter(query, route_short_name=route_short_name, trip_headsign=trip_headsign)
+        # trip_headsign = self.kwargs['trip_headsign']
+        # return StopTimesUpdated.objects.filter(stop_id=stop_id)   
+
 class RouteStopsView(generics.ListAPIView): 
     permission_classes = (AllowAny,) 
     serializer_class = RouteStopsSerializer

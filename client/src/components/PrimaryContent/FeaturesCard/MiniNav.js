@@ -11,7 +11,6 @@ const MiniNav = (props) => {
         style={{
           backgroundColor: "#F1B23E",
           borderRadius: "10px",
-          width: "100%",
         }}
       >
         <Toolbar

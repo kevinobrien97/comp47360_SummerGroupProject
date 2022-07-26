@@ -37,6 +37,7 @@ urlpatterns = [
     path('api/routes/', include(router.urls)),
     path('api/favouriteroutes/', include(router.urls)),
     path('api/stoptimes/', include(router.urls)),
+    path('api/fullroutestops/<str:route_short_name>/<str:trip_headsign>/<str:day>/', views.FullRouteStopTimesUpdatedView.as_view() ),
     path('api/routestops/<str:route_short_name>/<str:trip_headsign>/', views.RouteStopsView.as_view() ),
     path('api/stoptimes/<str:stop_id>/<str:day>/', views.StopTimesUpdatedView.as_view() ),
     path('api/token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),

@@ -5,14 +5,14 @@ import DialogueBox from "./DialogueBox";
 const Dropdown = (props) => {
   const [autocompleteSelection, setAutocompleteSelection] = useState("");
   const [addFavourite, setAddFavourite] = useState(false);
-  const [selectedist, setSelectedList] = useState(null);
+  const [selectedList, setSelectedList] = useState(null);
   return (
     <div>
       {/* Need different onclick functions */}
       {props.viewFavourites ? (
         <div>
           <Autocomplete
-            value={selectedist}
+            value={selectedList}
             onChange={(_event, newItem) => {
               setSelectedList(newItem);
               setAddFavourite(true);
@@ -31,20 +31,20 @@ const Dropdown = (props) => {
               <TextField {...params} label={`Select Bus ${props.text}`} />
             )}
           />
-          {selectedist && addFavourite ? (
+          {selectedList && addFavourite ? (
             <DialogueBox
-              header={"Add Stop to Favourites?"}
+              header={`Add ${props.text} to Favourites?`}
               body={"added to"}
               setDialogueController={setAddFavourite}
               func={props.addStop}
-              item={selectedist}
+              item={selectedList}
               setSelectedItem={setSelectedList}
             ></DialogueBox>
           ) : null}
         </div>
       ) : (
         <Autocomplete
-          value={selectedist}
+          value={selectedList}
           onChange={(_event, newItem) => {
             setSelectedList(newItem);
             props.addStop(newItem);

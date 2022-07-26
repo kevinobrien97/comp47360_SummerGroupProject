@@ -8,7 +8,7 @@ import useAxios from "../../../../utils/useAxios";
 import LoadingSpinner from "../../../LoadingSpinner";
 import RouteList from "./RouteList";
 import ToggleFavourites from "../ToggleFavourites";
-import StopDropdown from "../Dropdown";
+import Dropdown from "../Dropdown";
 import ScheduleTime from "../ScheduleTime";
 
 const Route = (props) => {
@@ -173,20 +173,20 @@ const Route = (props) => {
       ></ToggleFavourites>
       <div className={classes.fav_container}>
         {!viewFavourites ? (
-          <StopDropdown
+          <Dropdown
             text={"Route"}
             options={busRoutes}
             addStop={addRoute}
             viewFavourites={viewFavourites}
-          ></StopDropdown>
+          ></Dropdown>
         ) : (
-          <StopDropdown
+          <Dropdown
             text={"Route"}
             options={busRoutes}
             addStop={addFavRoute}
             viewFavourites={viewFavourites}
             setError={setError}
-          ></StopDropdown>
+          ></Dropdown>
         )}
       </div>
       {error && <Warning error={error}></Warning>}

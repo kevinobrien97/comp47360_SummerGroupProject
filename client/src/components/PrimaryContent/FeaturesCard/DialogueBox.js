@@ -25,7 +25,6 @@ const DialogueBox = (props) => {
           <h4>{props.header}</h4>
         </header>
         <div className={classes.content}>
-          {console.log(props.item)}
           {props.item.label ||
             props.item.stop_name ||
             props.item.route_short_name.concat(
@@ -34,7 +33,6 @@ const DialogueBox = (props) => {
             )}{" "}
           will be {props.body} your favourites. Do you want to continue?
         </div>
-        {console.log(props.item)}
         <footer className={classes.footer}>
           <ButtonGroup sx={{ width: "100%", background: "rgba(0, 0, 0, 0.8)" }}>
             {props.setList ? (

@@ -16,12 +16,11 @@ const Dropdown = (props) => {
             onChange={(_event, newItem) => {
               setSelectedList(newItem);
               setAddFavourite(true);
-              console.log(newItem);
             }}
             inputValue={autocompleteSelection}
             onInputChange={(_event, newInputValue) => {
               setAutocompleteSelection(newInputValue);
-              props.setError(null)
+              props.setError(null);
             }}
             disablePortal
             id="search"

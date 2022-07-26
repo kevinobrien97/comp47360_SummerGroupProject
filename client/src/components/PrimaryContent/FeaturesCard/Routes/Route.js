@@ -45,7 +45,6 @@ const Route = (props) => {
       // need to add response array to routeIDList to store the ID
       const arr = response.data;
 
-      // working
       setRouteIDList((prevRouteIDList) => {
         return [...prevRouteIDList, arr];
       });
@@ -57,8 +56,8 @@ const Route = (props) => {
 
   // function to delete a favourite route to the database for the user
   const deleteRoute = async (route) => {
-    const trip_headsign = route.trip_headsign
-    const route_short_name = route.route_short_name
+    const trip_headsign = route.trip_headsign;
+    const route_short_name = route.route_short_name;
     // need to delete via pk of database, but don't have this in list populating favouriteroutes
     // use routeIDList which has updated for every post and the initial get request
     const obj = routeIDList.find(
@@ -73,6 +72,7 @@ const Route = (props) => {
       console.log(response);
       // update routeIDList
       setRouteIDList(routeIDList.filter((item) => item !== obj));
+      props.setRouteMarkers([]);
     } else {
       // change
       alert("Something went wrong!");
@@ -99,9 +99,13 @@ const Route = (props) => {
         // const item = props.routes.find(
         //   (x) => x === tempObj
         // );
+        console.log("tempObj", tempObj);
+
         setFavRouteList((prevRouteList) => {
+          console.log("in");
           return [...prevRouteList, tempObj];
         });
+        console.log(favRouteList);
         // adding arr to routeIDList - used for deletions (stores primary key used in database)
         const arr = response.data[i];
         setRouteIDList((prevRouteIDList) => {
@@ -124,7 +128,6 @@ const Route = (props) => {
   const addFavRoute = (route) => {
     // remove error initially, reset below on conditional
     setError(null);
-    console.log(route);
     // if not blank
     if (route) {
       if (user) {
@@ -132,8 +135,13 @@ const Route = (props) => {
           (key) => busRoutes[key] === route
         );
         const routeObj = props.routes[idx];
-        // returns true if the stop is already in favRouteList
-        const inArr = favRouteList.some((elem) => elem === routeObj);
+        // returns true if the route is already in favRouteList
+        const inArr = favRouteList.some(
+          (elem) =>
+            elem.route_short_name === routeObj.route_short_name &&
+            elem.trip_headsign === routeObj.trip_headsign
+        );
+
         if (!inArr) {
           postRoute(routeObj.trip_headsign, routeObj.route_short_name);
           setFavRouteList((prevRouteList) => {
@@ -195,6 +203,7 @@ const Route = (props) => {
           ></Dropdown>
         )}
       </div>
+
       {error && <Warning error={error}></Warning>}
       <ScheduleTime
         daySelection={daySelection}
@@ -227,12 +236,15 @@ const Route = (props) => {
                         setList={setFavRouteList}
                         reCenter={props.reCenter}
                         setMarker={props.setRouteMarkers}
-                        resetMarker = {[]}
+                        resetMarker={[]}
                       ></DialogueBox>
                     )}
+                    {console.log(favRouteList)}
                     <RouteList
                       viewFavourites={viewFavourites}
                       routes={favRouteList}
+                      daySelection={daySelection}
+                      time={time}
                       setRouteList={setFavRouteList}
                       setRouteMarkers={props.setRouteMarkers}
                       deleteRoute={setDeleteFavourite}
@@ -260,6 +272,8 @@ const Route = (props) => {
           <RouteList
             viewFavourites={viewFavourites}
             routes={routeList}
+            daySelection={daySelection}
+            time={time}
             // delete below once popups implemented
             setRouteList={setRouteList}
             setRouteMarkers={props.setRouteMarkers}

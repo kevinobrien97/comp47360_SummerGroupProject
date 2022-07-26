@@ -115,6 +115,7 @@ const Stops = (props) => {
       if (user) {
         console.log(stop);
         const idx = Object.keys(busStops).find((key) => busStops[key] === stop);
+        console.log(idx)
         const stopObj = props.stops[idx];
         console.log(stopObj);
         // returns true if the stop is already in favStopsList

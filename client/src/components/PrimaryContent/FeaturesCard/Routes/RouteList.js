@@ -5,6 +5,7 @@ import classes from "../Stops_routes.module.css";
 import { FaTrash } from "react-icons/fa";
 import { MdClear } from "react-icons/md";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import RouteDetails from "./RouteDetails";
 
 const RouteFavourites = (props) => {
   const [loadingRouteStops, setLoadingRouteStops] = useState(false);
@@ -14,7 +15,7 @@ const RouteFavourites = (props) => {
     const short_name = route.route_short_name;
     const headsign = route.trip_headsign;
     fetchRoutesData(short_name, headsign);
-    console.log(route);
+    // console.log(route);
 
     // props.setMarker(stop.stop_lat, stop.stop_long);
   };
@@ -33,7 +34,7 @@ const RouteFavourites = (props) => {
         throw new Error("Something went wrong loading routes");
       }
       const allStops = await response.json();
-      console.log(allStops);
+      // console.log(allStops);
       props.setRouteMarkers(allStops);
     } catch (error) {
       console.log(error.message);
@@ -64,7 +65,7 @@ const RouteFavourites = (props) => {
       ) : (
         <h3 className={classes.h3}>Selected Routes</h3>
       )}
-      {console.log(props.routes)}
+      {/* {console.log(props.routes)} */}
       {props.routes[0] ? (
         <div>
           {props.routes.map((route, index) => (
@@ -119,11 +120,11 @@ const RouteFavourites = (props) => {
                     )}
                   </div>
                 </AccordionSummary>
-                {/* <StopDetails
-                  stop={stop}
+                <RouteDetails
+                  route={route}
                   time={props.time}
                   daySelection={props.daySelection}
-                ></StopDetails> */}
+                ></RouteDetails>
               </Accordion>
             </div>
           ))}

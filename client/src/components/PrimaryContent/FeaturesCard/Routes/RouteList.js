@@ -1,14 +1,16 @@
 import { React, useState } from "react";
-import { Button, IconButton } from "@mui/material";
+import { IconButton, Accordion, AccordionSummary } from "@mui/material";
+
 import classes from "../Stops_routes.module.css";
 import { FaTrash } from "react-icons/fa";
 import { MdClear } from "react-icons/md";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const RouteFavourites = (props) => {
   const [loadingRouteStops, setLoadingRouteStops] = useState(false);
 
-  const pickRoutes = (event) => {
-    const route = props.routes[event.target.value];
+  const pickRoutes = (index) => {
+    const route = props.routes[index];
     const short_name = route.route_short_name;
     const headsign = route.trip_headsign;
     fetchRoutesData(short_name, headsign);
@@ -40,13 +42,6 @@ const RouteFavourites = (props) => {
     setLoadingRouteStops(false);
   };
 
-  const removeFavStop = (idx) => {
-    const stop = props.stops[idx];
-    // open dialogue
-    props.deleteStop(stop);
-    props.setShowDelete(true);
-  };
-
   const removeFavRoute = (idx) => {
     const route = props.routes[idx];
     console.log(route);
@@ -69,41 +64,70 @@ const RouteFavourites = (props) => {
       ) : (
         <h3 className={classes.h3}>Selected Routes</h3>
       )}
+      {console.log(props.routes)}
       {props.routes[0] ? (
-        <ul className={classes.stop_options}>
+        <div>
           {props.routes.map((route, index) => (
-            <li key={index}>
-              <Button
-                sx={{
-                  backgroundColor: "black",
-                  width: 330,
-                  color: "white",
-                  border: 3,
-                  borderRadius: 5,
-                  padding: 1,
-                  "&:hover": {
-                    backgroundColor: "#fff",
-                    color: "black",
-                  },
-                }}
-                // style={bgColor(stop.stop_id)}
-                value={index}
-                onClick={pickRoutes}
+            <div
+              key={index}
+              style={{
+                minWidth: "100%",
+                width: "25rem",
+                borderTop: "0.05rem solid lightgrey",
+              }}
+            >
+              <Accordion
+                disableGutters={true}
+                onClick={() => pickRoutes(index)}
               >
-                {route.route_short_name.concat(": ", route.trip_headsign)}
-              </Button>
-              {props.viewFavourites ? (
-                <IconButton onClick={(e) => removeFavRoute(index)} size="sm">
-                  <FaTrash />
-                </IconButton>
-              ) : (
-                <IconButton onClick={(e) => removeRoute(index)} size="sm">
-                  <MdClear />
-                </IconButton>
-              )}
-            </li>
+                <AccordionSummary
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    width: "25rem",
+                  }}
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <div
+                    style={{
+                      marginTop: "auto",
+                      marginBottom: "auto",
+                      paddingLeft: "0.30rem",
+                    }}
+                  >
+                    {route.route_short_name.concat(": ", route.trip_headsign)}
+                  </div>
+
+                  <div
+                    style={{
+                      marginLeft: "auto",
+                    }}
+                  >
+                    {props.viewFavourites ? (
+                      <IconButton
+                        onClick={(e) => removeFavRoute(index)}
+                        size="sm"
+                      >
+                        <FaTrash />
+                      </IconButton>
+                    ) : (
+                      <IconButton onClick={(e) => removeRoute(index)} size="sm">
+                        <MdClear />
+                      </IconButton>
+                    )}
+                  </div>
+                </AccordionSummary>
+                {/* <StopDetails
+                  stop={stop}
+                  time={props.time}
+                  daySelection={props.daySelection}
+                ></StopDetails> */}
+              </Accordion>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
         <div className={classes.no_selection}>
           {props.viewFavourites ? (
@@ -112,7 +136,10 @@ const RouteFavourites = (props) => {
               <p>Add routes with the search bar to stay updated!</p>
             </div>
           ) : (
-            <p>Add routes with the search bar to view route and stop schedule information.</p>
+            <p>
+              Add routes with the search bar to view route and stop schedule
+              information.
+            </p>
           )}
         </div>
       )}

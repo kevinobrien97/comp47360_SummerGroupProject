@@ -2,7 +2,6 @@ import { ButtonGroup, Button, Box, TextField } from "@mui/material";
 import { Autocomplete } from "@react-google-maps/api";
 import classes from "./Journey.module.css";
 import CachedIcon from "@mui/icons-material/Cached";
-import { FaEllipsisV } from "react-icons/fa";
 import { FaLocationArrow, FaArrowsAltV } from "react-icons/fa";
 import { useRef, useState, useEffect } from "react";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";

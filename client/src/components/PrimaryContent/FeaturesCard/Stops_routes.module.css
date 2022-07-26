@@ -44,3 +44,8 @@
   margin-bottom: 0.75rem;
   text-align: center;
 }
+
+.no_selection {
+  text-align: center;
+  margin: 0 1rem;
+}

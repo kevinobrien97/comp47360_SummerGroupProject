@@ -1,19 +1,16 @@
 import { React, useState, useContext, useEffect } from "react";
 import { Button } from "@mui/material";
-import classes from "./Favourites.module.css";
+import classes from "../Stops_routes.module.css";
 import StopList from "./StopList";
 import AuthContext from "../../../../context/AuthContext";
 import { Link } from "react-router-dom";
 import Warning from "../Warning";
 import useAxios from "../../../../utils/useAxios";
 import LoadingSpinner from "../../../LoadingSpinner";
-import {
-  HiOutlineArrowNarrowLeft,
-  HiOutlineArrowNarrowRight,
-} from "react-icons/hi";
 import ScheduleTime from "../ScheduleTime";
-import StopDropdown from "./StopDropdown";
+import StopDropdown from "../Dropdown";
 import DialogueBox from "../DialogueBox";
+import ToggleFavourites from "../ToggleFavourites";
 
 const Stops = (props) => {
   const { user } = useContext(AuthContext);
@@ -118,6 +115,7 @@ const Stops = (props) => {
       if (user) {
         console.log(stop);
         const idx = Object.keys(busStops).find((key) => busStops[key] === stop);
+        console.log(idx)
         const stopObj = props.stops[idx];
         console.log(stopObj);
         // returns true if the stop is already in favStopsList
@@ -180,47 +178,23 @@ const Stops = (props) => {
           )}
         </Button>
       </div> */}
-      {!viewFavourites && (
-        <div className={classes.viewingFavs}>
-          <Button
-            onClick={() => {
-              setViewFavourites(true);
-              // setSelectedStopList(null);
-            }}
-          >
-            <span style={{ color: "#F1B23E" }}>
-              View Favourite Stops &nbsp;
-              <HiOutlineArrowNarrowRight />
-            </span>
-          </Button>
-        </div>
-      )}
-      {viewFavourites && (
-        <div className={classes.regularView}>
-          <Button
-            onClick={() => {
-              setViewFavourites(false);
-              // setSelectedStopList(null);
-            }}
-          >
-            <span style={{ color: "#F1B23E" }}>
-              <HiOutlineArrowNarrowLeft />
-              &nbsp;Back to Stop Search
-            </span>
-          </Button>
-        </div>
-      )}
-
+      <ToggleFavourites
+        viewFavourites={viewFavourites}
+        setViewFavourites={setViewFavourites}
+        setError={setError}
+      ></ToggleFavourites>
       <div className={classes.fav_container}>
         {/* pass different add function to dropdown depending on if in favourites or regular stop view */}
         {!viewFavourites ? (
           <StopDropdown
+            text={"Stop"}
             options={busStops}
             addStop={addStop}
             viewFavourites={viewFavourites}
           ></StopDropdown>
         ) : (
           <StopDropdown
+            text={"Stop"}
             options={busStops}
             addStop={addFavStop}
             viewFavourites={viewFavourites}
@@ -255,9 +229,12 @@ const Stops = (props) => {
                         setDialogueController={setShowDelete}
                         func={deleteStop}
                         item={deleteFavourite}
-                        stops={favStopsList}
+                        list={favStopsList}
                         setSelectedItem={setDeleteFavourite}
-                        setStopsList={setFavStopsList}
+                        setList={setFavStopsList}
+                        reCenter={props.reCenter}
+                        setMarker={props.setSelectedStopMarker}
+                        resetMarker = {null}
                       ></DialogueBox>
                     )}
                     <StopList
@@ -265,7 +242,7 @@ const Stops = (props) => {
                       daySelection={daySelection}
                       time={time}
                       stops={favStopsList}
-                      setStopsList={setFavStopsList}
+                      // setStopsList={setFavStopsList}
                       setMarker={props.setMarker}
                       deleteStop={setDeleteFavourite}
                       setShowDelete={setShowDelete}
@@ -298,7 +275,6 @@ const Stops = (props) => {
             stops={stopsList}
             setStopsList={setStopsList}
             setMarker={props.setMarker}
-            // deleteStop={deleteStop}
           ></StopList>
         )}
       </div>

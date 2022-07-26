@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { AccordionDetails } from "@mui/material";
 import LoadingSpinner from "../../../LoadingSpinner";
-import StopTable from "./StopTable"
+import StopTable from "../StopTable"
 
 
 const StopDetails = (props) => {
@@ -36,6 +36,7 @@ const StopDetails = (props) => {
         const sorted = filtered.sort((a, b) => {
           return collator.compare(a.departure_time, b.departure_time);
         });
+            // different schedule keys have the same stop information sometimes (multiple keys can apply on same day)
         const noDuplicates = sorted.reduce((unique, t) => {
             if(!unique.some(trip => trip.departure_time === t.departure_time && trip.stop_headsign===t.stop_headsign)) {
               unique.push(t);

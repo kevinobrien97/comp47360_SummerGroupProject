@@ -205,6 +205,7 @@ const Map = (props) => {
           onLoad={(mapLoaded) => setMapLoaded(mapLoaded)}
         >
           ({/* mapping the markers set by clicking a route */}
+          {routeMarkers && (<div>
           {routeMarkers.map((stop, index) => (
             <Marker
               position={{ lat: stop.stop_lat, lng: stop.stop_long }}
@@ -231,7 +232,9 @@ const Map = (props) => {
               ) : null}
             </Marker>
           ))}
-          )<Marker position={selectedStopMarker}></Marker>
+          </div>)}
+          )
+          <Marker position={selectedStopMarker}></Marker>
           {directionsOutput && (
             <DirectionsRenderer
               directions={directionsOutput}

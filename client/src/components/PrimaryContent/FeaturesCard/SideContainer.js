@@ -4,7 +4,7 @@ import MiniNav from "./MiniNav.js";
 import Journey from "./Journey";
 import RouteOptions from "./RouteOptions";
 import Nearest from "./Nearest";
-import Route from "./Route";
+import Route from "./Routes/Route";
 import Stops from "./Stops/Stops";
 import LoadingSpinner from "../../LoadingSpinner";
 import { IconButton } from "@mui/material";
@@ -64,6 +64,7 @@ const SideContainer = (props) => {
               <Route
                 routes={props.routes}
                 setRouteMarkers={props.setRouteMarkers}
+                reCenter={props.reCenter}
               ></Route>
             )}
             {/* {sidebarOption.stop && props.isLoading && (
@@ -79,6 +80,8 @@ const SideContainer = (props) => {
               <Stops
                 stops={props.stops}
                 setMarker={setMarker}
+                setSelectedStopMarker={props.setSelectedStopMarker}
+                reCenter={props.reCenter}
               ></Stops>
             )}
           </div>

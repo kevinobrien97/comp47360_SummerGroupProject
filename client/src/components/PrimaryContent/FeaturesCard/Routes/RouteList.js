@@ -1,16 +1,17 @@
-import { React, useState, useEffect } from "react";
+import { React, useState } from "react";
 import { Button, IconButton } from "@mui/material";
 import classes from "../Stops_routes.module.css";
 import { FaTrash } from "react-icons/fa";
+import { MdClear } from "react-icons/md";
 
 const RouteFavourites = (props) => {
-    const [loadingRouteStops, setLoadingRouteStops] = useState(false)
+  const [loadingRouteStops, setLoadingRouteStops] = useState(false);
 
   const pickRoutes = (event) => {
     const route = props.routes[event.target.value];
-    const short_name = route.route_short_name
-    const headsign = route.trip_headsign
-    fetchRoutesData(short_name, headsign)
+    const short_name = route.route_short_name;
+    const headsign = route.trip_headsign;
+    fetchRoutesData(short_name, headsign);
     console.log(route);
 
     // props.setMarker(stop.stop_lat, stop.stop_long);
@@ -22,36 +23,51 @@ const RouteFavourites = (props) => {
     try {
       // fetch returns a promise
       // is asynchronous
-      const response = await fetch(`http://127.0.0.1:8000/api/routestops/${short_name}/${headsign}/`);
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/routestops/${short_name}/${headsign}/`
+      );
       if (!response.ok) {
         // wont continue with next line if error thrown
         throw new Error("Something went wrong loading routes");
       }
       const allStops = await response.json();
-      console.log(allStops)     
+      console.log(allStops);
       props.setRouteMarkers(allStops);
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
       // setError(error.message);
     }
     setLoadingRouteStops(false);
   };
 
-  const removeRoute = (idx) => {
+  const removeFavStop = (idx) => {
+    const stop = props.stops[idx];
+    // open dialogue
+    props.deleteStop(stop);
+    props.setShowDelete(true);
+  };
+
+  const removeFavRoute = (idx) => {
     const route = props.routes[idx];
     console.log(route);
-    // update stopIDList
     props.setRouteList(props.routes.filter((item) => item !== route));
     // call method to delete from database
     props.deleteRoute(route.trip_headsign, route.route_short_name);
   };
 
+  const removeRoute = (idx) => {
+    const route = props.routes[idx];
+    console.log(route);
+    props.setRouteList(props.routes.filter((item) => item !== route));
+  };
+
   return (
-    <div className={classes.favouriteStops}>
-      <h3 style={{ marginTop: "0.75rem", marginBottom: "0.75rem" }}>
-        Your Favourite Routes
-      </h3>
-      {console.log("bug", props.routes)}
+    <div>
+      {props.viewFavourites ? (
+        <h3 className={classes.h3}>Your Favourite Routes</h3>
+      ) : (
+        <h3 className={classes.h3}>Selected Routes</h3>
+      )}
       {props.routes[0] ? (
         <ul className={classes.stop_options}>
           {props.routes.map((route, index) => (
@@ -75,17 +91,28 @@ const RouteFavourites = (props) => {
               >
                 {route.route_short_name.concat(": ", route.trip_headsign)}
               </Button>
-              
-              <IconButton onClick={(e) => removeRoute(index)} size="sm">
-                <FaTrash />
-              </IconButton>
+              {props.viewFavourites ? (
+                <IconButton onClick={(e) => removeFavRoute(index)} size="sm">
+                  <FaTrash />
+                </IconButton>
+              ) : (
+                <IconButton onClick={(e) => removeRoute(index)} size="sm">
+                  <MdClear />
+                </IconButton>
+              )}
             </li>
           ))}
         </ul>
       ) : (
-        <div>
-          <p>You haven't selected any favourite routes yet.</p>
-          <p>Add routes with the search bar to stay updated!</p>
+        <div className={classes.no_selection}>
+          {props.viewFavourites ? (
+            <div>
+              <p>You haven't selected any favourite routes yet.</p>
+              <p>Add routes with the search bar to stay updated!</p>
+            </div>
+          ) : (
+            <p>Add routes with the search bar to view route and stop schedule information.</p>
+          )}
         </div>
       )}
     </div>

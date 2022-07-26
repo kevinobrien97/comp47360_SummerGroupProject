@@ -7,7 +7,7 @@ import { MdClear } from "react-icons/md";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import StopDetails from "./StopDetails";
 
-const FavouriteStops = (props) => {
+const StopList = (props) => {
   // different delete methods depending if viewing favourites or not
 
   const removeFavStop = (idx) => {
@@ -24,7 +24,7 @@ const FavouriteStops = (props) => {
   };
 
   return (
-    <div className={classes.favouriteStops}>
+    <div>
       {props.viewFavourites ? (
         <h3 className={classes.h3}>Your Favourite Stops</h3>
       ) : (
@@ -95,7 +95,7 @@ const FavouriteStops = (props) => {
           ))}
         </div>
       ) : (
-        <div style={{ textAlign: "center" }}>
+        <div className={classes.no_selection}>
           {props.viewFavourites ? (
             <div>
               <p>You haven't selected any favourite stops yet.</p>
@@ -110,4 +110,4 @@ const FavouriteStops = (props) => {
   );
 };
 
-export default FavouriteStops;
+export default StopList;

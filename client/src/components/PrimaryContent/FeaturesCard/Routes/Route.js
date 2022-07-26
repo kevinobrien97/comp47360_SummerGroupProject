@@ -236,9 +236,9 @@ const Route = (props) => {
           <RouteList
             viewFavourites={viewFavourites}
             routes={routeList}
+            // delete below once popups implemented
             setRouteList={setRouteList}
             setRouteMarkers={props.setRouteMarkers}
-            deleteRoute={deleteRoute}
           ></RouteList>
         )}
       </div>

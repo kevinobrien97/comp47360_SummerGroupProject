@@ -167,7 +167,11 @@ const Route = (props) => {
       );
       const routeObj = props.routes[idx];
       // returns true if the stop is already in routeList
-      const inArr = routeList.some((elem) => elem === routeObj);
+      const inArr = routeList.some(
+        (elem) =>
+          elem.route_short_name === routeObj.route_short_name &&
+          elem.trip_headsign === routeObj.trip_headsign
+      );
       if (!inArr) {
         setRouteList((prevRouteList) => {
           return [...prevRouteList, routeObj];

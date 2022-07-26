@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { AccordionDetails } from "@mui/material";
 import LoadingSpinner from "../../../LoadingSpinner";
-import StopTable from "./StopTable"
+import StopTable from "../StopTable"
 
 
 const StopDetails = (props) => {

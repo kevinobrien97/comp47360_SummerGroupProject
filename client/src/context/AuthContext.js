@@ -24,7 +24,10 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
 
-  const loginUser = async (username, password) => {
+  const loginUser = async (username, password, setError) => {
+    // iniitally want error deleted if one was there previously
+    setError(null)
+    try {
     const response = await fetch("http://127.0.0.1:8000/api/token/", {
       method: "POST",
       headers: {
@@ -46,8 +49,9 @@ export const AuthProvider = ({ children }) => {
       // navigate('/')
       // return <Navigate to="/" />
       // alert("Login successfully!");
-    } else {
-      alert("Something went wrong!");
+    }} catch {
+       setError("Username or password were entered incorrectly.")
+      // alert("Something went wrong!");
     }
   };
 
@@ -89,6 +93,7 @@ export const AuthProvider = ({ children }) => {
     registerUser,
     loginUser,
     logoutUser,
+    // loginError
   };
 
   useEffect(() => {

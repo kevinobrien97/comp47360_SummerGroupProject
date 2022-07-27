@@ -98,7 +98,9 @@ const Stops = (props) => {
       }
       setLoadingFavourites(false);
     };
-    fetchData();
+    if (user) {
+      fetchData();
+    }
     // only want it to run on load - they are being added to the db via postStop above, and also to the stops list
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -115,7 +117,7 @@ const Stops = (props) => {
       if (user) {
         console.log(stop);
         const idx = Object.keys(busStops).find((key) => busStops[key] === stop);
-        console.log(idx)
+        console.log(idx);
         const stopObj = props.stops[idx];
         console.log(stopObj);
         // returns true if the stop is already in favStopsList
@@ -234,7 +236,7 @@ const Stops = (props) => {
                         setList={setFavStopsList}
                         reCenter={props.reCenter}
                         setMarker={props.setSelectedStopMarker}
-                        resetMarker = {null}
+                        resetMarker={null}
                       ></DialogueBox>
                     )}
                     <StopList

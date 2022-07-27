@@ -114,7 +114,9 @@ const Route = (props) => {
       }
       setLoadingFavourites(false);
     };
+    if (user) {
     fetchData();
+    }
     // only want it to run on load - they are being added to the db via postRoute above, and also to the routes list
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

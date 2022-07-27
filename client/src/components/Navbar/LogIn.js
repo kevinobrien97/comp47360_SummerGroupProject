@@ -5,7 +5,7 @@ import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import Warning from "../PrimaryContent/FeaturesCard/Warning"
 
-const LogIn = () => {
+const LogIn = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { loginUser } = useContext(AuthContext);
@@ -14,6 +14,7 @@ const LogIn = () => {
   const handleSubmit = (event) => {
     // prevent reload
     event.preventDefault();
+    props.setUserLoggedOut(false)
     loginUser(username, password);
   };
   return (
@@ -25,6 +26,7 @@ const LogIn = () => {
           </header>
 
           <div>
+          {props.userLoggedOut && <Warning error={"Your session has expired. To continue using all features of the site, please log in again."}></Warning>}
             <form className={classes.root} onSubmit={handleSubmit}>
               <div>
                 <TextField

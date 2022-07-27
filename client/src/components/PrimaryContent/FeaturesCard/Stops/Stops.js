@@ -50,8 +50,8 @@ const Stops = (props) => {
         });
       }
     } catch {
-      // change
-      alert("Something went wrong!");
+       // set error message on login screen
+       props.setUserLoggedOut(true);
     }
   };
 
@@ -71,8 +71,8 @@ const Stops = (props) => {
         setStopIDList(stopIDList.filter((item) => item !== obj));
       }
     } catch {
-      // change
-      alert("Something went wrong!");
+      // set error message on login screen
+      props.setUserLoggedOut(true);
     }
   };
 
@@ -98,8 +98,8 @@ const Stops = (props) => {
         }
         setLoadingFavourites(false);
       } catch {
-        // change
-        console.log("bug");
+        // set error message on login screen
+        props.setUserLoggedOut(true);
       }
     };
     // only load if logged in

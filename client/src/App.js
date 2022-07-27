@@ -1,3 +1,4 @@
+import { React, useState } from "react";
 import Map from "./components/PrimaryContent/Map";
 import Navbar from "./components/Navbar/Navbar";
 import LogIn from "./components/Navbar/LogIn";
@@ -7,23 +8,40 @@ import { AuthProvider } from "./context/AuthContext";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 function App() {
+  const [userLoggedOut, setUserLoggedOut] = useState(true);
 
   return (
     <div>
       <Router>
         <AuthProvider>
-          <Navbar></Navbar>
+          <Navbar
+            userLoggedOut={userLoggedOut}
+            setUserLoggedOut={setUserLoggedOut}
+          ></Navbar>
           <Routes>
-            <Route path="/" element={<Map />} />
-              <Route
-                path="/login/"
-                element={<LogIn></LogIn>}
-              />
+            <Route
+              path="/"
+              element={<Map setUserLoggedOut={setUserLoggedOut} />}
+            />
+            <Route
+              path="/login/"
+              element={
+                <LogIn
+                  userLoggedOut={userLoggedOut}
+                  setUserLoggedOut={setUserLoggedOut}
+                ></LogIn>
+              }
+            />
             )
-              <Route
-                path="/register/"
-                element={<SignUp></SignUp>}
-              />
+            <Route
+              path="/register/"
+              element={
+                <SignUp
+                  userLoggedOut={userLoggedOut}
+                  setUserLoggedOut={setUserLoggedOut}
+                ></SignUp>
+              }
+            />
             )
           </Routes>
         </AuthProvider>

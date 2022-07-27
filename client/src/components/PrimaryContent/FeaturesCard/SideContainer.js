@@ -16,7 +16,7 @@ const SideContainer = (props) => {
     journey: true,
     route: false,
     stop: false,
-   });
+  });
 
   const [container, setContainer] = useState(true);
 
@@ -65,6 +65,7 @@ const SideContainer = (props) => {
                 routes={props.routes}
                 setRouteMarkers={props.setRouteMarkers}
                 reCenter={props.reCenter}
+                setUserLoggedOut={props.setUserLoggedOut}
               ></Route>
             )}
             {/* {sidebarOption.stop && props.isLoading && (
@@ -82,6 +83,7 @@ const SideContainer = (props) => {
                 setMarker={setMarker}
                 setSelectedStopMarker={props.setSelectedStopMarker}
                 reCenter={props.reCenter}
+                setUserLoggedOut={props.setUserLoggedOut}
               ></Stops>
             )}
           </div>

@@ -51,8 +51,8 @@ const Route = (props) => {
         });
       }
     } catch {
-      // change
-      alert("Something went wrong!");
+      // set error message on login screen
+      props.setUserLoggedOut(true);
     }
   };
 
@@ -78,8 +78,8 @@ const Route = (props) => {
         props.setRouteMarkers([]);
       }
     } catch {
-      // change
-      alert("Something went wrong!");
+      // set error message on login screen
+      props.setUserLoggedOut(true);
     }
   };
 
@@ -113,8 +113,8 @@ const Route = (props) => {
           });
         }
       } catch {
-        // change
-        console.log("bug");
+         // set error message on login screen
+      props.setUserLoggedOut(true);
       }
 
       setLoadingFavourites(false);

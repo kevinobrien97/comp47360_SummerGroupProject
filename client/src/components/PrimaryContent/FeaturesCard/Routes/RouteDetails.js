@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { AccordionDetails } from "@mui/material";
 import LoadingSpinner from "../../../LoadingSpinner";
-import { MdStopScreenShare } from "react-icons/md";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Accordion, AccordionSummary } from "@mui/material";
 import StopTable from "../StopTable";

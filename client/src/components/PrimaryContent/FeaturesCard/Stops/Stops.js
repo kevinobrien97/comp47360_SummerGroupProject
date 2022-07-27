@@ -36,18 +36,20 @@ const Stops = (props) => {
 
   // function to add a favourite stop to the database for the user
   const postStop = async (id) => {
-    const response = await api.post("/favourites/", {
-      stop_id: id,
-    });
-    if (response.status === 201) {
-      console.log(response);
-
-      // need to add response array to stopIDList to store the ID
-      const arr = response.data;
-      setStopIDList((prevStopIDList) => {
-        return [...prevStopIDList, arr];
+    try {
+      const response = await api.post("/favourites/", {
+        stop_id: id,
       });
-    } else {
+      if (response.status === 201) {
+        console.log(response);
+
+        // need to add response array to stopIDList to store the ID
+        const arr = response.data;
+        setStopIDList((prevStopIDList) => {
+          return [...prevStopIDList, arr];
+        });
+      }
+    } catch {
       // change
       alert("Something went wrong!");
     }
@@ -60,13 +62,15 @@ const Stops = (props) => {
     // use stopIDList which has updated for every post and the initial get request
     const obj = stopIDList.find((x) => x.stop_id === id);
     const primaryKey = obj.id;
-    const response = await api.delete(`/favourites/${primaryKey}`);
-    console.log("del res", response);
-    if (response.status === 204) {
-      console.log(response);
-      // update stopIDList
-      setStopIDList(stopIDList.filter((item) => item !== obj));
-    } else {
+    try {
+      const response = await api.delete(`/favourites/${primaryKey}`);
+      console.log("del res", response);
+      if (response.status === 204) {
+        console.log(response);
+        // update stopIDList
+        setStopIDList(stopIDList.filter((item) => item !== obj));
+      }
+    } catch {
       // change
       alert("Something went wrong!");
     }
@@ -79,25 +83,26 @@ const Stops = (props) => {
       try {
         response = await api.get("/favourites/");
         console.log(response);
+        for (let i = 0; i < response.data.length; i++) {
+          const item = props.stops.find(
+            (x) => x.stop_id === response.data[i].stop_id
+          );
+          setFavStopsList((prevStopsList) => {
+            return [...prevStopsList, item];
+          });
+
+          const arr = response.data[i];
+          setStopIDList((prevStopIDList) => {
+            return [...prevStopIDList, arr];
+          });
+        }
+        setLoadingFavourites(false);
       } catch {
         // change
         console.log("bug");
       }
-      for (let i = 0; i < response.data.length; i++) {
-        const item = props.stops.find(
-          (x) => x.stop_id === response.data[i].stop_id
-        );
-        setFavStopsList((prevStopsList) => {
-          return [...prevStopsList, item];
-        });
-
-        const arr = response.data[i];
-        setStopIDList((prevStopIDList) => {
-          return [...prevStopIDList, arr];
-        });
-      }
-      setLoadingFavourites(false);
     };
+    // only load if logged in
     if (user) {
       fetchData();
     }

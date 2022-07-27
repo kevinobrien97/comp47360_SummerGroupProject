@@ -3,11 +3,13 @@ import { Button, TextField } from "@mui/material";
 import classes from "./LogInSignUp.module.css";
 import { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
+import Warning from "../PrimaryContent/FeaturesCard/Warning"
 
 const LogIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { loginUser } = useContext(AuthContext);
+  const [loginError, setLoginError] = useState(null)
 
   const handleSubmit = (event) => {
     // prevent reload
@@ -49,6 +51,7 @@ const LogIn = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
+              {loginError && <Warning error={loginError}></Warning>}
               <div>
                 <Button type="submit" variant="contained" color="primary">
                   Login

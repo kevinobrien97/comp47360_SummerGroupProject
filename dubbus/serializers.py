@@ -15,14 +15,12 @@ class WeatherSerializer(serializers.ModelSerializer):
         model = Weather 
         fields = ('temperature', 'feels_like', 'time_stamp', 'weather_icon')
 
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+class TokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
-        # Add custom claims
         token['username'] = user.username
         token['email'] = user.email
-        # ...
         return token
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -34,12 +32,12 @@ class RegisterSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'password', 'password2')
 
-    def validate(self, attrs):
-        if attrs['password'] != attrs['password2']:
+    def validate(self, attributes):
+        if attributes['password'] != attributes['password2']:
             raise serializers.ValidationError(
-                {"password": "Password fields didn't match."})
+                {"password": "Both passwords did not match."})
 
-        return attrs
+        return attributes
 
     def create(self, validated_data):
         user = User.objects.create(

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .serializers import StopsSerializer, WeatherSerializer, MyTokenObtainPairSerializer, RegisterSerializer, FavouriteStopsSerializer, RoutesUpdatedSerializer, FavouriteRoutesSerializer, StopTimesUpdatedSerializer, RouteStopsSerializer
+from .serializers import StopsSerializer, WeatherSerializer, TokenObtainPairSerializer, RegisterSerializer, FavouriteStopsSerializer, RoutesUpdatedSerializer, FavouriteRoutesSerializer, StopTimesUpdatedSerializer, RouteStopsSerializer
 from rest_framework import viewsets, status, generics  
 from .models import Stops, Weather, FavouriteStops, RoutesUpdated, FavouriteRoutes, StopTimesUpdated, RouteStops
 from django.contrib.auth.models import User
@@ -25,8 +25,8 @@ class WeatherView(viewsets.ModelViewSet):
     serializer_class = WeatherSerializer
     queryset = Weather.objects.all()
 
-class MyTokenObtainPairView(TokenObtainPairView):
-    serializer_class = MyTokenObtainPairSerializer
+class TokenObtainPairView(TokenObtainPairView):
+    serializer_class = TokenObtainPairSerializer
 
 class RegisterView(APIView):
     queryset = User.objects.all()

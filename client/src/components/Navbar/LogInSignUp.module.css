@@ -15,7 +15,7 @@
   justify-content: center;
   top: 30%;
   width: 100%;
-  /* z-index: 30; */
+  z-index: 30;
   background: red;
   box-shadow: 0 2px 8px rgba(143, 103, 103, 0.26);
   border-radius: 10px;
@@ -33,3 +33,13 @@
 }
 
 .log_in_modal_content div{margin-top:5px;border:0px;padding:0px;}
+
+.back_drop {
+  left: 0;
+  top: 0;
+  position: absolute;
+  height: 112%;
+  width: 100%;
+  z-index: 20;
+  background: rgba(0, 0, 0, 0.8);
+}

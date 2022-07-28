@@ -32,24 +32,25 @@ const Stops = (props) => {
   const [daySelection, setDaySelection] = useState(day.getDay(0));
   const [time, setTime] = useState(day);
 
-  const api = useAxios();
+  const api = useAxios(props.setUserLoggedOut, props.toggleLogIn);
 
   // function to add a favourite stop to the database for the user
   const postStop = async (id) => {
-    const response = await api.post("/favourites/", {
-      stop_id: id,
-    });
-    if (response.status === 201) {
-      console.log(response);
-
-      // need to add response array to stopIDList to store the ID
-      const arr = response.data;
-      setStopIDList((prevStopIDList) => {
-        return [...prevStopIDList, arr];
+    try {
+      const response = await api.post("/favourites/", {
+        stop_id: id,
       });
-    } else {
-      // change
-      alert("Something went wrong!");
+      if (response.status === 201) {
+        console.log(response);
+
+        // need to add response array to stopIDList to store the ID
+        const arr = response.data;
+        setStopIDList((prevStopIDList) => {
+          return [...prevStopIDList, arr];
+        });
+      }
+    } catch {
+      console.log("Couldn't add to database");
     }
   };
 
@@ -60,15 +61,16 @@ const Stops = (props) => {
     // use stopIDList which has updated for every post and the initial get request
     const obj = stopIDList.find((x) => x.stop_id === id);
     const primaryKey = obj.id;
-    const response = await api.delete(`/favourites/${primaryKey}`);
-    console.log("del res", response);
-    if (response.status === 204) {
-      console.log(response);
-      // update stopIDList
-      setStopIDList(stopIDList.filter((item) => item !== obj));
-    } else {
-      // change
-      alert("Something went wrong!");
+    try {
+      const response = await api.delete(`/favourites/${primaryKey}`);
+      console.log("del res", response);
+      if (response.status === 204) {
+        console.log(response);
+        // update stopIDList
+        setStopIDList(stopIDList.filter((item) => item !== obj));
+      }
+    } catch {
+      console.log("Couldn't remove from database");
     }
   };
 
@@ -79,26 +81,28 @@ const Stops = (props) => {
       try {
         response = await api.get("/favourites/");
         console.log(response);
-      } catch {
-        // change
-        console.log("bug");
-      }
-      for (let i = 0; i < response.data.length; i++) {
-        const item = props.stops.find(
-          (x) => x.stop_id === response.data[i].stop_id
-        );
-        setFavStopsList((prevStopsList) => {
-          return [...prevStopsList, item];
-        });
+        for (let i = 0; i < response.data.length; i++) {
+          const item = props.stops.find(
+            (x) => x.stop_id === response.data[i].stop_id
+          );
+          setFavStopsList((prevStopsList) => {
+            return [...prevStopsList, item];
+          });
 
-        const arr = response.data[i];
-        setStopIDList((prevStopIDList) => {
-          return [...prevStopIDList, arr];
-        });
+          const arr = response.data[i];
+          setStopIDList((prevStopIDList) => {
+            return [...prevStopIDList, arr];
+          });
+        }
+        setLoadingFavourites(false);
+      } catch {
+        console.log("Couldn't retrieve from database");
       }
-      setLoadingFavourites(false);
     };
-    fetchData();
+    // only load if logged in
+    if (user) {
+      fetchData();
+    }
     // only want it to run on load - they are being added to the db via postStop above, and also to the stops list
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -115,7 +119,7 @@ const Stops = (props) => {
       if (user) {
         console.log(stop);
         const idx = Object.keys(busStops).find((key) => busStops[key] === stop);
-        console.log(idx)
+        console.log(idx);
         const stopObj = props.stops[idx];
         console.log(stopObj);
         // returns true if the stop is already in favStopsList
@@ -234,7 +238,7 @@ const Stops = (props) => {
                         setList={setFavStopsList}
                         reCenter={props.reCenter}
                         setMarker={props.setSelectedStopMarker}
-                        resetMarker = {null}
+                        resetMarker={null}
                       ></DialogueBox>
                     )}
                     <StopList
@@ -255,13 +259,17 @@ const Stops = (props) => {
                 <h4>You are not logged in.</h4>
                 <p>
                   {" "}
-                  <Link to={"/login/"} style={{ textDecoration: "none" }}>
-                    <Button type="submit">Login</Button>
-                  </Link>
+                  {/* <Link to={"/login/"} style={{ textDecoration: "none" }}> */}
+                  <Button type="submit" onClick={() => props.toggleLogIn()}>
+                    Login
+                  </Button>
+                  {/* </Link> */}
                   {"or"}
-                  <Link to={"/register/"} style={{ textDecoration: "none" }}>
-                    <Button type="submit">Register</Button>{" "}
-                  </Link>
+                  {/* <Link to={"/register/"} style={{ textDecoration: "none" }}> */}
+                  <Button type="submit" onClick={() => props.toggleRegister()}>
+                    Register
+                  </Button>{" "}
+                  {/* </Link> */}
                   to view your favourites.
                 </p>
               </div>

@@ -157,7 +157,7 @@ const Map = (props) => {
   function removeRoutes() {
     setShowRoutes(false);
   }
- 
+
   return (
     <div
       style={{
@@ -187,6 +187,9 @@ const Map = (props) => {
           setStopMarker={setStopMarker}
           setRouteMarkers={setRouteMarkers}
           setSelectedStopMarker={setSelectedStopMarker}
+          setUserLoggedOut={props.setUserLoggedOut}
+          toggleLogIn={props.toggleLogIn}
+          toggleRegister={props.toggleRegister}
         ></SideContainer>
       </div>
       <div className={classes.google_map}>
@@ -205,36 +208,39 @@ const Map = (props) => {
           onLoad={(mapLoaded) => setMapLoaded(mapLoaded)}
         >
           ({/* mapping the markers set by clicking a route */}
-          {routeMarkers && (<div>
-          {routeMarkers.map((stop, index) => (
-            <Marker
-              position={{ lat: stop.stop_lat, lng: stop.stop_long }}
-              key={stop.stop_id}
-              onClick={() => {
-                setCurrentClickedMarker(stop.stop_id);
-              }}
-            >
-              {currentClickedMarker === stop.stop_id ? (
-                <InfoWindow
-                options= {{maxWidth : 250 }}
-                  onCloseClick={() => {
-                    setCurrentClickedMarker(null);
+          {routeMarkers && (
+            <div>
+              {routeMarkers.map((stop, index) => (
+                <Marker
+                  position={{ lat: stop.stop_lat, lng: stop.stop_long }}
+                  key={stop.stop_id}
+                  onClick={() => {
+                    setCurrentClickedMarker(stop.stop_id);
                   }}
                 >
-                  <div>
-                    <header><h4>{stop.stop_name}</h4></header>
-                    <div>
-                      Stop{" "}on route{" "}{stop.route_short_name}{" "}from{" "}
-                      {stop.trip_headsign}
-                    </div>
-                  </div>
-                </InfoWindow>
-              ) : null}
-            </Marker>
-          ))}
-          </div>)}
-          )
-          <Marker position={selectedStopMarker}></Marker>
+                  {currentClickedMarker === stop.stop_id ? (
+                    <InfoWindow
+                      options={{ maxWidth: 250 }}
+                      onCloseClick={() => {
+                        setCurrentClickedMarker(null);
+                      }}
+                    >
+                      <div>
+                        <header>
+                          <h4>{stop.stop_name}</h4>
+                        </header>
+                        <div>
+                          Stop on route {stop.route_short_name} from{" "}
+                          {stop.trip_headsign}
+                        </div>
+                      </div>
+                    </InfoWindow>
+                  ) : null}
+                </Marker>
+              ))}
+            </div>
+          )}
+          )<Marker position={selectedStopMarker}></Marker>
           {directionsOutput && (
             <DirectionsRenderer
               directions={directionsOutput}

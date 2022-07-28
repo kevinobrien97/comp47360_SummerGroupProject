@@ -31,26 +31,27 @@ const Route = (props) => {
   const [daySelection, setDaySelection] = useState(day.getDay(0));
   const [time, setTime] = useState(day);
 
-  const api = useAxios();
+  const api = useAxios(props.setUserLoggedOut, props.toggleLogIn);
 
   // function to add a favourite stop to the database for the user
   const postRoute = async (trip_headsign, route_short_name) => {
-    const response = await api.post("/favouriteroutes/", {
-      trip_headsign: trip_headsign,
-      route_short_name: route_short_name,
-    });
-    if (response.status === 201) {
-      console.log(response);
-
-      // need to add response array to routeIDList to store the ID
-      const arr = response.data;
-
-      setRouteIDList((prevRouteIDList) => {
-        return [...prevRouteIDList, arr];
+    try {
+      const response = await api.post("/favouriteroutes/", {
+        trip_headsign: trip_headsign,
+        route_short_name: route_short_name,
       });
-    } else {
-      // change
-      alert("Something went wrong!");
+      if (response.status === 201) {
+        console.log(response);
+
+        // need to add response array to routeIDList to store the ID
+        const arr = response.data;
+
+        setRouteIDList((prevRouteIDList) => {
+          return [...prevRouteIDList, arr];
+        });
+      }
+    } catch {
+      console.log("Couldn't add to database");
     }
   };
 
@@ -66,16 +67,17 @@ const Route = (props) => {
         x.route_short_name === route_short_name
     );
     const primaryKey = obj.id;
-    const response = await api.delete(`/favouriteroutes/${primaryKey}`);
-    console.log("del res", response);
-    if (response.status === 204) {
-      console.log(response);
-      // update routeIDList
-      setRouteIDList(routeIDList.filter((item) => item !== obj));
-      props.setRouteMarkers([]);
-    } else {
-      // change
-      alert("Something went wrong!");
+    try {
+      const response = await api.delete(`/favouriteroutes/${primaryKey}`);
+      console.log("del res", response);
+      if (response.status === 204) {
+        console.log(response);
+        // update routeIDList
+        setRouteIDList(routeIDList.filter((item) => item !== obj));
+        props.setRouteMarkers([]);
+      }
+    } catch {
+      console.log("Couldn't remove from database");
     }
   };
 
@@ -86,35 +88,38 @@ const Route = (props) => {
       try {
         response = await api.get("/favouriteroutes/");
         console.log(response);
-      } catch {
-        // change
-        console.log("bug");
-      }
-      for (let i = 0; i < response.data.length; i++) {
-        // creating a temporary object for each elem of the response to be added to the list that will be displayed on screen
-        const tempObj = {
-          trip_headsign: response.data[i].trip_headsign,
-          route_short_name: response.data[i].route_short_name,
-        };
-        // const item = props.routes.find(
-        //   (x) => x === tempObj
-        // );
-        console.log("tempObj", tempObj);
+        for (let i = 0; i < response.data.length; i++) {
+          // creating a temporary object for each elem of the response to be added to the list that will be displayed on screen
+          const tempObj = {
+            trip_headsign: response.data[i].trip_headsign,
+            route_short_name: response.data[i].route_short_name,
+          };
+          // const item = props.routes.find(
+          //   (x) => x === tempObj
+          // );
+          console.log("tempObj", tempObj);
 
-        setFavRouteList((prevRouteList) => {
-          console.log("in");
-          return [...prevRouteList, tempObj];
-        });
-        console.log(favRouteList);
-        // adding arr to routeIDList - used for deletions (stores primary key used in database)
-        const arr = response.data[i];
-        setRouteIDList((prevRouteIDList) => {
-          return [...prevRouteIDList, arr];
-        });
+          setFavRouteList((prevRouteList) => {
+            console.log("in");
+            return [...prevRouteList, tempObj];
+          });
+          console.log(favRouteList);
+          // adding arr to routeIDList - used for deletions (stores primary key used in database)
+          const arr = response.data[i];
+          setRouteIDList((prevRouteIDList) => {
+            return [...prevRouteIDList, arr];
+          });
+        }
+      } catch {
+        console.log("Couldn't retrieve from database");
       }
+
       setLoadingFavourites(false);
     };
-    fetchData();
+    // only load if logged in
+    if (user) {
+      fetchData();
+    }
     // only want it to run on load - they are being added to the db via postRoute above, and also to the routes list
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -262,10 +267,14 @@ const Route = (props) => {
                 <p>
                   {" "}
                   <Link to={"/login/"} style={{ textDecoration: "none" }}>
-                    <Button type="submit">Login</Button>
+                    <Button type="submit" onClick={() => props.toggleLogIn()}>
+                      Login
+                    </Button>
                   </Link>
                   {"or"}
-                  <Button type="submit">Register</Button>
+                  <Button type="submit" onClick={() => props.toggleRegister()}>
+                    Register
+                  </Button>
                   to view your favourites.
                 </p>
               </div>

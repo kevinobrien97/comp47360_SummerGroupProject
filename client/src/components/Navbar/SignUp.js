@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import Warning from "../PrimaryContent/FeaturesCard/Warning";
 
-const SignUp = () => {
+const SignUp = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
@@ -15,11 +15,12 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('signup', password)
-    registerUser(username, password, password2, setSignupError);
+    registerUser(username, password, password2, setSignupError, props.toggleRegister, props.toggleLogIn);
   };
 
   return (
     <div>
+      <div className={classes.back_drop} onClick={props.toggleRegister}></div>
       <div className={classes.log_in_modal}>
         <div className={classes.log_in_modal_content}>
           <header>
@@ -73,11 +74,11 @@ const SignUp = () => {
               {signupError && <Warning error={signupError}></Warning>}
               </form>
               Already have an account?{"  "}
-              <Link to={"/login/"} style={{ textDecoration: "none" }}> 
-              <Button type="submit" variant="contained" style={{ color: "#2196f3", backgroundColor: "white" }}>
+              {/* <Link to={"/login/"} style={{ textDecoration: "none" }}>  */}
+              <Button type="submit" variant="contained" style={{ color: "#2196f3", backgroundColor: "white" }} onClick={()=> {props.toggleRegister(); props.toggleLogIn()}}>
                 Login
               </Button>
-              </Link>
+              {/* </Link> */}
           </div>
         </div>
       </div>

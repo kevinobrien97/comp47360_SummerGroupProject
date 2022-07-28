@@ -9,7 +9,15 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 function App() {
   const [userLoggedOut, setUserLoggedOut] = useState(true);
+  const [logInWindow, setLogInWindow] = useState(false);
+  const [registerWindow, setRegisterWindow] = useState(false);
 
+  const toggleLogIn = () => {
+    setLogInWindow(!logInWindow);
+  };
+  const toggleRegister = () => {
+    setRegisterWindow(!registerWindow);
+  };
   return (
     <div>
       <Router>
@@ -17,33 +25,44 @@ function App() {
           <Navbar
             userLoggedOut={userLoggedOut}
             setUserLoggedOut={setUserLoggedOut}
+            toggleLogIn={toggleLogIn}
+            toggleRegister={toggleRegister}
           ></Navbar>
-          <Routes>
+          {/* <Routes>
             <Route
               path="/"
               element={<Map setUserLoggedOut={setUserLoggedOut} />}
-            />
-            <Route
+            /> */}
+          <Map setUserLoggedOut={setUserLoggedOut} />
+          {/* <Route
               path="/login/"
-              element={
-                <LogIn
-                  userLoggedOut={userLoggedOut}
-                  setUserLoggedOut={setUserLoggedOut}
-                ></LogIn>
-              }
-            />
-            )
-            <Route
+              element={ */}
+          {logInWindow && (
+            <LogIn
+              // userLoggedOut={userLoggedOut}
+              // setUserLoggedOut={setUserLoggedOut}
+              toggleLogIn={toggleLogIn}
+              toggleRegister={toggleRegister}
+            ></LogIn>
+          )}
+          {/* }
+            /> */}
+          {/* ) */}
+          {/* <Route
               path="/register/"
-              element={
-                <SignUp
-                  userLoggedOut={userLoggedOut}
-                  setUserLoggedOut={setUserLoggedOut}
-                ></SignUp>
-              }
+              element={ */}
+          {registerWindow && (
+            <SignUp
+              userLoggedOut={userLoggedOut}
+              setUserLoggedOut={setUserLoggedOut}
+              toggleLogIn={toggleLogIn}
+              toggleRegister={toggleRegister}
+            ></SignUp>
+          )}
+          {/* }
             />
             )
-          </Routes>
+          </Routes> */}
         </AuthProvider>
       </Router>
     </div>

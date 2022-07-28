@@ -16,11 +16,12 @@ const LogIn = (props) => {
     event.preventDefault();
     props.setUserLoggedOut(false);
 
-    loginUser(username, password, setLoginError);
+    loginUser(username, password, setLoginError, props.toggleLogIn);
   };
   
   return (
     <div>
+      <div className={classes.back_drop} onClick={props.toggleLogIn}></div>
       <div className={classes.log_in_modal}>
         <div className={classes.log_in_modal_content}>
           <header>
@@ -69,6 +70,11 @@ const LogIn = (props) => {
                 </Button>
               </div>
             </form>
+            Don't have an account?{"  "}
+              {/* <Link to={"/login/"} style={{ textDecoration: "none" }}>  */}
+              <Button type="submit" variant="contained" style={{ color: "#2196f3", backgroundColor: "white" }} onClick={()=> {props.toggleLogIn(); props.toggleRegister()}}>
+                Register
+              </Button>
           </div>
           <div></div>
         </div>

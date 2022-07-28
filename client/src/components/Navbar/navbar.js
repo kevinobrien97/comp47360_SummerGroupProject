@@ -35,7 +35,7 @@ const Navbar = (props) => {
         // desktop
         <Toolbar>
           <Grid>
-            <Link to={"/"} style={{ textDecoration: "none" }}>
+            {/* <Link to={"/"} style={{ textDecoration: "none" }}> */}
               <Button
                 sx={{
                   backgroundColor: "#F1B23E",
@@ -51,12 +51,12 @@ const Navbar = (props) => {
               >
                 Home
               </Button>
-            </Link>
+            {/* </Link> */}
 
                 {!user ? (
               // span is parent element of ternary - using so it keeps to the same line
               <span>
-                <Link to={"/login/"} style={{ textDecoration: "none" }}>
+                {/* <Link to={"/login/"} style={{ textDecoration: "none" }}> */}
                   <Button
                     sx={{
                       backgroundColor: "black",
@@ -69,12 +69,12 @@ const Navbar = (props) => {
                         color: "black",
                       },
                     }}
-                    onClick={props.openLogIn}
+                    onClick={props.toggleLogIn}
                   >
                     Login
                   </Button>
-                </Link>
-                <Link to={"/register/"} style={{ textDecoration: "none" }}>
+                {/* </Link>
+                <Link to={"/register/"} style={{ textDecoration: "none" }}> */}
                   <Button
                     sx={{
                       backgroundColor: "black",
@@ -87,12 +87,12 @@ const Navbar = (props) => {
                         color: "black",
                       },
                     }}
-                    onClick={props.openSignUp}
+                    onClick={props.toggleRegister}
                     color="inherit"
                   >
                     Register
                   </Button>
-                </Link>
+                {/* </Link> */}
               </span>
             ) : (
               <AccountOptions

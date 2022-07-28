@@ -20,10 +20,10 @@ export const AuthProvider = ({ children }) => {
       : null
   );
   const [loading, setLoading] = useState(true);
-  console.log("userauth", user);
-  const navigate = useNavigate();
+  // console.log("userauth", user);
+  // const navigate = useNavigate();
 
-  const loginUser = async (username, password, setError) => {
+  const loginUser = async (username, password, setError, toggleLogIn) => {
     // iniitally want error deleted if one was there previously
     setError(null);
     try {
@@ -40,7 +40,8 @@ export const AuthProvider = ({ children }) => {
       setAuthTokens(data);
       setUser(jwt_decode(data.access));
       localStorage.setItem("authTokens", JSON.stringify(data));
-      navigate("/");
+      toggleLogIn()
+      // navigate("/");
     } catch (e) {
       setError("Username or password were entered incorrectly.");
     }
@@ -50,7 +51,9 @@ export const AuthProvider = ({ children }) => {
     username,
     password,
     password2,
-    setSignupError
+    setSignupError,
+    toggleLogIn,
+    toggleRegister
   ) => {
     // iniitally want error deleted if one was there previously
     setSignupError(null);
@@ -80,7 +83,9 @@ export const AuthProvider = ({ children }) => {
       // if (response.status === 201) {
       //   console.log(response);
       // history.push("/login");
-      navigate("/login/");
+      // navigate("/login/");
+      toggleRegister()
+      toggleLogIn()
     } catch (e) {
       if (e.response.data.username) {
         setSignupError(e.response.data.username[0])
@@ -97,11 +102,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logoutUser = () => {
-    console.log("logging out");
+    // console.log("logging out");
     setAuthTokens(null);
     setUser(null);
     localStorage.removeItem("authTokens");
-    navigate("/");
+    // navigate("/");
   };
 
   const contextData = {
@@ -112,7 +117,6 @@ export const AuthProvider = ({ children }) => {
     registerUser,
     loginUser,
     logoutUser,
-    // loginError
   };
 
   useEffect(() => {

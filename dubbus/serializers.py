@@ -18,12 +18,9 @@ class WeatherSerializer(serializers.ModelSerializer):
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
-        print('user boi',user)
         token = super().get_token(user)
         token['username'] = user.username
         token['email'] = user.email
-        
-        print('token boi',token)
         # ...
         return token
 

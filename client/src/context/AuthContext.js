@@ -82,7 +82,17 @@ export const AuthProvider = ({ children }) => {
       // history.push("/login");
       navigate("/login/");
     } catch (e) {
-      console.log(e);
+      if (e.response.data.username) {
+        setSignupError(e.response.data.username[0])
+      }
+      else if (e.response.data.password) {
+        setSignupError(e.response.data.password[0])
+      }
+      // catch all
+      else {
+        setSignupError("Error creating account.")
+      }
+      console.log(e.response.data);
     }
   };
 

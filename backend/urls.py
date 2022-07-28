@@ -40,7 +40,7 @@ urlpatterns = [
     path('api/fullroutestoptimes/<str:route_short_name>/<str:trip_headsign>/<str:day>/', views.FullRouteStopTimesUpdatedView.as_view() ),
     path('api/routestops/<str:route_short_name>/<str:trip_headsign>/', views.RouteStopsView.as_view() ),
     path('api/stoptimes/<str:stop_id>/<str:day>/', views.StopTimesUpdatedView.as_view() ),
-    path('api/token/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/', views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/register/', views.RegisterView.as_view(), name='auth_register'),
     path('api/favourites/', include(router.urls)),

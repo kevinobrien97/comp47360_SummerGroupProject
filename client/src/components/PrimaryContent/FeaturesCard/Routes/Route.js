@@ -31,7 +31,7 @@ const Route = (props) => {
   const [daySelection, setDaySelection] = useState(day.getDay(0));
   const [time, setTime] = useState(day);
 
-  const api = useAxios();
+  const api = useAxios(props.setUserLoggedOut, props.toggleLogIn);
 
   // function to add a favourite stop to the database for the user
   const postRoute = async (trip_headsign, route_short_name) => {
@@ -51,8 +51,7 @@ const Route = (props) => {
         });
       }
     } catch {
-      // set error message on login screen
-      props.setUserLoggedOut(true);
+      console.log("Couldn't add to database");
     }
   };
 
@@ -78,8 +77,7 @@ const Route = (props) => {
         props.setRouteMarkers([]);
       }
     } catch {
-      // set error message on login screen
-      props.setUserLoggedOut(true);
+      console.log("Couldn't remove from database");
     }
   };
 
@@ -113,8 +111,7 @@ const Route = (props) => {
           });
         }
       } catch {
-         // set error message on login screen
-      props.setUserLoggedOut(true);
+        console.log("Couldn't retrieve from database");
       }
 
       setLoadingFavourites(false);
@@ -270,10 +267,14 @@ const Route = (props) => {
                 <p>
                   {" "}
                   <Link to={"/login/"} style={{ textDecoration: "none" }}>
-                    <Button type="submit">Login</Button>
+                    <Button type="submit" onClick={() => props.toggleLogIn()}>
+                      Login
+                    </Button>
                   </Link>
                   {"or"}
-                  <Button type="submit">Register</Button>
+                  <Button type="submit" onClick={() => props.toggleRegister()}>
+                    Register
+                  </Button>
                   to view your favourites.
                 </p>
               </div>

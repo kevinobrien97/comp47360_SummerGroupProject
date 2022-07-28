@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const baseURL = "http://127.0.0.1:8000/api";
 
-const useAxios = () => {
+const useAxios = (setUserLoggedOut, toggleLogIn) => {
   const navigate = useNavigate();
   const { authTokens, setUser, setAuthTokens } = useContext(AuthContext);
 
@@ -44,7 +44,12 @@ const useAxios = () => {
       setUser(null);
       setAuthTokens(null);
       localStorage.removeItem("authTokens");
-      navigate('/login/');
+      if (setUserLoggedOut && toggleLogIn) {
+        // set error message on login screen and open login screen
+        setUserLoggedOut(true);
+        toggleLogIn();
+      }
+      // navigate('/login/');
     }
   });
 

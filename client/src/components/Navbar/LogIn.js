@@ -14,6 +14,7 @@ const LogIn = (props) => {
   const handleSubmit = (event) => {
     // prevent reload
     event.preventDefault();
+    // remove logged out error
     props.setUserLoggedOut(false);
 
     loginUser(username, password, setLoginError, props.toggleLogIn);
@@ -21,7 +22,7 @@ const LogIn = (props) => {
   
   return (
     <div>
-      <div className={classes.back_drop} onClick={props.toggleLogIn}></div>
+      <div className={classes.back_drop} onClick={()=> {props.toggleLogIn(); props.setUserLoggedOut(false)}}></div>
       <div className={classes.log_in_modal}>
         <div className={classes.log_in_modal_content}>
           <header>
@@ -72,7 +73,7 @@ const LogIn = (props) => {
             </form>
             Don't have an account?{"  "}
               {/* <Link to={"/login/"} style={{ textDecoration: "none" }}>  */}
-              <Button type="submit" variant="contained" style={{ color: "#2196f3", backgroundColor: "white" }} onClick={()=> {props.toggleLogIn(); props.toggleRegister()}}>
+              <Button type="submit" variant="contained" style={{ color: "#2196f3", backgroundColor: "white" }} onClick={()=> {props.toggleLogIn(); props.toggleRegister(); props.setUserLoggedOut(false)}}>
                 Register
               </Button>
           </div>

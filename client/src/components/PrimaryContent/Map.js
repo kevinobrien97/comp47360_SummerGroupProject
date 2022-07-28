@@ -188,6 +188,8 @@ const Map = (props) => {
           setRouteMarkers={setRouteMarkers}
           setSelectedStopMarker={setSelectedStopMarker}
           setUserLoggedOut={props.setUserLoggedOut}
+          toggleLogIn={props.toggleLogIn}
+          toggleRegister={props.toggleRegister}
         ></SideContainer>
       </div>
       <div className={classes.google_map}>

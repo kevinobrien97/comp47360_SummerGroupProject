@@ -8,7 +8,7 @@ import { AuthProvider } from "./context/AuthContext";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 function App() {
-  const [userLoggedOut, setUserLoggedOut] = useState(true);
+  const [userLoggedOut, setUserLoggedOut] = useState(false);
   const [logInWindow, setLogInWindow] = useState(false);
   const [registerWindow, setRegisterWindow] = useState(false);
 
@@ -23,8 +23,6 @@ function App() {
       <Router>
         <AuthProvider>
           <Navbar
-            userLoggedOut={userLoggedOut}
-            setUserLoggedOut={setUserLoggedOut}
             toggleLogIn={toggleLogIn}
             toggleRegister={toggleRegister}
           ></Navbar>
@@ -33,14 +31,18 @@ function App() {
               path="/"
               element={<Map setUserLoggedOut={setUserLoggedOut} />}
             /> */}
-          <Map setUserLoggedOut={setUserLoggedOut} />
+          <Map
+            setUserLoggedOut={setUserLoggedOut}
+            toggleLogIn={toggleLogIn}
+            toggleRegister={toggleRegister}
+          />
           {/* <Route
               path="/login/"
               element={ */}
           {logInWindow && (
             <LogIn
-              // userLoggedOut={userLoggedOut}
-              // setUserLoggedOut={setUserLoggedOut}
+              userLoggedOut={userLoggedOut}
+              setUserLoggedOut={setUserLoggedOut}
               toggleLogIn={toggleLogIn}
               toggleRegister={toggleRegister}
             ></LogIn>

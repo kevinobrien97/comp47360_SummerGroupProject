@@ -32,7 +32,7 @@ const Stops = (props) => {
   const [daySelection, setDaySelection] = useState(day.getDay(0));
   const [time, setTime] = useState(day);
 
-  const api = useAxios();
+  const api = useAxios(props.setUserLoggedOut, props.toggleLogIn);
 
   // function to add a favourite stop to the database for the user
   const postStop = async (id) => {
@@ -50,8 +50,7 @@ const Stops = (props) => {
         });
       }
     } catch {
-       // set error message on login screen
-       props.setUserLoggedOut(true);
+      console.log("Couldn't add to database");
     }
   };
 
@@ -71,8 +70,7 @@ const Stops = (props) => {
         setStopIDList(stopIDList.filter((item) => item !== obj));
       }
     } catch {
-      // set error message on login screen
-      props.setUserLoggedOut(true);
+      console.log("Couldn't remove from database");
     }
   };
 
@@ -98,8 +96,7 @@ const Stops = (props) => {
         }
         setLoadingFavourites(false);
       } catch {
-        // set error message on login screen
-        props.setUserLoggedOut(true);
+        console.log("Couldn't retrieve from database");
       }
     };
     // only load if logged in
@@ -262,13 +259,17 @@ const Stops = (props) => {
                 <h4>You are not logged in.</h4>
                 <p>
                   {" "}
-                  <Link to={"/login/"} style={{ textDecoration: "none" }}>
-                    <Button type="submit">Login</Button>
-                  </Link>
+                  {/* <Link to={"/login/"} style={{ textDecoration: "none" }}> */}
+                  <Button type="submit" onClick={() => props.toggleLogIn()}>
+                    Login
+                  </Button>
+                  {/* </Link> */}
                   {"or"}
-                  <Link to={"/register/"} style={{ textDecoration: "none" }}>
-                    <Button type="submit">Register</Button>{" "}
-                  </Link>
+                  {/* <Link to={"/register/"} style={{ textDecoration: "none" }}> */}
+                  <Button type="submit" onClick={() => props.toggleRegister()}>
+                    Register
+                  </Button>{" "}
+                  {/* </Link> */}
                   to view your favourites.
                 </p>
               </div>

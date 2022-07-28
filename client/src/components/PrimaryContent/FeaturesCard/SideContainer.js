@@ -66,6 +66,8 @@ const SideContainer = (props) => {
                 setRouteMarkers={props.setRouteMarkers}
                 reCenter={props.reCenter}
                 setUserLoggedOut={props.setUserLoggedOut}
+                toggleLogIn={props.toggleLogIn}
+                toggleRegister={props.toggleRegister}
               ></Route>
             )}
             {/* {sidebarOption.stop && props.isLoading && (
@@ -84,6 +86,8 @@ const SideContainer = (props) => {
                 setSelectedStopMarker={props.setSelectedStopMarker}
                 reCenter={props.reCenter}
                 setUserLoggedOut={props.setUserLoggedOut}
+                toggleLogIn={props.toggleLogIn}
+                toggleRegister={props.toggleRegister}
               ></Stops>
             )}
           </div>

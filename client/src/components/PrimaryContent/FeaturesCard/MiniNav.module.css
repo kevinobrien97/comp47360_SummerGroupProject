@@ -1,0 +1,11 @@
+.mininav_items { 
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center; 
+    font-size: 1rem; 
+}
+.mininav_menu { 
+    display: grid; 
+    text-align: center; 
+    justify-content: end; 
+}

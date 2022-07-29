@@ -1,0 +1,16 @@
+.widget_container {
+  position: absolute;
+  margin-left: 60%;
+  width: 8rem;
+  display: flex;
+  align-items: center;
+}
+
+.weather_container {
+  background-color: black;
+  border-radius: 30px;
+  width: 3rem;
+  height: 3rem;
+  font-weight: bold;
+  text-align: center;
+}

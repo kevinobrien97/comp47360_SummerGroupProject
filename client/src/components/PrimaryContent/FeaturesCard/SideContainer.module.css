@@ -1,0 +1,46 @@
+.side_container {
+  display: flex;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  flex-direction: column;
+  position: absolute;
+  border-radius: 10px;
+  z-index: 2;
+  max-height: 80vh;
+}
+
+.side_main {
+  background-color: white;
+  box-shadow: 2px 6px 6px 0px rgba(0, 0, 0, 0.43);
+  height: inherit;
+  max-height: inherit;
+  border-radius: 10px;
+  min-width: 22rem;
+  max-width: 25rem;
+  white-space: normal;
+  overflow-x: hidden;
+}
+/* min and max width of mobile device */
+
+.toggleButton {
+  align-self: center;
+  margin-top: 0.3rem;
+  background-color: #f1b23e;
+  border-radius: 30px;
+  width: 3rem;
+  height: 1.5rem;
+}
+
+/* .toggleButton.rotate {
+  animation: rotate-keyframes 1s;
+ }
+ 
+ @keyframes rotate-keyframes {
+  from {
+   transform: rotate(0deg);
+  }
+ 
+  to {
+   transform: rotate(180deg);
+  }
+ } */

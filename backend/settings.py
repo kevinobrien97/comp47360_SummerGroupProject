@@ -29,7 +29,7 @@ SECRET_KEY = django_key
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['44.208.26.245', '127.0.0.1']
+ALLOWED_HOSTS = ['44.208.26.245', '64.43.46.157', 'http://137.43.49.26']
 
 
 # Application definition
@@ -92,7 +92,7 @@ SIMPLE_JWT = {
 
 # CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
-'http://localhost:3000',
+'http://localhost:3000', 'http://137.43.49.26',
 ]
 
 MIDDLEWARE = [
@@ -107,7 +107,7 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
+    'http://localhost:3000', 'http://137.43.49.26',
 ]
 
 ROOT_URLCONF = 'backend.urls'

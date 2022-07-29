@@ -15,15 +15,17 @@ import operator
 
 from rest_framework.views import APIView
 
-class StopsView(viewsets.ModelViewSet): 
-    permission_classes = (AllowAny,) 
-    serializer_class = StopsSerializer   
+class StopsView(viewsets.ModelViewSet):
+    permission_classes = (AllowAny,)
+    serializer_class = StopsSerializer
     queryset = Stops.objects.all()
+    http_method_names = ['get']
 
 class WeatherView(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = WeatherSerializer
     queryset = Weather.objects.all()
+    http_method_names = ['get']
 
 class TokenObtainPairView(TokenObtainPairView):
     serializer_class = TokenObtainPairSerializer
@@ -59,6 +61,7 @@ class RoutesUpdatedView(viewsets.ModelViewSet):
     permission_classes = (AllowAny,) 
     serializer_class = RoutesUpdatedSerializer   
     queryset = RoutesUpdated.objects.all()
+    http_method_names = ['get']
 
 class FavouriteRoutesView(viewsets.ModelViewSet):
     serializer_class = FavouriteRoutesSerializer
@@ -76,7 +79,8 @@ class FavouriteRoutesView(viewsets.ModelViewSet):
 
 class StopTimesUpdatedView(generics.ListAPIView): 
     permission_classes = (AllowAny,) 
-    serializer_class = StopTimesUpdatedSerializer   
+    serializer_class = StopTimesUpdatedSerializer
+    http_method_names = ['get']   
 
     def get_queryset(self):
         stop_id = self.kwargs['stop_id']
@@ -98,7 +102,8 @@ class StopTimesUpdatedView(generics.ListAPIView):
 
 class FullRouteStopTimesUpdatedView(generics.ListAPIView): 
     permission_classes = (AllowAny,) 
-    serializer_class = StopTimesUpdatedSerializer   
+    serializer_class = StopTimesUpdatedSerializer
+    http_method_names = ['get']   
 
     def get_queryset(self):
         route_short_name = self.kwargs['route_short_name']
@@ -122,6 +127,7 @@ class FullRouteStopTimesUpdatedView(generics.ListAPIView):
 class RouteStopsView(generics.ListAPIView): 
     permission_classes = (AllowAny,) 
     serializer_class = RouteStopsSerializer
+    http_method_names = ['get']
     # RouteStops.objects.get(route_short_name='1')
     
     # def get_queryset(request):

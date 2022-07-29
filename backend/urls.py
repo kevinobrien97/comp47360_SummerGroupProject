@@ -46,8 +46,6 @@ urlpatterns = [
     path('api/favourites/', include(router.urls)),
     #path('', views.getRoutes),
     path('test/', views.testEndPoint, name='test'),
-    url(r'^api/v1/', include('djoser.urls')),
-    url(r'^api/v1/', include('djoser.urls.authtoken')),
 ]
 
 urlpatterns += router.urls

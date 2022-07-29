@@ -28,7 +28,8 @@ export const AuthProvider = ({ children }) => {
     setError(null);
     try {
       const res = await axios.post(
-        "http://127.0.0.1:8000/api/token/",
+        // "http://127.0.0.1:8000/api/token/",
+        "http://44.208.26.245/api/token/",
         {
           username: username,
           password: password,
@@ -59,7 +60,8 @@ export const AuthProvider = ({ children }) => {
     setSignupError(null);
     try {
       const res = await axios.post(
-        "http://127.0.0.1:8000/api/register/",
+        // "http://127.0.0.1:8000/api/register/",
+        "http://44.208.26.245/api/register/",
         {
           username: username,
           password: password,

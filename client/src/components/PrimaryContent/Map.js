@@ -32,7 +32,8 @@ const Map = (props) => {
       try {
         // fetch returns a promise
         // is asynchronous
-        const response = await fetch("http://127.0.0.1:8000/api/stops/");
+        const response = await fetch("http://44.208.26.245/api/stops/");
+        // const response = await fetch("http://127.0.0.1:8000/api/stops/");
         if (!response.ok) {
           // wont continue with next line if error thrown
           throw new Error("Something went wrong loading stops");
@@ -54,7 +55,8 @@ const Map = (props) => {
       try {
         // fetch returns a promise
         // is asynchronous
-        const response = await fetch("http://127.0.0.1:8000/api/routes/");
+        const response = await fetch("http://44.208.26.245/api/routes/");
+        // const response = await fetch("http://127.0.0.1:8000/api/routes/");
         if (!response.ok) {
           // wont continue with next line if error thrown
           throw new Error("Something went wrong loading routes");

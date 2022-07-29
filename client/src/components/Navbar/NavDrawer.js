@@ -30,10 +30,10 @@ const NavDrawer = (props) => {
                     </Link>                     */}
         {!user ? (
           <List>
-            <ListItemButton onClick={props.toggleLogIn} color="inherit">
+            <ListItemButton onClick={()=>{props.toggleLogIn(); setOpenDrawer(false)}} color="inherit">
               <ListItemText>Login</ListItemText>
             </ListItemButton>
-            <ListItemButton onClick={props.toggleRegister} color="inherit">
+            <ListItemButton onClick={()=>{props.toggleRegister(); setOpenDrawer(false)}} color="inherit">
               <ListItemText>Register</ListItemText>
             </ListItemButton>
           </List>

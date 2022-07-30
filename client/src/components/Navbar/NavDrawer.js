@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import AuthContext from "../../context/AuthContext";
-import AccountOptions from "./AccountOptions";
+
 
 const NavDrawer = (props) => {
   const { user, logoutUser } = useContext(AuthContext);
@@ -27,7 +27,8 @@ const NavDrawer = (props) => {
                                 Home
                             </ListItemText>
                         </ListItemButton>
-                    </Link>                     */}
+                    </Link> */}
+                    <div style={{marginLeft:"0.5rem", marginRight:"0.5rem"}}>
         {!user ? (
           <List>
             <ListItemButton onClick={()=>{props.toggleLogIn(); setOpenDrawer(false)}} color="inherit">
@@ -39,15 +40,15 @@ const NavDrawer = (props) => {
           </List>
         ) : (
           <List>
-            <ListItemText>{user.username}</ListItemText>
+            <ListItemText sx={{textDecoration:"underline", fontWeight:"900"}}>{user.username}</ListItemText>
             <ListItemButton onClick={() => logoutUser()} color="inherit">
               <ListItemText>Logout</ListItemText>
             </ListItemButton>
             <ListItemButton color="inherit">
-              <ListItemText>Register</ListItemText>
+              <ListItemText>Account Management</ListItemText>
             </ListItemButton>
           </List>
-        )}
+        )}</div>
       </Drawer>
       <IconButton
         sx={{ color: "white" }}

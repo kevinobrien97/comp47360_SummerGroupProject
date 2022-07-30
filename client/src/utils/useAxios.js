@@ -2,13 +2,11 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
 
 // const baseURL = "http://127.0.0.1:8000/api";
 const baseURL = "http://44.208.26.245/api";
 
 const useAxios = (setUserLoggedOut, toggleLogIn) => {
-  const navigate = useNavigate();
   const { authTokens, setUser, setAuthTokens } = useContext(AuthContext);
 
   const axiosInstance = axios.create({

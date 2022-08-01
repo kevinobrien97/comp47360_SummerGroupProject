@@ -110,6 +110,7 @@ const Journey = (props) => {
           <div className={classes.input_options}>
             <Autocomplete options={searchLimits}>
               <input
+                onChange={() => props.setMapError(false)}
                 className={classes.origin}
                 id="origin"
                 placeholder="Origin"
@@ -132,6 +133,7 @@ const Journey = (props) => {
           <div className={classes.input_options}>
             <Autocomplete options={searchLimits}>
               <input
+                onChange={() => props.setMapError(false)}
                 className={classes.destination}
                 id="destination"
                 placeholder="Destination"

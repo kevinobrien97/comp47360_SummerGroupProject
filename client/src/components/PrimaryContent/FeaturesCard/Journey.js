@@ -8,6 +8,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 // date-fns
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import Warning from "./Warning";
 
 const searchLimits = {
   componentRestrictions: { country: ["ie"] },
@@ -103,123 +104,126 @@ const Journey = (props) => {
   }
 
   return (
-      <Box className={classes.journey_planner}>
-        <div className={classes.journey_options}>
-          <div className={classes.origin_destination}>
-            <div className={classes.input_options}>
-              <Autocomplete options={searchLimits}>
-                <input
-                  className={classes.origin}
-                  id="origin"
-                  placeholder="Origin"
-                  ref={originRef}
-                />
-              </Autocomplete>
-            </div>
-            <div className={classes.reverse_button}>
-              <Button
-                sx={{
-                  color: "#323336",
-                }}
-                aria-label="center back"
-                size="medium"
-                onClick={reverseJourney}
-              >
-                {<FaArrowsAltV />}
-              </Button>
-            </div>
-            <div className={classes.input_options}>
-              <Autocomplete options={searchLimits}>
-                <input
-                  className={classes.destination}
-                  id="destination"
-                  placeholder="Destination"
-                  ref={destinationRef}
-                />
-              </Autocomplete>
-            </div>
+    <Box className={classes.journey_planner}>
+      <div className={classes.journey_options}>
+        <div className={classes.origin_destination}>
+          <div className={classes.input_options}>
+            <Autocomplete options={searchLimits}>
+              <input
+                className={classes.origin}
+                id="origin"
+                placeholder="Origin"
+                ref={originRef}
+              />
+            </Autocomplete>
           </div>
-          <div className={classes.timing}>
-            <div className={classes.input_options}>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DateTimePicker
-                  label="Departure Time"
-                  minDateTime={currentTime}
-                  value={dateTime}
-                  onChange={handleTimeChange}
-                  renderInput={(params) => (
-                    <TextField {...params} size="small" />
-                  )}
-                />
-              </LocalizationProvider>
-            </div>
+          <div className={classes.reverse_button}>
             <Button
-              aria-label="center back"
-              size="large"
-              onClick={resetTime}
               sx={{
-                borderColor: "darkgrey",
-                color: "black",
-                "&:hover": {
-                  backgroundColor: "#EEEAEA",
-                },
+                color: "#323336",
               }}
+              aria-label="center back"
+              size="medium"
+              onClick={reverseJourney}
             >
-              {<CachedIcon />}
+              {<FaArrowsAltV />}
             </Button>
           </div>
+          <div className={classes.input_options}>
+            <Autocomplete options={searchLimits}>
+              <input
+                className={classes.destination}
+                id="destination"
+                placeholder="Destination"
+                ref={destinationRef}
+              />
+            </Autocomplete>
+          </div>
         </div>
-
-        <div className={classes.buttons}>
-          <ButtonGroup
+        <div className={classes.mapError}>
+          {props.mapError && (
+            <Warning error={"Enter a valid origin and destination."}></Warning>
+          )}
+        </div>
+        <div className={classes.timing}>
+          <div className={classes.input_options}>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                label="Departure Time"
+                minDateTime={currentTime}
+                value={dateTime}
+                onChange={handleTimeChange}
+                renderInput={(params) => <TextField {...params} size="small" />}
+              />
+            </LocalizationProvider>
+          </div>
+          <Button
+            aria-label="center back"
+            size="large"
+            onClick={resetTime}
             sx={{
-              backgroundColor: "#d8d8d5",
-              "& .MuiButtonGroup-grouped": {
-                color: "#323336",
-              },
-              "& .MuiButtonGroup-grouped:not(:last-of-type)": {
-                borderColor: "darkgrey",
+              borderColor: "darkgrey",
+              color: "black",
+              "&:hover": {
+                backgroundColor: "#EEEAEA",
               },
             }}
           >
-            <Button
-              sx={{
-                "&:hover": {
-                  backgroundColor: "#EEEAEA",
-                },
-              }}
-              type="submit"
-              onClick={triggerRouteCalculator}
-            >
-              Calculate
-            </Button>
-            <Button
-              sx={{
-                "&:hover": {
-                  backgroundColor: "#EEEAEA",
-                },
-              }}
-              type="submit"
-              onClick={triggerCancelRoute}
-            >
-              Cancel
-            </Button>
-            {/* will need to change this to users location at some stage */}
-            <Button
-              sx={{
-                "&:hover": {
-                  backgroundColor: "#EEEAEA",
-                },
-              }}
-              aria-label="center back"
-              size="large"
-              onClick={centerMap}
-            >
-              {<FaLocationArrow />}
-            </Button>
-               </ButtonGroup>
+            {<CachedIcon />}
+          </Button>
         </div>
-      </Box>
+      </div>
+
+      <div className={classes.buttons}>
+        <ButtonGroup
+          sx={{
+            backgroundColor: "#d8d8d5",
+            "& .MuiButtonGroup-grouped": {
+              color: "#323336",
+            },
+            "& .MuiButtonGroup-grouped:not(:last-of-type)": {
+              borderColor: "darkgrey",
+            },
+          }}
+        >
+          <Button
+            sx={{
+              "&:hover": {
+                backgroundColor: "#EEEAEA",
+              },
+            }}
+            type="submit"
+            onClick={triggerRouteCalculator}
+          >
+            Calculate
+          </Button>
+          <Button
+            sx={{
+              "&:hover": {
+                backgroundColor: "#EEEAEA",
+              },
+            }}
+            type="submit"
+            onClick={triggerCancelRoute}
+          >
+            Cancel
+          </Button>
+          {/* will need to change this to users location at some stage */}
+          <Button
+            sx={{
+              "&:hover": {
+                backgroundColor: "#EEEAEA",
+              },
+            }}
+            aria-label="center back"
+            size="large"
+            onClick={centerMap}
+          >
+            {<FaLocationArrow />}
+          </Button>
+        </ButtonGroup>
+      </div>
+    </Box>
   );
 };
 

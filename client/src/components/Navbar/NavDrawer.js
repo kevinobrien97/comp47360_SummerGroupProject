@@ -53,7 +53,7 @@ const NavDrawer = (props) => {
           >
             ShuttleUp&nbsp;
             <img
-              src={require("./images/buslogo.png")}
+              src={require("./images/bus.png")}
               height={"100%"}
               maxWidth={"100%"}
               alt={"bus logo"}

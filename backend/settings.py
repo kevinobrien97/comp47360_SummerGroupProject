@@ -29,7 +29,7 @@ SECRET_KEY = django_key
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['44.208.26.245', '64.43.46.157', 'http://137.43.49.26']
+ALLOWED_HOSTS = ['44.208.26.245', '64.43.46.157', 'http://137.43.49.26', '52.91.214.177', 'localhost']
 
 
 # Application definition

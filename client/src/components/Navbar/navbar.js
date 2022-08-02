@@ -45,7 +45,9 @@ const Navbar = (props) => {
                 height: "4rem",
                 minWidth: "6rem",
                 marginLeft: -3,
-                color: "white",
+                color: "black",
+                borderRadius: "0",
+                fontSize: "100%",
                 "&:hover": {
                   backgroundColor: "#fff",
                   color: "black",
@@ -54,7 +56,13 @@ const Navbar = (props) => {
               // reload on click
               onClick={() => window.location.reload(false)}
             >
-              Home
+              ShuttleUp&nbsp;
+              <img
+                src={require("./images/buslogo.png")}
+                height={"100%"}
+                width={"100%"}
+                alt={"bus logo"}
+              />
             </Button>
             {/* </Link> */}
 
@@ -69,6 +77,7 @@ const Navbar = (props) => {
                     minWidth: "6rem",
                     borderColor: "#323336",
                     color: "white",
+                    borderRadius: "0",
                     "&:hover": {
                       backgroundColor: "#fff",
                       color: "black",

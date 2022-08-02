@@ -33,6 +33,7 @@ const SideContainer = (props) => {
           setRouteMarkers={props.setRouteMarkers}
           setSelectedStopMarker={props.setSelectedStopMarker}
           reCenter={props.reCenter}
+          setDirectionsOutput={props.setDirectionsOutput}
         />
         {container && (
           <div>

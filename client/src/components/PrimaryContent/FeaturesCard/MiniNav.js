@@ -49,6 +49,7 @@ const MiniNav = (props) => {
               props.setRouteMarkers([]);
               props.setSelectedStopMarker(null);
               props.reCenter();
+              props.setDirectionsOutput(null)
             }}
           >
             Routes
@@ -80,6 +81,7 @@ const MiniNav = (props) => {
               props.setRouteMarkers([]);
               props.setSelectedStopMarker(null);
               props.reCenter();
+              props.setDirectionsOutput(null)
             }}
           >
             Stops

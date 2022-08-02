@@ -198,6 +198,7 @@ const Map = (props) => {
           toggleRegister={props.toggleRegister}
           mapError={mapError}
           setMapError={setMapError}
+          setDirectionsOutput={setDirectionsOutput}
         ></SideContainer>
       </div>
       <div className={classes.google_map}>

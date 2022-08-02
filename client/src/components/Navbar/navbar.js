@@ -51,6 +51,8 @@ const Navbar = (props) => {
                   color: "black",
                 },
               }}
+              // reload on click
+              onClick={() => window.location.reload(false)}
             >
               Home
             </Button>

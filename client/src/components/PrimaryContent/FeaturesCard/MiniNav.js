@@ -1,6 +1,5 @@
 import { React } from "react";
 import classes from "./MiniNav.module.css";
-// import classes from "./SideContainer.module.css";
 import { AppBar, Toolbar, Button } from "@mui/material";
 
 const MiniNav = (props) => {
@@ -54,20 +53,6 @@ const MiniNav = (props) => {
           >
             Routes
           </Button>
-          {/* <Button
-            color="inherit"
-            type="button"
-            onClick={() =>
-              props.setSidebarOption({
-                journey: false,
-                route: false,
-                stop: true,
-                favourites: false,
-              })
-            }
-          >
-            Stops
-          </Button> */}
           <Button
             color="inherit"
             type="button"

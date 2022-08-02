@@ -47,7 +47,7 @@ const Navbar = (props) => {
                 marginLeft: -3,
                 color: "black",
                 borderRadius: "0",
-                fontSize: "100%",
+                fontSize: "90%",
                 "&:hover": {
                   backgroundColor: "#fff",
                   color: "black",

@@ -3,8 +3,8 @@ import jwt_decode from "jwt-decode";
 import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 
-// const baseURL = "http://127.0.0.1:8000/api";
-const baseURL = "http://44.203.154.47/api";
+const baseURL = "http://127.0.0.1:8000/api";
+// const baseURL = "http://44.203.154.47/api";
 
 const useAxios = (setUserLoggedOut, toggleLogIn) => {
   const { authTokens, setUser, setAuthTokens } = useContext(AuthContext);

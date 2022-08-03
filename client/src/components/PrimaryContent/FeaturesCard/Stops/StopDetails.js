@@ -17,8 +17,8 @@ const StopDetails = (props) => {
         // fetch returns a promise
         // is asynchronous
         const response = await fetch(
-          // `http://127.0.0.1:8000/api/stoptimes/${stop_id}/${day}/`
-          `http://44.203.154.47/api/stoptimes/${stop_id}/${day}/`
+          `http://127.0.0.1:8000/api/stoptimes/${stop_id}/${day}/`
+          // `http://44.203.154.47/api/stoptimes/${stop_id}/${day}/`
         );
         if (!response.ok) {
           // wont continue with next line if error thrown

@@ -14,7 +14,7 @@ const WeatherStatus = (props) => {
       setIsLoading(true);
 
       try {
-        const response = await fetch("http://52.91.214.177/api/weather/");
+        const response = await fetch("http://44.203.154.47/api/weather/");
         // const response = await fetch("http://127.0.0.1:8000/api/weather/");
         if (!response.ok) {
           throw new Error("404");

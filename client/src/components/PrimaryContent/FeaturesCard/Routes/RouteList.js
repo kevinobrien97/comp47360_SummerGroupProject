@@ -28,7 +28,7 @@ const RouteFavourites = (props) => {
       // is asynchronous
       const response = await fetch(
         // `http://127.0.0.1:8000/api/routestops/${short_name}/${headsign}/`
-        `http://52.91.214.177/api/routestops/${short_name}/${headsign}/`
+        `http://44.203.154.47/api/routestops/${short_name}/${headsign}/`
       );
       if (!response.ok) {
         // wont continue with next line if error thrown

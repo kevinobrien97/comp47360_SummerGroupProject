@@ -39,7 +39,7 @@ const Map = (props) => {
       try {
         // fetch returns a promise
         // is asynchronous
-        const response = await fetch("http://52.91.214.177/api/stops/");
+        const response = await fetch("http://44.203.154.47/api/stops/");
         // const response = await fetch("http://127.0.0.1:8000/api/stops/");
         if (!response.ok) {
           // wont continue with next line if error thrown
@@ -62,7 +62,7 @@ const Map = (props) => {
       try {
         // fetch returns a promise
         // is asynchronous
-        const response = await fetch("http://52.91.214.177/api/routes/");
+        const response = await fetch("http://44.203.154.47/api/routes/");
         // const response = await fetch("http://127.0.0.1:8000/api/routes/");
         if (!response.ok) {
           // wont continue with next line if error thrown

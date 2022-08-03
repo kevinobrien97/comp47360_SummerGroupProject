@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await axios.post(
         // "http://127.0.0.1:8000/api/token/",
-        "http://52.91.214.177/api/token/",
+        "http://44.203.154.47/api/token/",
         {
           username: username,
           password: password,

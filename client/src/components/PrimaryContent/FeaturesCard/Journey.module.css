@@ -48,5 +48,8 @@ margin-left: 2rem;
 .reverse_button {
   align-self: flex-end;
   position: absolute;
+}
 
+.mapError {
+  margin-left: 1rem;
 }

@@ -8,7 +8,7 @@ import {
   useTheme,
 } from "@mui/material";
 import NavDrawer from "./NavDrawer";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import AccountOptions from "./AccountOptions";
 import WeatherStatus from "./WeatherStatus";
@@ -29,69 +29,83 @@ const Navbar = (props) => {
         // mobile
         <Toolbar>
           <WeatherStatus></WeatherStatus>
-          <NavDrawer />
+          <NavDrawer
+            toggleLogIn={props.toggleLogIn}
+            toggleRegister={props.toggleRegister}
+          ></NavDrawer>
         </Toolbar>
       ) : (
         // desktop
         <Toolbar>
           <Grid>
             {/* <Link to={"/"} style={{ textDecoration: "none" }}> */}
-              <Button
-                sx={{
-                  backgroundColor: "#F1B23E",
-                  height: "4rem",
-                  minWidth: "6rem",
-                  marginLeft: -3,
-                  color: "white",
-                  "&:hover": {
-                    backgroundColor: "#fff",
-                    color: "black",
-                  },
-                }}
-              >
-                Home
-              </Button>
+            <Button
+              sx={{
+                backgroundColor: "#F1B23E",
+                height: "4rem",
+                minWidth: "6rem",
+                marginLeft: -3,
+                color: "black",
+                borderRadius: "0",
+                fontSize: "90%",
+                "&:hover": {
+                  backgroundColor: "#fff",
+                  color: "black",
+                },
+              }}
+              // reload on click
+              onClick={() => window.location.reload(false)}
+            >
+              ShuttleUp&nbsp;
+              <img
+                src={require("./images/bus.png")}
+                height={"100%"}
+                width={"100%"}
+                alt={"bus logo"}
+              />
+            </Button>
             {/* </Link> */}
 
-                {!user ? (
+            {!user ? (
               // span is parent element of ternary - using so it keeps to the same line
               <span>
                 {/* <Link to={"/login/"} style={{ textDecoration: "none" }}> */}
-                  <Button
-                    sx={{
-                      backgroundColor: "black",
-                      height: "4rem",
-                      minWidth: "6rem",
-                      borderColor: "#323336",
-                      color: "white",
-                      "&:hover": {
-                        backgroundColor: "#fff",
-                        color: "black",
-                      },
-                    }}
-                    onClick={props.toggleLogIn}
-                  >
-                    Login
-                  </Button>
+                <Button
+                  sx={{
+                    backgroundColor: "black",
+                    height: "4rem",
+                    minWidth: "6rem",
+                    borderColor: "#323336",
+                    color: "white",
+                    borderRadius: "0",
+                    "&:hover": {
+                      backgroundColor: "#fff",
+                      color: "black",
+                    },
+                  }}
+                  onClick={props.toggleLogIn}
+                >
+                  Login
+                </Button>
                 {/* </Link>
                 <Link to={"/register/"} style={{ textDecoration: "none" }}> */}
-                  <Button
-                    sx={{
-                      backgroundColor: "black",
-                      height: "4rem",
-                      minWidth: "6rem",
-                      borderColor: "#323336",
-                      color: "white",
-                      "&:hover": {
-                        backgroundColor: "#fff",
-                        color: "black",
-                      },
-                    }}
-                    onClick={props.toggleRegister}
-                    color="inherit"
-                  >
-                    Register
-                  </Button>
+                <Button
+                  sx={{
+                    backgroundColor: "black",
+                    height: "4rem",
+                    minWidth: "6rem",
+                    borderColor: "#323336",
+                    color: "white",
+                    "&:hover": {
+                      backgroundColor: "#fff",
+                      color: "black",
+                    },
+                  }}
+                  onClick={props.toggleRegister}
+                  color="inherit"
+                >
+                  Register
+                </Button>
                 {/* </Link> */}
               </span>
             ) : (

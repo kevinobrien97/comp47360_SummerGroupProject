@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const AuthContext = createContext();
@@ -29,7 +28,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await axios.post(
         // "http://127.0.0.1:8000/api/token/",
-        "http://44.208.26.245/api/token/",
+        "http://44.203.154.47/api/token/",
         {
           username: username,
           password: password,
@@ -61,7 +60,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await axios.post(
         // "http://127.0.0.1:8000/api/register/",
-        "http://44.208.26.245/api/register/",
+        "http://52.91.214.177/api/register/",
         {
           username: username,
           password: password,

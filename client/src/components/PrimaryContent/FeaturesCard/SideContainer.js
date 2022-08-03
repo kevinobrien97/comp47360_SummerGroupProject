@@ -33,6 +33,7 @@ const SideContainer = (props) => {
           setRouteMarkers={props.setRouteMarkers}
           setSelectedStopMarker={props.setSelectedStopMarker}
           reCenter={props.reCenter}
+          setDirectionsOutput={props.setDirectionsOutput}
         />
         {container && (
           <div>
@@ -42,6 +43,8 @@ const SideContainer = (props) => {
                   routeCalculator={props.routeCalculator}
                   cancelRoute={props.cancelRoute}
                   centerMap={props.centerMap}
+                  mapError={props.mapError}
+                  setMapError={props.setMapError}
                 ></Journey>
 
                 {props.allRoutes && props.showRoutes && (

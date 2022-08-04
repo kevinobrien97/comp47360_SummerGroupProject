@@ -118,7 +118,9 @@ const Stops = (props) => {
     if (stop) {
       if (user) {
         // complex object - comparing specific elements of object instead of entire object
-        const idx = Object.keys(busStops).find((key) => busStops[key].key === stop.key);
+        const idx = Object.keys(busStops).find(
+          (key) => busStops[key].key === stop.key
+        );
         const stopObj = props.stops[idx];
         // returns true if the stop is already in favStopsList
         const inArr = favStopsList.some(
@@ -144,7 +146,10 @@ const Stops = (props) => {
     setError(null);
     // if not blank
     if (stop) {
-      const idx = Object.keys(busStops).find((key) => busStops[key].key === stop.key);
+      // complex object - comparing specific elements of object instead of entire object
+      const idx = Object.keys(busStops).find(
+        (key) => busStops[key].key === stop.key
+      );
       const stopObj = props.stops[idx];
       // returns true if the stop is already in stopsList
       const inArr = stopsList.some((elem) => elem.stop_id === stopObj.stop_id);

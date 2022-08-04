@@ -136,8 +136,9 @@ const Route = (props) => {
     // if not blank
     if (route) {
       if (user) {
+          // complex object - comparing specific elements of object instead of entire object
         const idx = Object.keys(busRoutes).find(
-          (key) => busRoutes[key] === route
+          (key) => busRoutes[key].label === route.label
         );
         const routeObj = props.routes[idx];
         // returns true if the route is already in favRouteList
@@ -167,8 +168,9 @@ const Route = (props) => {
     console.log(route);
     // if not blank
     if (route) {
+        // complex object - comparing specific elements of object instead of entire object
       const idx = Object.keys(busRoutes).find(
-        (key) => busRoutes[key] === route
+        (key) => busRoutes[key].label === route.label
       );
       const routeObj = props.routes[idx];
       // returns true if the stop is already in routeList

@@ -22,6 +22,7 @@ const Route = (props) => {
 
   const [deleteFavourite, setDeleteFavourite] = useState(null);
   const [showDelete, setShowDelete] = useState(false);
+  const [timeClicked, setTimeClicked] = useState(false);
 
   // routeIDList holds array of database IDs and their associated bus route
   // need it to pass delete requests to DB
@@ -136,8 +137,9 @@ const Route = (props) => {
     // if not blank
     if (route) {
       if (user) {
+          // complex object - comparing specific elements of object instead of entire object
         const idx = Object.keys(busRoutes).find(
-          (key) => busRoutes[key] === route
+          (key) => busRoutes[key].label === route.label
         );
         const routeObj = props.routes[idx];
         // returns true if the route is already in favRouteList
@@ -167,8 +169,9 @@ const Route = (props) => {
     console.log(route);
     // if not blank
     if (route) {
+        // complex object - comparing specific elements of object instead of entire object
       const idx = Object.keys(busRoutes).find(
-        (key) => busRoutes[key] === route
+        (key) => busRoutes[key].label === route.label
       );
       const routeObj = props.routes[idx];
       // returns true if the stop is already in routeList
@@ -219,6 +222,7 @@ const Route = (props) => {
         setDaySelection={setDaySelection}
         time={time}
         setTime={setTime}
+        setTimeClicked={setTimeClicked}
       ></ScheduleTime>
 
       <div>
@@ -257,6 +261,8 @@ const Route = (props) => {
                       setRouteMarkers={props.setRouteMarkers}
                       deleteRoute={setDeleteFavourite}
                       setShowDelete={setShowDelete}
+                      timeClicked={timeClicked}
+                      setTimeClicked={setTimeClicked}
                     ></RouteList>
                   </div>
                 )}
@@ -289,6 +295,8 @@ const Route = (props) => {
             // delete below once popups implemented
             setRouteList={setRouteList}
             setRouteMarkers={props.setRouteMarkers}
+            timeClicked={timeClicked}
+            setTimeClicked={setTimeClicked}
           ></RouteList>
         )}
       </div>

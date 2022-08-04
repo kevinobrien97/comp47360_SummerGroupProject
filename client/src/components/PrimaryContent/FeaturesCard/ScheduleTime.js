@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useState } from "react";
 import classes from "./Stops_routes.module.css";
 import {
   FormControl,
@@ -6,20 +6,32 @@ import {
   Select,
   MenuItem,
   TextField,
+  Button,
 } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { IconContext } from "react-icons";
+import { BsFillCheckCircleFill } from "react-icons/bs";
+import { AiOutlineCheckCircle } from "react-icons/ai";
 
 const ScheduleTime = (props) => {
+  const day = new Date();
+  const [showButton, setShowButton] = useState(false);
+  const [dropdownDay, setDropdownDay] = useState(day.getDay(0));
+  const [drowdownTime, setDropdownTime] = useState(day);
 
-    const handleDateChange = (event) => {
-        props.setDaySelection(event.target.value);
-      };
-    
-      const handleTimeChange = (val) => {
-        props.setTime(val);
-      };
+  const handleDateChange = (event) => {
+    // props.setDaySelection(event.target.value);
+    setDropdownDay(event.target.value);
+    setShowButton(true);
+  };
+
+  const handleTimeChange = (val) => {
+    // props.setTime(val);
+    setDropdownTime(val);
+    setShowButton(true);
+  };
   return (
     <div>
       <h4 style={{ textAlign: "center" }}>Set Schedule Time</h4>
@@ -29,7 +41,7 @@ const ScheduleTime = (props) => {
           <Select
             labelId="dayselector"
             id="dayselector"
-            value={props.daySelection}
+            value={dropdownDay}
             onChange={handleDateChange}
             label="Weekday"
           >
@@ -45,7 +57,7 @@ const ScheduleTime = (props) => {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <TimePicker
             label="Time"
-            value={props.time}
+            value={drowdownTime}
             ampm={false}
             onChange={handleTimeChange}
             renderInput={(params) => (
@@ -53,6 +65,43 @@ const ScheduleTime = (props) => {
             )}
           />
         </LocalizationProvider>
+        {showButton ? (
+          <Button
+            sx={{
+              "&:hover": {
+                backgroundColor: "#EEEAEA",
+              },
+            }}
+            aria-label="center back"
+            onClick={() => {
+              props.setTimeClicked(true);
+              setShowButton(false);
+              props.setDaySelection(dropdownDay);
+              props.setTime(drowdownTime);
+            }}
+          >
+            {
+              <IconContext.Provider
+                value={{ size: "1.4rem", color: "#F1B23E" }}
+              >
+                <BsFillCheckCircleFill />{" "}
+              </IconContext.Provider>
+            }
+          </Button>
+        ) : (
+          <Button disabled aria-label="center back">
+            {
+              <IconContext.Provider value={{ size: "1.4rem" }}>
+                <AiOutlineCheckCircle />{" "}
+              </IconContext.Provider>
+            }
+          </Button>
+        )}
+        {/* <IconContext.Provider
+          value={{ size: "1.4rem", color: "#F1B23E", paddingTop: "5rem" }}
+        >
+          <AiOutlineCheckCircle />
+        </IconContext.Provider> */}
       </div>
     </div>
   );

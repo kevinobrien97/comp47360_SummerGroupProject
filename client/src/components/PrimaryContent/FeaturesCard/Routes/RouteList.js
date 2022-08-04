@@ -125,6 +125,8 @@ const RouteFavourites = (props) => {
                   route={route}
                   time={props.time}
                   daySelection={props.daySelection}
+                  timeClicked={props.timeClicked}
+                  setTimeClicked={props.setTimeClicked}
                 ></RouteDetails>
               </Accordion>
             </div>

@@ -46,7 +46,9 @@ const RouteDetails = (props) => {
   useEffect(() => {
     const getSchedule = async (route_short_name, trip_headsign, day) => {
       // setError(null);
+      props.setTimeClicked(false)
       setLoadingSchedule(true);
+ 
       try {
         console.log("here");
         // fetch returns a promise
@@ -99,8 +101,10 @@ const RouteDetails = (props) => {
       props.route.trip_headsign,
       props.daySelection
     );
-    // rerender whenever time is changed
-  }, [props.daySelection, props.time]);
+  //   // rerender whenever time is changed
+  // }, [props.daySelection, props.time]);
+       // rerender whenever button clicked
+}, [props.timeClicked]);
 
   return (
     <AccordionDetails sx={{ backgroundColor: "whitesmoke" }}>

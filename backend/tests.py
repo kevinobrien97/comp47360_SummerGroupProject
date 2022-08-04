@@ -27,3 +27,25 @@ class TestLogin(TestCase):
         # convert to json format to access the tokens
         result = json.loads(response.content)
         self.assertTrue("access" in result)
+
+class TestLoginWrongPassword(TestCase):
+    def setUp(self):
+        testuser = sample_users[0]
+        for testuser in sample_users:
+            user = User.objects.create(
+                username=testuser['username']
+                )
+            user.set_password(testuser['password'])
+            user.save() 
+
+    def test_login(self):
+        # send incorrect user info to url to see if an error is returned
+        response = self.client.post('/api/token/'
+        , {
+             'username': sample_users[0]["username"],
+            #  set the password to the wrong one
+             'password': sample_users[1]["password"]}, follow=True)
+        # should not be logged in
+        # convert to json format to access response
+        result = json.loads(response.content)    
+        self.assertTrue("No active account found with the given credentials" in result['detail'])

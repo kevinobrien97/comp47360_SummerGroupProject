@@ -89,6 +89,8 @@ const StopList = (props) => {
                   stop={stop}
                   time={props.time}
                   daySelection={props.daySelection}
+                  timeClicked={props.timeClicked}
+                  setTimeClicked={props.setTimeClicked}
                 ></StopDetails>
               </Accordion>
             </div>

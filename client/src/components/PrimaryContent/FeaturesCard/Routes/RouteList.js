@@ -28,7 +28,7 @@ const RouteFavourites = (props) => {
       // is asynchronous
       const response = await fetch(
         // `http://127.0.0.1:8000/api/routestops/${short_name}/${headsign}/`
-        `http://44.208.26.245/api/routestops/${short_name}/${headsign}/`
+        `http://3.90.184.148/api/routestops/${short_name}/${headsign}/`
       );
       if (!response.ok) {
         // wont continue with next line if error thrown
@@ -125,6 +125,8 @@ const RouteFavourites = (props) => {
                   route={route}
                   time={props.time}
                   daySelection={props.daySelection}
+                  timeClicked={props.timeClicked}
+                  setTimeClicked={props.setTimeClicked}
                 ></RouteDetails>
               </Accordion>
             </div>

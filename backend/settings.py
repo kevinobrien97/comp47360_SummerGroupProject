@@ -27,9 +27,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = django_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['44.208.26.245', '64.43.46.157', 'http://137.43.49.26']
+ALLOWED_HOSTS = ['44.208.26.245', '64.43.46.157', '137.43.49.26', '54.196.166.166', '172.31.21.18', '109.77.145.241', '3.90.184.148', '172.31.21.18', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -92,7 +92,7 @@ SIMPLE_JWT = {
 
 # CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
-'http://localhost:3000', 'http://137.43.49.26',
+'http://localhost:3000', 'http://137.43.49.26', 'http://54.196.166.166', 'http://172.31.21.18', 'http://109.77.145.241', 'http://172.31.21.18','http://3.90.184.148',
 ]
 
 MIDDLEWARE = [
@@ -106,9 +106,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000', 'http://137.43.49.26',
-]
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:3000', 'http://137.43.49.26',
+# ]
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -176,7 +176,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+# STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

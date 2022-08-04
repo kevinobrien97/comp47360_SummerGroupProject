@@ -12,13 +12,14 @@ const StopDetails = (props) => {
     const getSchedule = async (stop_id, day) => {
       // setError(null);
       setLoadingSchedule(true);
+      props.setTimeClicked(false)
       try {
           console.log("here")
         // fetch returns a promise
         // is asynchronous
         const response = await fetch(
           // `http://127.0.0.1:8000/api/stoptimes/${stop_id}/${day}/`
-          `http://44.208.26.245/api/stoptimes/${stop_id}/${day}/`
+          `http://3.90.184.148/api/stoptimes/${stop_id}/${day}/`
         );
         if (!response.ok) {
           // wont continue with next line if error thrown
@@ -54,7 +55,9 @@ const StopDetails = (props) => {
     };
     getSchedule(props.stop.stop_id, props.daySelection);
     // rerender whenever time is changed
-  }, [props.daySelection, props.time]);
+  // }, [props.daySelection, props.time]);
+     // rerender whenever button clicked
+}, [props.timeClicked]);
 
   return (
     <AccordionDetails sx={{ backgroundColor: "whitesmoke" }}>

@@ -24,6 +24,13 @@ const Map = (props) => {
   const [error, setError] = useState(null);
   const [routeMarkers, setRouteMarkers] = useState([]);
   const [currentClickedMarker, setCurrentClickedMarker] = useState(null);
+  const [allRoutes, setAllRoutes] = useState();
+  const [chosenRoute, setChosenRoute] = useState();
+  const [mapLoaded, setMapLoaded] = useState(null);
+  const [directionsOutput, setDirectionsOutput] = useState(null);
+  const [showRoutes, setShowRoutes] = useState(false);
+  const [selectedStopMarker, setSelectedStopMarker] = useState(null);
+  const [mapError, setMapError] = useState(false);
 
   useEffect(() => {
     const fetchStopsData = async () => {
@@ -32,7 +39,7 @@ const Map = (props) => {
       try {
         // fetch returns a promise
         // is asynchronous
-        const response = await fetch("http://44.208.26.245/api/stops/");
+        const response = await fetch("http://3.90.184.148/api/stops/");
         // const response = await fetch("http://127.0.0.1:8000/api/stops/");
         if (!response.ok) {
           // wont continue with next line if error thrown
@@ -55,7 +62,7 @@ const Map = (props) => {
       try {
         // fetch returns a promise
         // is asynchronous
-        const response = await fetch("http://44.208.26.245/api/routes/");
+        const response = await fetch("http://3.90.184.148/api/routes/");
         // const response = await fetch("http://127.0.0.1:8000/api/routes/");
         if (!response.ok) {
           // wont continue with next line if error thrown
@@ -83,13 +90,6 @@ const Map = (props) => {
     fetchRoutesData();
   }, []);
 
-  const [allRoutes, setAllRoutes] = useState();
-  const [chosenRoute, setChosenRoute] = useState();
-  const [mapLoaded, setMapLoaded] = useState(null);
-  const [directionsOutput, setDirectionsOutput] = useState(null);
-  const [showRoutes, setShowRoutes] = useState(false);
-  const [selectedStopMarker, setSelectedStopMarker] = useState(null);
-
   const setStopMarker = (coords) => {
     setSelectedStopMarker(coords);
     mapLoaded.panTo(coords);
@@ -116,23 +116,27 @@ const Map = (props) => {
 
   async function routeCalculator(or, des, time) {
     console.log("map", time);
-    // eslint-disable-next-line no-undef
-    const dirServ = new google.maps.DirectionsService();
-    const results = await dirServ.route({
-      origin: or,
-      destination: des,
+    try {
       // eslint-disable-next-line no-undef
-      travelMode: google.maps.TravelMode.TRANSIT,
-      transitOptions: {
-        departureTime: time,
-        modes: ["BUS"],
-      },
-      provideRouteAlternatives: true,
-    });
-    console.log("res", results);
-    setDirectionsOutput(results);
-    getRoutesHandler(results.routes);
-    setChosenRoute(0);
+      const dirServ = new google.maps.DirectionsService();
+      const results = await dirServ.route({
+        origin: or,
+        destination: des,
+        // eslint-disable-next-line no-undef
+        travelMode: google.maps.TravelMode.TRANSIT,
+        transitOptions: {
+          departureTime: time,
+          modes: ["BUS"],
+        },
+        provideRouteAlternatives: true,
+      });
+      console.log("res", results);
+      setDirectionsOutput(results);
+      getRoutesHandler(results.routes);
+      setChosenRoute(0);
+    } catch {
+      setMapError(true);
+    }
   }
 
   const getRoutesHandler = (r) => {
@@ -192,6 +196,9 @@ const Map = (props) => {
           setUserLoggedOut={props.setUserLoggedOut}
           toggleLogIn={props.toggleLogIn}
           toggleRegister={props.toggleRegister}
+          mapError={mapError}
+          setMapError={setMapError}
+          setDirectionsOutput={setDirectionsOutput}
         ></SideContainer>
       </div>
       <div className={classes.google_map}>

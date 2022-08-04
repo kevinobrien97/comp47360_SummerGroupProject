@@ -43,7 +43,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User.objects.create(
             username=validated_data['username']
         )
-        print('validated', validated_data)
         user.set_password(validated_data['password'])
         user.save()
 

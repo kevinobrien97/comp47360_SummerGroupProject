@@ -3,6 +3,7 @@ import { Accordion, AccordionSummary } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { FaBus, FaWalking } from "react-icons/fa";
 import RouteOptionDetails from "./RouteOptionDetails";
+import classes from "./RouteOptions.module.css"
 
 const RouteOptions = (props) => {
   return (
@@ -16,6 +17,7 @@ const RouteOptions = (props) => {
                 display: "flex",
                 justifyContent: "flex-start",
                 borderTop: "0.05rem solid lightgrey",
+               
               }}
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
@@ -25,7 +27,7 @@ const RouteOptions = (props) => {
                 props.selectedRoute(index);
               }}
             >
-              <span style={{ marginRight: "auto" }}>
+              <span className={classes.tripSummary}>
                 {route.legs[0].steps.map((step, idx) =>
                   idx === 0 ? (
                     // {/* if its the first then dont want an arrow (i.e. '>') */}
@@ -121,6 +123,7 @@ const RouteOptions = (props) => {
                   backgroundColor: "red",
                   borderRadius: "10px",
                   padding: "3px",
+                  margin: "0.25rem",
                   marginLeft: "auto",
                 }}
               >

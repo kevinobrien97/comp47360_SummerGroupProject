@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useState } from "react";
 import classes from "./Stops_routes.module.css";
 import {
   FormControl,
@@ -13,15 +13,20 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import { IconContext } from "react-icons";
 import { BsFillCheckCircleFill } from "react-icons/bs";
+import { AiOutlineCheckCircle } from "react-icons/ai";
 
 
 const ScheduleTime = (props) => {
+  const [showButton, setShowButton] = useState(false);
+
   const handleDateChange = (event) => {
     props.setDaySelection(event.target.value);
+    setShowButton(true)
   };
 
   const handleTimeChange = (val) => {
     props.setTime(val);
+    setShowButton(true)
   };
   return (
     <div>
@@ -56,23 +61,35 @@ const ScheduleTime = (props) => {
             )}
           />
         </LocalizationProvider>
-        <Button
-          sx={{
-            "&:hover": {
-              backgroundColor: "#EEEAEA",
-            },
-          }}
-          aria-label="center back"
-          onClick={()=> props.setTimeClicked(true)}
-        >
-          {
-            <IconContext.Provider
-              value={{ size: "1.4rem", color: "#F1B23E"}}
-            >
-              <BsFillCheckCircleFill />{" "}
-            </IconContext.Provider>
-          }
-        </Button>
+        {showButton ? (
+          <Button
+            sx={{
+              "&:hover": {
+                backgroundColor: "#EEEAEA",
+              },
+            }}
+            aria-label="center back"
+            onClick={() => {props.setTimeClicked(true); setShowButton(false)}}
+          >
+            {
+              <IconContext.Provider
+                value={{ size: "1.4rem", color: "#F1B23E" }}
+              >
+                <BsFillCheckCircleFill />{" "}
+              </IconContext.Provider>
+            }
+          </Button>
+        ) : (
+          <Button disabled aria-label="center back">
+            {
+              <IconContext.Provider
+                value={{ size: "1.4rem"}}
+              >
+                <AiOutlineCheckCircle />{" "}
+              </IconContext.Provider>
+            }
+          </Button>
+        )}
         {/* <IconContext.Provider
           value={{ size: "1.4rem", color: "#F1B23E", paddingTop: "5rem" }}
         >

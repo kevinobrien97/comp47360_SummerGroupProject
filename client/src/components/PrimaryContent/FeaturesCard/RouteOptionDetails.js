@@ -27,8 +27,8 @@ const RouteOptionDetails = (props) => {
       </p>
       <div>
         {props.route.legs[0].steps.map((step, idx) => (
-          <>
-            <div className={classes.route_details}>
+       
+            <div key={Math.random()} className={classes.route_details}>
               <div className={classes.route_icon}>
                 {step.travel_mode === "WALKING" ? (
                   <IconContext.Provider
@@ -72,7 +72,7 @@ const RouteOptionDetails = (props) => {
                 )}
               </div>
             </div>
-          </>
+    
         ))}
       </div>
     </AccordionDetails>

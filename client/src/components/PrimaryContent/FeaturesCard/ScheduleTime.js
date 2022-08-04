@@ -6,20 +6,23 @@ import {
   Select,
   MenuItem,
   TextField,
+  Button,
 } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { IconContext } from "react-icons";
+import { BsFillCheckCircleFill } from "react-icons/bs";
+
 
 const ScheduleTime = (props) => {
+  const handleDateChange = (event) => {
+    props.setDaySelection(event.target.value);
+  };
 
-    const handleDateChange = (event) => {
-        props.setDaySelection(event.target.value);
-      };
-    
-      const handleTimeChange = (val) => {
-        props.setTime(val);
-      };
+  const handleTimeChange = (val) => {
+    props.setTime(val);
+  };
   return (
     <div>
       <h4 style={{ textAlign: "center" }}>Set Schedule Time</h4>
@@ -53,6 +56,28 @@ const ScheduleTime = (props) => {
             )}
           />
         </LocalizationProvider>
+        <Button
+          sx={{
+            "&:hover": {
+              backgroundColor: "#EEEAEA",
+            },
+          }}
+          aria-label="center back"
+          onClick={()=> props.setTimeClicked(true)}
+        >
+          {
+            <IconContext.Provider
+              value={{ size: "1.4rem", color: "#F1B23E"}}
+            >
+              <BsFillCheckCircleFill />{" "}
+            </IconContext.Provider>
+          }
+        </Button>
+        {/* <IconContext.Provider
+          value={{ size: "1.4rem", color: "#F1B23E", paddingTop: "5rem" }}
+        >
+          <AiOutlineCheckCircle />
+        </IconContext.Provider> */}
       </div>
     </div>
   );

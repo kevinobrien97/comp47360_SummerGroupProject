@@ -22,6 +22,7 @@ const Route = (props) => {
 
   const [deleteFavourite, setDeleteFavourite] = useState(null);
   const [showDelete, setShowDelete] = useState(false);
+  const [timeClicked, setTimeClicked] = useState(false);
 
   // routeIDList holds array of database IDs and their associated bus route
   // need it to pass delete requests to DB
@@ -221,6 +222,7 @@ const Route = (props) => {
         setDaySelection={setDaySelection}
         time={time}
         setTime={setTime}
+        setTimeClicked={setTimeClicked}
       ></ScheduleTime>
 
       <div>
@@ -259,6 +261,8 @@ const Route = (props) => {
                       setRouteMarkers={props.setRouteMarkers}
                       deleteRoute={setDeleteFavourite}
                       setShowDelete={setShowDelete}
+                      timeClicked={timeClicked}
+                      setTimeClicked={setTimeClicked}
                     ></RouteList>
                   </div>
                 )}
@@ -291,6 +295,8 @@ const Route = (props) => {
             // delete below once popups implemented
             setRouteList={setRouteList}
             setRouteMarkers={props.setRouteMarkers}
+            timeClicked={timeClicked}
+            setTimeClicked={setTimeClicked}
           ></RouteList>
         )}
       </div>

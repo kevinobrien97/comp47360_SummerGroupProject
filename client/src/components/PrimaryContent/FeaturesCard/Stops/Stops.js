@@ -20,6 +20,7 @@ const Stops = (props) => {
 
   const [deleteFavourite, setDeleteFavourite] = useState(null);
   const [showDelete, setShowDelete] = useState(false);
+  const [timeClicked, setTimeClicked] = useState(false);
 
   // stopIDList holds array of database IDs and their associated bus stop
   // need it to pass delete requests to DB
@@ -194,6 +195,7 @@ const Stops = (props) => {
           setDaySelection={setDaySelection}
           time={time}
           setTime={setTime}
+          setTimeClicked={setTimeClicked}
         ></ScheduleTime>
       </div>
 
@@ -233,6 +235,8 @@ const Stops = (props) => {
                       setMarker={props.setMarker}
                       deleteStop={setDeleteFavourite}
                       setShowDelete={setShowDelete}
+                      timeClicked={timeClicked}
+                      setTimeClicked={setTimeClicked}
                     ></StopList>
                   </div>
                 )}
@@ -266,6 +270,8 @@ const Stops = (props) => {
             stops={stopsList}
             setStopsList={setStopsList}
             setMarker={props.setMarker}
+            timeClicked={timeClicked}
+            setTimeClicked={setTimeClicked}
           ></StopList>
         )}
       </div>

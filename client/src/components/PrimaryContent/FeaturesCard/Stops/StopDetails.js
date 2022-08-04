@@ -12,6 +12,7 @@ const StopDetails = (props) => {
     const getSchedule = async (stop_id, day) => {
       // setError(null);
       setLoadingSchedule(true);
+      props.setTimeClicked(false)
       try {
           console.log("here")
         // fetch returns a promise
@@ -54,7 +55,9 @@ const StopDetails = (props) => {
     };
     getSchedule(props.stop.stop_id, props.daySelection);
     // rerender whenever time is changed
-  }, [props.daySelection, props.time]);
+  // }, [props.daySelection, props.time]);
+     // rerender whenever button clicked
+}, [props.timeClicked]);
 
   return (
     <AccordionDetails sx={{ backgroundColor: "whitesmoke" }}>

@@ -48,10 +48,10 @@ INSTALLED_APPS = [
  ]
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"), 
-]
-STATIC_ROOT = '/var/www/backend/assets/'
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "static"), 
+# ]
+# STATIC_ROOT = '/var/www/backend/assets/'
 
 
 #configure DRF
@@ -138,6 +138,8 @@ DATABASES = {
         'PASSWORD': SQLPW,
         'HOST': 'shupdublinbus.cimqwuwj7cb7.us-east-1.rds.amazonaws.com',
         'PORT': '3306',
+        # including the below removes warnings during tests
+        # 'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"},
     }
 }
 

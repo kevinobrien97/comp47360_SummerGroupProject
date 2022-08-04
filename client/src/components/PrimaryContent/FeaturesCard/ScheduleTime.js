@@ -15,18 +15,22 @@ import { IconContext } from "react-icons";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 
-
 const ScheduleTime = (props) => {
+  const day = new Date();
   const [showButton, setShowButton] = useState(false);
+  const [dropdownDay, setDropdownDay] = useState(day.getDay(0));
+  const [drowdownTime, setDropdownTime] = useState(day);
 
   const handleDateChange = (event) => {
-    props.setDaySelection(event.target.value);
-    setShowButton(true)
+    // props.setDaySelection(event.target.value);
+    setDropdownDay(event.target.value);
+    setShowButton(true);
   };
 
   const handleTimeChange = (val) => {
-    props.setTime(val);
-    setShowButton(true)
+    // props.setTime(val);
+    setDropdownTime(val);
+    setShowButton(true);
   };
   return (
     <div>
@@ -37,7 +41,7 @@ const ScheduleTime = (props) => {
           <Select
             labelId="dayselector"
             id="dayselector"
-            value={props.daySelection}
+            value={dropdownDay}
             onChange={handleDateChange}
             label="Weekday"
           >
@@ -53,7 +57,7 @@ const ScheduleTime = (props) => {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <TimePicker
             label="Time"
-            value={props.time}
+            value={drowdownTime}
             ampm={false}
             onChange={handleTimeChange}
             renderInput={(params) => (
@@ -69,7 +73,12 @@ const ScheduleTime = (props) => {
               },
             }}
             aria-label="center back"
-            onClick={() => {props.setTimeClicked(true); setShowButton(false)}}
+            onClick={() => {
+              props.setTimeClicked(true);
+              setShowButton(false);
+              props.setDaySelection(dropdownDay);
+              props.setTime(drowdownTime);
+            }}
           >
             {
               <IconContext.Provider
@@ -82,9 +91,7 @@ const ScheduleTime = (props) => {
         ) : (
           <Button disabled aria-label="center back">
             {
-              <IconContext.Provider
-                value={{ size: "1.4rem"}}
-              >
+              <IconContext.Provider value={{ size: "1.4rem" }}>
                 <AiOutlineCheckCircle />{" "}
               </IconContext.Provider>
             }

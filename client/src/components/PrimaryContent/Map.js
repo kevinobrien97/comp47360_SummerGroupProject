@@ -135,6 +135,9 @@ const Map = (props) => {
       getRoutesHandler(results.routes);
       setChosenRoute(0);
     } catch {
+      // remove current route details
+      cancelRoute()
+      // display the error
       setMapError(true);
     }
   }

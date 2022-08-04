@@ -8,7 +8,7 @@ import Warning from "../Warning";
 import useAxios from "../../../../utils/useAxios";
 import LoadingSpinner from "../../../LoadingSpinner";
 import ScheduleTime from "../ScheduleTime";
-import StopDropdown from "../Dropdown";
+import Dropdown from "../Dropdown";
 import DialogueBox from "../DialogueBox";
 import ToggleFavourites from "../ToggleFavourites";
 
@@ -117,13 +117,10 @@ const Stops = (props) => {
     // if not blank
     if (stop) {
       if (user) {
-        console.log(stop);
-        const idx = Object.keys(busStops).find((key) => busStops[key] === stop);
-        console.log(idx);
+        // complex object - comparing specific elements of object instead of entire object
+        const idx = Object.keys(busStops).find((key) => busStops[key].key === stop.key);
         const stopObj = props.stops[idx];
-        console.log(stopObj);
         // returns true if the stop is already in favStopsList
-        console.log(favStopsList);
         const inArr = favStopsList.some(
           (elem) => elem.stop_id === stopObj.stop_id
         );
@@ -147,7 +144,7 @@ const Stops = (props) => {
     setError(null);
     // if not blank
     if (stop) {
-      const idx = Object.keys(busStops).find((key) => busStops[key] === stop);
+      const idx = Object.keys(busStops).find((key) => busStops[key].key === stop.key);
       const stopObj = props.stops[idx];
       // returns true if the stop is already in stopsList
       const inArr = stopsList.some((elem) => elem.stop_id === stopObj.stop_id);
@@ -163,25 +160,6 @@ const Stops = (props) => {
 
   return (
     <div>
-      {/* <div
-        className={`"classes.${
-          viewFavourites ? "regularView" : "viewingFavs"
-        }"`}
-      >
-        <Button onClick={() => setViewFavourites(!viewFavourites)}>
-          {!viewFavourites ? (
-            <span style={{ color: "#F1B23E" }}>
-              View Your Favourite Stops &nbsp;
-              <HiOutlineArrowNarrowRight />
-            </span>
-          ) : (
-            <span style={{ color: "#F1B23E" }}>
-              <HiOutlineArrowNarrowLeft />
-              &nbsp;Back to Stop Search
-            </span>
-          )}
-        </Button>
-      </div> */}
       <ToggleFavourites
         viewFavourites={viewFavourites}
         setViewFavourites={setViewFavourites}
@@ -190,20 +168,20 @@ const Stops = (props) => {
       <div className={classes.fav_container}>
         {/* pass different add function to dropdown depending on if in favourites or regular stop view */}
         {!viewFavourites ? (
-          <StopDropdown
+          <Dropdown
             text={"Stop"}
             options={busStops}
             addStop={addStop}
             viewFavourites={viewFavourites}
-          ></StopDropdown>
+          ></Dropdown>
         ) : (
-          <StopDropdown
+          <Dropdown
             text={"Stop"}
             options={busStops}
             addStop={addFavStop}
             viewFavourites={viewFavourites}
             setError={setError}
-          ></StopDropdown>
+          ></Dropdown>
         )}
         {error && <Warning error={error}></Warning>}
         <ScheduleTime

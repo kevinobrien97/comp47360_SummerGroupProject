@@ -31,6 +31,7 @@ const Map = (props) => {
   const [showRoutes, setShowRoutes] = useState(false);
   const [selectedStopMarker, setSelectedStopMarker] = useState(null);
   const [mapError, setMapError] = useState(false);
+  const [mapErrorText, setMapErrorText] = useState("");
 
   useEffect(() => {
     const fetchStopsData = async () => {
@@ -134,9 +135,19 @@ const Map = (props) => {
       setDirectionsOutput(results);
       getRoutesHandler(results.routes);
       setChosenRoute(0);
-    } catch {
+    } catch (error) {
       // remove current route details
-      cancelRoute()
+      cancelRoute();
+      // set error text
+      if (error.code === "ZERO_RESULTS") {
+        setMapErrorText("No bus routes were found for this trip.");
+      } else if (error.code === "NOT_FOUND") {
+        setMapErrorText("Enter a valid origin and destination.");
+      }
+      // catch all
+      else {
+        setMapErrorText("Something went wrong calculating the journey.");
+      }
       // display the error
       setMapError(true);
     }
@@ -202,6 +213,8 @@ const Map = (props) => {
           mapError={mapError}
           setMapError={setMapError}
           setDirectionsOutput={setDirectionsOutput}
+          mapErrorText={mapErrorText}
+          setMapErrorText={setMapErrorText}
         ></SideContainer>
       </div>
       <div className={classes.google_map}>

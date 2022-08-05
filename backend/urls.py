@@ -25,7 +25,6 @@ from rest_framework_simplejwt.views import (
 router = routers.DefaultRouter()                   
 router.register(r'stops', views.StopsView, 'dubbus')  
 router.register(r'weather', views.WeatherView, 'dubbus')
-# router.register(r'routes', views.RoutesView, 'dubbus')
 router.register(r'favourites', views.FavouritesView, 'dubbus')
 router.register(r'routes', views.RoutesUpdatedView, 'dubbus')
 router.register(r'favouriteroutes', views.FavouriteRoutesView, 'dubbus')

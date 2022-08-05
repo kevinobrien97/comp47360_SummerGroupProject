@@ -17,12 +17,12 @@ class Stops(models.Model):
         db_table = 'stops'
 
 class Weather(models.Model):
-    temperature = models.IntegerField()
-    feels_like = models.IntegerField()
-    time_stamp = models.DateTimeField(primary_key=True, unique=True)
-    weather_icon = models.CharField(max_length=5)
+    temperature = models.IntegerField(blank=True, null=True)
+    feels_like = models.IntegerField(blank=True, null=True)
+    time_stamp = models.DateTimeField(primary_key=True)
+    weather_icon = models.CharField(max_length=5, blank=True, null=True)
 
-    class Meta: 
+    class Meta:
         managed = False
         db_table = 'weather'
 

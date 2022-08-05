@@ -43,7 +43,6 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/register/', views.RegisterView.as_view(), name='auth_register'),
     path('api/favourites/', include(router.urls)),
-    # path('test/', views.testEndPoint, name='test'),
 ]
 
 urlpatterns += router.urls

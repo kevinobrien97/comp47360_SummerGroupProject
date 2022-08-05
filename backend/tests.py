@@ -16,6 +16,11 @@ sample_bus_routes = [
     {"trip_headsign": "Dalriada Estate - Merrion Square South", "route_short_name": "15b"}
 ]
 
+sample_bus_stops = [
+    {"stop_id": "8220DB000894"},
+    {"stop_id": "8220DB000010"}
+]
+
 class TestLogin(TestCase):
     def setUp(self):
         # add users to db
@@ -301,6 +306,130 @@ class TestFavouriteRoutes(TestCase):
     def test_delete_favourite_route(self):
         access_token = self.get_access_token()
         response = self.client.delete('/api/favouriteroutes/1/',
+        content_type='application/json',
+        HTTP_AUTHORIZATION= f'Bearer {access_token}', 
+        follow=True)
+        # success code for deletions
+        self.assertEquals(response.status_code, 204)
+
+    # note I am not testing posting duplicates or posting wrong information as this is not possible via checks I implemented on the frontend (i.e. no manual entry, user checks, duplicate postings prevented)
+
+class TestFavouriteStops(TestCase):
+    def setUp(self):
+        # set up 2 users
+        user1 = User.objects.create(
+            username=sample_users[0]['username']
+            )
+        user1.set_password(sample_users[0]['password'])
+        user1.save()
+
+        user2 = User.objects.create(
+            username=sample_users[1]['username']
+            )
+        user2.set_password(sample_users[1]['password'])
+        user2.save()
+        # add a stop to favourites to test get and delete methods
+        access_token = self.get_access_token()
+        self.client.post('/api/favourites/',
+        {
+            "stop_id": sample_bus_stops[1]["stop_id"]
+        }, 
+        content_type='application/json',
+        HTTP_AUTHORIZATION= f'Bearer {access_token}', 
+        follow=True)
+    
+    # set up a method to get the users access token
+    def get_access_token(self):
+        response = self.client.post('/api/token/'
+        , {
+             'username': sample_users[0]["username"],
+             'password': sample_users[0]["password"]}, follow=True)
+        # should be logged in
+        # convert to json format to access the token
+        result = json.loads(response.content)
+        return result["access"]
+
+    # test if a user can post a favourite stop
+    def test_post_favourite_stop(self):
+        access_token = self.get_access_token()
+        response = self.client.post('/api/favourites/',
+        {
+            "stop_id": sample_bus_stops[0]["stop_id"]
+        }, 
+        content_type='application/json',
+        HTTP_AUTHORIZATION= f'Bearer {access_token}', 
+        follow=True)
+        self.assertEquals(response.status_code, 201)
+        result = json.loads(response.content)
+        self.assertEquals(result["stop_id"], sample_bus_stops[0]["stop_id"])
+        # no need to test entire output
+    
+    # test if a user can post without an access token
+    def test_post_favourite_stop_no_token(self):
+        response = self.client.post('/api/favourites/',
+        {
+            "stop_id": sample_bus_stops[0]["stop_id"]
+        }, 
+        content_type='application/json',
+        # HTTP_AUTHORIZATION not provided
+        follow=True)
+        self.assertEquals(response.status_code, 401)
+        result = json.loads(response.content)
+        self.assertEquals(result["detail"], "Authentication credentials were not provided.")
+    
+    # test if a user can post with an incorrect access token
+    def test_post_favourite_stop_wrong_token(self):
+        response = self.client.post('/api/favourites/',
+        {
+            "stop_id": sample_bus_stops[0]["stop_id"]
+        }, 
+        content_type='application/json',
+        HTTP_AUTHORIZATION= f'Bearer wrongtoken', 
+        follow=True)
+        self.assertEquals(response.status_code, 401)
+        result = json.loads(response.content)
+        self.assertEquals(result["detail"], "Given token not valid for any token type")
+
+    # test if a user can get a favourite route
+    def test_get_favourite_stop(self):
+        access_token = self.get_access_token()
+        response = self.client.get('/api/favourites/',
+        content_type='application/json',
+        HTTP_AUTHORIZATION= f'Bearer {access_token}', 
+        follow=True)
+        self.assertEquals(response.status_code, 200)
+        result = json.loads(response.content)
+        self.assertEquals(result[0]["stop_id"], sample_bus_stops[1]["stop_id"])
+
+    # test if a user can get other users favourites
+    # in setUp I made 2 users and posted a favourite for one of them, I will now test if the second can access the favourite for the first
+    def test_get_favourite_stop_different_user(self):
+        access_request = self.client.post('/api/token/'
+        , {
+             'username': sample_users[1]["username"],
+             'password': sample_users[1]["password"]}, follow=True)
+        # should be logged in
+        # convert to json format to access the token
+        access_result = json.loads(access_request.content)
+        access_token = access_result["access"]
+
+        response = self.client.get('/api/favourites/',
+        content_type='application/json',
+        HTTP_AUTHORIZATION= f'Bearer {access_token}', 
+        follow=True)
+        # still a valid request, just no favourites returned
+        self.assertEquals(response.status_code, 200)
+        result = json.loads(response.content)
+        # length of an empty list is False
+        self.assertEquals(len(result), False)
+
+    # test if a user can delete a favourite stop
+    # in setUp I added a favourite stop for a user
+    # deletes are made by adding the primary key to the url
+    # primary key is the order in which the favourites were made - this was favourte #1
+    def test_delete_favourite_stop(self):
+        access_token = self.get_access_token()
+        response = self.client.delete('/api/favourites/1/',
         content_type='application/json',
         HTTP_AUTHORIZATION= f'Bearer {access_token}', 
         follow=True)

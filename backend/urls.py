@@ -25,7 +25,6 @@ from rest_framework_simplejwt.views import (
 router = routers.DefaultRouter()                   
 router.register(r'stops', views.StopsView, 'dubbus')  
 router.register(r'weather', views.WeatherView, 'dubbus')
-# router.register(r'routes', views.RoutesView, 'dubbus')
 router.register(r'favourites', views.FavouritesView, 'dubbus')
 router.register(r'routes', views.RoutesUpdatedView, 'dubbus')
 router.register(r'favouriteroutes', views.FavouriteRoutesView, 'dubbus')
@@ -36,7 +35,6 @@ urlpatterns = [
     path('weather/', include(router.urls)),
     path('api/routes/', include(router.urls)),
     path('api/favouriteroutes/', include(router.urls)),
-    path('api/stoptimes/', include(router.urls)),
     path('api/fullroutestoptimes/<str:route_short_name>/<str:trip_headsign>/<str:day>/', views.FullRouteStopTimesUpdatedView.as_view() ),
     path('api/routestops/<str:route_short_name>/<str:trip_headsign>/', views.RouteStopsView.as_view() ),
     path('api/stoptimes/<str:stop_id>/<str:day>/', views.StopTimesUpdatedView.as_view() ),
@@ -44,8 +42,6 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/register/', views.RegisterView.as_view(), name='auth_register'),
     path('api/favourites/', include(router.urls)),
-    #path('', views.getRoutes),
-    path('test/', views.testEndPoint, name='test'),
 ]
 
 urlpatterns += router.urls

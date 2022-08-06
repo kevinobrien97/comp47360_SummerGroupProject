@@ -22,7 +22,6 @@ const useAxios = (setUserLoggedOut, toggleLogIn) => {
     const currentTime = new Date().getTime();
     // allowing for 10 ms in case of a lag
     const isExpired = expTime - currentTime < 10;
-
     if (!isExpired) return req;
 
     // if the refresh tokens have expired then will be caught

@@ -1,19 +1,22 @@
 from django.contrib import admin
-# test model
-from .models import Stops, Weather
+from .models import FavouriteStops, FavouriteRoutes
 
 # Register your models here.
-class StopsAdmin(admin.ModelAdmin):
-    list = ('stop_id', 'stop_name', 'stop_lat', 'stop_long')
+class FavouriteStopsAdmin(admin.ModelAdmin):
+    list = (
+            "id",
+            "created_at",
+            "created_by",
+            "stop_id"
+        )
 
-admin.site.register(Stops, StopsAdmin)
+admin.site.register(FavouriteStops, FavouriteStopsAdmin)
 
-class WeatherAdmin(admin.ModelAdmin): 
-    list=('temperature', 'feels_like', 'timestamp', 'weather_icon')
+class FavouriteRoutesAdmin(admin.ModelAdmin): 
+    list=("id",
+            "created_at",
+            "created_by",
+            "trip_headsign",
+            "route_short_name",)
 
-admin.site.register(Weather, WeatherAdmin)
-
-# class RoutesAdmin(admin.ModelAdmin): 
-#     list=('route_id', 'agency_id', 'route_short_name', 'route_long_name', 'route_type' )
-
-# admin.site.register(Routes, RoutesAdmin)
+admin.site.register(FavouriteRoutes, FavouriteStopsAdmin)

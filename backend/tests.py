@@ -436,4 +436,43 @@ class TestFavouriteStops(TestCase):
         # success code for deletions
         self.assertEquals(response.status_code, 204)
 
-    # note I am not testing posting duplicates or posting wrong information as this is not possible via checks I implemented on the frontend (i.e. no manual entry, user checks, duplicate postings prevented)
+   # note I am not testing posting duplicates or posting wrong information as this is not possible via checks I implemented on the frontend (i.e. no manual entry, user checks, duplicate postings prevented)
+
+class TestWeather(TestCase):
+    def test_get_weather(self):
+        # testing if weather is returned successfully
+        response = self.client.get('/api/weather/', follow=True)
+        self.assertEquals(response.status_code, 200)
+
+class TestRoutes(TestCase):
+    def test_get_routes(self):
+        # testing if routes are returned successfully
+        response = self.client.get('/api/routes/', follow=True)
+        self.assertEquals(response.status_code, 200)
+
+class TestStops(TestCase):
+    def test_get_all_stops(self):
+        # testing if stops are returned successfully
+        response = self.client.get('/api/stops/', follow=True)
+        self.assertEquals(response.status_code, 200)
+
+class TestStopTimes(TestCase):
+    def test_get_stop_times(self):
+        # testing if stop times are returned successfully
+        # using a sample stop below
+        response = self.client.get('/api/stoptimes/8220DB000007/5/', follow=True)
+        self.assertEquals(response.status_code, 200)
+
+class TestFullRouteStopTimes(TestCase):
+    def test_get_full_route_stop_times(self):
+        # testing if stop times are returned successfully
+        # using a sample stop below
+        response = self.client.get('/api/fullroutestoptimes/4/Harristown Bus Garage - Monkstown Avenue (Richmond Grove)/6/', follow=True)
+        self.assertEquals(response.status_code, 200)
+
+class TestFullRouteStop(TestCase):
+    def test_get_full_route_stops(self):
+        # testing if stop times are returned successfully
+        # using a sample stop below
+        response = self.client.get('/api/routestops/4/Harristown Bus Garage - Monkstown Avenue (Richmond Grove)/', follow=True)
+        self.assertEquals(response.status_code, 200)

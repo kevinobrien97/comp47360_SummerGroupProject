@@ -45,6 +45,8 @@ const SideContainer = (props) => {
                   centerMap={props.centerMap}
                   mapError={props.mapError}
                   setMapError={props.setMapError}
+                  mapErrorText={props.mapErrorText}
+                  setMapErrorText={props.setMapErrorText}
                 ></Journey>
 
                 {props.allRoutes && props.showRoutes && (

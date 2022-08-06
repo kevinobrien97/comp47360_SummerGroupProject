@@ -110,7 +110,10 @@ const Journey = (props) => {
           <div className={classes.input_options}>
             <Autocomplete options={searchLimits}>
               <input
-                onChange={() => props.setMapError(false)}
+                onChange={() => {
+                  props.setMapError(false);
+                  props.setMapErrorText("");
+                }}
                 className={classes.origin}
                 id="origin"
                 placeholder="Origin"
@@ -133,7 +136,10 @@ const Journey = (props) => {
           <div className={classes.input_options}>
             <Autocomplete options={searchLimits}>
               <input
-                onChange={() => props.setMapError(false)}
+                onChange={() => {
+                  props.setMapError(false);
+                  props.setMapErrorText("");
+                }}
                 className={classes.destination}
                 id="destination"
                 placeholder="Destination"
@@ -143,9 +149,7 @@ const Journey = (props) => {
           </div>
         </div>
         <div className={classes.mapError}>
-          {props.mapError && (
-            <Warning error={"Enter a valid origin and destination."}></Warning>
-          )}
+          {props.mapError && <Warning error={props.mapErrorText}></Warning>}
         </div>
         <div className={classes.timing}>
           <div className={classes.input_options}>

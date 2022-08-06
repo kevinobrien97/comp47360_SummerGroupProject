@@ -1,3 +1,5 @@
+// below component inspired by https://blog.devgenius.io/django-rest-framework-react-authentication-workflow-2022-part-2-d299b7fef875
+
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import { useContext } from "react";
@@ -20,12 +22,10 @@ const useAxios = (setUserLoggedOut, toggleLogIn) => {
     const currentTime = new Date().getTime();
     // allowing for 10 ms in case of a lag
     const isExpired = expTime - currentTime < 10;
-
     if (!isExpired) return req;
 
     // if the refresh tokens have expired then will be caught
     const refresh = jwt_decode(authTokens.refresh);
-    console.log(refresh.exp);
     const refreshExpTime = new Date(refresh.exp * 1000);
     const refreshIsExpired = refreshExpTime - currentTime < 10;
 
@@ -33,7 +33,6 @@ const useAxios = (setUserLoggedOut, toggleLogIn) => {
       const response = await axios.post(`${baseURL}/token/refresh/`, {
         refresh: authTokens.refresh,
       });
-      console.log("refreshing tokens");
       localStorage.setItem("authTokens", JSON.stringify(response.data));
       setAuthTokens(response.data);
       setUser(jwt_decode(response.data.access));

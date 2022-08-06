@@ -9,6 +9,4 @@
 **/__pycache__
  *.pyc
 
-**/migrations
-
 **/gtfs_files

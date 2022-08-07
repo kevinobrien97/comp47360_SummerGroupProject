@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 import os
 SQLPW = os.environ['SQLPW']
 
-engine = create_engine("mysql+mysqlconnector://shuttleup:" + SQLPW + "@dubbusv2.cimqwuwj7cb7.us-east-1.rds.amazonaws.com:3306/dublin_bus")
+engine = create_engine("mysql+mysqlconnector://shuttleup:" + SQLPW + "@shupdublinbus.cimqwuwj7cb7.us-east-1.rds.amazonaws.com:3306/dublin_bus")
 
 connection = engine.connect()
 
@@ -14,13 +14,13 @@ def create_weather_table():
     except Exception as error:
         print(error)
 
-def insert_weather(value: dict):
+def insert_weather(field: dict):
     empty_table="truncate table weather"
     try: 
         print(connection.execute(empty_table).fetchall())
     except Exception as error: 
         print(error)
-    sql = f"INSERT INTO weather values('{value['temperature']}','{value['feels_like']}','{value['time_stamp']}','{value['weather_icon']}')"
+    sql = f"INSERT INTO weather values('{field['temperature']}','{field['feels_like']}','{field['time_stamp']}','{field['weather_icon']}')"
     try:
         print(connection.execute(sql).fetchall())
     except Exception as error:

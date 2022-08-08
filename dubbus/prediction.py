@@ -110,6 +110,14 @@ def encode_morning(hour):
         morning = 0
     return morning
 
+# function to encode trip_headsign as a direction_id
+def get_direction_id(trip_headsign):
+    direction_ids = json.loads(open ('dubbus/models/direction_id.json').read())
+    if trip_headsign in direction_ids:
+        return direction_ids[trip_headsign]
+    else:
+        return 3
+
 # need to be fetched from frontend
 start_pronum = 1
 end_pronum = 20
@@ -128,6 +136,9 @@ midweek = encode_midweek(weekday)
 summer = encode_summer(month)
 winter = encode_winter(month)
 morning = encode_morning(hour)
+
+direction_id = get_direction_id("Ringsend Road - Tallaght Luas")
+print(direction_id, 'test')
 
 # open pickle
 # use a fixed pickle to test, need be changed

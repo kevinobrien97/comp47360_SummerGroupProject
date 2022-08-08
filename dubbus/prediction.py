@@ -5,7 +5,7 @@ import os
 import json
 import pickle
 import pandas as pd
-import sklearn
+# import sklearn
 # get current time
 def current_time():
     # current time:- 2022-07-20 03:07:48.055880
@@ -30,6 +30,7 @@ def future_weather(api, timestamp):
             futureweather[j['dt']] = j['weather'][0]['main']
         # match with the closest timestamp, weather_key is time and weather_val is returned weather type
         weather_key, weather_val = min(futureweather.items(), key=lambda x: abs(timestamp - x[0]))
+        print(weather_val)
         return weather_val
     else:
         return 'Clouds'
@@ -116,6 +117,7 @@ end_pronum = 20
 # read data
 month,weekday,hour,ts = current_time()
 weather_main = future_weather(api,ts)
+print(ts)
 #print(type(weather_main))
 weather_main = encode_weather(weather_main)
 rush_hour = encode_rush_hour(hour)
@@ -129,19 +131,19 @@ morning = encode_morning(hour)
 
 # open pickle
 # use a fixed pickle to test, need be changed
-f = open('46A_2.pickle', 'rb')
+f = open('dubbus/models/46A_2.pickle', 'rb')
 model = pickle.load(f)
 
 # if the programnumber=1, then the prediction should be set as 0 
 start = {
         'PROGRNUMBER': start_pronum, 
         'weather_main':weather_main,
-        'MIDDAY':midday,  
         'rush_hour':rush_hour,
         'LATE_NIGHT':late_night,
         'WEEKDAY':midweek,
         'SUMMER':summer,
         'WINTER':winter,
+        'MIDDAY':midday,  
         'frisat':frisat,
         'MORNING':morning,
         }
@@ -149,12 +151,12 @@ start = {
 end = {
         'PROGRNUMBER': end_pronum, 
         'weather_main':weather_main,
-        'MIDDAY':midday,  
         'rush_hour':rush_hour,
         'LATE_NIGHT':late_night,
         'WEEKDAY':midweek,
         'SUMMER':summer,
         'WINTER':winter,
+        'MIDDAY':midday,  
         'frisat':frisat,
         'MORNING':morning,
         }

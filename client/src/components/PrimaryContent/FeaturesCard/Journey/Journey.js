@@ -8,7 +8,7 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 // date-fns
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import Warning from "./Warning";
+import Warning from "../Warning";
 
 const searchLimits = {
   componentRestrictions: { country: ["ie"] },

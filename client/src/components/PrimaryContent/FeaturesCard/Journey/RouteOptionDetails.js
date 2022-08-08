@@ -3,6 +3,7 @@ import { AccordionDetails } from "@mui/material";
 import { FaBus, FaWalking } from "react-icons/fa";
 import classes from "./RouteOptionDetails.module.css";
 import { IconContext } from "react-icons";
+import JourneyPrediction from "./JourneyPrediction"
 
 const RouteOptionDetails = (props) => {
   return (
@@ -21,7 +22,8 @@ const RouteOptionDetails = (props) => {
               padding: "3px",
             }}
           >
-            xx:xx
+ xx mins
+ 
           </span>
         </strong>
       </p>
@@ -66,7 +68,7 @@ const RouteOptionDetails = (props) => {
                         padding: "3px",
                       }}
                     >
-                      xx mins
+                     <JourneyPrediction></JourneyPrediction>
                     </span>{" "}
                   </p>
                 )}

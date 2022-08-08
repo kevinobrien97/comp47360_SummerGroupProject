@@ -1,9 +1,8 @@
 import { React, useState } from "react";
 import classes from "./SideContainer.module.css";
 import MiniNav from "./MiniNav.js";
-import Journey from "./Journey";
-import RouteOptions from "./RouteOptions";
-import Nearest from "./Nearest";
+import Journey from "./Journey/Journey";
+import RouteOptions from "./Journey/RouteOptions";
 import Route from "./Routes/Route";
 import Stops from "./Stops/Stops";
 import LoadingSpinner from "../../LoadingSpinner";
@@ -61,7 +60,6 @@ const SideContainer = (props) => {
                 )}
               </div>
             )}
-            {sidebarOption.nearest && <Nearest></Nearest>}
             {sidebarOption.route && props.routesIsLoading && (
               <LoadingSpinner text={"Loading Routes..."}></LoadingSpinner>
             )}

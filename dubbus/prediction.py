@@ -118,7 +118,7 @@ def encode_morning(hour):
 # function to encode trip_headsign as a direction_id
 def get_direction_id(trip_headsign):
     print(os.getcwd())
-    direction_ids = json.loads(open ('./models/direction_id.json').read())
+    direction_ids = json.loads(open ('dubbus/models/direction_id.json').read())
     # look for a direct match
     if trip_headsign in direction_ids:
         return direction_ids[trip_headsign]
@@ -128,7 +128,7 @@ def get_direction_id(trip_headsign):
 
 def get_progress_number(route_id, stop_name):
     print(os.getcwd())
-    progress_numbers = json.loads(open ('./models/progress_numbers.json').read())
+    progress_numbers = json.loads(open ('dubbus/models/progress_numbers.json').read())
     progress_num = progress_numbers[route_id][stop_name]
     return progress_num
     
@@ -143,14 +143,14 @@ weather_main = future_weather(api,ts)
 #print(ts)
 #print(type(weather_main))
 #weather_main = encode_weather(weather_main)
-rush_hour = encode_rush_hour(hour)
-frisat = encode_frisat(weekday)
-late_night = encode_late_night(hour)
-midday = encode_midday(hour)
-midweek = encode_midweek(weekday)
-summer = encode_summer(month)
-winter = encode_winter(month)
-morning = encode_morning(hour)
+# rush_hour = encode_rush_hour(hour)
+# frisat = encode_frisat(weekday)
+# late_night = encode_late_night(hour)
+# midday = encode_midday(hour)
+# midweek = encode_midweek(weekday)
+# summer = encode_summer(month)
+# winter = encode_winter(month)
+# morning = encode_morning(hour)
 
 direction_id = get_direction_id("Ringsend Road - Tallaght Luas")
 #print(direction_id, 'test')
@@ -160,9 +160,10 @@ prog_num = get_progress_number("37_1","Pearse Street, stop 7588")
 
 # open pickle
 # use a fixed pickle to test, need be changed
-f = open('./models/46A_2.pickle', 'rb')
-model = pickle.load(f)
+
 def get_prediction(model,start_pronum,end_pronum,weather,rush_hour,late_night,midweek,summer,winter,midday,frisat,morning):
+    f = open('dubbus/models/46A_2.pickle', 'rb')
+    model = pickle.load(f)  
     start = {
         'PROGRNUMBER': start_pronum, 
         'weather_main':weather_main,

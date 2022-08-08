@@ -1,5 +1,6 @@
 import datetime
 from math import sin,cos,pi
+from re import S
 import requests
 import os
 import json
@@ -113,10 +114,18 @@ def encode_morning(hour):
 # function to encode trip_headsign as a direction_id
 def get_direction_id(trip_headsign):
     direction_ids = json.loads(open ('dubbus/models/direction_id.json').read())
+    # look for a direct match
     if trip_headsign in direction_ids:
         return direction_ids[trip_headsign]
     else:
+        # could be anything, just not 0 or 1
         return 3
+
+def get_progress_number(route_id, stop_name):
+    progress_numbers = json.loads(open ('dubbus/models/progress_numbers.json').read())
+    progress_num = progress_numbers[route_id][stop_name]
+    return progress_num
+    
 
 # need to be fetched from frontend
 start_pronum = 1
@@ -139,6 +148,9 @@ morning = encode_morning(hour)
 
 direction_id = get_direction_id("Ringsend Road - Tallaght Luas")
 print(direction_id, 'test')
+
+prog_num = get_progress_number("37_1","Pearse Street, stop 7588")
+print('prog_num',prog_num)
 
 # open pickle
 # use a fixed pickle to test, need be changed

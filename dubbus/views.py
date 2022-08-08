@@ -11,7 +11,8 @@ from rest_framework.decorators import api_view
 from django.db.models import Q
 from functools import reduce
 import operator
-
+from .prediction import *
+from django.http import JsonResponse
 from rest_framework.views import APIView
 
 class StopsView(viewsets.ModelViewSet):
@@ -143,3 +144,39 @@ class RouteStopsView(generics.ListAPIView):
         # queryset = StopTimesUpdated.objects.all()
         # print('hello',self.kwargs)
         return RouteStops.objects.filter(route_short_name=route_short_name, trip_headsign=trip_headsign)
+
+
+    # to call the prediction
+api = os.environ['API']
+class StopPredictionView(APIView):
+    http_method_names = ['get']
+    def get(self, request):
+        route_id = request.query_params.get('route_id')
+        route_id = route_id.upper()
+        headsign = request.query_params.get('headsign')
+        start_stop = request.query_params.get('start_stop')
+        end_stop = request.query_params.get('end_stop')
+        timestamp = request.query_params.get('timestamp')
+        month = request.query_params.get('month')
+        weekday = request.query_params.get('weekday')
+        hour = request.query_params.get('hour')
+        # map direction through headsign
+        direction = get_direction_id(headsign)
+        # map programnum through routeid and direction
+        start_num = get_progress_number(route_id,start_stop)
+        end_num = get_progress_number(route_id,end_stop)
+        # open pickle through routeid and direction, assume to store the pickles in model folder
+        modelName = route_id + '_' + direction + '.pickle'
+        f = open(modelName, 'rb')
+        model = pickle.load(f)
+        weather_main = future_weather(api,timestamp)
+        rush_hour = encode_rush_hour(hour)
+        frisat = encode_frisat(weekday)
+        late_night = encode_late_night(hour)
+        midday = encode_midday(hour)
+        midweek = encode_midweek(weekday)
+        summer = encode_summer(month)
+        winter = encode_winter(month)
+        morning = encode_morning(hour)
+        prediction = get_prediction(model,start_num,end_num,weather_main,rush_hour,late_night,midweek,summer,winter,midday,frisat,morning)
+        return JsonResponse({'result':prediction})

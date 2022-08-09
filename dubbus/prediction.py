@@ -131,12 +131,17 @@ def get_progress_number(route_id, stop_name):
     progress_numbers = json.loads(open ('dubbus/models/progress_numbers.json').read())
     if route_id not in progress_numbers:
         return -1
+    # sometimes Google Maps returns a partial stop name in which case it should still be returned
+    elif any(stop_name in k for k in progress_numbers[route_id].keys()):
+        stops = [val for key, val in progress_numbers[route_id].items() if stop_name in key]
+        return stops[0]
     elif stop_name not in progress_numbers[route_id]:
         return -1
+ 
     else: 
         return progress_numbers[route_id][stop_name]
     
-print(get_progress_number("46a_1","Westmoreland Street, stop 319"))
+print(get_progress_number("46a_1","Westmoreland Street"))
 # need to be fetched from frontend
 start_pronum = 1
 end_pronum = 20
@@ -159,13 +164,18 @@ weather_main = future_weather(api,ts)
 direction_id = get_direction_id("Ringsend Road - Tallaght Luas")
 #print(direction_id, 'test')
 
-# prog_num = get_progress_number("37_1","Pearse Street, stop 7588")
+print(get_progress_number("37_1","Pearse Streets"))
 #print('prog_num',prog_num)
 
 # open pickle
 # use a fixed pickle to test, need be changed
 
-def get_prediction(model, start_pronum, end_pronum, weather, rush_hour, late_night, midweek, summer, winter, midday, frisat, morning):
+def get_prediction(model_name, start_pronum, end_pronum, weather, rush_hour, late_night, midweek, summer, winter, midday, frisat, morning):
+    # add some checks if the prog numbers were retrieved incorrectly
+    # None results in Google Maps prediction being used
+    if int(end_pronum) <= int(start_pronum) or int(end_pronum) <= 0 or int(start_pronum) <0:
+        return "None"
+
     f = open('dubbus/models/46A_2.pickle', 'rb')
     model = pickle.load(f)  
     start = {

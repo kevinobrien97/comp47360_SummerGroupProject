@@ -195,21 +195,21 @@ class StopPredictionView(APIView):
 
         start_progr = get_progress_number(model_name, start_stop)
         if start_progr != -1:
-            end_progr = str(int(start_progr)+int(total_stops)-1)
+            end_progr = str(int(start_progr)+int(total_stops))
             print('ifendprog', end_progr)
             prediction = get_prediction(model_name, start_progr, end_progr, weather_main, rush_hour, late_night, midweek, summer, winter, midday, frisat, morning)
             print('ifpred', prediction)
         else:
-            end_progr = get_progress_number(model_name, start_stop)
+            end_progr = get_progress_number(model_name, end_stop)
             print('elseendprog', end_progr)
             if end_progr != -1:
-                start_progr = str(int(end_progr)-int(total_stops)-1)
+                start_progr = str(int(end_progr)-int(total_stops))
                 print('elsestartprog', start_progr)
                 prediction = get_prediction(model_name, start_progr, end_progr, weather_main, rush_hour, late_night, midweek, summer, winter, midday, frisat, morning)
                 print('elsepred', prediction)
             else:
                 prediction = "None"
-        print('progress',start_progr)
+   
 
 
         return JsonResponse({'result':prediction})

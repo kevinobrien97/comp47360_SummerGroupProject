@@ -11,13 +11,10 @@ import {
 // import Journey from "./Journey/Journey";
 // import RouteOptions from "./Journey/RouteOptions";
 import SideContainer from "./FeaturesCard/SideContainer";
-import axios from "axios";
-
 
 const center = { lat: 53.3473, lng: -6.2591 };
 // not setting libraries directly to prevent a bug
 const libraries = ["places"];
-
 
 const Map = (props) => {
   const [stops, setStops] = useState({});
@@ -35,33 +32,6 @@ const Map = (props) => {
   const [selectedStopMarker, setSelectedStopMarker] = useState(null);
   const [mapError, setMapError] = useState(false);
   const [mapErrorText, setMapErrorText] = useState("");
-  
-  useEffect(() => {
-  const fetchPrediction = async () => {
-    // iniitally want error deleted if one was there previously
-    setError(null);
-    try {
-      const res = await axios.get(
-        "http://127.0.0.1:8000/api/getPrediction/", {
-        // "http://3.90.184.148/api/token/",{
-       params: {
-        route_id: "route_id",
-        headsign: "headsign",
-        start_stop: "start_stop",
-        end_stop: "end_stop",
-        timestamp: "timestamp",
-
-        },
-      });
-      console.log(res)
-      // const data = res.data;
-      // navigate("/");
-    } catch (e) {
-      console.log(e)
-    }
-  };
-  fetchPrediction();
-}, []);
 
   useEffect(() => {
     const fetchStopsData = async () => {

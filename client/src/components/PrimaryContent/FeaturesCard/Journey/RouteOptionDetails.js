@@ -68,7 +68,7 @@ const RouteOptionDetails = (props) => {
                         padding: "3px",
                       }}
                     >
-                     <JourneyPrediction></JourneyPrediction>
+                     <JourneyPrediction step={step}></JourneyPrediction>
                     </span>{" "}
                   </p>
                 )}

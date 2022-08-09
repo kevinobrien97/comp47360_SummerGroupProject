@@ -42,7 +42,7 @@ def select_forecast():
         test = json.dump(f_list, f)
     print(test)
 
-    return (json.loads(open('dubbus/models/forecast.json').read()))
+    return (test)
 
 
 #testData = "INSERT INTO test_table (test_col) VALUES (123)"

@@ -1,13 +1,15 @@
 import datetime
 from math import sin,cos,pi
 from re import S
-import requests
 import os
 import json
 import pickle
 import pandas as pd
-# import sklearn
-# get current time
+import sys
+sys.path.append('database')
+import connect_db
+
+
 def current_time():
     # current time:- 2022-07-20 03:07:48.055880
     ct = datetime.datetime.now()
@@ -18,28 +20,23 @@ def current_time():
     ts = ct.timestamp()
     return (month,weekday,hour,ts)
 
-api = os.environ['API']
-def future_weather(api, timestamp):
-    open_weather = f"http://api.openweathermap.org/data/2.5/forecast?lat=53.33306&lon=-6.24889&appid={api}&units=metric"
-    r = requests.get(open_weather)
-    # if the request of weather api success, or set default as cloudy
-    if r.status_code == requests.codes.ok:
-        forecast_temp = r.json()
-        # store all predicted 5 days weather type in a dict: futureweather
-        futureweather = {}
-        for j in forecast_temp['list']:
-            futureweather[j['dt']] = j['weather'][0]['main']
-        # match with the closest timestamp, weather_key is time and weather_val is returned weather type
-        weather_key, weather_val = min(futureweather.items(), key=lambda x: abs(timestamp - x[0]))
-        #print(weather_val)
-        if (weather_val == "Rain" or weather_val == "Mist" or weather_val == "Thunderstorm"): 
-            weather_type = 1
-        else:
-            weather_type = 0
-        return weather_type
-    else:
-        return 0
 
+def future_weather(timestamp):
+    forecast = connect_db.select_forecast()
+    forecast = json.loads(open('dubbus/models/forecast.json').read())
+    # store all predicted 5 days weather type in a dict: futureweather
+    futureweather = {}
+    for j in forecast:
+        futureweather[j['date_time']] = j['conditions']
+    print(futureweather)
+
+    # # match with the closest timestamp, weather_key is time and weather_val is returned weather type
+    weather_key, weather_val = min(futureweather.items(), key=lambda x: abs(timestamp - x[0]))
+    if (weather_val == "Rain" or weather_val == "Mist" or weather_val == "Thunderstorm"): 
+        weather_type = 1
+    else:
+         weather_type = 0
+    return weather_type
 
 # transfer weather type str to 0/1
 def encode_weather(weather_type):
@@ -48,6 +45,8 @@ def encode_weather(weather_type):
     else:
         weather_type = 0
     return weather_type
+
+
 
 def encode_rush_hour(hour):
     if hour in [7,8,9,16,17,18,19]:
@@ -148,7 +147,7 @@ end_pronum = 20
 
 # read data
 month,weekday,hour,ts = current_time()
-weather_main = future_weather(api,ts)
+weather_main = future_weather(ts)
 #print(ts)
 #print(type(weather_main))
 #weather_main = encode_weather(weather_main)

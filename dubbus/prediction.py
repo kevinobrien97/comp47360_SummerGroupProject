@@ -2,6 +2,7 @@ from re import S
 import json
 import pickle
 import pandas as pd
+from os import path
 
 
 def encode_weather(json_ob, currenttime):
@@ -118,24 +119,16 @@ def get_prediction(model_name, start_pronum, end_pronum, weather, rush_hour, lat
     # None results in Google Maps prediction being used
     if int(end_pronum) <= int(start_pronum) or int(end_pronum) <= 0 or int(start_pronum) <0:
         return "None"
+    upper_model_name = model_name.upper()
+    print('in prediction method',upper_model_name)
 
-    f = open('dubbus/models/46A_2.pickle', 'rb')
-    model = pickle.load(f)  
-    start = {
-        'PROGRNUMBER': start_pronum, 
-        'weather_main':weather,
-        'rush_hour':rush_hour,
-        'LATE_NIGHT':late_night,
-        'WEEKDAY':midweek,
-        'SUMMER':summer,
-        'WINTER':winter,
-        'MIDDAY':midday,  
-        'frisat':frisat,
-        'MORNING':morning,
-        }
-
-    end = {
-            'PROGRNUMBER': end_pronum, 
+    print('EXISTS?',path.exists(f'dubbus/models/pickle_files/{upper_model_name}.pickle'))
+    if path.exists(f'dubbus/models/pickle_files/{upper_model_name}.pickle'):
+        f = open(f'dubbus/models/pickle_files/{upper_model_name}.pickle', 'rb')
+        # f = open('dubbus/models/46A_2.pickle', 'rb')
+        model = pickle.load(f)  
+        start = {
+            'PROGRNUMBER': start_pronum, 
             'weather_main':weather,
             'rush_hour':rush_hour,
             'LATE_NIGHT':late_night,
@@ -147,16 +140,31 @@ def get_prediction(model_name, start_pronum, end_pronum, weather, rush_hour, lat
             'MORNING':morning,
             }
 
-    start_df = pd.DataFrame([start])
-    end_df = pd.DataFrame([end])
-    # if the programnumber=1, then the prediction should be set as 0 
-    if start_pronum == 1:
-        start_prediction = 0
-    else:
-        start_prediction = model.predict(start_df)
-    end_prediction = model.predict(end_df)
+        end = {
+                'PROGRNUMBER': end_pronum, 
+                'weather_main':weather,
+                'rush_hour':rush_hour,
+                'LATE_NIGHT':late_night,
+                'WEEKDAY':midweek,
+                'SUMMER':summer,
+                'WINTER':winter,
+                'MIDDAY':midday,  
+                'frisat':frisat,
+                'MORNING':morning,
+                }
 
-    prediction = end_prediction - start_prediction
-    return prediction[0]
+        start_df = pd.DataFrame([start])
+        end_df = pd.DataFrame([end])
+        # if the programnumber=1, then the prediction should be set as 0 
+        if start_pronum == 1:
+            start_prediction = 0
+        else:
+            start_prediction = model.predict(start_df)
+        end_prediction = model.predict(end_df)
+
+        prediction = end_prediction - start_prediction
+        return prediction[0]
+    else:
+        return "None"
 
 

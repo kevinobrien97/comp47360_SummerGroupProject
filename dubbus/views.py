@@ -182,7 +182,7 @@ class StopPredictionView(APIView):
 
         direction_id = get_direction_id(headsign) 
         model_name = route_id + '_' + direction_id
-        print('mod',model_name)
+        # print('mod',model_name)
         # want to check if we can get either of the progress numbers from the starting or ending stops
         # can use the number of stops to calculate the other
         # if neither are found use google maps prediction as route has changed too much since 2018
@@ -190,17 +190,17 @@ class StopPredictionView(APIView):
         start_progr = get_progress_number(model_name, start_stop)
         if start_progr != -1:
             end_progr = str(int(start_progr)+int(total_stops))
-            print('ifendprog', end_progr)
+            # print('ifendprog', end_progr)
             prediction = get_prediction(model_name, start_progr, end_progr, weather, rush_hour, late_night, midweek, summer, winter, midday, frisat, morning)
-            print('ifpred', prediction)
+            # print('ifpred', prediction)
         else:
             end_progr = get_progress_number(model_name, end_stop)
             print('elseendprog', end_progr)
             if end_progr != -1:
                 start_progr = str(int(end_progr)-int(total_stops))
-                print('elsestartprog', start_progr)
+                # print('elsestartprog', start_progr)
                 prediction = get_prediction(model_name, start_progr, end_progr, weather, rush_hour, late_night, midweek, summer, winter, midday, frisat, morning)
-                print('elsepred', prediction)
+                # print('elsepred', prediction)
             else:
                 prediction = "None"
         return JsonResponse({'result':prediction})

@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import classes from "./SideContainer.module.css";
 import MiniNav from "./MiniNav.js";
 import Journey from "./Journey/Journey";
-import RouteOptions from "./Journey/RouteOptions";
+import RouteOptionsSetUp from "./Journey/RouteOptionsSetUp";
 import Route from "./Routes/Route";
 import Stops from "./Stops/Stops";
 import LoadingSpinner from "../../LoadingSpinner";
@@ -55,13 +55,13 @@ const SideContainer = (props) => {
 
                 {props.allRoutes && props.showRoutes && (
                   <div>
-                    <RouteOptions
+                    <RouteOptionsSetUp
                       dateTime={dateTime}
                       removeRoutes={props.removeRoutes}
                       chosenRoute={props.chosenRoute}
                       options={props.allRoutes}
                       selectedRoute={props.selectedRoute}
-                    ></RouteOptions>
+                    ></RouteOptionsSetUp>
                   </div>
                 )}
               </div>

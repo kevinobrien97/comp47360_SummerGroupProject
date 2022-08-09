@@ -1,0 +1,16 @@
+import React from "react";
+import RouteOptionsSummary from "./RouteOptionsSummary";
+
+const RouteOptionsSetUp = (props) => {
+  return (
+    <>
+      {props.options.map((route, index) => (
+        <React.Fragment key={index}>
+          {console.log(index)}
+          <RouteOptionsSummary route={route} index={index} dateTime={props.dateTime}></RouteOptionsSummary>
+        </React.Fragment>
+      ))}
+    </>
+  );
+};
+export default RouteOptionsSetUp;

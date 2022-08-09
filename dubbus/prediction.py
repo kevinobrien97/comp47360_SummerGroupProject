@@ -117,22 +117,26 @@ def encode_morning(hour):
 
 # function to encode trip_headsign as a direction_id
 def get_direction_id(trip_headsign):
-    print(os.getcwd())
     direction_ids = json.loads(open ('dubbus/models/direction_id.json').read())
     # look for a direct match
     if trip_headsign in direction_ids:
         return direction_ids[trip_headsign]
     else:
-        # could be anything, just not 0 or 1
-        return 3
+        # default to direction 1 if not found
+        return str(1)
 
 def get_progress_number(route_id, stop_name):
-    print(os.getcwd())
+    # json object stores route IDs in lower case
+    route_id = route_id.lower()
     progress_numbers = json.loads(open ('dubbus/models/progress_numbers.json').read())
-    progress_num = progress_numbers[route_id][stop_name]
-    return progress_num
+    if route_id not in progress_numbers:
+        return -1
+    elif stop_name not in progress_numbers[route_id]:
+        return -1
+    else: 
+        return progress_numbers[route_id][stop_name]
     
-
+print(get_progress_number("46a_1","Westmoreland Street, stop 319"))
 # need to be fetched from frontend
 start_pronum = 1
 end_pronum = 20
@@ -155,7 +159,7 @@ weather_main = future_weather(api,ts)
 direction_id = get_direction_id("Ringsend Road - Tallaght Luas")
 #print(direction_id, 'test')
 
-prog_num = get_progress_number("37_1","Pearse Street, stop 7588")
+# prog_num = get_progress_number("37_1","Pearse Street, stop 7588")
 #print('prog_num',prog_num)
 
 # open pickle

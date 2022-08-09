@@ -21,15 +21,20 @@ const JourneyPrediction = (props) => {
         const transitDetails = props.step.transit;
         if (
           transitDetails.line.short_name &&
-          transitDetails.line.agencies[0].name &&
+          transitDetails.line.name &&
           transitDetails.arrival_stop.name &&
           transitDetails.departure_stop.name &&
           transitDetails.num_stops
         ) {
+            // eslint-disable-next-line react-hooks/exhaustive-deps
           route_id = transitDetails.line.short_name;
-          headsign = transitDetails.line.agencies[0].name;
-          start_stop = transitDetails.arrival_stop.name;
-          end_stop = transitDetails.departure_stop.name;
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+          headsign = transitDetails.line.name;
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+          start_stop = transitDetails.departure_stop.name;
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+          end_stop = transitDetails.arrival_stop.name;
+          // eslint-disable-next-line react-hooks/exhaustive-deps
           total_stops = transitDetails.num_stops;
 
           // iniitally want error deleted if one was there previously

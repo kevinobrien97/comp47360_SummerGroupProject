@@ -155,30 +155,64 @@ class StopPredictionView(APIView):
     def get(self, request):
         route_id = request.query_params.get('route_id')
         print('r1',route_id)
-        route_id = route_id.upper()
-        print('r1',route_id)
+        # route_id = route_id.upper()
+        # print('r1',route_id)
         headsign = request.query_params.get('headsign')
-        print('r1',headsign)
+        print('headsign',headsign)
         start_stop = request.query_params.get('start_stop')
-        print('r1',start_stop)
+        print('start_stop',start_stop)
         end_stop = request.query_params.get('end_stop')
-        print('r2',end_stop)
+        print('end_stop',end_stop)
         total_stops = request.query_params.get('total_stops')
-        print('r1',total_stops)
+        print('total_stops',total_stops)
         timestamp = request.query_params.get('timestamp')
-        print('r1',timestamp)
+        print('timestamp',timestamp)
 
         time_real = datetime.fromtimestamp((int(timestamp)/1000))
         time_real_timezone = time_real + timedelta(hours=1)
         # returns new timestamp with the hour rounded to nearest hour
         rounded_hour = time_real_timezone.replace(second=0, microsecond=0, minute=0, hour=time_real_timezone.hour) +timedelta(hours=time_real_timezone.minute//30)
-        print(time_real_timezone.month)
-        print(time_real_timezone.isoweekday())
-        print(rounded_hour)
-        print(rounded_hour.hour)
-        
+        month = time_real_timezone.month
+        hour = rounded_hour.hour
+        day = time_real_timezone.weekday()
+        print(day)
+        rush_hour = encode_rush_hour(hour)
+        frisat = encode_frisat(day)
+        late_night = encode_late_night(hour)
+        midday = encode_midday(hour)
+        midweek = encode_midweek(day)
+        summer = encode_summer(month)
+        winter = encode_winter(month)
+        morning = encode_morning(hour)
 
-        return JsonResponse({'result':"prediction"})
+        direction_id = get_direction_id(headsign) 
+        print("here", direction_id)
+        model_name = route_id + '_' + direction_id
+        print('mod',model_name)
+        # want to check if we can get either of the progress numbers from the starting or ending stops
+        # can use the number of stops to calculate the other
+        # if neither are found use google maps prediction as route has changed too much since 2018
+
+        start_progr = get_progress_number(model_name, start_stop)
+        if start_progr != -1:
+            end_progr = str(int(start_progr)+int(total_stops)-1)
+            print('ifendprog', end_progr)
+            prediction = get_prediction(model_name, start_progr, end_progr, weather_main, rush_hour, late_night, midweek, summer, winter, midday, frisat, morning)
+            print('ifpred', prediction)
+        else:
+            end_progr = get_progress_number(model_name, start_stop)
+            print('elseendprog', end_progr)
+            if end_progr != -1:
+                start_progr = str(int(end_progr)-int(total_stops)-1)
+                print('elsestartprog', start_progr)
+                prediction = get_prediction(model_name, start_progr, end_progr, weather_main, rush_hour, late_night, midweek, summer, winter, midday, frisat, morning)
+                print('elsepred', prediction)
+            else:
+                prediction = "None"
+        print('progress',start_progr)
+
+
+        return JsonResponse({'result':prediction})
         # month = request.query_params.get('month')
         # print('r1',month)
         # weekday = request.query_params.get('weekday')

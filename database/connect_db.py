@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from sqlalchemy import create_engine
+import json
 import os
 SQLPW = os.environ['SQLPW']
 
@@ -25,6 +26,24 @@ def insert_weather(value: dict):
         print(connection.execute(sql).fetchall())
     except Exception as error:
         print(error)
+        
+def select_forecast():
+    get_table = f"SELECT * FROM forecast"
+    f_list = []
+
+    with open('dubbus/models/forecast.json', 'w') as f:
+        data = connection.execute(get_table).fetchall()
+        try:
+            print(data)
+        except Exception as error:
+            print(error)
+        for i in data: 
+            f_list.append({"description_code": i[0], "conditions": i[1], "weather_type": i[2], "date_time":i[3]})
+        test = json.dump(f_list, f)
+    print(test)
+
+    return (json.loads(open('dubbus/models/forecast.json').read()))
+
 
 #testData = "INSERT INTO test_table (test_col) VALUES (123)"
 #connection.execute(testData)

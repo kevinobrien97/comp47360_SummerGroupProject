@@ -15,6 +15,7 @@ from .prediction import *
 from django.http import JsonResponse
 from rest_framework.views import APIView
 from datetime import datetime, timedelta
+from django.core import serializers
 
 class StopsView(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
@@ -148,7 +149,6 @@ class RouteStopsView(generics.ListAPIView):
 
 
     # to call the prediction
-api = os.environ['API']
 class StopPredictionView(APIView):
     permission_classes = (AllowAny,) 
     http_method_names = ['get']
@@ -159,7 +159,10 @@ class StopPredictionView(APIView):
         end_stop = request.query_params.get('end_stop')
         total_stops = request.query_params.get('total_stops')
         timestamp = request.query_params.get('timestamp')
-        print('timestamp',timestamp)
+        forecast_queryset = Forecast.objects.all()
+        forecast_json = serializers.serialize('json', forecast_queryset)
+        weather = encode_weather(forecast_json, int(timestamp)/1000)
+ 
 
         time_real = datetime.fromtimestamp((int(timestamp)/1000))
         time_real_timezone = time_real + timedelta(hours=1)
@@ -178,18 +181,17 @@ class StopPredictionView(APIView):
         morning = encode_morning(hour)
 
         direction_id = get_direction_id(headsign) 
-        print("here", direction_id)
         model_name = route_id + '_' + direction_id
         print('mod',model_name)
         # want to check if we can get either of the progress numbers from the starting or ending stops
         # can use the number of stops to calculate the other
         # if neither are found use google maps prediction as route has changed too much since 2018
-        print('forecast',Forecast.objects.all())
+        
         start_progr = get_progress_number(model_name, start_stop)
         if start_progr != -1:
             end_progr = str(int(start_progr)+int(total_stops))
             print('ifendprog', end_progr)
-            prediction = get_prediction(model_name, start_progr, end_progr, weather_main, rush_hour, late_night, midweek, summer, winter, midday, frisat, morning)
+            prediction = get_prediction(model_name, start_progr, end_progr, weather, rush_hour, late_night, midweek, summer, winter, midday, frisat, morning)
             print('ifpred', prediction)
         else:
             end_progr = get_progress_number(model_name, end_stop)
@@ -197,7 +199,7 @@ class StopPredictionView(APIView):
             if end_progr != -1:
                 start_progr = str(int(end_progr)-int(total_stops))
                 print('elsestartprog', start_progr)
-                prediction = get_prediction(model_name, start_progr, end_progr, weather_main, rush_hour, late_night, midweek, summer, winter, midday, frisat, morning)
+                prediction = get_prediction(model_name, start_progr, end_progr, weather, rush_hour, late_night, midweek, summer, winter, midday, frisat, morning)
                 print('elsepred', prediction)
             else:
                 prediction = "None"

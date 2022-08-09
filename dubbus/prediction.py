@@ -1,53 +1,24 @@
-import datetime
-from math import sin,cos,pi
 from re import S
-import requests
-import os
 import json
 import pickle
 import pandas as pd
-# import sklearn
-# get current time
-def current_time():
-    # current time:- 2022-07-20 03:07:48.055880
-    ct = datetime.datetime.now()
-    weekday = ct.weekday()
-    month = ct.month
-    hour = ct.hour
-    # timestamp:- 1658282868.05588
-    ts = ct.timestamp()
-    return (month,weekday,hour,ts)
 
-api = os.environ['API']
-def future_weather(api, timestamp):
-    open_weather = f"http://api.openweathermap.org/data/2.5/forecast?lat=53.33306&lon=-6.24889&appid={api}&units=metric"
-    r = requests.get(open_weather)
-    # if the request of weather api success, or set default as cloudy
-    if r.status_code == requests.codes.ok:
-        forecast_temp = r.json()
-        # store all predicted 5 days weather type in a dict: futureweather
-        futureweather = {}
-        for j in forecast_temp['list']:
-            futureweather[j['dt']] = j['weather'][0]['main']
-        # match with the closest timestamp, weather_key is time and weather_val is returned weather type
-        weather_key, weather_val = min(futureweather.items(), key=lambda x: abs(timestamp - x[0]))
-        #print(weather_val)
-        if (weather_val == "Rain" or weather_val == "Mist" or weather_val == "Thunderstorm"): 
-            weather_type = 1
-        else:
-            weather_type = 0
-        return weather_type
-    else:
+
+def encode_weather(json_ob, currenttime):
+    forecast_dict = {}
+    for j in json.loads(json_ob):
+        forecast_dict[int(j['pk'])] = j['fields']['conditions']
+
+    weather_key, weather_val = min(forecast_dict.items(), key=lambda x: abs(currenttime - x[0]))
+    # weather forecast is every 3 hours 5 days out so if greater than 14400 (4 hours in seconds) means its past 5 days 
+    if currenttime - weather_key > 14400:
+        print("older than 5 days")
         return 0
 
-
-# transfer weather type str to 0/1
-def encode_weather(weather_type):
-    if (weather_type == "Rain" or weather_type == "Mist" or weather_type == "Thunderstorm"):
-        weather_type = 1
-    else:
-        weather_type = 0
-    return weather_type
+    if (weather_val == "Rain" or weather_val == "Mist" or weather_val == "Thunderstorm"): 
+        return 1
+    else: 
+        return 0
 
 def encode_rush_hour(hour):
     if hour in [7,8,9,16,17,18,19]:
@@ -141,34 +112,6 @@ def get_progress_number(route_id, stop_name):
     else: 
         return progress_numbers[route_id][stop_name]
     
-print(get_progress_number("46a_1","Westmoreland Street"))
-# need to be fetched from frontend
-start_pronum = 1
-end_pronum = 20
-
-# read data
-month,weekday,hour,ts = current_time()
-weather_main = future_weather(api,ts)
-#print(ts)
-#print(type(weather_main))
-#weather_main = encode_weather(weather_main)
-# rush_hour = encode_rush_hour(hour)
-# frisat = encode_frisat(weekday)
-# late_night = encode_late_night(hour)
-# midday = encode_midday(hour)
-# midweek = encode_midweek(weekday)
-# summer = encode_summer(month)
-# winter = encode_winter(month)
-# morning = encode_morning(hour)
-
-direction_id = get_direction_id("Ringsend Road - Tallaght Luas")
-#print(direction_id, 'test')
-
-print(get_progress_number("37_1","Pearse Streets"))
-#print('prog_num',prog_num)
-
-# open pickle
-# use a fixed pickle to test, need be changed
 
 def get_prediction(model_name, start_pronum, end_pronum, weather, rush_hour, late_night, midweek, summer, winter, midday, frisat, morning):
     # add some checks if the prog numbers were retrieved incorrectly
@@ -180,7 +123,7 @@ def get_prediction(model_name, start_pronum, end_pronum, weather, rush_hour, lat
     model = pickle.load(f)  
     start = {
         'PROGRNUMBER': start_pronum, 
-        'weather_main':weather_main,
+        'weather_main':weather,
         'rush_hour':rush_hour,
         'LATE_NIGHT':late_night,
         'WEEKDAY':midweek,
@@ -193,7 +136,7 @@ def get_prediction(model_name, start_pronum, end_pronum, weather, rush_hour, lat
 
     end = {
             'PROGRNUMBER': end_pronum, 
-            'weather_main':weather_main,
+            'weather_main':weather,
             'rush_hour':rush_hour,
             'LATE_NIGHT':late_night,
             'WEEKDAY':midweek,
@@ -214,9 +157,6 @@ def get_prediction(model_name, start_pronum, end_pronum, weather, rush_hour, lat
     end_prediction = model.predict(end_df)
 
     prediction = end_prediction - start_prediction
-    #print('Predicted journey time is: ', prediction)
     return prediction[0]
 
-# x = get_prediction(model,start_pronum,end_pronum,weather_main,rush_hour,late_night,midweek,summer,winter,midday,frisat,morning)
-# print(x)
 

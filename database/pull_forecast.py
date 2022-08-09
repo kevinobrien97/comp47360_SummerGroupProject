@@ -13,17 +13,24 @@ while True:
     open_weather = f"http://api.openweathermap.org/data/2.5/forecast?lat=53.33306&lon=6.24889&appid={api}"
     data = requests.get(open_weather).json()
 
-    create_table = f"CREATE TABLE IF NOT EXISTS forecast (description_code INTEGER, conditions VARCHAR(80), weather_type INTEGER, date_time DATETIME)"
+    create_table = f"CREATE TABLE IF NOT EXISTS forecast (description_code VARCHAR(10), conditions VARCHAR(80), weather_type VARCHAR(2), date_time VARCHAR(50))"
     try:
         print(connection.execute(create_table).fetchall())
     except Exception as error:
         print(error)
+
+    empty_table="truncate table forecast"
+    try: 
+        print(connection.execute(empty_table).fetchall())
+    except Exception as error: 
+        print(error)
+
     
     for i in data['list']:
         field ={
         'description_code':i['weather'][0]['id'],
         'conditions': i['weather'][0]['main'],
-        'date_time': i['dt_txt'] 
+        'date_time': i['dt'] 
         }
 
         #print(weather_val)
@@ -43,11 +50,5 @@ while True:
 
     start = time.time()
     time.sleep(3600 - (time.time() - start) % 3600)
-
-    empty_table="truncate table forecast"
-    try: 
-        print(connection.execute(empty_table).fetchall())
-    except Exception as error: 
-        print(error)
 
        

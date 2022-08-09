@@ -13,29 +13,29 @@ while True:
     open_weather = f"http://api.openweathermap.org/data/2.5/forecast?lat=53.33306&lon=6.24889&appid={api}"
     data = requests.get(open_weather).json()
 
-    create_table = f"CREATE TABLE IF NOT EXISTS forecast (temperature INTEGER, description VARCHAR(80), description_code INTEGER, wind_speed FLOAT(5), conditions VARCHAR(80), date_time DATETIME)"
+    create_table = f"CREATE TABLE IF NOT EXISTS forecast (description_code INTEGER, conditions VARCHAR(80), weather_type INTEGER, date_time DATETIME)"
     try:
         print(connection.execute(create_table).fetchall())
     except Exception as error:
         print(error)
-
-    empty_table="truncate table forecast"
-    try: 
-        print(connection.execute(empty_table).fetchall())
-    except Exception as error: 
-        print(error)
-
     
     for i in data['list']:
         field ={
-        'temperature': math.floor(i['main']['temp']),
-        'description': i['weather'][0]['description'],
         'description_code':i['weather'][0]['id'],
-        'wind_speed': i['wind']['speed'],
         'conditions': i['weather'][0]['main'],
         'date_time': i['dt_txt'] 
         }
-        sql = f"INSERT INTO forecast values('{field['temperature']}','{field['description']}','{field['description_code']} ',' {field['wind_speed']}','{field['conditions']} ',' {field['date_time']}')"
+
+        #print(weather_val)
+        if (field['conditions'] == "Rain" or field['conditions']== "Mist" or field['conditions'] == "Thunderstorm"): 
+            weather_val = { 
+                "weather_type": 1
+                }
+        else:
+            weather_val = {
+                "weather_type": 0
+            }
+        sql = f"INSERT INTO forecast values('{field['description_code']} ',' {field['conditions']} ',' {weather_val['weather_type']}',' {field['date_time']}')"
         try:
             print(connection.execute(sql).fetchall())
         except Exception as error:

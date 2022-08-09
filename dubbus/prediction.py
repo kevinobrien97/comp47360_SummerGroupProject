@@ -5,6 +5,7 @@ import os
 import json
 import pickle
 import pandas as pd
+import sklearn
 import sys
 sys.path.append('database')
 import connect_db
@@ -28,7 +29,6 @@ def future_weather(timestamp):
     futureweather = {}
     for j in forecast:
         futureweather[int(j['date_time'])] = j['conditions']
-    print(futureweather)
 
     # # match with the closest timestamp, weather_key is time and weather_val is returned weather type
     weather_key, weather_val = min(futureweather.items(), key=lambda x: abs(timestamp - x[0]))
@@ -151,14 +151,14 @@ weather_main = future_weather(ts)
 #print(ts)
 #print(type(weather_main))
 #weather_main = encode_weather(weather_main)
-# rush_hour = encode_rush_hour(hour)
-# frisat = encode_frisat(weekday)
-# late_night = encode_late_night(hour)
-# midday = encode_midday(hour)
-# midweek = encode_midweek(weekday)
-# summer = encode_summer(month)
-# winter = encode_winter(month)
-# morning = encode_morning(hour)
+rush_hour = encode_rush_hour(hour)
+frisat = encode_frisat(weekday)
+late_night = encode_late_night(hour)
+midday = encode_midday(hour)
+midweek = encode_midweek(weekday)
+summer = encode_summer(month)
+winter = encode_winter(month)
+morning = encode_morning(hour)
 
 direction_id = get_direction_id("Ringsend Road - Tallaght Luas")
 #print(direction_id, 'test')
@@ -216,6 +216,6 @@ def get_prediction(model_name, start_pronum, end_pronum, weather, rush_hour, lat
     #print('Predicted journey time is: ', prediction)
     return prediction[0]
 
-# x = get_prediction(model,start_pronum,end_pronum,weather_main,rush_hour,late_night,midweek,summer,winter,midday,frisat,morning)
-# print(x)
+x = get_prediction(model, start_pronum,end_pronum,weather_main,rush_hour,late_night,midweek,summer,winter,midday,frisat,morning)
+print(x)
 

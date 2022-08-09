@@ -1,6 +1,6 @@
 from .serializers import StopsSerializer, WeatherSerializer, TokenObtainPairSerializer, RegisterSerializer, FavouriteStopsSerializer, RoutesUpdatedSerializer, FavouriteRoutesSerializer, StopTimesUpdatedSerializer, RouteStopsSerializer
 from rest_framework import viewsets, status, generics  
-from .models import Stops, Weather, FavouriteStops, RoutesUpdated, FavouriteRoutes, StopTimesUpdated, RouteStops
+from .models import Stops, Weather, FavouriteStops, RoutesUpdated, FavouriteRoutes, StopTimesUpdated, RouteStops, Forecast
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -154,17 +154,10 @@ class StopPredictionView(APIView):
     http_method_names = ['get']
     def get(self, request):
         route_id = request.query_params.get('route_id')
-        print('r1',route_id)
-        # route_id = route_id.upper()
-        # print('r1',route_id)
         headsign = request.query_params.get('headsign')
-        print('headsign',headsign)
         start_stop = request.query_params.get('start_stop')
-        print('start_stop',start_stop)
         end_stop = request.query_params.get('end_stop')
-        print('end_stop',end_stop)
         total_stops = request.query_params.get('total_stops')
-        print('total_stops',total_stops)
         timestamp = request.query_params.get('timestamp')
         print('timestamp',timestamp)
 
@@ -175,7 +168,6 @@ class StopPredictionView(APIView):
         month = time_real_timezone.month
         hour = rounded_hour.hour
         day = time_real_timezone.weekday()
-        print(day)
         rush_hour = encode_rush_hour(hour)
         frisat = encode_frisat(day)
         late_night = encode_late_night(hour)
@@ -192,7 +184,7 @@ class StopPredictionView(APIView):
         # want to check if we can get either of the progress numbers from the starting or ending stops
         # can use the number of stops to calculate the other
         # if neither are found use google maps prediction as route has changed too much since 2018
-
+        print('forecast',Forecast.objects.all())
         start_progr = get_progress_number(model_name, start_stop)
         if start_progr != -1:
             end_progr = str(int(start_progr)+int(total_stops))
@@ -209,33 +201,4 @@ class StopPredictionView(APIView):
                 print('elsepred', prediction)
             else:
                 prediction = "None"
-   
-
-
         return JsonResponse({'result':prediction})
-        # month = request.query_params.get('month')
-        # print('r1',month)
-        # weekday = request.query_params.get('weekday')
-        # print('r1',weekday)
-        # hour = request.query_params.get('hour')
-        # print('r1',hour)
-        # # map direction through headsign
-        # direction = get_direction_id(headsign)
-        # # map programnum through routeid and direction
-        # start_num = get_progress_number(route_id,start_stop)
-        # end_num = get_progress_number(route_id,end_stop)
-        # # open pickle through routeid and direction, assume to store the pickles in model folder
-        # modelName = route_id + '_' + direction + '.pickle'
-        # f = open(modelName, 'rb')
-        # model = pickle.load(f)
-        # weather_main = future_weather(api,timestamp)
-        # rush_hour = encode_rush_hour(hour)
-        # frisat = encode_frisat(weekday)
-        # late_night = encode_late_night(hour)
-        # midday = encode_midday(hour)
-        # midweek = encode_midweek(weekday)
-        # summer = encode_summer(month)
-        # winter = encode_winter(month)
-        # morning = encode_morning(hour)
-        # prediction = get_prediction(model,start_num,end_num,weather_main,rush_hour,late_night,midweek,summer,winter,midday,frisat,morning)
-        # return JsonResponse({'result':prediction})

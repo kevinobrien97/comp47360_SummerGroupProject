@@ -14,6 +14,7 @@ import operator
 from .prediction import *
 from django.http import JsonResponse
 from rest_framework.views import APIView
+from datetime import datetime, timedelta
 
 class StopsView(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
@@ -161,11 +162,21 @@ class StopPredictionView(APIView):
         start_stop = request.query_params.get('start_stop')
         print('r1',start_stop)
         end_stop = request.query_params.get('end_stop')
-        print('r1',end_stop)
+        print('r2',end_stop)
         total_stops = request.query_params.get('total_stops')
         print('r1',total_stops)
         timestamp = request.query_params.get('timestamp')
         print('r1',timestamp)
+
+        time_real = datetime.fromtimestamp((int(timestamp)/1000))
+        time_real_timezone = time_real + timedelta(hours=1)
+        # returns new timestamp with the hour rounded to nearest hour
+        rounded_hour = time_real_timezone.replace(second=0, microsecond=0, minute=0, hour=time_real_timezone.hour) +timedelta(hours=time_real_timezone.minute//30)
+        print(time_real_timezone.month)
+        print(time_real_timezone.isoweekday())
+        print(rounded_hour)
+        print(rounded_hour.hour)
+        
 
         return JsonResponse({'result':"prediction"})
         # month = request.query_params.get('month')

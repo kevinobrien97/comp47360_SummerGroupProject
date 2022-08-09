@@ -56,7 +56,7 @@ def encode_rush_hour(hour):
         rush_hour = 0
     return rush_hour
 
-# Friday and Saturdays grouped together because both are party nights
+# Friday and Saturdays grouped together because both are popular for socialising
 def encode_frisat(weekday):
     if weekday in [4, 5]:
         frisat = 1
@@ -161,7 +161,7 @@ prog_num = get_progress_number("37_1","Pearse Street, stop 7588")
 # open pickle
 # use a fixed pickle to test, need be changed
 
-def get_prediction(model,start_pronum,end_pronum,weather,rush_hour,late_night,midweek,summer,winter,midday,frisat,morning):
+def get_prediction(model, start_pronum, end_pronum, weather, rush_hour, late_night, midweek, summer, winter, midday, frisat, morning):
     f = open('dubbus/models/46A_2.pickle', 'rb')
     model = pickle.load(f)  
     start = {

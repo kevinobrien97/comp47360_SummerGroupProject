@@ -129,6 +129,7 @@ const RouteOptions = (props) => {
                 xx mins
               </span>
             </AccordionSummary>
+            {console.log(route, index)}
             <RouteOptionDetails
               route={route}
               dateTime={props.dateTime}

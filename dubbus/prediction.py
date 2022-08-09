@@ -27,7 +27,7 @@ def future_weather(timestamp):
     # store all predicted 5 days weather type in a dict: futureweather
     futureweather = {}
     for j in forecast:
-        futureweather[j['date_time']] = j['conditions']
+        futureweather[int(j['date_time'])] = j['conditions']
     print(futureweather)
 
     # # match with the closest timestamp, weather_key is time and weather_val is returned weather type

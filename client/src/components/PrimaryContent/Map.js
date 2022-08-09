@@ -112,7 +112,7 @@ const Map = (props) => {
     libraries,
   });
 
-  if (!isLoaded) return console.log("error loading map");
+  if (!isLoaded) return console.log("loading map");
 
   async function routeCalculator(or, des, time) {
     console.log("map", time);
@@ -130,10 +130,7 @@ const Map = (props) => {
         },
         provideRouteAlternatives: true,
       });
-
       customiseResults(results, time);
-      console.log("res", results);
-      setDirectionsOutput(results);
       getRoutesHandler(results.routes);
       setChosenRoute(0);
     } catch (error) {
@@ -172,6 +169,9 @@ const Map = (props) => {
               results.routes[i].legs[0].steps[j].duration.text
             );
           } else {
+            // below is a check to ensure each of the elements are returned, and if not the google prediction is used. For example, if line.short_name does not exist
+            // it is the case that the bus is outside the dublin bus network
+            // some of the below checks will never fail but this acts as a semse check in any case
             if (results.routes[i].legs[0].steps[j].transit) {
               const transitDetails = results.routes[i].legs[0].steps[j].transit;
               if (
@@ -212,13 +212,13 @@ const Map = (props) => {
                     );
                   } else {
                     const prediction = res.data.result;
-                    console.log(prediction / 60);
+                    // console.log(prediction / 60);
                     totalJourneyTime += prediction / 60;
                     // add prediction to object
                     results.routes[i].legs[0].steps[j].shuttleup_prediction =
                       prediction / 60;
                   }
-                  console.log(res);
+                  // console.log(res);
                 } catch (e) {
                   console.log(e);
                   // setPredictionPossible(false);
@@ -228,11 +228,15 @@ const Map = (props) => {
           }
         }
       }
-       // add total journey time to object
-      results.routes[i].legs[0].total_journey_time = totalJourneyTime;
-      console.log("time", totalJourneyTime, i);
+      // add total journey time to object
+      console.log(totalJourneyTime, Math.round(totalJourneyTime));
+      results.routes[i].legs[0].total_journey_time =
+        Math.round(totalJourneyTime);
+      // console.log("time", totalJourneyTime, i);
     }
-    console.log("final", results);
+    // new object passed to children
+    console.log("resss", results);
+    setDirectionsOutput(results);
   }
 
   const getRoutesHandler = (r) => {

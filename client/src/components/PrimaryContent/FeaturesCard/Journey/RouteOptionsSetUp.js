@@ -6,7 +6,6 @@ const RouteOptionsSetUp = (props) => {
     <>
       {props.options.map((route, index) => (
         <React.Fragment key={index}>
-          {console.log(index)}
           <RouteOptionsSummary
             route={route}
             index={index}

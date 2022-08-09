@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { Accordion, AccordionSummary } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { FaBus, FaWalking } from "react-icons/fa";
@@ -6,8 +6,6 @@ import RouteOptionDetails from "./RouteOptionDetails";
 import classes from "./RouteOptions.module.css";
 
 const RouteOptionsSummary = (props) => {
-  const [totalJourneyTime, setTotalJourneyTime] = useState(0);
-
   return (
     <Accordion disableGutters={true}>
       <AccordionSummary
@@ -108,24 +106,17 @@ const RouteOptionsSummary = (props) => {
         </span>
         <span
           style={{
-            backgroundColor: "red",
+            backgroundColor: "#F1B23E",
             borderRadius: "10px",
             padding: "3px",
             margin: "0.25rem",
             marginLeft: "auto",
           }}
         >
-          {new Date(
-            props.dateTime.getTime() + totalJourneyTime * 60000
-          ).toLocaleTimeString(navigator.language, {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
+          {props.route.legs[0].total_journey_time} mins
         </span>
       </AccordionSummary>
       <RouteOptionDetails
-        totalJourneyTime={totalJourneyTime}
-        setTotalJourneyTime={setTotalJourneyTime}
         route={props.route}
         dateTime={props.dateTime}
       ></RouteOptionDetails>

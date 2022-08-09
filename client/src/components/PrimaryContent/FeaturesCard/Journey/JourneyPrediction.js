@@ -3,13 +3,24 @@ import LoadingSpinner from "../../../LoadingSpinner";
 import axios from "axios";
 
 const JourneyPrediction = (props) => {
-  const [predictionPossible, setPredictionPossible] = useState(false);
-  console.log(props.step);
+  const [predictionPossible, setPredictionPossible] = useState(true);
+  const [predictionLoading, setpredictionLoading] = useState(false);
+  const [prediction, setPrediction] = useState(null);
   let route_id;
   let headsign;
   let start_stop;
   let end_stop;
   let total_stops;
+
+  const handlePrediction = (prediction) => {
+    if (prediction === "None") {
+      setPredictionPossible(false);
+    } else {
+      console.log(Math.round(prediction / 60));
+      setPrediction(Math.round(prediction / 60));
+      // and add to total
+    }
+  };
 
   // below is a check to ensure each of the elements are returned, and if not the google prediction is used. For example, if line.short_name does not exist
   // it is the case that the bus is outside the dublin bus network
@@ -17,6 +28,7 @@ const JourneyPrediction = (props) => {
 
   useEffect(() => {
     const fetchPrediction = async () => {
+      setpredictionLoading(true);
       if (props.step.transit) {
         const transitDetails = props.step.transit;
         if (
@@ -26,7 +38,7 @@ const JourneyPrediction = (props) => {
           transitDetails.departure_stop.name &&
           transitDetails.num_stops
         ) {
-            // eslint-disable-next-line react-hooks/exhaustive-deps
+          // eslint-disable-next-line react-hooks/exhaustive-deps
           route_id = transitDetails.line.short_name;
           // eslint-disable-next-line react-hooks/exhaustive-deps
           headsign = transitDetails.line.name;
@@ -56,10 +68,12 @@ const JourneyPrediction = (props) => {
               }
             );
             console.log(res);
+            handlePrediction(res.data.result);
             // const data = res.data;
             // navigate("/");
           } catch (e) {
             console.log(e);
+            setPredictionPossible(false);
           }
         } else {
           setPredictionPossible(false);
@@ -68,6 +82,7 @@ const JourneyPrediction = (props) => {
         setPredictionPossible(false);
       }
       //   }
+      setpredictionLoading(false);
     };
     // console.log(predictionPossible);
     // if (predictionPossible) {
@@ -75,7 +90,22 @@ const JourneyPrediction = (props) => {
     // }
   }, []);
 
-  return <span>xy mins</span>;
+  return (
+    <span>
+      {console.log(parseInt(prediction))}
+      {predictionLoading ? (
+        "Loading..."
+      ) : (
+        <span>
+          {predictionPossible ? (
+            <span>ShuttleUp Journey Time: {prediction} mins vs {props.step.duration.text}</span>
+          ) : (
+            <span>Google Maps Journey Time: {props.step.duration.text}</span>
+          )}
+        </span>
+      )}
+    </span>
+  );
 };
 
 export default JourneyPrediction;

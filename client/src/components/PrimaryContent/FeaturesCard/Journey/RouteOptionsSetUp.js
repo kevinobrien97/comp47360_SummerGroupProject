@@ -7,7 +7,14 @@ const RouteOptionsSetUp = (props) => {
       {props.options.map((route, index) => (
         <React.Fragment key={index}>
           {console.log(index)}
-          <RouteOptionsSummary route={route} index={index} dateTime={props.dateTime}></RouteOptionsSummary>
+          <RouteOptionsSummary
+            route={route}
+            index={index}
+            dateTime={props.dateTime}
+            selectedRoute={props.selectedRoute}
+            removeRoutes={props.removeRoutes}
+            chosenRoute={props.chosenRoute}
+          ></RouteOptionsSummary>
         </React.Fragment>
       ))}
     </>

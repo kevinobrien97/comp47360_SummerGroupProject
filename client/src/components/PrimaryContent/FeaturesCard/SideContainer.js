@@ -10,7 +10,10 @@ import { IconButton } from "@mui/material";
 import { MdKeyboardArrowUp, MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { IconContext } from "react-icons";
 
+const currentTime = new Date();
 const SideContainer = (props) => {
+
+  const [dateTime, setDateTime] = useState(currentTime);
   const [sidebarOption, setSidebarOption] = useState({
     journey: true,
     route: false,
@@ -46,11 +49,14 @@ const SideContainer = (props) => {
                   setMapError={props.setMapError}
                   mapErrorText={props.mapErrorText}
                   setMapErrorText={props.setMapErrorText}
+                  dateTime={dateTime}
+                  setDateTime={setDateTime}
                 ></Journey>
 
                 {props.allRoutes && props.showRoutes && (
                   <div>
                     <RouteOptions
+                      dateTime={dateTime}
                       removeRoutes={props.removeRoutes}
                       chosenRoute={props.chosenRoute}
                       options={props.allRoutes}

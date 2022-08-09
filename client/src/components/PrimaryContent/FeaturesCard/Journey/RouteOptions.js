@@ -3,7 +3,7 @@ import { Accordion, AccordionSummary } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { FaBus, FaWalking } from "react-icons/fa";
 import RouteOptionDetails from "./RouteOptionDetails";
-import classes from "./RouteOptions.module.css"
+import classes from "./RouteOptions.module.css";
 
 const RouteOptions = (props) => {
   return (
@@ -17,7 +17,6 @@ const RouteOptions = (props) => {
                 display: "flex",
                 justifyContent: "flex-start",
                 borderTop: "0.05rem solid lightgrey",
-               
               }}
               expandIcon={<ExpandMoreIcon />}
               aria-controls="panel1a-content"
@@ -130,7 +129,10 @@ const RouteOptions = (props) => {
                 xx mins
               </span>
             </AccordionSummary>
-            <RouteOptionDetails route={route}></RouteOptionDetails>
+            <RouteOptionDetails
+              route={route}
+              dateTime={props.dateTime}
+            ></RouteOptionDetails>
           </Accordion>
         </React.Fragment>
       ))}

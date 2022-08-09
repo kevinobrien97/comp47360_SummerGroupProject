@@ -162,6 +162,8 @@ class StopPredictionView(APIView):
         print('r1',start_stop)
         end_stop = request.query_params.get('end_stop')
         print('r1',end_stop)
+        total_stops = request.query_params.get('total_stops')
+        print('r1',total_stops)
         timestamp = request.query_params.get('timestamp')
         print('r1',timestamp)
 

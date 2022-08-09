@@ -19,7 +19,6 @@ const JourneyPrediction = (props) => {
     const fetchPrediction = async () => {
       if (props.step.transit) {
         const transitDetails = props.step.transit;
-        console.log(transitDetails.line.short_name);
         if (
           transitDetails.line.short_name &&
           transitDetails.line.agencies[0].name &&
@@ -32,37 +31,38 @@ const JourneyPrediction = (props) => {
           start_stop = transitDetails.arrival_stop.name;
           end_stop = transitDetails.departure_stop.name;
           total_stops = transitDetails.num_stops;
-          console.log(total_stops);
+
+          // iniitally want error deleted if one was there previously
+          //   setError(null);
+          //   if (predictionPossible) {
+          try {
+            const res = await axios.get(
+              "http://127.0.0.1:8000/api/getPrediction/",
+              {
+                // "http://3.90.184.148/api/token/",{
+                params: {
+                  route_id: route_id,
+                  headsign: headsign,
+                  start_stop: start_stop,
+                  end_stop: end_stop,
+                  total_stops: total_stops,
+                  timestamp: props.dateTime.getTime(),
+                },
+              }
+            );
+            console.log(res);
+            // const data = res.data;
+            // navigate("/");
+          } catch (e) {
+            console.log(e);
+          }
         } else {
           setPredictionPossible(false);
         }
       } else {
         setPredictionPossible(false);
       }
-      // iniitally want error deleted if one was there previously
-      //   setError(null);
-      if (predictionPossible) {
-        try {
-          const res = await axios.get(
-            "http://127.0.0.1:8000/api/getPrediction/",
-            {
-              // "http://3.90.184.148/api/token/",{
-              params: {
-                route_id: route_id,
-                headsign: headsign,
-                start_stop: start_stop,
-                end_stop: end_stop,
-                timestamp: total_stops,
-              },
-            }
-          );
-          console.log(res);
-          // const data = res.data;
-          // navigate("/");
-        } catch (e) {
-          console.log(e);
-        }
-      }
+      //   }
     };
     // console.log(predictionPossible);
     // if (predictionPossible) {

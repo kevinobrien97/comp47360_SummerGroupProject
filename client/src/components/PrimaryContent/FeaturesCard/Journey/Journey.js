@@ -1,3 +1,4 @@
+import { React, useState } from "react";
 import { ButtonGroup, Button, Box, TextField } from "@mui/material";
 import { Autocomplete } from "@react-google-maps/api";
 import classes from "./Journey.module.css";
@@ -19,12 +20,19 @@ const searchLimits = {
 const Journey = (props) => {
   const originRef = useRef("");
   const destinationRef = useRef("");
+  const [validTime, setValidTime] = useState(true)
 
 
   useEffect(() => {}, [props.dateTime]);
 
   const triggerRouteCalculator = () => {
     if (originRef.current.value === "" || destinationRef.current.value === "") {
+      props.cancelRoute();
+      return;
+    }
+    if (isNaN(props.dateTime)) {
+      setValidTime(false)
+      props.cancelRoute();
       return;
     }
     props.routeCalculator(
@@ -97,9 +105,12 @@ const Journey = (props) => {
   }
 
   function handleTimeChange(value) {
+    setValidTime(true)
     props.setDateTime(value);
   }
+
   function resetTime() {
+    setValidTime(true)
     props.setDateTime(new Date());
   }
 
@@ -148,10 +159,10 @@ const Journey = (props) => {
             </Autocomplete>
           </div>
         </div>
-        <div className={classes.mapError}>
+        <div className={classes.journeyError}>
           {props.mapError && <Warning error={props.mapErrorText}></Warning>}
         </div>
-        <div className={classes.timing}>
+        <div className={classes.stack}>
           <div className={classes.input_options}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DateTimePicker
@@ -162,6 +173,7 @@ const Journey = (props) => {
                 renderInput={(params) => <TextField {...params} size="small" />}
               />
             </LocalizationProvider>
+            
           </div>
           <Button
             aria-label="center back"
@@ -177,6 +189,9 @@ const Journey = (props) => {
           >
             {<CachedIcon />}
           </Button>
+        </div>
+        <div className={classes.journeyError}>
+        {!validTime && <Warning error={"Enter a valid time."}></Warning>}
         </div>
       </div>
 

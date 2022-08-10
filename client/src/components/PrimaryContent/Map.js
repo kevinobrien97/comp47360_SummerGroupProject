@@ -31,6 +31,7 @@ const Map = (props) => {
   const [selectedStopMarker, setSelectedStopMarker] = useState(null);
   const [mapError, setMapError] = useState(false);
   const [mapErrorText, setMapErrorText] = useState("");
+  const [predictionsLoading, setPredictionsLoading] = useState(false);
 
   useEffect(() => {
     const fetchStopsData = async () => {
@@ -115,6 +116,8 @@ const Map = (props) => {
   if (!isLoaded) return console.log("loading map");
 
   async function routeCalculator(or, des, time) {
+    // set loading state true initially
+    setPredictionsLoading(true);
     console.log("map", time);
     try {
       // eslint-disable-next-line no-undef
@@ -136,6 +139,7 @@ const Map = (props) => {
     } catch (error) {
       // remove current route details
       cancelRoute();
+      setPredictionsLoading(false);
       // set error text
       if (error.code === "ZERO_RESULTS") {
         setMapErrorText("No bus routes were found for this trip.");
@@ -144,11 +148,13 @@ const Map = (props) => {
       }
       // catch all
       else {
+        
         setMapErrorText("Something went wrong calculating the journey.");
       }
       // display the error
-      setMapError(true);
+       setMapError(true);
     }
+  
   }
 
   // middleware function to amend the contents of the returned result, to include our predictions, as well as the resulting total journey time
@@ -227,13 +233,14 @@ const Map = (props) => {
             }
           }
         }
+      
       }
       // add total journey time to object
       console.log(totalJourneyTime, Math.round(totalJourneyTime));
       results.routes[i].legs[0].total_journey_time =
         Math.round(totalJourneyTime);
       // console.log("time", totalJourneyTime, i);
-    }
+    }  setPredictionsLoading(false);
     // new object passed to children
     console.log("resss", results);
     setDirectionsOutput(results);
@@ -276,6 +283,7 @@ const Map = (props) => {
     >
       <div>
         <SideContainer
+          predictionsLoading={predictionsLoading}
           reCenter={reCenter}
           isLoading={isLoading}
           routesIsLoading={routesIsLoading}

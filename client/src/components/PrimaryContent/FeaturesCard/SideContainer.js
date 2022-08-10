@@ -55,6 +55,8 @@ const SideContainer = (props) => {
 
                 {props.allRoutes && props.showRoutes && (
                   <div>
+                    {props.predictionsLoading ? (<div><LoadingSpinner text={"Calculating Journey..."}></LoadingSpinner></div>):(
+                  <div>
                     <RouteOptionsSetUp
                       dateTime={dateTime}
                       removeRoutes={props.removeRoutes}
@@ -62,6 +64,7 @@ const SideContainer = (props) => {
                       options={props.allRoutes}
                       selectedRoute={props.selectedRoute}
                     ></RouteOptionsSetUp>
+                  </div>)}
                   </div>
                 )}
               </div>

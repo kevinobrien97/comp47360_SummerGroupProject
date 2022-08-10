@@ -84,7 +84,6 @@ const Route = (props) => {
       let response;
       try {
         response = await api.get("/favouriteroutes/");
-        console.log(response);
         for (let i = 0; i < response.data.length; i++) {
           // creating a temporary object for each elem of the response to be added to the list that will be displayed on screen
           const tempObj = {

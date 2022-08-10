@@ -1,7 +1,6 @@
 import { React, useState, useContext } from "react";
 import classes from "./LogInSignUp.module.css";
 import { Button, TextField } from "@mui/material";
-import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import Warning from "../PrimaryContent/FeaturesCard/Warning";
 

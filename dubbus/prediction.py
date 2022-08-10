@@ -96,8 +96,9 @@ def get_direction_id(trip_headsign):
     if trip_headsign in direction_ids:
         return direction_ids[trip_headsign]
     else:
-        # default to direction 1 if not found
-        return str(1)
+        # if cannot find it the headsign may have just changed
+        # therefore try both directions for the route
+        return -1
 
 def get_progress_number(route_id, stop_name):
     # json object stores route IDs in lower case

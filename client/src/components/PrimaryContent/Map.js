@@ -185,12 +185,6 @@ const Map = (props) => {
                 const start_stop = transitDetails.departure_stop.name;
                 const end_stop = transitDetails.arrival_stop.name;
                 const total_stops = transitDetails.num_stops;
-                console.log(route_id);
-                console.log(headsign);
-                console.log(start_stop);
-                console.log(end_stop);
-                console.log(total_stops);
-                console.log(time.getTime())
                 // iniitally want error deleted if one was there previously
                 //   setError(null);
                 //   if (predictionPossible) {

@@ -1,9 +1,8 @@
 import { React, useState } from "react";
 import classes from "./SideContainer.module.css";
 import MiniNav from "./MiniNav.js";
-import Journey from "./Journey";
-import RouteOptions from "./RouteOptions";
-import Nearest from "./Nearest";
+import Journey from "./Journey/Journey";
+import RouteOptionsSetUp from "./Journey/RouteOptionsSetUp";
 import Route from "./Routes/Route";
 import Stops from "./Stops/Stops";
 import LoadingSpinner from "../../LoadingSpinner";
@@ -11,7 +10,10 @@ import { IconButton } from "@mui/material";
 import { MdKeyboardArrowUp, MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { IconContext } from "react-icons";
 
+const currentTime = new Date();
 const SideContainer = (props) => {
+
+  const [dateTime, setDateTime] = useState(currentTime);
   const [sidebarOption, setSidebarOption] = useState({
     journey: true,
     route: false,
@@ -47,21 +49,23 @@ const SideContainer = (props) => {
                   setMapError={props.setMapError}
                   mapErrorText={props.mapErrorText}
                   setMapErrorText={props.setMapErrorText}
+                  dateTime={dateTime}
+                  setDateTime={setDateTime}
                 ></Journey>
 
                 {props.allRoutes && props.showRoutes && (
                   <div>
-                    <RouteOptions
+                    <RouteOptionsSetUp
+                      dateTime={dateTime}
                       removeRoutes={props.removeRoutes}
                       chosenRoute={props.chosenRoute}
                       options={props.allRoutes}
                       selectedRoute={props.selectedRoute}
-                    ></RouteOptions>
+                    ></RouteOptionsSetUp>
                   </div>
                 )}
               </div>
             )}
-            {sidebarOption.nearest && <Nearest></Nearest>}
             {sidebarOption.route && props.routesIsLoading && (
               <LoadingSpinner text={"Loading Routes..."}></LoadingSpinner>
             )}

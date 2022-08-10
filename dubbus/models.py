@@ -95,3 +95,12 @@ class RouteStops(models.Model):
         managed = False
         db_table = 'route_stops'
         unique_together = (('route_short_name', 'trip_headsign', 'stop_id'),)
+
+class Forecast(models.Model):
+    description_code = models.CharField(max_length=10, blank=True, null=True)
+    conditions = models.CharField(max_length=80, blank=True, null=True)
+    weather_type = models.CharField(max_length=2, blank=True, null=True)
+    date_time = models.CharField(primary_key=True, max_length=50)
+
+    class Meta:
+        db_table = 'forecast'

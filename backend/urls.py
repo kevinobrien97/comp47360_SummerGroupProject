@@ -42,6 +42,7 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/register/', views.RegisterView.as_view(), name='auth_register'),
     path('api/favourites/', include(router.urls)),
+    path('api/getPrediction/', views.StopPredictionView.as_view(),name='get_prediction_info')
 ]
 
 urlpatterns += router.urls

@@ -8,20 +8,20 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 // date-fns
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import Warning from "./Warning";
+import Warning from "../Warning";
 
 const searchLimits = {
   componentRestrictions: { country: ["ie"] },
 };
 
-const currentTime = new Date();
+
 
 const Journey = (props) => {
   const originRef = useRef("");
   const destinationRef = useRef("");
-  const [dateTime, setDateTime] = useState(currentTime);
 
-  useEffect(() => {}, [dateTime]);
+
+  useEffect(() => {}, [props.dateTime]);
 
   const triggerRouteCalculator = () => {
     if (originRef.current.value === "" || destinationRef.current.value === "") {
@@ -30,7 +30,7 @@ const Journey = (props) => {
     props.routeCalculator(
       originRef.current.value,
       destinationRef.current.value,
-      dateTime
+      props.dateTime
     );
   };
 
@@ -97,10 +97,10 @@ const Journey = (props) => {
   }
 
   function handleTimeChange(value) {
-    setDateTime(value);
+    props.setDateTime(value);
   }
   function resetTime() {
-    setDateTime(new Date());
+    props.setDateTime(new Date());
   }
 
   return (
@@ -156,8 +156,8 @@ const Journey = (props) => {
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DateTimePicker
                 label="Departure Time"
-                minDateTime={currentTime}
-                value={dateTime}
+                minDateTime={props.currentTime}
+                value={props.dateTime}
                 onChange={handleTimeChange}
                 renderInput={(params) => <TextField {...params} size="small" />}
               />

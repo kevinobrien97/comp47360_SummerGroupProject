@@ -8,9 +8,8 @@ import {
   InfoWindow,
 } from "@react-google-maps/api";
 
-// import Journey from "./Journey/Journey";
-// import RouteOptions from "./Journey/RouteOptions";
 import SideContainer from "./FeaturesCard/SideContainer";
+import axios from "axios";
 
 const center = { lat: 53.3473, lng: -6.2591 };
 // not setting libraries directly to prevent a bug
@@ -113,7 +112,7 @@ const Map = (props) => {
     libraries,
   });
 
-  if (!isLoaded) return console.log("error loading map");
+  if (!isLoaded) return console.log("loading map");
 
   async function routeCalculator(or, des, time) {
     console.log("map", time);
@@ -131,8 +130,7 @@ const Map = (props) => {
         },
         provideRouteAlternatives: true,
       });
-      console.log("res", results);
-      setDirectionsOutput(results);
+      customiseResults(results, time);
       getRoutesHandler(results.routes);
       setChosenRoute(0);
     } catch (error) {
@@ -151,6 +149,94 @@ const Map = (props) => {
       // display the error
       setMapError(true);
     }
+  }
+
+  // middleware function to amend the contents of the returned result, to include our predictions, as well as the resulting total journey time
+  async function customiseResults(results, time) {
+    console.log("cust", results);
+    for (let i = 0; i < results.routes.length; i++) {
+      let totalJourneyTime = 0;
+      console.log("step", results.routes[i].legs[0].steps[0]);
+      for (let j = 0; j < results.routes[i].legs[0].steps.length; j++) {
+        // will not show departure time if the route is only walking (no transit)
+        if (!results.routes[i].legs[0].departure_time) {
+          totalJourneyTime += parseInt(results.routes[i].legs[0].duration.text);
+        }
+        // if not just walking
+        else {
+          if (results.routes[i].legs[0].steps[j].travel_mode === "WALKING") {
+            totalJourneyTime += parseInt(
+              results.routes[i].legs[0].steps[j].duration.text
+            );
+          } else {
+            // below is a check to ensure each of the elements are returned, and if not the google prediction is used. For example, if line.short_name does not exist
+            // it is the case that the bus is outside the dublin bus network
+            // some of the below checks will never fail but this acts as a semse check in any case
+            if (results.routes[i].legs[0].steps[j].transit) {
+              const transitDetails = results.routes[i].legs[0].steps[j].transit;
+              if (
+                transitDetails.line.short_name &&
+                transitDetails.line.name &&
+                transitDetails.arrival_stop.name &&
+                transitDetails.departure_stop.name &&
+                transitDetails.num_stops
+              ) {
+                const route_id = transitDetails.line.short_name;
+                const headsign = transitDetails.line.name;
+                const start_stop = transitDetails.departure_stop.name;
+                const end_stop = transitDetails.arrival_stop.name;
+                const total_stops = transitDetails.num_stops;
+
+                // iniitally want error deleted if one was there previously
+                //   setError(null);
+                //   if (predictionPossible) {
+                try {
+                  const res = await axios.get(
+                    "http://127.0.0.1:8000/api/getPrediction/",
+                    {
+                      // "http://3.90.184.148/api/token/",{
+                      params: {
+                        route_id: route_id,
+                        headsign: headsign,
+                        start_stop: start_stop,
+                        end_stop: end_stop,
+                        total_stops: total_stops,
+                        timestamp: time.getTime(),
+                      },
+                    }
+                  );
+                  if (res.data.result === "None") {
+                    // journey time was not returned - google time will be used
+                    totalJourneyTime += parseInt(
+                      results.routes[i].legs[0].steps[j].duration.text
+                    );
+                  } else {
+                    const prediction = res.data.result;
+                    // console.log(prediction / 60);
+                    totalJourneyTime += prediction / 60;
+                    // add prediction to object
+                    results.routes[i].legs[0].steps[j].shuttleup_prediction =
+                      prediction / 60;
+                  }
+                  // console.log(res);
+                } catch (e) {
+                  console.log(e);
+                  // setPredictionPossible(false);
+                }
+              }
+            }
+          }
+        }
+      }
+      // add total journey time to object
+      console.log(totalJourneyTime, Math.round(totalJourneyTime));
+      results.routes[i].legs[0].total_journey_time =
+        Math.round(totalJourneyTime);
+      // console.log("time", totalJourneyTime, i);
+    }
+    // new object passed to children
+    console.log("resss", results);
+    setDirectionsOutput(results);
   }
 
   const getRoutesHandler = (r) => {

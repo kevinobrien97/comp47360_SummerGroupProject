@@ -19,8 +19,8 @@ const RouteDetails = (props) => {
         // fetch returns a promise
         // is asynchronous
         const response = await fetch(
-            // `http://127.0.0.1:8000/api/routestops/${short_name}/${headsign}/`
-          `http://3.90.184.148/api/routestops/${short_name}/${headsign}/`
+            `http://127.0.0.1:8000/api/routestops/${short_name}/${headsign}/`
+          // `http://3.90.184.148/api/routestops/${short_name}/${headsign}/`
         );
         if (!response.ok) {
           // wont continue with next line if error thrown
@@ -28,7 +28,6 @@ const RouteDetails = (props) => {
         }
         const allStops = await response.json();
         setRouteStops(allStops);
-        console.log("here");
 
         // console.log(allStops);
         //   props.setRouteMarkers(allStops);
@@ -50,12 +49,11 @@ const RouteDetails = (props) => {
       setLoadingSchedule(true);
  
       try {
-        console.log("here");
         // fetch returns a promise
         // is asynchronous
         const response = await fetch(
-            // `http://127.0.0.1:8000/api/fullroutestoptimes/${route_short_name}/${trip_headsign}/${day}/`
-          `http://3.90.184.148/api/fullroutestoptimes/${route_short_name}/${trip_headsign}/${day}/`
+            `http://127.0.0.1:8000/api/fullroutestoptimes/${route_short_name}/${trip_headsign}/${day}/`
+          // `http://3.90.184.148/api/fullroutestoptimes/${route_short_name}/${trip_headsign}/${day}/`
         );
         if (!response.ok) {
           // wont continue with next line if error thrown
@@ -66,7 +64,6 @@ const RouteDetails = (props) => {
         const filtered = routeSchedule.filter((d) => {
           return d.departure_time >= props.time.toTimeString().split(" ")[0];
         });
-        console.log("getting schedule");
         // sort remaining values by time
         const collator = new Intl.Collator(undefined, {
           numeric: true,
@@ -104,6 +101,7 @@ const RouteDetails = (props) => {
   //   // rerender whenever time is changed
   // }, [props.daySelection, props.time]);
        // rerender whenever button clicked
+// eslint-disable-next-line react-hooks/exhaustive-deps
 }, [props.timeClicked]);
 
   return (

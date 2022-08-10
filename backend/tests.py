@@ -1,6 +1,13 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 import json
+import unittest
+from dubbus.views import WeatherView, RoutesUpdatedView, StopsView, StopTimesUpdatedView, FullRouteStopTimesUpdatedView, RouteStopsView
+from rest_framework.test import APIRequestFactory
+from django.http import JsonResponse
+from dubbus.models import Stops, Weather, FavouriteStops, RoutesUpdated, FavouriteRoutes, StopTimesUpdated, RouteStops, Forecast
+import time
+from dubbus.prediction import get_progress_number, get_direction_id
 
 sample_users = [
     {"username": "kevinTestDB1", "password": "testpassword123", "password2": "testpassword123"},
@@ -19,6 +26,21 @@ sample_bus_routes = [
 sample_bus_stops = [
     {"stop_id": "8220DB000894"},
     {"stop_id": "8220DB000010"}
+]
+
+# the below predictions were retrieved 
+google_predictions_long = [
+    {"route_id": "65", "headsign": "Poolbeg Street - Valleymount Road", "start_stop": "George's St, Exchequer Street", "end_stop": "Tallaght Hospital",  "total_stops": 34, "timestamp": 1660045350000, "prediction": 40},
+    {"route_id": "14", "headsign": "Maryfield Drive - Outside Luas Station", "start_stop": "Dame Street, stop 7581", "end_stop": "Holy Cross Church",  "total_stops": 43, "timestamp": 1660045350000, "prediction": 41},
+    {"route_id": "145", "headsign": "Outside Heuston Train Station - Ballywaltrim", "start_stop": "Dublin (Arran Quay - Smithfield)", "end_stop": "Seafield Road",  "total_stops": 22, "timestamp": 1660045350000, "prediction": 32},
+    {"route_id": "14", "headsign": "Maryfield Drive - Outside Luas Station", "start_stop": "D'Olier Street", "end_stop": "Holy Cross Church",  "total_stops": 44, "timestamp": 1660045350000, "prediction": 45},
+]
+
+google_predictions_short = [
+    {"route_id": "14", "headsign": "Maryfield Drive - Outside Luas Station", "start_stop": "Fairview, stop 614", "end_stop": "Nth Strand Fire Stn, Stop 616",  "total_stops": 2, "timestamp": 1660045350000, "prediction": 2},
+    {"route_id": "15", "headsign": "Main Street - Ballycullen Road (Hunter's Avenue)", "start_stop": "Fairview, stop 614", "end_stop": "Nth Strand Fire Stn, Stop 616",  "total_stops": 2, "timestamp": 1660045350000, "prediction": 2},
+    {"route_id": "61", "headsign": "Eden Quay - Edmondstown Road (Rockbrook Park School)", "start_stop": "Charlemont Street, stop 2812", "end_stop": "Glenmalure Square, stop 2816",  "total_stops": 8, "timestamp": 1660045350000, "prediction": 10},
+    {"route_id": "14", "headsign": "Maryfield Drive - Outside Luas Station", "start_stop": "Dame Street, stop 7581", "end_stop": "Rathgar Place",  "total_stops": 11, "timestamp": 1660309593000, "prediction": 15},
 ]
 
 class TestLogin(TestCase):
@@ -438,6 +460,35 @@ class TestFavouriteStops(TestCase):
 
    # note I am not testing posting duplicates or posting wrong information as this is not possible via checks I implemented on the frontend (i.e. no manual entry, user checks, duplicate postings prevented)
 
+# class TestWeather(unittest.TestCase):
+#     def test_get_weather(self):
+#         request = APIRequestFactory().get("")
+#         # testing if weather is returned successfully
+#         view = WeatherView.as_view({'get': 'retrieve'}, detail=True)
+#         res = view(request, pk=Weather.objects.first().pk)
+#         self.assertEquals(res.status_code, 200)
+
+# class TestRoutes(unittest.TestCase):
+#     def test_get_routes(self):
+#         request = APIRequestFactory(content_type='application/json').get("")
+#         # testing if routes are returned successfully
+#         view = RoutesUpdatedView.as_view({'get': 'retrieve'}, detail=True)
+#         print(RoutesUpdated.objects.filter(trip_headsign='Abbeyvale Brackenstown Road - Marlborough Street', route_short_name='41'))
+#         sample = RoutesUpdated.objects.filter(trip_headsign='Abbeyvale Brackenstown Road - Marlborough Street', route_short_name='41')
+#         res = view(request, pk=(('Aston Quay - Park West Hotel')))
+#         # print(res)
+#         # res = view(request, pk=sample['trip_headsign'])
+#         self.assertEquals(res.status_code, 200)
+
+# class TestStops(unittest.TestCase):
+#     def test_get_all_stops(self):
+#         request = APIRequestFactory().get("")
+#         # testing if stops are returned successfully
+#         view = StopsView.as_view({'get': 'retrieve'}, detail=True)
+#         res = view(request, pk=Stops.objects.first().pk)
+#         # print('rrr',JsonResponse(res.content))
+#         self.assertEquals(res.status_code, 200)
+
 class TestWeather(TestCase):
     def test_get_weather(self):
         # testing if weather is returned successfully
@@ -454,7 +505,7 @@ class TestStops(TestCase):
     def test_get_all_stops(self):
         # testing if stops are returned successfully
         response = self.client.get('/api/stops/', follow=True)
-        self.assertEquals(response.status_code, 200)
+        self.assertEquals(response.status_code, 200)        
 
 class TestStopTimes(TestCase):
     def test_get_stop_times(self):
@@ -476,3 +527,78 @@ class TestFullRouteStop(TestCase):
         # using a sample stop below
         response = self.client.get('/api/routestops/4/Harristown Bus Garage - Monkstown Avenue (Richmond Grove)/', follow=True)
         self.assertEquals(response.status_code, 200)
+
+class TestPredictions(TestCase):
+    # test retrieving a progress number given the stop name
+    def testprogressnumber_easy(self):
+        route_id = "1_1"
+        stop_name = "Shanard Avenue, stop 226"
+        progress_num = get_progress_number(route_id, stop_name)
+        self.assertAlmostEqual(progress_num, "1")
+
+    # test retrieving a progress number partial stop name
+    def testprogressnumber_advanced(self):
+        route_id = "1_1"
+        # sometimes Google Maps returns a stop without its full name
+        stop_name = "Shanard Avenue"
+        progress_num = get_progress_number(route_id, stop_name)
+        self.assertAlmostEqual(progress_num, "1")
+    
+    # test getting the bus direction given the headsign
+    def testdirectionid(self):
+        headsign = "Alensgrove - Saint Stephen's Green House"
+        direction_id = get_direction_id(headsign)
+        self.assertAlmostEqual(direction_id, "2")
+    
+    # test to see if the prediction endpoint returns a successful response
+    def test_predictions_returned(self):
+        # testing if stop times are returned successfully
+        # using a sample stop below
+
+        response = self.client.get('/api/getPrediction/',
+      {
+                        "route_id": "1",
+                        "headsign": "Shanard Road (Shanard Avenue) - Shaw Street",
+                        "start_stop": "Shanard Avenue, stop 226",
+                        "end_stop": "Whitehall Church, stop 1642",
+                        "total_stops": 7,
+                        "timestamp": 1660152569329,
+                      }, follow=True)
+        result = json.loads(response.content)
+        self.assertEquals(response.status_code, 200)
+    
+    # takes a random sample of actual journeys precalculated on Google and compares our estimated time to the associated Google prediction, plus or minus a range
+    def test_predictions_google(self):
+        # the below loops through 'long' journeys that were samplped from Google, comparing our prediction to Googles, +- 1.5 mins 
+        for journey in google_predictions_long:
+
+
+            response = self.client.get('/api/getPrediction/',
+        {
+                            "route_id": journey["route_id"],
+                            "headsign": journey["headsign"],
+                            "start_stop": journey["start_stop"],
+                            "end_stop": journey["end_stop"],
+                            "total_stops": journey["total_stops"],
+                            "timestamp": journey["timestamp"],
+                        }, follow=True)
+            result = json.loads(response.content)
+            prediction = result['result']/60           
+            self.assertTrue(journey["prediction"]-1.5 <= prediction <= journey["prediction"]+1.5)
+
+        # the below loops through 'short' journeys that were samplped from Google, comparing our prediction to Googles, +- 1 mins 
+        for journey in google_predictions_short:
+            response = self.client.get('/api/getPrediction/',
+        {
+                            "route_id": journey["route_id"],
+                            "headsign": journey["headsign"],
+                            "start_stop": journey["start_stop"],
+                            "end_stop": journey["end_stop"],
+                            "total_stops": journey["total_stops"],
+                            "timestamp": journey["timestamp"],
+                        }, follow=True)
+            result = json.loads(response.content)
+            prediction = result['result']/60            
+            self.assertTrue(journey["prediction"]-1.0 <= prediction <= journey["prediction"]+1.0)
+    
+

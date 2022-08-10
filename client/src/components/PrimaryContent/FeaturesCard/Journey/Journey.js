@@ -1,36 +1,44 @@
+import { React, useState } from "react";
 import { ButtonGroup, Button, Box, TextField } from "@mui/material";
 import { Autocomplete } from "@react-google-maps/api";
 import classes from "./Journey.module.css";
 import CachedIcon from "@mui/icons-material/Cached";
 import { FaLocationArrow, FaArrowsAltV } from "react-icons/fa";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 // date-fns
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import Warning from "./Warning";
+import Warning from "../Warning";
 
 const searchLimits = {
   componentRestrictions: { country: ["ie"] },
 };
 
-const currentTime = new Date();
+
 
 const Journey = (props) => {
   const originRef = useRef("");
   const destinationRef = useRef("");
-  const [dateTime, setDateTime] = useState(currentTime);
+  const [validTime, setValidTime] = useState(true)
 
-  useEffect(() => {}, [dateTime]);
+
+  useEffect(() => {}, [props.dateTime]);
 
   const triggerRouteCalculator = () => {
     if (originRef.current.value === "" || destinationRef.current.value === "") {
+      props.cancelRoute();
+      return;
+    }
+    if (isNaN(props.dateTime)) {
+      setValidTime(false)
+      props.cancelRoute();
       return;
     }
     props.routeCalculator(
       originRef.current.value,
       destinationRef.current.value,
-      dateTime
+      props.dateTime
     );
   };
 
@@ -97,10 +105,13 @@ const Journey = (props) => {
   }
 
   function handleTimeChange(value) {
-    setDateTime(value);
+    setValidTime(true)
+    props.setDateTime(value);
   }
+
   function resetTime() {
-    setDateTime(new Date());
+    setValidTime(true)
+    props.setDateTime(new Date());
   }
 
   return (
@@ -148,20 +159,21 @@ const Journey = (props) => {
             </Autocomplete>
           </div>
         </div>
-        <div className={classes.mapError}>
+        <div className={classes.journeyError}>
           {props.mapError && <Warning error={props.mapErrorText}></Warning>}
         </div>
-        <div className={classes.timing}>
+        <div className={classes.stack}>
           <div className={classes.input_options}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DateTimePicker
                 label="Departure Time"
-                minDateTime={currentTime}
-                value={dateTime}
+                minDateTime={props.currentTime}
+                value={props.dateTime}
                 onChange={handleTimeChange}
                 renderInput={(params) => <TextField {...params} size="small" />}
               />
             </LocalizationProvider>
+            
           </div>
           <Button
             aria-label="center back"
@@ -177,6 +189,9 @@ const Journey = (props) => {
           >
             {<CachedIcon />}
           </Button>
+        </div>
+        <div className={classes.journeyError}>
+        {!validTime && <Warning error={"Enter a valid time."}></Warning>}
         </div>
       </div>
 

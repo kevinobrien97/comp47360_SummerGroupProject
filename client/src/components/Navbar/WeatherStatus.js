@@ -4,18 +4,15 @@ import LoadingSpinner from "../LoadingSpinner";
 
 const WeatherStatus = (props) => {
   const [weather, setWeather] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   //   const [weatherImage, setWeatherImage] = useState(null);
 
   useEffect(() => {
     const fetchWeatherData = async () => {
       setError(null);
-      setIsLoading(true);
-
-      try {
-        const response = await fetch("http://3.90.184.148/api/weather/");
-        // const response = await fetch("http://127.0.0.1:8000/api/weather/");
+       try {
+        // const response = await fetch("http://3.90.184.148/api/weather/");
+        const response = await fetch("http://127.0.0.1:8000/api/weather/");
         if (!response.ok) {
           throw new Error("404");
         }
@@ -27,7 +24,6 @@ const WeatherStatus = (props) => {
       } catch (error) {
         setError(error.message);
       }
-      setIsLoading(false);
     };
     fetchWeatherData();
   }, []);

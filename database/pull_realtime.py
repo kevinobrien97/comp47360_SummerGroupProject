@@ -20,7 +20,7 @@ while True:
         'time_stamp': time_stamp
         } 
 
-    weather = pull_weather(api)
+    weather = pull_weather(apireal)
     start = time.time()
     connect_db.insert_weather(weather)
     time.sleep(3600 - (time.time() - start) % 3600)

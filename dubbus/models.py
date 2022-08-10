@@ -13,7 +13,6 @@ class Stops(models.Model):
 
     class Meta:
         # keep false so Django doesnt change our tables (django specific tables should be True)
-        managed = False
         db_table = 'stops'
 
 class Weather(models.Model):
@@ -23,7 +22,6 @@ class Weather(models.Model):
     weather_icon = models.CharField(max_length=5, blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'weather'
 
 # class Routes(models.Model):
@@ -44,7 +42,6 @@ class FavouriteStops(models.Model):
     stop_id = models.CharField(max_length=300)
 
     class Meta:
-        managed = True
         db_table = 'favouritestops'
 
 class RoutesUpdated(models.Model):
@@ -52,7 +49,6 @@ class RoutesUpdated(models.Model):
     route_short_name = models.CharField(max_length=30)
 
     class Meta:
-        managed = False
         db_table = 'routes_updated'
         unique_together = (('trip_headsign', 'route_short_name'),)
 
@@ -64,7 +60,6 @@ class FavouriteRoutes(models.Model):
     route_short_name = models.CharField(max_length=300)
 
     class Meta:
-        managed = True
         db_table = 'favouriteroutes'
 
 class StopTimesUpdated(models.Model):
@@ -79,7 +74,6 @@ class StopTimesUpdated(models.Model):
     route_short_name = models.CharField(max_length=30, blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'stop_times_updated'
         unique_together = (('stop_id', 'trip_id'),)
 
@@ -92,7 +86,6 @@ class RouteStops(models.Model):
     stop_long = models.FloatField(blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'route_stops'
         unique_together = (('route_short_name', 'trip_headsign', 'stop_id'),)
 

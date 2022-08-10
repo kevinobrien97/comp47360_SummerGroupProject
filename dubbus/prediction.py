@@ -6,10 +6,12 @@ from os import path
 
 
 def encode_weather(json_ob, currenttime):
+    # if weather retrieval fails for any reason - should never happen
+    if isinstance(json_ob, str):
+        return 0 
     forecast_dict = {}
     for j in json.loads(json_ob):
         forecast_dict[int(j['pk'])] = j['fields']['conditions']
-
     weather_key, weather_val = min(forecast_dict.items(), key=lambda x: abs(currenttime - x[0]))
     # weather forecast is every 3 hours 5 days out so if greater than 14400 (4 hours in seconds) means its past 5 days 
     if currenttime - weather_key > 14400:
@@ -94,8 +96,9 @@ def get_direction_id(trip_headsign):
     if trip_headsign in direction_ids:
         return direction_ids[trip_headsign]
     else:
-        # default to direction 1 if not found
-        return str(1)
+        # if cannot find it the headsign may have just changed
+        # therefore try both directions for the route
+        return -1
 
 def get_progress_number(route_id, stop_name):
     # json object stores route IDs in lower case

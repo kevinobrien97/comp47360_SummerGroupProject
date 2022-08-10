@@ -185,7 +185,6 @@ const Map = (props) => {
                 const start_stop = transitDetails.departure_stop.name;
                 const end_stop = transitDetails.arrival_stop.name;
                 const total_stops = transitDetails.num_stops;
-
                 // iniitally want error deleted if one was there previously
                 //   setError(null);
                 //   if (predictionPossible) {
@@ -211,6 +210,7 @@ const Map = (props) => {
                     );
                   } else {
                     const prediction = res.data.result;
+                    console.log(prediction)
                     // console.log(prediction / 60);
                     totalJourneyTime += prediction / 60;
                     // add prediction to object

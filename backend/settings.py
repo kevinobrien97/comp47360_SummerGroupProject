@@ -136,7 +136,7 @@ DATABASES = {
         'NAME': 'dublin_bus',
         'USER': 'shuttleup',
         'PASSWORD': SQLPW,
-        'HOST': 'dubbusv2.cimqwuwj7cb7.us-east-1.rds.amazonaws.com',
+        'HOST': 'dubbus.cimqwuwj7cb7.us-east-1.rds.amazonaws.com',
         'PORT': '3306',
         # including the below removes warnings during tests
         # 'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"},

@@ -28,7 +28,6 @@ const RouteDetails = (props) => {
         }
         const allStops = await response.json();
         setRouteStops(allStops);
-        console.log("here");
 
         // console.log(allStops);
         //   props.setRouteMarkers(allStops);
@@ -50,7 +49,6 @@ const RouteDetails = (props) => {
       setLoadingSchedule(true);
  
       try {
-        console.log("here");
         // fetch returns a promise
         // is asynchronous
         const response = await fetch(
@@ -66,7 +64,6 @@ const RouteDetails = (props) => {
         const filtered = routeSchedule.filter((d) => {
           return d.departure_time >= props.time.toTimeString().split(" ")[0];
         });
-        console.log("getting schedule");
         // sort remaining values by time
         const collator = new Intl.Collator(undefined, {
           numeric: true,
@@ -104,6 +101,7 @@ const RouteDetails = (props) => {
   //   // rerender whenever time is changed
   // }, [props.daySelection, props.time]);
        // rerender whenever button clicked
+// eslint-disable-next-line react-hooks/exhaustive-deps
 }, [props.timeClicked]);
 
   return (

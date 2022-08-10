@@ -57,6 +57,8 @@ const StopDetails = (props) => {
     // rerender whenever time is changed
   // }, [props.daySelection, props.time]);
      // rerender whenever button clicked
+     
+// eslint-disable-next-line react-hooks/exhaustive-deps
 }, [props.timeClicked]);
 
   return (

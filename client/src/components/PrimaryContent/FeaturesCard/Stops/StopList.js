@@ -19,7 +19,6 @@ const StopList = (props) => {
 
   const removeStop = (idx) => {
     const stop = props.stops[idx];
-    console.log(stop)
     props.setStopsList(props.stops.filter((item) => item !== stop));
   };
 

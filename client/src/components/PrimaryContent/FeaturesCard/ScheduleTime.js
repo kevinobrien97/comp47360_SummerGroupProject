@@ -97,11 +97,6 @@ const ScheduleTime = (props) => {
             }
           </Button>
         )}
-        {/* <IconContext.Provider
-          value={{ size: "1.4rem", color: "#F1B23E", paddingTop: "5rem" }}
-        >
-          <AiOutlineCheckCircle />
-        </IconContext.Provider> */}
       </div>
     </div>
   );

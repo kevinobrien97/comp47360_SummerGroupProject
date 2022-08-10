@@ -42,8 +42,7 @@ const Stops = (props) => {
         stop_id: id,
       });
       if (response.status === 201) {
-        console.log(response);
-
+  
         // need to add response array to stopIDList to store the ID
         const arr = response.data;
         setStopIDList((prevStopIDList) => {
@@ -64,9 +63,7 @@ const Stops = (props) => {
     const primaryKey = obj.id;
     try {
       const response = await api.delete(`/favourites/${primaryKey}`);
-      console.log("del res", response);
       if (response.status === 204) {
-        console.log(response);
         // update stopIDList
         setStopIDList(stopIDList.filter((item) => item !== obj));
       }
@@ -81,7 +78,6 @@ const Stops = (props) => {
       let response;
       try {
         response = await api.get("/favourites/");
-        console.log(response);
         for (let i = 0; i < response.data.length; i++) {
           const item = props.stops.find(
             (x) => x.stop_id === response.data[i].stop_id

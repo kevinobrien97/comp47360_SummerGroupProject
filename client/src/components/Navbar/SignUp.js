@@ -14,7 +14,6 @@ const SignUp = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('signup', password)
     registerUser(username, password, password2, setSignupError, props.toggleRegister, props.toggleLogIn);
   };
 

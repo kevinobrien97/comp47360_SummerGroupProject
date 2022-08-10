@@ -6,10 +6,12 @@ from os import path
 
 
 def encode_weather(json_ob, currenttime):
+    # if weather retrieval fails for any reason - should never happen
+    if isinstance(json_ob, str):
+        return 0 
     forecast_dict = {}
     for j in json.loads(json_ob):
         forecast_dict[int(j['pk'])] = j['fields']['conditions']
-
     weather_key, weather_val = min(forecast_dict.items(), key=lambda x: abs(currenttime - x[0]))
     # weather forecast is every 3 hours 5 days out so if greater than 14400 (4 hours in seconds) means its past 5 days 
     if currenttime - weather_key > 14400:

@@ -186,7 +186,7 @@ class StopPredictionView(APIView):
         # want to check if we can get either of the progress numbers from the starting or ending stops
         # can use the number of stops to calculate the other
         # if neither are found use google maps prediction as route has changed too much since 2018
-        
+
         start_progr = get_progress_number(model_name, start_stop)
         if start_progr != -1:
             end_progr = str(int(start_progr)+int(total_stops))
@@ -195,7 +195,6 @@ class StopPredictionView(APIView):
             # print('ifpred', prediction)
         else:
             end_progr = get_progress_number(model_name, end_stop)
-            print('elseendprog', end_progr)
             if end_progr != -1:
                 start_progr = str(int(end_progr)-int(total_stops))
                 # print('elsestartprog', start_progr)

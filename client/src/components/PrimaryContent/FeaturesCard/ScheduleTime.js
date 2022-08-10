@@ -61,13 +61,14 @@ const ScheduleTime = (props) => {
             ampm={false}
             onChange={handleTimeChange}
             renderInput={(params) => (
-              <TextField sx={{ width: "10rem" }} {...params} />
+              <TextField sx={{ width: "8rem" }} {...params} />
             )}
           />
         </LocalizationProvider>
         {showButton ? (
           <Button
             sx={{
+              width: "1rem",
               "&:hover": {
                 backgroundColor: "#EEEAEA",
               },
@@ -82,7 +83,7 @@ const ScheduleTime = (props) => {
           >
             {
               <IconContext.Provider
-                value={{ size: "1.4rem", color: "#F1B23E" }}
+                value={{ size: "1.5rem", color: "#F1B23E" }}
               >
                 <BsFillCheckCircleFill />{" "}
               </IconContext.Provider>
@@ -91,7 +92,7 @@ const ScheduleTime = (props) => {
         ) : (
           <Button disabled aria-label="center back">
             {
-              <IconContext.Provider value={{ size: "1.4rem" }}>
+              <IconContext.Provider value={{ size: "1.5rem" }}>
                 <AiOutlineCheckCircle />{" "}
               </IconContext.Provider>
             }

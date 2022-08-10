@@ -8,11 +8,13 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-width: 21rem;
+  max-width: 25rem;
 
 }
 
 .origin_destination {
-width: 22rem;
+/* width: 22rem; */
 align-self: center;
 margin-left: 2rem;
 }

@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { IconButton, Accordion, AccordionSummary } from "@mui/material";
 
 import classes from "../Stops_routes.module.css";
@@ -8,7 +8,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import RouteDetails from "./RouteDetails";
 
 const RouteFavourites = (props) => {
-  const [loadingRouteStops, setLoadingRouteStops] = useState(false);
+
 
   const pickRoutes = (index) => {
     const route = props.routes[index];
@@ -22,7 +22,6 @@ const RouteFavourites = (props) => {
 
   const fetchRoutesData = async (short_name, headsign) => {
     // setError(null);
-    setLoadingRouteStops(true);
     try {
       // fetch returns a promise
       // is asynchronous
@@ -41,12 +40,10 @@ const RouteFavourites = (props) => {
       console.log(error.message);
       // setError(error.message);
     }
-    setLoadingRouteStops(false);
   };
 
   const removeFavRoute = (idx) => {
     const route = props.routes[idx];
-    console.log(route);
     // props.setRouteList(props.routes.filter((item) => item !== route));
     // call method to delete from database
     props.deleteRoute(route);
@@ -55,7 +52,6 @@ const RouteFavourites = (props) => {
 
   const removeRoute = (idx) => {
     const route = props.routes[idx];
-    console.log(route);
     props.setRouteList(props.routes.filter((item) => item !== route));
   };
 
@@ -66,7 +62,6 @@ const RouteFavourites = (props) => {
       ) : (
         <h3 className={classes.h3}>Selected Routes</h3>
       )}
-      {/* {console.log(props.routes)} */}
       {props.routes[0] ? (
         <div>
           {props.routes.map((route, index) => (
@@ -74,7 +69,7 @@ const RouteFavourites = (props) => {
               key={index}
               style={{
                 minWidth: "100%",
-                width: "25rem",
+                // width: "25rem",
                 borderTop: "0.05rem solid lightgrey",
               }}
             >
@@ -86,7 +81,7 @@ const RouteFavourites = (props) => {
                   sx={{
                     display: "flex",
                     justifyContent: "center",
-                    width: "25rem",
+                    // width: "25rem",
                   }}
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1a-content"

@@ -20,7 +20,6 @@ const Map = (props) => {
   const [routes, setRoutes] = useState({});
   const [routesIsLoading, setRoutesIsLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [routeMarkers, setRouteMarkers] = useState([]);
   const [currentClickedMarker, setCurrentClickedMarker] = useState(null);
   const [allRoutes, setAllRoutes] = useState();
@@ -31,10 +30,10 @@ const Map = (props) => {
   const [selectedStopMarker, setSelectedStopMarker] = useState(null);
   const [mapError, setMapError] = useState(false);
   const [mapErrorText, setMapErrorText] = useState("");
+  const [predictionsLoading, setPredictionsLoading] = useState(false);
 
   useEffect(() => {
     const fetchStopsData = async () => {
-      setError(null);
       setIsLoading(true);
       try {
         // fetch returns a promise
@@ -48,7 +47,7 @@ const Map = (props) => {
         const data = await response.json();
         setStops(data);
       } catch (error) {
-        setError(error.message);
+        console.log(error.message);
       }
       setIsLoading(false);
     };
@@ -83,7 +82,7 @@ const Map = (props) => {
         });
         setRoutes(sorted);
       } catch (error) {
-        setError(error.message);
+        console.log(error.message);
       }
       setRoutesIsLoading(false);
     };
@@ -115,7 +114,8 @@ const Map = (props) => {
   if (!isLoaded) return console.log("loading map");
 
   async function routeCalculator(or, des, time) {
-    console.log("map", time);
+    // set loading state true initially
+    setPredictionsLoading(true);
     try {
       // eslint-disable-next-line no-undef
       const dirServ = new google.maps.DirectionsService();
@@ -136,6 +136,7 @@ const Map = (props) => {
     } catch (error) {
       // remove current route details
       cancelRoute();
+      setPredictionsLoading(false);
       // set error text
       if (error.code === "ZERO_RESULTS") {
         setMapErrorText("No bus routes were found for this trip.");
@@ -153,10 +154,8 @@ const Map = (props) => {
 
   // middleware function to amend the contents of the returned result, to include our predictions, as well as the resulting total journey time
   async function customiseResults(results, time) {
-    console.log("cust", results);
     for (let i = 0; i < results.routes.length; i++) {
       let totalJourneyTime = 0;
-      console.log("step", results.routes[i].legs[0].steps[0]);
       for (let j = 0; j < results.routes[i].legs[0].steps.length; j++) {
         // will not show departure time if the route is only walking (no transit)
         if (!results.routes[i].legs[0].departure_time) {
@@ -229,18 +228,16 @@ const Map = (props) => {
         }
       }
       // add total journey time to object
-      console.log(totalJourneyTime, Math.round(totalJourneyTime));
       results.routes[i].legs[0].total_journey_time =
         Math.round(totalJourneyTime);
       // console.log("time", totalJourneyTime, i);
     }
+    setPredictionsLoading(false);
     // new object passed to children
-    console.log("resss", results);
     setDirectionsOutput(results);
   }
 
   const getRoutesHandler = (r) => {
-    console.log("app", r);
     setAllRoutes(r);
     setShowRoutes(true);
   };
@@ -276,6 +273,7 @@ const Map = (props) => {
     >
       <div>
         <SideContainer
+          predictionsLoading={predictionsLoading}
           reCenter={reCenter}
           isLoading={isLoading}
           routesIsLoading={routesIsLoading}

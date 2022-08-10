@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }) => {
     // iniitally want error deleted if one was there previously
     setSignupError(null);
     try {
-      const res = await axios.post(
+      await axios.post(
         "http://127.0.0.1:8000/api/register/",
         // "http://3.90.184.148/api/register/",
         {

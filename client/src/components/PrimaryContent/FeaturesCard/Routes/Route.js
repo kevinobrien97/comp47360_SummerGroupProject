@@ -2,7 +2,6 @@ import { React, useState, useContext, useEffect } from "react";
 import { Button } from "@mui/material";
 import classes from "../Stops_routes.module.css";
 import AuthContext from "../../../../context/AuthContext";
-import { Link } from "react-router-dom";
 import Warning from "../Warning";
 import useAxios from "../../../../utils/useAxios";
 import LoadingSpinner from "../../../LoadingSpinner";
@@ -42,7 +41,6 @@ const Route = (props) => {
         route_short_name: route_short_name,
       });
       if (response.status === 201) {
-        console.log(response);
 
         // need to add response array to routeIDList to store the ID
         const arr = response.data;
@@ -70,9 +68,7 @@ const Route = (props) => {
     const primaryKey = obj.id;
     try {
       const response = await api.delete(`/favouriteroutes/${primaryKey}`);
-      console.log("del res", response);
       if (response.status === 204) {
-        console.log(response);
         // update routeIDList
         setRouteIDList(routeIDList.filter((item) => item !== obj));
         props.setRouteMarkers([]);
@@ -88,7 +84,6 @@ const Route = (props) => {
       let response;
       try {
         response = await api.get("/favouriteroutes/");
-        console.log(response);
         for (let i = 0; i < response.data.length; i++) {
           // creating a temporary object for each elem of the response to be added to the list that will be displayed on screen
           const tempObj = {
@@ -98,13 +93,10 @@ const Route = (props) => {
           // const item = props.routes.find(
           //   (x) => x === tempObj
           // );
-          console.log("tempObj", tempObj);
 
           setFavRouteList((prevRouteList) => {
-            console.log("in");
             return [...prevRouteList, tempObj];
           });
-          console.log(favRouteList);
           // adding arr to routeIDList - used for deletions (stores primary key used in database)
           const arr = response.data[i];
           setRouteIDList((prevRouteIDList) => {
@@ -166,7 +158,6 @@ const Route = (props) => {
   const addRoute = (route) => {
     // remove error initially, reset below on conditional
     setError(null);
-    console.log(route);
     // if not blank
     if (route) {
         // complex object - comparing specific elements of object instead of entire object
@@ -272,11 +263,11 @@ const Route = (props) => {
                 <h4>You are not logged in.</h4>
                 <p>
                   {" "}
-                  <Link to={"/login/"} style={{ textDecoration: "none" }}>
+                  {/* <Link to={"/login/"} style={{ textDecoration: "none" }}> */}
                     <Button type="submit" onClick={() => props.toggleLogIn()}>
                       Login
                     </Button>
-                  </Link>
+                  {/* </Link> */}
                   {"or"}
                   <Button type="submit" onClick={() => props.toggleRegister()}>
                     Register

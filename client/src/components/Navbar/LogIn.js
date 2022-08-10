@@ -19,10 +19,16 @@ const LogIn = (props) => {
 
     loginUser(username, password, setLoginError, props.toggleLogIn);
   };
-  
+
   return (
     <div>
-      <div className={classes.back_drop} onClick={()=> {props.toggleLogIn(); props.setUserLoggedOut(false)}}></div>
+      <div
+        className={classes.back_drop}
+        onClick={() => {
+          props.toggleLogIn();
+          props.setUserLoggedOut(false);
+        }}
+      ></div>
       <div className={classes.log_in_modal}>
         <div className={classes.log_in_modal_content}>
           <header>
@@ -63,7 +69,6 @@ const LogIn = (props) => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              {console.log(loginError)}
               {loginError && <Warning error={loginError}></Warning>}
               <div>
                 <Button type="submit" variant="contained" color="primary">
@@ -72,10 +77,19 @@ const LogIn = (props) => {
               </div>
             </form>
             Don't have an account?{"  "}
-              {/* <Link to={"/login/"} style={{ textDecoration: "none" }}>  */}
-              <Button type="submit" variant="contained" style={{ color: "#2196f3", backgroundColor: "white" }} onClick={()=> {props.toggleLogIn(); props.toggleRegister(); props.setUserLoggedOut(false)}}>
-                Register
-              </Button>
+            {/* <Link to={"/login/"} style={{ textDecoration: "none" }}>  */}
+            <Button
+              type="submit"
+              variant="contained"
+              style={{ color: "#2196f3", backgroundColor: "white" }}
+              onClick={() => {
+                props.toggleLogIn();
+                props.toggleRegister();
+                props.setUserLoggedOut(false);
+              }}
+            >
+              Register
+            </Button>
           </div>
           <div></div>
         </div>

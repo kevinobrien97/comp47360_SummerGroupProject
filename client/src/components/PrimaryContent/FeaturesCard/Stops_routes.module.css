@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 20rem;
   min-width: 100%;
 }
 
@@ -9,7 +10,8 @@
   justify-content: center;
 }
 
-.loggedOut h4 {
+.loggedOut {
+  margin: 0 1rem;
   text-align: center;
 }
 
@@ -24,19 +26,14 @@
   display: flex;
   justify-content: center;
 }
-/* .favouriteStops {
-      text-align: center;
-  } */
 
 .viewingFavs {
   padding-top: 0.2rem;
   text-align: end;
-  /* margin-left: auto; */
 }
 
 .regularView {
   padding-top: 0.2rem;
-  /* margin-right: auto; */
 }
 
 .h3 {

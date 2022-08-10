@@ -19,7 +19,6 @@ const StopList = (props) => {
 
   const removeStop = (idx) => {
     const stop = props.stops[idx];
-    console.log(stop)
     props.setStopsList(props.stops.filter((item) => item !== stop));
   };
 
@@ -38,7 +37,7 @@ const StopList = (props) => {
               key={stop.stop_id}
               style={{
                 minWidth: "100%",
-                width: "25rem",
+                // width: "25rem",
                 borderTop: "0.05rem solid lightgrey",
               }}
             >
@@ -50,7 +49,7 @@ const StopList = (props) => {
                   sx={{
                     display: "flex",
                     justifyContent: "center",
-                    width: "25rem",
+                    // width: "25rem",
                   }}
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1a-content"

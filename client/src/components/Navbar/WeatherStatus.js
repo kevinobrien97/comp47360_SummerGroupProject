@@ -11,7 +11,7 @@ const WeatherStatus = (props) => {
     const fetchWeatherData = async () => {
       setError(null);
        try {
-        const response = await fetch("http://3.90.184.148/api/weather/");
+        const response = await fetch("http://54.157.240.210/api/weather/");
         // const response = await fetch("http://127.0.0.1:8000/api/weather/");
         if (!response.ok) {
           throw new Error("404");

@@ -106,7 +106,6 @@ const Map = (props) => {
           throw new Error("Something went wrong loading routes");
         }
         const allStops = await response.json();
-        console.log(allStops);
         setRouteStops(allStops);
       } catch (error) {
         console.log(error.message);
@@ -237,10 +236,6 @@ const Map = (props) => {
                   );
                   if (res.data.result === "None") {
                     // journey time was not returned - google time will be used
-                    console.log(
-                      i,
-                      results.routes[i].legs[0].steps[j].duration.value
-                    );
                     totalJourneyTime += parseInt(
                       results.routes[i].legs[0].steps[j].duration.value / 60
                     );
@@ -258,15 +253,11 @@ const Map = (props) => {
                   // setPredictionPossible(false);
                 }
               } else {
-                console.log("here");
-                console.log(i, results.routes[i].legs[0].steps[j]);
                 totalJourneyTime += parseInt(
                   results.routes[i].legs[0].steps[j].duration.value / 60
                 );
               }
             } else {
-              console.log("here1");
-              console.log(i, results.routes[i].legs[0].steps[j]);
               totalJourneyTime += parseInt(
                 results.routes[i].legs[0].steps[j].duration.value / 60
               );

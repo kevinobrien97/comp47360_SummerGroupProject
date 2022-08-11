@@ -55,7 +55,7 @@ const NavDrawer = (props) => {
             <img
               src={require("./images/bus.png")}
               height={"100%"}
-              maxWidth={"100%"}
+              width={"100%"}
               alt={"bus logo"}
             />
           </ListItemButton>

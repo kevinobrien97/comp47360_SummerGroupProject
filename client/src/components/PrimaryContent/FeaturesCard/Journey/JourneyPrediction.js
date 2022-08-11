@@ -15,7 +15,6 @@ const JourneyPrediction = (props) => {
               <strong>
                 {Math.round(props.step.shuttleup_prediction)} mins{" "}
               </strong>
-              vs {props.step.duration.text}
             </span>
           ) : (
             <span>

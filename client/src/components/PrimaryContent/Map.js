@@ -98,8 +98,8 @@ const Map = (props) => {
         // fetch returns a promise
         // is asynchronous
         const response = await fetch(
-          `http://127.0.0.1:8000/api/routestops/`
-          // `http://54.157.240.210/api/routestops/`
+          // `http://127.0.0.1:8000/api/routestops/`
+          `http://54.157.240.210/api/routestops/`
         );
         if (!response.ok) {
           // wont continue with next line if error thrown

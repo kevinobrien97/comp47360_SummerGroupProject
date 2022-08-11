@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await axios.post(
         // "http://127.0.0.1:8000/api/token/",
-        "http://3.90.184.148/api/token/",
+        "http://54.157.240.210/api/token/",
         {
           username: username,
           password: password,
@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
     try {
       await axios.post(
         // "http://127.0.0.1:8000/api/register/",
-        "http://3.90.184.148/api/register/",
+        "http://54.157.240.210/api/register/",
         {
           username: username,
           password: password,

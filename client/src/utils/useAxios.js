@@ -6,7 +6,7 @@ import { useContext } from "react";
 import AuthContext from "../context/AuthContext";
 
 // const baseURL = "http://127.0.0.1:8000/api";
-const baseURL = "http://3.90.184.148/api";
+const baseURL = "http://54.157.240.210/api";
 
 const useAxios = (setUserLoggedOut, toggleLogIn) => {
   const { authTokens, setUser, setAuthTokens } = useContext(AuthContext);

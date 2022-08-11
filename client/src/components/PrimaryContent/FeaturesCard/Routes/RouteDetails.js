@@ -53,7 +53,7 @@ const RouteDetails = (props) => {
         // is asynchronous
         const response = await fetch(
             // `http://127.0.0.1:8000/api/fullroutestoptimes/${route_short_name}/${trip_headsign}/${day}/`
-          `http://3.90.184.148/api/fullroutestoptimes/${route_short_name}/${trip_headsign}/${day}/`
+          `http://54.157.240.210/api/fullroutestoptimes/${route_short_name}/${trip_headsign}/${day}/`
         );
         if (!response.ok) {
           // wont continue with next line if error thrown

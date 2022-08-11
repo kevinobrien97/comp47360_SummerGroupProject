@@ -48,7 +48,7 @@ const AccountOptions = (props) => {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={closer}>My Account</MenuItem>
+        {/* <MenuItem onClick={closer}>My Account</MenuItem> */}
         <MenuItem onClick={logout}>Logout</MenuItem>
       </Menu>
     </span>

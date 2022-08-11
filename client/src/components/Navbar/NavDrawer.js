@@ -99,12 +99,12 @@ const NavDrawer = (props) => {
                 </ListItemIcon>
                 <ListItemText>Logout</ListItemText>
               </ListItemButton>
-              <ListItemButton color="inherit">
+              {/* <ListItemButton color="inherit">
                 <ListItemIcon sx={{ minWidth: "1.5rem" }}>
                   <MdManageAccounts />{" "}
                 </ListItemIcon>
                 <ListItemText>Account Management</ListItemText>
-              </ListItemButton>
+              </ListItemButton> */}
             </List>
           )}
         </div>

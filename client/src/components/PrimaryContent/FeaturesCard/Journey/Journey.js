@@ -11,17 +11,17 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import Warning from "../Warning";
 
+const currentTime = new Date();
+
 const searchLimits = {
   componentRestrictions: { country: ["ie"] },
 };
 
-
-
 const Journey = (props) => {
   const originRef = useRef("");
   const destinationRef = useRef("");
-  const [validTime, setValidTime] = useState(true)
-
+  const [validTime, setValidTime] = useState(true);
+  const [validTimeMessage, setValidTimeMessage] = useState("");
 
   useEffect(() => {}, [props.dateTime]);
 
@@ -31,10 +31,20 @@ const Journey = (props) => {
       return;
     }
     if (isNaN(props.dateTime)) {
-      setValidTime(false)
+      setValidTimeMessage("Enter a valid time.");
+      setValidTime(false);
       props.cancelRoute();
       return;
     }
+    if (props.dateTime < currentTime) {
+      setValidTime(false);
+      setValidTimeMessage(
+        "This is not a time machine! Enter a time in the future."
+      );
+      props.cancelRoute();
+      return;
+    }
+
     props.routeCalculator(
       originRef.current.value,
       destinationRef.current.value,
@@ -105,12 +115,16 @@ const Journey = (props) => {
   }
 
   function handleTimeChange(value) {
-    setValidTime(true)
+    setValidTime(true);
+    setValidTimeMessage("");
     props.setDateTime(value);
+    props.setMapError(false);
+    props.setMapErrorText("");
   }
 
   function resetTime() {
-    setValidTime(true)
+    setValidTime(true);
+    setValidTimeMessage("");
     props.setDateTime(new Date());
   }
 
@@ -167,13 +181,12 @@ const Journey = (props) => {
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DateTimePicker
                 label="Departure Time"
-                minDateTime={props.currentTime}
+                minDateTime={currentTime}
                 value={props.dateTime}
                 onChange={handleTimeChange}
                 renderInput={(params) => <TextField {...params} size="small" />}
               />
             </LocalizationProvider>
-            
           </div>
           <Button
             aria-label="center back"
@@ -191,7 +204,7 @@ const Journey = (props) => {
           </Button>
         </div>
         <div className={classes.journeyError}>
-        {!validTime && <Warning error={"Enter a valid time."}></Warning>}
+          {!validTime && <Warning error={validTimeMessage}></Warning>}
         </div>
       </div>
 

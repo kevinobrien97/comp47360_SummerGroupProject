@@ -211,7 +211,6 @@ const Map = (props) => {
                     );
                   } else {
                     const prediction = res.data.result;
-                    console.log(prediction)
                     // console.log(prediction / 60);
                     totalJourneyTime += prediction / 60;
                     // add prediction to object

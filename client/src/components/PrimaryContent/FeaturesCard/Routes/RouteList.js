@@ -8,8 +8,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import RouteDetails from "./RouteDetails";
 
 const RouteFavourites = (props) => {
-
-
   const pickRoutes = (index) => {
     const route = props.routes[index];
     const short_name = route.route_short_name;
@@ -20,26 +18,33 @@ const RouteFavourites = (props) => {
     // props.setMarker(stop.stop_lat, stop.stop_long);
   };
 
-  const fetchRoutesData = async (short_name, headsign) => {
+  const fetchRoutesData = (short_name, headsign) => {
     // setError(null);
-    try {
-      // fetch returns a promise
-      // is asynchronous
-      const response = await fetch(
-        // `http://127.0.0.1:8000/api/routestops/${short_name}/${headsign}/`
-        `http://54.157.240.210/api/routestops/${short_name}/${headsign}/`
+    const allStops = props.routeStops.filter((item) => {
+      return (
+        item.route_short_name === short_name && item.trip_headsign === headsign
       );
-      if (!response.ok) {
-        // wont continue with next line if error thrown
-        throw new Error("Something went wrong loading routes");
-      }
-      const allStops = await response.json();
-      // console.log(allStops);
-      props.setRouteMarkers(allStops);
-    } catch (error) {
-      console.log(error.message);
-      // setError(error.message);
-    }
+    });
+
+    props.setRouteMarkers(allStops);
+    // try {
+    //   // fetch returns a promise
+    //   // is asynchronous
+    //   const response = await fetch(
+    //     // `http://127.0.0.1:8000/api/routestops/${short_name}/${headsign}/`
+    //     `http://54.157.240.210/api/routestops/${short_name}/${headsign}/`
+    //   );
+    //   if (!response.ok) {
+    //     // wont continue with next line if error thrown
+    //     throw new Error("Something went wrong loading routes");
+    //   }
+    //   const allStops = await response.json();
+    //   // console.log(allStops);
+    //   props.setRouteMarkers(allStops);
+    // } catch (error) {
+    //   console.log(error.message);
+    //   // setError(error.message);
+    // }
   };
 
   const removeFavRoute = (idx) => {
@@ -122,6 +127,7 @@ const RouteFavourites = (props) => {
                   daySelection={props.daySelection}
                   timeClicked={props.timeClicked}
                   setTimeClicked={props.setTimeClicked}
+                  routeStops={props.routeStops}
                 ></RouteDetails>
               </Accordion>
             </div>

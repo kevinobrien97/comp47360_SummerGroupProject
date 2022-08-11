@@ -254,6 +254,7 @@ const Route = (props) => {
                       setShowDelete={setShowDelete}
                       timeClicked={timeClicked}
                       setTimeClicked={setTimeClicked}
+                      routeStops={props.routeStops}
                     ></RouteList>
                   </div>
                 )}
@@ -288,6 +289,7 @@ const Route = (props) => {
             setRouteMarkers={props.setRouteMarkers}
             timeClicked={timeClicked}
             setTimeClicked={setTimeClicked}
+            routeStops={props.routeStops}
           ></RouteList>
         )}
       </div>

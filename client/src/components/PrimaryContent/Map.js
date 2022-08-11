@@ -31,6 +31,8 @@ const Map = (props) => {
   const [mapError, setMapError] = useState(false);
   const [mapErrorText, setMapErrorText] = useState("");
   const [predictionsLoading, setPredictionsLoading] = useState(false);
+  const [routeStops, setRouteStops] = useState({});
+  const [routeStopsLoading, setRouteStopsLoading] = useState(false);
 
   useEffect(() => {
     const fetchStopsData = async () => {
@@ -87,6 +89,33 @@ const Map = (props) => {
       setRoutesIsLoading(false);
     };
     fetchRoutesData();
+  }, []);
+
+  useEffect(() => {
+    const fetchRouteStopsData = async () => {
+      setRouteStopsLoading(true);
+      try {
+        // fetch returns a promise
+        // is asynchronous
+        const response = await fetch(
+          `http://127.0.0.1:8000/api/routestops/`
+          // `http://54.157.240.210/api/routestops/`
+        );
+        if (!response.ok) {
+          // wont continue with next line if error thrown
+          throw new Error("Something went wrong loading routes");
+        }
+        const allStops = await response.json();
+        console.log(allStops);
+        setRouteStops(allStops);
+      } catch (error) {
+        console.log(error.message);
+        // setError(error.message);
+      }
+      setRouteStopsLoading(false);
+    };
+    fetchRouteStopsData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const setStopMarker = (coords) => {
@@ -159,13 +188,15 @@ const Map = (props) => {
       for (let j = 0; j < results.routes[i].legs[0].steps.length; j++) {
         // will not show departure time if the route is only walking (no transit)
         if (!results.routes[i].legs[0].departure_time) {
-          totalJourneyTime += parseInt(results.routes[i].legs[0].duration.value/60);
+          totalJourneyTime += parseInt(
+            results.routes[i].legs[0].duration.value / 60
+          );
         }
         // if not just walking
         else {
           if (results.routes[i].legs[0].steps[j].travel_mode === "WALKING") {
             totalJourneyTime += parseInt(
-              results.routes[i].legs[0].steps[j].duration.value/60
+              results.routes[i].legs[0].steps[j].duration.value / 60
             );
           } else {
             // below is a check to ensure each of the elements are returned, and if not the google prediction is used. For example, if line.short_name does not exist
@@ -206,9 +237,12 @@ const Map = (props) => {
                   );
                   if (res.data.result === "None") {
                     // journey time was not returned - google time will be used
-                    console.log(i, results.routes[i].legs[0].steps[j].duration.value);
+                    console.log(
+                      i,
+                      results.routes[i].legs[0].steps[j].duration.value
+                    );
                     totalJourneyTime += parseInt(
-                      results.routes[i].legs[0].steps[j].duration.value/60
+                      results.routes[i].legs[0].steps[j].duration.value / 60
                     );
                   } else {
                     const prediction = res.data.result;
@@ -227,15 +261,16 @@ const Map = (props) => {
                 console.log("here");
                 console.log(i, results.routes[i].legs[0].steps[j]);
                 totalJourneyTime += parseInt(
-                  results.routes[i].legs[0].steps[j].duration.value/60
+                  results.routes[i].legs[0].steps[j].duration.value / 60
                 );
               }
             } else {
               console.log("here1");
               console.log(i, results.routes[i].legs[0].steps[j]);
               totalJourneyTime += parseInt(
-                results.routes[i].legs[0].steps[j].duration.value/60
-              );}
+                results.routes[i].legs[0].steps[j].duration.value / 60
+              );
+            }
           }
         }
       }
@@ -311,6 +346,8 @@ const Map = (props) => {
           setDirectionsOutput={setDirectionsOutput}
           mapErrorText={mapErrorText}
           setMapErrorText={setMapErrorText}
+          routeStops={routeStops}
+          routeStopsLoading={routeStopsLoading}
         ></SideContainer>
       </div>
       <div className={classes.google_map}>

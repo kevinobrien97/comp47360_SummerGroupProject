@@ -222,6 +222,7 @@ const Journey = (props) => {
         >
           <Button
             sx={{
+              width: "9.5rem",
               "&:hover": {
                 backgroundColor: "#EEEAEA",
               },
@@ -233,6 +234,7 @@ const Journey = (props) => {
           </Button>
           <Button
             sx={{
+              width: "9.5rem",
               "&:hover": {
                 backgroundColor: "#EEEAEA",
               },
@@ -242,8 +244,8 @@ const Journey = (props) => {
           >
             Cancel
           </Button>
-          {/* will need to change this to users location at some stage */}
-          <Button
+          {/* not using as we do not have ssl setup on deployed version */}
+          {/* <Button
             sx={{
               "&:hover": {
                 backgroundColor: "#EEEAEA",
@@ -254,7 +256,7 @@ const Journey = (props) => {
             onClick={centerMap}
           >
             {<FaLocationArrow />}
-          </Button>
+          </Button> */}
         </ButtonGroup>
       </div>
     </Box>

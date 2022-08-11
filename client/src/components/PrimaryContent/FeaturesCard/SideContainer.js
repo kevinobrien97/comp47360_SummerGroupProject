@@ -69,10 +69,10 @@ const SideContainer = (props) => {
                 )}
               </div>
             )}
-            {sidebarOption.route && props.routesIsLoading && (
+            {sidebarOption.route && props.routesIsLoading && props.routeStopsLoading && (
               <LoadingSpinner text={"Loading Routes..."}></LoadingSpinner>
             )}
-            {sidebarOption.route && !props.routesIsLoading && (
+            {sidebarOption.route && !props.routesIsLoading && !props.routeStopsLoading && (
               <Route
                 routes={props.routes}
                 setRouteMarkers={props.setRouteMarkers}
@@ -80,6 +80,7 @@ const SideContainer = (props) => {
                 setUserLoggedOut={props.setUserLoggedOut}
                 toggleLogIn={props.toggleLogIn}
                 toggleRegister={props.toggleRegister}
+                routeStops={props.routeStops}
               ></Route>
             )}
             {/* {sidebarOption.stop && props.isLoading && (

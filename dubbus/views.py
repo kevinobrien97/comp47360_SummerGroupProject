@@ -126,9 +126,10 @@ class FullRouteStopTimesUpdatedView(generics.ListAPIView):
         # trip_headsign = self.kwargs['trip_headsign']
         # return StopTimesUpdated.objects.filter(stop_id=stop_id)   
 
-class RouteStopsView(generics.ListAPIView): 
+class RouteStopsView(generics.ListAPIView):
     permission_classes = (AllowAny,) 
     serializer_class = RouteStopsSerializer
+    queryset = RouteStops.objects.all()
     http_method_names = ['get']
     # RouteStops.objects.get(route_short_name='1')
     
@@ -138,14 +139,14 @@ class RouteStopsView(generics.ListAPIView):
     #     # headSign= self.request.GET['headSign']
     #     return RouteStops.objects.filter(route_short_name='1')  
     
-    def get_queryset(self):
-        route_short_name = self.kwargs['route_short_name']
-        trip_headsign = self.kwargs['trip_headsign']
-        # short_name = self.kwargs.get('short_name')
-        # headsign = self.kwargs.get('headsign')
-        # queryset = StopTimesUpdated.objects.all()
-        # print('hello',self.kwargs)
-        return RouteStops.objects.filter(route_short_name=route_short_name, trip_headsign=trip_headsign)
+    # def get_queryset(self):
+    #     route_short_name = self.kwargs['route_short_name']
+    #     trip_headsign = self.kwargs['trip_headsign']
+    #     # short_name = self.kwargs.get('short_name')
+    #     # headsign = self.kwargs.get('headsign')
+    #     # queryset = StopTimesUpdated.objects.all()
+    #     # print('hello',self.kwargs)
+    #     return RouteStops.objects.filter(route_short_name=route_short_name, trip_headsign=trip_headsign)
 
 
     # to call the prediction

@@ -12,32 +12,44 @@ const RouteDetails = (props) => {
   const [routeStops, setRouteStops] = useState([]);
 
   useEffect(() => {
-    const fetchRoutesData = async (short_name, headsign) => {
+    const fetchRoutesData = (short_name, headsign) => {
       // setError(null);
       setLoadingRouteStops(true);
-      try {
-        // fetch returns a promise
-        // is asynchronous
-        const response = await fetch(
-            // `http://127.0.0.1:8000/api/routestops/${short_name}/${headsign}/`
-          `http://3.90.184.148/api/routestops/${short_name}/${headsign}/`
+      const allStops = props.routeStops.filter((item) => {
+        return (
+          item.route_short_name === short_name &&
+          item.trip_headsign === headsign
         );
-        if (!response.ok) {
-          // wont continue with next line if error thrown
-          throw new Error("Something went wrong loading routes");
-        }
-        const allStops = await response.json();
-        setRouteStops(allStops);
+      });
+      setRouteStops(allStops);
 
-        // console.log(allStops);
-        //   props.setRouteMarkers(allStops);
-      } catch (error) {
-        console.log(error.message);
-        // setError(error.message);
-      }
       setLoadingRouteStops(false);
     };
-    fetchRoutesData(props.route.route_short_name, props.route.trip_headsign);
+    //   try {
+    //     // fetch returns a promise
+    //     // is asynchronous
+    //     const response = await fetch(
+    //         // `http://127.0.0.1:8000/api/routestops/${short_name}/${headsign}/`
+    //       `http://3.90.184.148/api/routestops/${short_name}/${headsign}/`
+    //     );
+    //     if (!response.ok) {
+    //       // wont continue with next line if error thrown
+    //       throw new Error("Something went wrong loading routes");
+    //     }
+    //     const allStops = await response.json();
+    //     setRouteStops(allStops);
+
+    //     // console.log(allStops);
+    //     //   props.setRouteMarkers(allStops);
+    //   } catch (error) {
+    //     console.log(error.message);
+    //     // setError(error.message);
+    //   }
+
+    // };
+    if (!props.routeStopsLoading) {
+      fetchRoutesData(props.route.route_short_name, props.route.trip_headsign);
+    }
     // only want it to run on load
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -45,14 +57,14 @@ const RouteDetails = (props) => {
   useEffect(() => {
     const getSchedule = async (route_short_name, trip_headsign, day) => {
       // setError(null);
-      props.setTimeClicked(false)
+      props.setTimeClicked(false);
       setLoadingSchedule(true);
- 
+
       try {
         // fetch returns a promise
         // is asynchronous
         const response = await fetch(
-            // `http://127.0.0.1:8000/api/fullroutestoptimes/${route_short_name}/${trip_headsign}/${day}/`
+          // `http://127.0.0.1:8000/api/fullroutestoptimes/${route_short_name}/${trip_headsign}/${day}/`
           `http://54.157.240.210/api/fullroutestoptimes/${route_short_name}/${trip_headsign}/${day}/`
         );
         if (!response.ok) {
@@ -98,11 +110,11 @@ const RouteDetails = (props) => {
       props.route.trip_headsign,
       props.daySelection
     );
-  //   // rerender whenever time is changed
-  // }, [props.daySelection, props.time]);
-       // rerender whenever button clicked
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [props.timeClicked]);
+    //   // rerender whenever time is changed
+    // }, [props.daySelection, props.time]);
+    // rerender whenever button clicked
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.timeClicked]);
 
   return (
     <AccordionDetails sx={{ backgroundColor: "whitesmoke" }}>

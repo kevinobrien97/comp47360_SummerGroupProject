@@ -164,7 +164,7 @@ def get_prediction(model_name, start_pronum, end_pronum, weather, rush_hour, lat
         else:
             start_prediction = model.predict(start_df)
         end_prediction = model.predict(end_df)
-
+        f.close()
         prediction = end_prediction - start_prediction
         return prediction[0]
     else:

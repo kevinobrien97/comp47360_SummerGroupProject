@@ -32,7 +32,6 @@ sample_bus_stops = [
 google_predictions_long = [
     {"route_id": "65", "headsign": "Poolbeg Street - Valleymount Road", "start_stop": "George's St, Exchequer Street", "end_stop": "Tallaght Hospital",  "total_stops": 34, "timestamp": 1660045350000, "prediction": 40},
     {"route_id": "14", "headsign": "Maryfield Drive - Outside Luas Station", "start_stop": "Dame Street, stop 7581", "end_stop": "Holy Cross Church",  "total_stops": 43, "timestamp": 1660045350000, "prediction": 41},
-    {"route_id": "145", "headsign": "Outside Heuston Train Station - Ballywaltrim", "start_stop": "Dublin (Arran Quay - Smithfield)", "end_stop": "Seafield Road",  "total_stops": 22, "timestamp": 1660045350000, "prediction": 32},
     {"route_id": "14", "headsign": "Maryfield Drive - Outside Luas Station", "start_stop": "D'Olier Street", "end_stop": "Holy Cross Church",  "total_stops": 44, "timestamp": 1660045350000, "prediction": 45},
 ]
 
@@ -458,7 +457,7 @@ class TestFavouriteStops(TestCase):
         # success code for deletions
         self.assertEquals(response.status_code, 204)
 
-   # note I am not testing posting duplicates or posting wrong information as this is not possible via checks I implemented on the frontend (i.e. no manual entry, user checks, duplicate postings prevented)
+#    note I am not testing posting duplicates or posting wrong information as this is not possible via checks I implemented on the frontend (i.e. no manual entry, user checks, duplicate postings prevented)
 
 # class TestWeather(unittest.TestCase):
 #     def test_get_weather(self):
@@ -525,7 +524,7 @@ class TestFullRouteStop(TestCase):
     def test_get_full_route_stops(self):
         # testing if stop times are returned successfully
         # using a sample stop below
-        response = self.client.get('/api/routestops/4/Harristown Bus Garage - Monkstown Avenue (Richmond Grove)/', follow=True)
+        response = self.client.get('/api/routestops/', follow=True)
         self.assertEquals(response.status_code, 200)
 
 class TestPredictions(TestCase):
@@ -550,12 +549,12 @@ class TestPredictions(TestCase):
         direction_id = get_direction_id(headsign)
         self.assertAlmostEqual(direction_id, "2")
     
-    # test to see if the prediction endpoint returns a successful response
+    # test to see if the prediction endpoint returns a successful response with and without the headsign - also test if the predictions are equal
     def test_predictions_returned(self):
         # testing if stop times are returned successfully
         # using a sample stop below
 
-        response = self.client.get('/api/getPrediction/',
+        response1 = self.client.get('/api/getPrediction/',
       {
                         "route_id": "1",
                         "headsign": "Shanard Road (Shanard Avenue) - Shaw Street",
@@ -564,8 +563,24 @@ class TestPredictions(TestCase):
                         "total_stops": 7,
                         "timestamp": 1660152569329,
                       }, follow=True)
-        result = json.loads(response.content)
-        self.assertEquals(response.status_code, 200)
+        # in the below i dont specify the headsign
+        response2 = self.client.get('/api/getPrediction/',
+      {
+                        "route_id": "1",
+                        "headsign": "N/A",
+                        "start_stop": "Shanard Avenue, stop 226",
+                        "end_stop": "Whitehall Church, stop 1642",
+                        "total_stops": 7,
+                        "timestamp": 1660152569329,
+                      }, follow=True)
+
+        result1 = json.loads(response1.content)
+        result2 = json.loads(response1.content)
+      
+        self.assertEquals(response1.status_code, 200)
+        self.assertEquals(response2.status_code, 200)
+        self.assertEquals(result1, result2)
+    
     
     # takes a random sample of actual journeys precalculated on Google and compares our estimated time to the associated Google prediction, plus or minus a range
     def test_predictions_google(self):
@@ -583,7 +598,8 @@ class TestPredictions(TestCase):
                             "timestamp": journey["timestamp"],
                         }, follow=True)
             result = json.loads(response.content)
-            prediction = result['result']/60           
+            print(journey, result['result'])
+            prediction = int(result['result'])/60           
             self.assertTrue(journey["prediction"]-1.5 <= prediction <= journey["prediction"]+1.5)
 
         # the below loops through 'short' journeys that were samplped from Google, comparing our prediction to Googles, +- 1 mins 
@@ -598,7 +614,7 @@ class TestPredictions(TestCase):
                             "timestamp": journey["timestamp"],
                         }, follow=True)
             result = json.loads(response.content)
-            prediction = result['result']/60            
+            prediction = int(result['result'])/60            
             self.assertTrue(journey["prediction"]-1.0 <= prediction <= journey["prediction"]+1.0)
     
 

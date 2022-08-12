@@ -13,8 +13,6 @@ Clone repo to your desired location and run the following:
 ## **Ensure React is installed for "npm" ** 
 ##### npm install
 
-in ./src/components/Navbar/ rename navbar.js to Navbar.js
-
 ##### npm start 
 
 You must store your personal Google Maps API key in the env folder, please ensure that you have enabled access to GoogleMaps' Javascript, Directions and Places APIs. 
@@ -29,4 +27,4 @@ In a second terminal you can optionally do the following:
 
 ##### python manage.py runserver 
 
-this will start Django, however all instances of api calls to the backend would have to be changed from the server ip to your localhost, this can be done by sifting through each file and using "ctrl+f" to find where "127.0.0.1" has been commented out in favour of the server ip. 
+this will start Django. To use a local version of our backend you will need to replace our deployed backend IP address to "127.0.0.1", by commenting back in the lines with this IP (and removing the lines with the deployed version). 

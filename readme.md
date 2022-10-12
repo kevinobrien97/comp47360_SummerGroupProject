@@ -1,6 +1,6 @@
 # ShuttleUp Installation Guide 
 
-Clone repo to your desired location and run the following:
+Clone repo and run the following:
 
 ##### virtualenv envname
 ##### source envname/bin/activate 
@@ -10,12 +10,11 @@ Clone repo to your desired location and run the following:
 
 ### cd client
 
-## **Ensure React is installed for "npm" ** 
 ##### npm install
 
 ##### npm start 
 
-You must store your personal Google Maps API key in the env folder, please ensure that you have enabled access to GoogleMaps' Javascript, Directions and Places APIs. 
+Store your personal Google Maps API key in the env folder and ensure you have enabled access to GoogleMaps' Javascript, Directions and Places APIs. 
 
 ## For other keys: 
 
